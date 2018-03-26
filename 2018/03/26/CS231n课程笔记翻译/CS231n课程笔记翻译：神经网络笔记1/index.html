@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <title>CS231n课程笔记翻译：神经网络笔记1 · heroinlin&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+        box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.7);
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180311 as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180311 media="(max-width: 980px)"/>
+    <link rel="icon" href= /assets/leaf.ico>
+    <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    <script src="/scripts/main.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >heroinlin&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">CS231n课程笔记翻译：神经网络笔记1</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>heroinlin's Studio.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            CS231n课程笔记翻译：神经网络笔记1
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = CS231n>CS231n</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = 神经网络>神经网络</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2018/03/26</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="CS231n课程笔记翻译：神经网络笔记"><a href="#CS231n课程笔记翻译：神经网络笔记" class="headerlink" title="CS231n课程笔记翻译：神经网络笔记"></a>CS231n课程笔记翻译：神经网络笔记</h1><h2 id="原文如下"><a href="#原文如下" class="headerlink" title="原文如下"></a>原文如下</h2><p>内容列表：</p>
+<ul>
+<li>不用大脑做类比的快速简介</li>
+<li>单个神经元建模<ul>
+<li>生物动机和连接</li>
+<li>作为线性分类器的单个神经元</li>
+<li>常用的激活函数 </li>
+</ul>
+</li>
+<li>神经网络结构<ul>
+<li>层组织</li>
+<li>前向传播计算例子</li>
+<li>表达能力</li>
+<li>设置层的数量和尺寸</li>
+</ul>
+</li>
+<li>小节</li>
+<li>参考文献</li>
+</ul>
+<h2 id="快速简介"><a href="#快速简介" class="headerlink" title="快速简介"></a>快速简介</h2><p>在不诉诸大脑的类比的情况下，依然是可以对神经网络算法进行介绍的。在线性分类一节中，在给出图像的情况下，是使用$s=Wx$来计算不同视觉类别的评分，其中$W$是一个矩阵，$x$是一个输入列向量，它包含了图像的全部像素数据。在使用数据库CIFAR-10的案例中，$x$是一个[3072x1]的列向量，$W$是一个[10x3072]的矩阵，所以输出的评分是一个包含10个分类评分的向量。</p>
+<p>神经网络算法则不同，它的计算公式是$s=W_2max(0,W_1x)$。其中$W_1$的含义是这样的：举个例子来说，它可以是一个[100x3072]的矩阵，其作用是将图像转化为一个100维的过渡向量。函数$max(0,-)$是非线性的，它会作用到每个元素。这个非线性函数有多种选择，后续将会学到。但这个形式是一个最常用的选择，它就是简单地设置阈值，将所有小于0的值变成0。最终，矩阵$W_2$的尺寸是[10x100]，因此将得到10个数字，这10个数字可以解释为是分类的评分。注意非线性函数在计算上是至关重要的，如果略去这一步，那么两个矩阵将会合二为一，对于分类的评分计算将重新变成关于输入的线性函数。这个非线性函数就是<em>改变</em>的关键点。参数$W_1,W_2$将通过随机梯度下降来学习到，他们的梯度在反向传播过程中，通过链式法则来求导计算得出。</p>
+<p>一个三层的神经网络可以类比地看做$s=W_3max(0,W_2max(0,W_1x))$，其中$W_1,W_2,W_3$是需要进行学习的参数。中间隐层的尺寸是网络的超参数，后续将学习如何设置它们。现在让我们先从神经元或者网络的角度理解上述计算。</p>
+<h2 id="单个神经元建模"><a href="#单个神经元建模" class="headerlink" title="单个神经元建模"></a>单个神经元建模</h2><p>神经网络算法领域最初是被对生物神经系统建模这一目标启发，但随后与其分道扬镳，成为一个工程问题，并在机器学习领域取得良好效果。然而，讨论将还是从对生物系统的一个高层次的简略描述开始，因为神经网络毕竟是从这里得到了启发。</p>
+<h3 id="生物动机与连接"><a href="#生物动机与连接" class="headerlink" title="生物动机与连接"></a>生物动机与连接</h3><p>大脑的基本计算单位是 <strong>神经元（neuron）</strong> 。人类的神经系统中大约有860亿个神经元，它们被大约10^14-10^15个 <strong>突触(synapses)</strong> 连接起来。下面图表的左边展示了一个生物学的神经元，右边展示了一个常用的数学模型。每个神经元都从它的 <strong>树突</strong> 获得输入信号，然后沿着它唯一的 <strong>轴突（axon）</strong> 产生输出信号。轴突在末端会逐渐分枝，通过突触和其他神经元的树突相连。</p>
+<p>在神经元的计算模型中，沿着轴突传播的信号（比如$x_0$）将基于突触的突触强度（比如$w_0$），与其他神经元的树突进行乘法交互（比如$w_0x_0$）。其观点是，突触的强度（也就是权重$w$），是可学习的且可以控制一个神经元对于另一个神经元的影响强度（还可以控制影响方向：使其兴奋（正权重）或使其抑制（负权重））。在基本模型中，树突将信号传递到细胞体，信号在细胞体中相加。如果最终之和高于某个阈值，那么神经元将会<em>激活</em>，向其轴突输出一个峰值信号。在计算模型中，我们假设峰值信号的准确时间点不重要，是激活信号的频率在交流信息。基于这个<em>速率编码</em>的观点，将神经元的激活率建模为<strong>激活函数（activation function）$f$</strong>，它表达了轴突上激活信号的频率。由于历史原因，激活函数常常选择使用<strong>sigmoid函数$\sigma$ </strong>，该函数输入实数值（求和后的信号强度），然后将输入值压缩到0-1之间。在本节后面部分会看到这些激活函数的各种细节。</p>
+<p>————————————————————————————————————————</p>
+<table><tr><br><td><center><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/neural_nets/neural_nets_0.png?raw=true" width="200" border="0"></center></td><br><td><center><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/neural_nets/neural_nets_1.jpg?raw=true" width="200" border="0"></center></td><br></tr></table>
+
+<p>左边是生物神经元，右边是数学模型。</p>
+<p>————————————————————————————————————————</p>
+<p>一个神经元前向传播的实例代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Neuron</span><span class="params">(object)</span>:</span></span><br><span class="line">  <span class="comment"># ... </span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(inputs)</span>:</span></span><br><span class="line">    <span class="string">""" 假设输入和权重是1-D的numpy数组，偏差是一个数字 """</span></span><br><span class="line">    cell_body_sum = np.sum(inputs * self.weights) + self.bias</span><br><span class="line">    firing_rate = <span class="number">1.0</span> / (<span class="number">1.0</span> + math.exp(-cell_body_sum)) <span class="comment"># sigmoid激活函数</span></span><br><span class="line">    <span class="keyword">return</span> firing_rate</span><br></pre></td></tr></table></figure>
+<p>换句话说，每个神经元都对它的输入和权重进行点积，然后加上偏差，最后使用非线性函数（或称为激活函数）。本例中使用的是sigmoid函数$\sigma(x)=1/(1+e^{-x})$。在本节的末尾部分将介绍不同激活函数的细节。</p>
+<p><strong>粗糙模型</strong>：要注意这个对于生物神经元的建模是非常粗糙的：在实际中，有很多不同类型的神经元，每种都有不同的属性。生物神经元的树突可以进行复杂的非线性计算。突触并不就是一个简单的权重，它们是复杂的非线性动态系统。很多系统中，输出的峰值信号的精确时间点非常重要，说明速率编码的近似是不够全面的。鉴于所有这些已经介绍和更多未介绍的简化，如果你画出人类大脑和神经网络之间的类比，有神经科学背景的人对你的板书起哄也是非常自然的。如果你对此感兴趣，可以看看这份<a href="http://link.zhihu.com/?target=https%3A//physics.ucsd.edu/neurophysics/courses/physics_171/annurev.neuro.28.061604.135703.pdf" target="_blank" rel="noopener"><strong>评论</strong></a>或者最新的<a href="http://link.zhihu.com/?target=http%3A//www.sciencedirect.com/science/article/pii/S0959438814000130" target="_blank" rel="noopener"><strong>另一份</strong></a>。</p>
+<h3 id="作为线性分类器的单个神经元"><a href="#作为线性分类器的单个神经元" class="headerlink" title="作为线性分类器的单个神经元"></a>作为线性分类器的单个神经元</h3><p>神经元模型的前向计算数学公式看起来可能比较眼熟。就像在线性分类器中看到的那样，神经元有能力“喜欢”（激活函数值接近1），或者不喜欢（激活函数值接近0）输入空间中的某些线性区域。因此，只要在神经元的输出端有一个合适的损失函数，就能让单个神经元变成一个线性分类器。</p>
+<p><strong>二分类Softmax分类器</strong>   举例来说，可以把$\displaystyle\sigma(\Sigma_iw_ix_i+b)$看做其中一个分类的概率$P(y_i=1|x_i;w)$，其他分类的概率为$P(y_i=0|x_i;w)=1-P(y_i=1|x_i;w)$，因为它们加起来必须为1。根据这种理解，可以得到交叉熵损失，这个在线性分一节中已经介绍。然后将它最优化为二分类的Softmax分类器（也就是逻辑回归）。因为sigmoid函数输出限定在0-1之间，所以分类器做出预测的基准是神经元的输出是否大于0.5。</p>
+<p><strong>二分类SVM分类器</strong>    或者可以在神经元的输出外增加一个最大边界折叶损失（max-margin hinge loss）函数，将其训练成一个二分类的支持向量机。</p>
+<p><strong>理解正则化</strong>  在SVM/Softmax的例子中，正则化损失从生物学角度可以看做<em>逐渐遗忘</em>，因为它的效果是让所有突触权重$w$在参数更新过程中逐渐向着0变化。</p>
+<blockquote>
+<p>一个单独的神经元可以用来实现一个二分类分类器，比如二分类的Softmax或者SVM分类器。</p>
+</blockquote>
+<h3 id="常用激活函数"><a href="#常用激活函数" class="headerlink" title="常用激活函数"></a>常用激活函数</h3><p>每个激活函数（或非线性函数）的输入都是一个数字，然后对其进行某种固定的数学操作。下面是在实践中可能遇到的几种激活函数：</p>
+<p>————————————————————————————————————————</p>
+<p><table><tr></tr></table></p>
+<p><td><center><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/neural_nets/neural_nets_2.jpg?raw=true" width="200"></center></td></p>
+<p><td><center><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/neural_nets/neural_nets_3.jpg?raw=true" width="200"></center></td><br><br>左边是Sigmoid非线性函数，将实数压缩到[0,1]之间。右边是tanh函数，将实数压缩到[-1,1]。</p>
+<p>————————————————————————————————————————</p>
+<p><strong>Sigmoid</strong>  sigmoid非线性函数的数学公式是$\displaystyle\sigma(x)=1/(1+e^{-x})$，函数图像如上图的左边所示。在前一节中已经提到过，它输入实数值并将其“挤压”到0到1范围内。更具体地说，很大的负数变成0，很大的正数变成1。在历史上，sigmoid函数非常常用，这是因为它对于神经元的激活频率有良好的解释：从完全不激活（0）到在求和后的最大频率处的完全饱和（<strong>saturated</strong>）的激活（1）。然而现在sigmoid函数已经不太受欢迎，实际很少使用了，这是因为它有两个主要缺点：</p>
+<ul>
+<li><em>Sigmoid函数饱和使梯度消失</em>。sigmoid神经元有一个不好的特性，就是当神经元的激活在接近0或1处时会饱和：在这些区域，梯度几乎为0。回忆一下，在反向传播的时候，这个（局部）梯度将会与整个损失函数关于该门单元输出的梯度相乘。因此，如果局部梯度非常小，那么相乘的结果也会接近零，这会有效地“杀死”梯度，几乎就有没有信号通过神经元传到权重再到数据了。还有，为了防止饱和，必须对于权重矩阵初始化特别留意。比如，如果初始化权重过大，那么大多数神经元将会饱和，导致网络就几乎不学习了。</li>
+<li><em>Sigmoid函数的输出不是零中心的</em>。这个性质并不是我们想要的，因为在神经网络后面层中的神经元得到的数据将不是零中心的。这一情况将影响梯度下降的运作，因为如果输入神经元的数据总是正数（比如在$f=w^Tx+b$中每个元素都$x&gt;0$），那么关于$w$的梯度在反向传播的过程中，将会要么全部是正数，要么全部是负数（具体依整个表达式$f$而定）。这将会导致梯度下降权重更新时出现z字型的下降。然而，可以看到整个批量的数据的梯度被加起来后，对于权重的最终更新将会有不同的正负，这样就从一定程度上减轻了这个问题。因此，该问题相对于上面的神经元饱和问题来说只是个小麻烦，没有那么严重。</li>
+</ul>
+<p><strong>Tanh</strong>    tanh非线性函数图像如上图右边所示。它将实数值压缩到[-1,1]之间。和sigmoid神经元一样，它也存在饱和问题，但是和sigmoid神经元不同的是，它的输出是零中心的。因此，在实际操作中，<em>tanh非线性函数比sigmoid非线性函数更受欢迎</em>。注意tanh神经元是一个简单放大的sigmoid神经元，具体说来就是：$tanh(x)=2\sigma(2x)-1$。<br>————————————————————————————————————————</p>
+<p><table><tr></tr></table></p>
+<p><td><center><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/neural_nets/neural_nets_4.jpg?raw=true" width="200"></center></td></p>
+<p><td><center><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/neural_nets/neural_nets_5.jpg?raw=true" width="200"></center></td><br><br>左边是ReLU（校正线性单元：Rectified Linear Unit）激活函数，当$x=0$时函数值为0。当$x&gt;0$函数的斜率为1。右边是从<a href="http://link.zhihu.com/?target=http%3A//www.cs.toronto.edu/%7Efritz/absps/imagenet.pdf" target="_blank" rel="noopener"><strong>Krizhevsky</strong></a> 等的论文中截取的图表，指明使用ReLU比使用tanh的收敛快6倍。</p>
+<p>————————————————————————————————————————</p>
+<p><strong>ReLU</strong>   在近些年ReLU变得非常流行。它的函数公式是$f(x)=max(0,x)$)。换句话说，这个激活函数就是一个关于0的阈值（如上图左侧）。使用ReLU有以下一些优缺点：</p>
+<ul>
+<li>优点：相较于sigmoid和tanh函数，ReLU对于随机梯度下降的收敛有巨大的加速作用（<a href="http://link.zhihu.com/?target=http%3A//www.cs.toronto.edu/%7Efritz/absps/imagenet.pdf" target="_blank" rel="noopener"><strong>Krizhevsky</strong></a> 等的论文指出有6倍之多）。据称这是由它的线性，非饱和的公式导致的。</li>
+<li>优点：sigmoid和tanh神经元含有指数运算等耗费计算资源的操作，而ReLU可以简单地通过对一个矩阵进行阈值计算得到。</li>
+<li>缺点：在训练的时候，ReLU单元比较脆弱并且可能“死掉”。举例来说，当一个很大的梯度流过ReLU的神经元的时候，可能会导致梯度更新到一种特别的状态，在这种状态下神经元将无法被其他任何数据点再次激活。如果这种情况发生，那么从此所以流过这个神经元的梯度将都变成0。也就是说，这个ReLU单元在训练中将不可逆转的死亡，因为这导致了数据多样化的丢失。例如，如果学习率设置得太高，可能会发现网络中40%的神经元都会死掉（在整个训练集中这些神经元都不会被激活）。通过合理设置学习率，这种情况的发生概率会降低。</li>
+</ul>
+<p><strong>Leaky ReLU</strong>    Leaky ReLU是为解决“ReLU死亡”问题的尝试。ReLU中当x&lt;0时，函数值为0。而Leaky ReLU则是给出一个很小的负数梯度值，比如0.01。所以其函数公式为</p>
+<p><center>$$f(x)=1(x&lt;0)(\alpha x)+1(x&gt;=0)(x)$$</center><br>其中 $\alpha$是一个小的常量。有些研究者的论文指出这个激活函数表现很不错，但是其效果并不是很稳定。Kaiming He等人在2015年发布的论文<a href="http://link.zhihu.com/?target=http%3A//arxiv.org/abs/1502.01852" target="_blank" rel="noopener"><strong>Delving Deep into Rectifiers</strong></a> 中介绍了一种新方法PReLU，把负区间上的斜率当做每个神经元中的一个参数。然而该激活函数在在不同任务中均有益处的一致性并没有特别清晰。</p>
+<p><strong>Maxout</strong>      一些其他类型的单元被提了出来，它们对于权重和数据的内积结果不再使用$f(w^Tx+b)$函数形式。一个相关的流行选择是Maxout（最近由<a href="http://link.zhihu.com/?target=http%3A//www-etud.iro.umontreal.ca/%7Egoodfeli/maxout.html" target="_blank" rel="noopener"><strong>Goodfellow</strong></a> 等发布）神经元。Maxout是对ReLU和leaky ReLU的一般化归纳，它的函数是：$max(w^T_1x+b_1,w^T_2x+b_2)$。ReLU和Leaky ReLU都是这个公式的特殊情况（比如ReLU就是当$w_1,b_1=0$的时候）。这样Maxout神经元就拥有ReLU单元的所有优点（线性操作和不饱和），而没有它的缺点（死亡的ReLU单元）。然而和ReLU对比，它每个神经元的参数数量增加了一倍，这就导致整体参数的数量激增。</p>
+<p>以上就是一些常用的神经元及其激活函数。最后需要注意一点：在同一个网络中混合使用不同类型的神经元是非常少见的，虽然没有什么根本性问题来禁止这样做。</p>
+<p><strong>一句话</strong>：“<em>那么该用那种呢？</em>”用ReLU非线性函数。注意设置好学习率，或许可以监控你的网络中死亡的神经元占的比例。如果单元死亡问题困扰你，就试试Leaky ReLU或者Maxout，不要再用sigmoid了。也可以试试tanh，但是其效果应该不如ReLU或者Maxout。</p>
+<h2 id="神经网络结构"><a href="#神经网络结构" class="headerlink" title="神经网络结构"></a>神经网络结构</h2><h3 id="灵活地组织层"><a href="#灵活地组织层" class="headerlink" title="灵活地组织层"></a>灵活地组织层</h3><p><strong>将神经网络算法以神经元的形式图形化</strong>    神经网络被建模成神经元的集合，神经元之间以无环图的形式进行连接。也就是说，一些神经元的输出是另一些神经元的输入。在网络中是不允许循环的，因为这样会导致前向传播的无限循环。通常神经网络模型中神经元是分层的，而不是像生物神经元一样聚合成大小不一的团状。对于普通神经网络，最普通的层的类型是<strong>全连接层（fully-connected layer）</strong>。全连接层中的神经元与其前后两层的神经元是完全成对连接的，但是在同一个全连接层内的神经元之间没有连接。下面是两个神经网络的图例，都使用的全连接层：</p>
+<p>————————————————————————————————————————</p>
+<p><table><tr></tr></table></p>
+<p><td><center><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/neural_nets/neural_nets_6.jpg?raw=true" width="250"></center></td></p>
+<p><td><center><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/neural_nets/neural_nets_7.jpg?raw=true" width="250"></center></td><br><br>左边是一个2层神经网络，隐层由4个神经元（也可称为单元（unit））组成，输出层由2个神经元组成，输入层是3个神经元。右边是一个3层神经网络，两个含4个神经元的隐层。注意：层与层之间的神经元是全连接的，但是层内的神经元不连接。</p>
+<p>————————————————————————————————————————</p>
+<p><strong>命名规则</strong>     当我们说N层神经网络的时候，我们没有把输入层算入。因此，单层的神经网络就是没有隐层的（输入直接映射到输出）。因此，有的研究者会说逻辑回归或者SVM只是单层神经网络的一个特例。研究者们也会使用<em>人工神经网络（</em>Artificial Neural Networks <em>缩写ANN）</em>或者<em>多层感知器（Multi-Layer Perceptrons 缩写MLP）</em>来指代神经网络。很多研究者并不喜欢神经网络算法和人类大脑之间的类比，他们更倾向于用<em>单元（unit）</em>而不是神经元作为术语。</p>
+<p><strong>输出层</strong>    和神经网络中其他层不同，输出层的神经元一般是不会有激活函数的（或者也可以认为它们有一个线性相等的激活函数）。这是因为最后的输出层大多用于表示分类评分值，因此是任意值的实数，或者某种实数值的目标数（比如在回归中）。</p>
+<p><strong>确定网络尺寸</strong>    用来度量神经网络的尺寸的标准主要有两个：一个是神经元的个数，另一个是参数的个数，用上面图示的两个网络举例：</p>
+<ul>
+<li>第一个网络有4+2=6个神经元（输入层不算），[3x4]+[4x2]=20个权重，还有4+2=6个偏置，共26个可学习的参数。</li>
+<li>第二个网络有4+4+1=9个神经元，[3x4]+[4x4]+[4x1]=32个权重，4+4+1=9个偏置，共41个可学习的参数。</li>
+</ul>
+<p>为了方便对比，现代卷积神经网络能包含约1亿个参数，可由10-20层构成（这就是深度学习）。然而，<em>有效（effective）</em>连接的个数因为参数共享的缘故大大增多。在后面的卷积神经网络内容中我们将学习更多。</p>
+<h3 id="前向传播计算举例"><a href="#前向传播计算举例" class="headerlink" title="前向传播计算举例"></a>前向传播计算举例</h3><p><em>不断重复的矩阵乘法与激活函数交织</em>。将神经网络组织成层状的一个主要原因，就是这个结构让神经网络算法使用矩阵向量操作变得简单和高效。用上面那个3层神经网络举例，输入是[3x1]的向量。一个层所有连接的强度可以存在一个单独的矩阵中。比如第一个隐层的权重<strong>W1</strong>是[4x3]，所有单元的偏置储存在<strong>b1</strong>中，尺寸[4x1]。这样，每个神经元的权重都在<strong>W1</strong>的一个行中，于是矩阵乘法<strong>np.dot(W1, x)</strong>就能计算该层中所有神经元的激活数据。类似的，<strong>W2</strong>将会是[4x4]矩阵，存储着第二个隐层的连接，<strong>W3</strong>是[1x4]的矩阵，用于输出层。完整的3层神经网络的前向传播就是简单的3次矩阵乘法，其中交织着激活函数的应用。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一个3层神经网络的前向传播:</span></span><br><span class="line">f = <span class="keyword">lambda</span> x: <span class="number">1.0</span>/(<span class="number">1.0</span> + np.exp(-x)) <span class="comment"># 激活函数(用的sigmoid)</span></span><br><span class="line">x = np.random.randn(<span class="number">3</span>, <span class="number">1</span>) <span class="comment"># 含3个数字的随机输入向量(3x1)</span></span><br><span class="line">h1 = f(np.dot(W1, x) + b1) <span class="comment"># 计算第一个隐层的激活数据(4x1)</span></span><br><span class="line">h2 = f(np.dot(W2, h1) + b2) <span class="comment"># 计算第二个隐层的激活数据(4x1)</span></span><br><span class="line">out = np.dot(W3, h2) + b3 <span class="comment"># 神经元输出(1x1)</span></span><br></pre></td></tr></table></figure>
+<p>在上面的代码中，<strong>W1，W2，W3，b1，b2，b3</strong>都是网络中可以学习的参数。注意<strong>x</strong>并不是一个单独的列向量，而可以是一个批量的训练数据（其中每个输入样本将会是<strong>x</strong>中的一列），所有的样本将会被并行化的高效计算出来。注意神经网络最后一层通常是没有激活函数的（例如，在分类任务中它给出一个实数值的分类评分）。</p>
+<blockquote>
+<p>全连接层的前向传播一般就是先进行一个矩阵乘法，然后加上偏置并运用激活函数。</p>
+</blockquote>
+<h3 id="表达能力"><a href="#表达能力" class="headerlink" title="表达能力"></a>表达能力</h3><p>理解具有全连接层的神经网络的一个方式是：可以认为它们定义了一个由一系列函数组成的函数族，网络的权重就是每个函数的参数。如此产生的问题是：该函数族的表达能力如何？存在不能被神经网络表达的函数吗？</p>
+<p>现在看来，拥有至少一个隐层的神经网络是一个<em>通用的近似器</em>。在研究（例如1989年的论文<a href="http://link.zhihu.com/?target=http%3A//www.dartmouth.edu/%257Egvc/Cybenko_MCSS.pdf" target="_blank" rel="noopener"><strong>Approximation by Superpositions of Sigmoidal Function</strong></a> ，或者<a href="http://link.zhihu.com/?target=http%3A//neuralnetworksanddeeplearning.com/chap4.html" target="_blank" rel="noopener"><strong>Michael Nielsen</strong></a> 的这个直观解释。）中已经证明，给出任意连续函数$f(x)$和任意$\epsilon &gt;0$，均存在一个至少含1个隐层的神经网络$g(x)$（并且网络中有合理选择的非线性激活函数，比如sigmoid），对于$\forall x$，使得$|f(x)-g(x)|&lt;\epsilon$。换句话说，神经网络可以近似任何连续函数。</p>
+<p>既然一个隐层就能近似任何函数，那为什么还要构建更多层来将网络做得更深？答案是：虽然一个2层网络在数学理论上能完美地近似所有连续函数，但在实际操作中效果相对较差。在一个维度上，虽然以$a,b,c$为参数向量“指示块之和”函数$g(x)=\sum_ic_i1(a_i&lt;x&lt;b_i) $也是通用的近似器，但是谁也不会建议在机器学习中使用这个函数公式。神经网络在实践中非常好用，是因为它们表达出的函数不仅平滑，而且对于数据的统计特性有很好的拟合。同时，网络通过最优化算法（例如梯度下降）能比较容易地学习到这个函数。类似的，虽然在理论上深层网络（使用了多个隐层）和单层网络的表达能力是一样的，但是就实践经验而言，深度网络效果比单层网络好。</p>
+<p>另外，在实践中3层的神经网络会比2层的表现好，然而继续加深（做到4，5，6层）很少有太大帮助。卷积神经网络的情况却不同，在卷积神经网络中，对于一个良好的识别系统来说，深度是一个极端重要的因素（比如数十(以10为量级)个可学习的层）。对于该现象的一种解释观点是：因为图像拥有层次化结构（比如脸是由眼睛等组成，眼睛又是由边缘组成），所以多层处理对于这种数据就有直观意义。</p>
+<p>全面的研究内容还很多，近期研究的进展也很多。如果你对此感兴趣，我么推荐你阅读下面文献：</p>
+<ul>
+<li><a href="http://link.zhihu.com/?target=http%3A//www.deeplearningbook.org/" target="_blank" rel="noopener"><strong>Deep Learning</strong></a> 的<a href="http://link.zhihu.com/?target=http%3A//www.deeplearningbook.org/contents/mlp.html" target="_blank" rel="noopener"><strong>Chapter6.4</strong></a> ，作者是Bengio等。</li>
+<li><a href="http://link.zhihu.com/?target=http%3A//arxiv.org/abs/1312.6184" target="_blank" rel="noopener"><strong>Do Deep Nets Really Need to be Deep?</strong></a> </li>
+<li><a href="http://link.zhihu.com/?target=http%3A//arxiv.org/abs/1412.6550" target="_blank" rel="noopener"><strong>FitNets: Hints for Thin Deep Nets</strong></a> </li>
+</ul>
+<h3 id="设置层的数量和尺寸"><a href="#设置层的数量和尺寸" class="headerlink" title="设置层的数量和尺寸"></a>设置层的数量和尺寸</h3><p>在面对一个具体问题的时候该确定网络结构呢？到底是不用隐层呢？还是一个隐层？两个隐层或更多？每个层的尺寸该多大？</p>
+<p>首先，要知道当我们增加层的数量和尺寸时，网络的容量上升了。即神经元们可以合作表达许多复杂函数，所以表达函数的空间增加。例如，如果有一个在二维平面上的二分类问题。我们可以训练3个不同的神经网络，每个网络都只有一个隐层，但是每层的神经元数目不同：</p>
+<p>————————————————————————————————————————</p>
+<p><center><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/neural_nets/neural_nets_8.jpg?raw=true" width="400"></center><br>更大的神经网络可以表达更复杂的函数。数据是用不同颜色的圆点表示他们的不同类别，决策边界是由训练过的神经网络做出的。你可以在 <a href="http://link.zhihu.com/?target=http%3A//cs.stanford.edu/people/karpathy/convnetjs/demo/classify2d.html" target="_blank" rel="noopener"><strong>ConvNetsJS demo</strong></a> 上练练手。</p>
+<p>————————————————————————————————————————</p>
+<p>在上图中，可以看见有更多神经元的神经网络可以表达更复杂的函数。然而这既是优势也是不足，优势是可以分类更复杂的数据，不足是可能造成对训练数据的过拟合。<strong>过拟合（Overfitting）</strong> 是网络对数据中的噪声有很强的拟合能力，而没有重视数据间（假设）的潜在基本关系。举例来说，有20个神经元隐层的网络拟合了所有的训练数据，但是其代价是把决策边界变成了许多不相连的红绿区域。而有3个神经元的模型的表达能力只能用比较宽泛的方式去分类数据。它将数据看做是两个大块，并把个别在绿色区域内的红色点看做噪声。在实际中，这样可以在测试数据中获得更好的 <strong>泛化（generalization）</strong> 能力。</p>
+<p>基于上面的讨论，看起来如果数据不是足够复杂，则似乎小一点的网络更好，因为可以防止过拟合。然而并非如此，防止神经网络的过拟合有很多方法（L2正则化，dropout和输入噪音等），后面会详细讨论。在实践中，使用这些方法来控制过拟合比减少网络神经元数目要好得多。</p>
+<p>不要减少网络神经元数目的主要原因在于小网络更难使用梯度下降等局部方法来进行训练：虽然小型网络的损失函数的局部极小值更少，也比较容易收敛到这些局部极小值，但是这些最小值一般都很差，损失值很高。相反，大网络拥有更多的局部极小值，但就实际损失值来看，这些局部极小值表现更好，损失更小。因为神经网络是非凸的，就很难从数学上研究这些特性。即便如此，还是有一些文章尝试对这些目标函数进行理解，例如<a href="http://link.zhihu.com/?target=http%3A//arxiv.org/abs/1412.0233" target="_blank" rel="noopener"><strong>The Loss Surfaces of Multilayer Networks</strong></a> 这篇论文。在实际中，你将发现如果训练的是一个小网络，那么最终的损失值将展现出多变性：某些情况下运气好会收敛到一个好的地方，某些情况下就收敛到一个不好的极值。从另一方面来说，如果你训练一个大的网络，你将发现许多不同的解决方法，但是最终损失值的差异将会小很多。这就是说，所有的解决办法都差不多，而且对于随机初始化参数好坏的依赖也会小很多。</p>
+<p>重申一下，正则化强度是控制神经网络过拟合的好方法。看下图结果：</p>
+<p>————————————————————————————————————————</p>
+<p><center><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/neural_nets/neural_nets_9.jpg?raw=true" width="400"></center><br>不同正则化强度的效果：每个神经网络都有20个隐层神经元，但是随着正则化强度增加，它的决策边界变得更加平滑。你可以在 <a href="http://link.zhihu.com/?target=http%3A//cs.stanford.edu/people/karpathy/convnetjs/demo/classify2d.html" target="_blank" rel="noopener"><strong>ConvNetsJS demo</strong></a> 上练练手。</p>
+<p>————————————————————————————————————————</p>
+<p>需要记住的是：不应该因为害怕出现过拟合而使用小网络。相反，应该进尽可能使用大网络，然后使用正则化技巧来控制过拟合。</p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>小结如下：</p>
+<ul>
+<li><p>介绍了生物神经元的粗略模型；</p>
+</li>
+<li><p>讨论了几种不同类型的激活函数，其中ReLU是最佳推荐；</p>
+</li>
+<li><p>介绍了<strong>神经网络</strong>，神经元通过<strong>全连接层</strong>连接，层间神经元两两相连，但是层内神经元不连接；</p>
+</li>
+<li><p>理解了分层的结构能够让神经网络高效地进行矩阵乘法和激活函数运算；</p>
+</li>
+<li><p>理解了神经网络是一个<strong>通用函数近似器</strong>，但是该性质与其广泛使用无太大关系。之所以使用神经网络，是因为它们对于实际问题中的函数的公式能够某种程度上做出“正确”假设。</p>
+</li>
+<li><p>讨论了更大网络总是更好的这一事实。然而更大容量的模型一定要和更强的正则化（比如更高的权重衰减）配合，否则它们就会过拟合。在后续章节中我们讲学习更多正则化的方法，尤其是dropout。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1></li>
+<li><p>使用Theano的<a href="http://link.zhihu.com/?target=http%3A//www.deeplearning.net/tutorial/mlp.html" target="_blank" rel="noopener"><strong>deeplearning.net tutorial</strong></a></p>
+</li>
+<li><p><a href="http://link.zhihu.com/?target=http%3A//www.deeplearning.net/tutorial/mlp.html" target="_blank" rel="noopener"><strong>ConvNetJS</strong></a></p>
+</li>
+<li><p><a href="http://link.zhihu.com/?target=http%3A//neuralnetworksanddeeplearning.com/chap1.html" target="_blank" rel="noopener"><strong>Michael Nielsen’s tutorials</strong></a></p>
+</li>
+</ul>
+<blockquote>
+<p>译自斯坦福CS231n课程笔记<a href="http://link.zhihu.com/?target=http%3A//cs231n.github.io/neural-networks-1/" target="_blank" rel="noopener"><strong>Neural Nets notes 1</strong></a> ，课程教师<a href="http://link.zhihu.com/?target=http%3A//cs.stanford.edu/people/karpathy/" target="_blank" rel="noopener"><strong>Andrej Karpathy</strong></a> 授权翻译。本篇教程由<a href="https://www.zhihu.com/people/du-ke" target="_blank" rel="noopener">杜客</a>翻译完成，<a href="https://www.zhihu.com/people/hmonkey" target="_blank" rel="noopener">巩子嘉</a>和<a href="https://www.zhihu.com/people/kun-kun-97-81" target="_blank" rel="noopener">堃堃</a>进行校对修改.</p>
+<p>知乎地址： <a href="https://zhuanlan.zhihu.com/p/21462488?refer=intelligentunit" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/21462488?refer=intelligentunit</a></p>
+</blockquote>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2018/03/26/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记2/" title= CS231n课程笔记翻译：神经网络笔记2 >
+                    <div class="nextTitle">CS231n课程笔记翻译：神经网络笔记2</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/03/26/CS231n课程笔记翻译/CS231n课程笔记翻译：最优化笔记/" title= CS231n课程笔记翻译：最优化笔记 >
+                    <div class="prevTitle">CS231n课程笔记翻译：最优化笔记</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+<div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: "Mon Mar 26 2018 08:43:43 GMT+0800", // 可选。默认为 location.href
+        owner: 'heroinlin',
+        repo: 'heroinlin.github.io',
+        oauth: {
+            client_id: '33b4a51ea87942e922ca',
+            client_secret: '264679785d383afbc726145178abea84ff750743',
+        },
+    })
+    gitment.render('container')
+</script>
+
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:heroinlj@gmail.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="https://github.com/heroinlin" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/example_qr.png" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+        <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CS231n课程笔记翻译：神经网络笔记"><span class="toc-number">1.</span> <span class="toc-text">CS231n课程笔记翻译：神经网络笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原文如下"><span class="toc-number">1.1.</span> <span class="toc-text">原文如下</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#快速简介"><span class="toc-number">1.2.</span> <span class="toc-text">快速简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单个神经元建模"><span class="toc-number">1.3.</span> <span class="toc-text">单个神经元建模</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#生物动机与连接"><span class="toc-number">1.3.1.</span> <span class="toc-text">生物动机与连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#作为线性分类器的单个神经元"><span class="toc-number">1.3.2.</span> <span class="toc-text">作为线性分类器的单个神经元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用激活函数"><span class="toc-number">1.3.3.</span> <span class="toc-text">常用激活函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#神经网络结构"><span class="toc-number">1.4.</span> <span class="toc-text">神经网络结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#灵活地组织层"><span class="toc-number">1.4.1.</span> <span class="toc-text">灵活地组织层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#前向传播计算举例"><span class="toc-number">1.4.2.</span> <span class="toc-text">前向传播计算举例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#表达能力"><span class="toc-number">1.4.3.</span> <span class="toc-text">表达能力</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置层的数量和尺寸"><span class="toc-number">1.4.4.</span> <span class="toc-text">设置层的数量和尺寸</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#小结"><span class="toc-number">2.</span> <span class="toc-text">小结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考资料"><span class="toc-number">3.</span> <span class="toc-text">参考资料</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 16 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/CS231n课程笔记翻译/CS231n课程笔记翻译：线性分类笔记/" >CS231n课程笔记翻译：线性分类笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记3/" >CS231n课程笔记翻译：神经网络笔记3</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/Pytorch/pytorch常用Tensor运算/" >Tensor的数学运算</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/CS231n课程笔记翻译/CS231n课程笔记翻译：最优化笔记/" >CS231n课程笔记翻译：最优化笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记1/" >CS231n课程笔记翻译：神经网络笔记1</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记2/" >CS231n课程笔记翻译：神经网络笔记2</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/CS231n课程笔记翻译/CS231n课程笔记翻译：反向传播笔记/" >CS231n课程笔记翻译：反向传播笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/CS231n课程笔记翻译/CS231n课程笔记翻译：Python Numpy教程/" >CS231n课程笔记翻译：Python Numpy教程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/CS231n课程笔记翻译/CS231n课程笔记翻译：图像分类笔记/" >CS231n课程笔记翻译：图像分类笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/15</span><a class="archive-post-title" href= "/2018/03/15/Python/Python_pip和conda安装错误解决/" >python_pip和conda安装错误解决</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/13</span><a class="archive-post-title" href= "/2018/03/13/linux/CentOS7添加应用到菜单栏/" >CentOS7添加应用到菜单栏</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_String模块/" >Python之String模块</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_文件操作/" >python中对文件、文件夹操作</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/07</span><a class="archive-post-title" href= "/2018/03/07/C&C++/调试报错问题解决方法/" >C及C++编译时候出现的一些问题与解决方案</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/hello-world/" >Hello World</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：卷积神经网络笔记/" >CS231n课程笔记翻译：卷积神经网络笔记</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="C&C++"><span class="iconfont-archer">&#xe606;</span>C&C++</span>
+    
+        <span class="sidebar-tag-name" data-tags="Debug"><span class="iconfont-archer">&#xe606;</span>Debug</span>
+    
+        <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
+    
+        <span class="sidebar-tag-name" data-tags="String"><span class="iconfont-archer">&#xe606;</span>String</span>
+    
+        <span class="sidebar-tag-name" data-tags="pip"><span class="iconfont-archer">&#xe606;</span>pip</span>
+    
+        <span class="sidebar-tag-name" data-tags="conda"><span class="iconfont-archer">&#xe606;</span>conda</span>
+    
+        <span class="sidebar-tag-name" data-tags="ProxyError"><span class="iconfont-archer">&#xe606;</span>ProxyError</span>
+    
+        <span class="sidebar-tag-name" data-tags="os"><span class="iconfont-archer">&#xe606;</span>os</span>
+    
+        <span class="sidebar-tag-name" data-tags="shutil"><span class="iconfont-archer">&#xe606;</span>shutil</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件操作"><span class="iconfont-archer">&#xe606;</span>文件操作</span>
+    
+        <span class="sidebar-tag-name" data-tags="CS231n"><span class="iconfont-archer">&#xe606;</span>CS231n</span>
+    
+        <span class="sidebar-tag-name" data-tags="Numpy"><span class="iconfont-archer">&#xe606;</span>Numpy</span>
+    
+        <span class="sidebar-tag-name" data-tags="卷积神经网络"><span class="iconfont-archer">&#xe606;</span>卷积神经网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="Convolution"><span class="iconfont-archer">&#xe606;</span>Convolution</span>
+    
+        <span class="sidebar-tag-name" data-tags="反向传播"><span class="iconfont-archer">&#xe606;</span>反向传播</span>
+    
+        <span class="sidebar-tag-name" data-tags="图像分类"><span class="iconfont-archer">&#xe606;</span>图像分类</span>
+    
+        <span class="sidebar-tag-name" data-tags="神经网络"><span class="iconfont-archer">&#xe606;</span>神经网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="最优化"><span class="iconfont-archer">&#xe606;</span>最优化</span>
+    
+        <span class="sidebar-tag-name" data-tags="Optimization"><span class="iconfont-archer">&#xe606;</span>Optimization</span>
+    
+        <span class="sidebar-tag-name" data-tags="线性分类"><span class="iconfont-archer">&#xe606;</span>线性分类</span>
+    
+        <span class="sidebar-tag-name" data-tags="Pytorch"><span class="iconfont-archer">&#xe606;</span>Pytorch</span>
+    
+        <span class="sidebar-tag-name" data-tags="Tensor"><span class="iconfont-archer">&#xe606;</span>Tensor</span>
+    
+        <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
+    
+        <span class="sidebar-tag-name" data-tags="Pycharm"><span class="iconfont-archer">&#xe606;</span>Pycharm</span>
+    
+        <span class="sidebar-tag-name" data-tags="快捷方式"><span class="iconfont-archer">&#xe606;</span>快捷方式</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="C-C"><span class="iconfont-archer">&#xe60a;</span>C-C</span>
+    
+        <span class="sidebar-category-name" data-categories="Python"><span class="iconfont-archer">&#xe60a;</span>Python</span>
+    
+        <span class="sidebar-category-name" data-categories="CS231n课程笔记翻译"><span class="iconfont-archer">&#xe60a;</span>CS231n课程笔记翻译</span>
+    
+        <span class="sidebar-category-name" data-categories="Pytorch"><span class="iconfont-archer">&#xe60a;</span>Pytorch</span>
+    
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: 'Heroinlin'
+    }
+</script>
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+	
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			showProcessingMessages: false, //关闭js加载过程信息
+			messageStyle: "none", //不显示信息
+			extensions: ["tex2jax.js"],
+			jax: ["input/TeX", "output/HTML-CSS"],
+			tex2jax: {
+				inlineMath: [ ['$','$'], ["\\(","\\)"] ], //行内公式选择符
+				displayMath: [ ['$$','$$'], ["\\[","\\]"] ], //段内公式选择符
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre','code','a'], //避开某些标签
+				ignoreClass:"comment-content" //避开含该Class的标签
+			},
+			"HTML-CSS": {
+				availableFonts: ["STIX","TeX"], //可选字体
+				showMathMenu: false //关闭右击菜单显示
+			}
+		});
+		MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+		</script>
+		<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    </body>
+</html>
+
+

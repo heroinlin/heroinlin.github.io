@@ -251,10 +251,8 @@
 </head>
 
     
-        <body class="home-body">
     
-    
-<header class="header index-header">
+<header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
@@ -272,34 +270,21 @@
 
 
 
-height:50vh;
-
 >
     
     <!-- 主页  -->
-    
-    
-    <!-- 文章页  -->
             
-    <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/)"></div>
     <div class="site-intro-placeholder"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            heroinlin's Studio.
-            <!-- 文章页  -->
-            
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
-            
-            
-                I like for you to be still It is as though you are absent
-            
-            <!-- 文章页  -->
             
         </p>
         <!-- 文章页meta -->
@@ -314,81 +299,37 @@ height:50vh;
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/26/Pytorch/pytorch常用Tensor运算/" >
+            <a class="abstract-title" href = "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：卷积神经网络笔记/" >
                 
-                    <span>Tensor的数学运算</span>
+                    <span>CS231n课程笔记翻译：卷积神经网络笔记</span>
             </a>
             <div class="abstract-content">
-                #Tensor的数学运算
-总结的方法包括：
-Tensor求和以及按索引求和：torch.sum()         torch.Tensor.indexadd()
-Tensor元素乘积：torch.prod(input)
-对Tensor求均值、方差、极值：
-torch.mean()      torch.var()
-torch.max()         torch.min()
-最后还有在NLP领域经常用到的：
-求Tensor的平方根倒数、线性插值、双曲正切
-torch.rsqrt(input)     torch.lerp(star,end,weight)
-torch.tanh(inp...
+                CS231n课程笔记翻译：卷积神经网络笔记原文如下内容列表：
+
+结构概述
+用来构建卷积神经网络的各种层
+卷积层
+汇聚层
+归一化层
+全连接层
+将全连接层转化成卷积层
+
+
+卷积神经网络的结构
+层的排列规律
+层的尺寸设置规律
+案例学习（LeNet / AlexNet / ZFNet / GoogLeNet / VGGNet）
+计算上的考量
+
+
+拓展资源
+
+卷积神经网络（CNNs / ConvNets）卷积神经网络和上一章讲的常规神经网络非常相似：它们都是由神经元组成，神经元中有具有学习能力的权重和偏差。每个神经元都得到一些输入数据，进行内积运算后再进行激活函数运算。整个网络依旧是一个可导的评分...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/26</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = Pytorch>Pytorch</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = Tensor>Tensor</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/26/CS231n课程笔记翻译/CS231n课程笔记翻译：线性分类笔记/" >
-                
-                    <span>CS231n课程笔记翻译：线性分类笔记</span>
-            </a>
-            <div class="abstract-content">
-                CS231n课程笔记翻译：线性分类笔记原文如下内容列表：
-
-线性分类器简介
-
-线性评分函数
-
-阐明线性分类器
-
-损失函数
-
-多类SVM
-
-
-
-
-Softmax分类器
-SVM和Softmax的比较
-
-
-基于Web的可交互线性分类器原型
-
-小结
-
-
-线性分类上一篇笔记介绍了图像分类问题。图像分类的任务，就是从已有的固定分类标签集合中选择一个并分配给一张图像。我们还介绍了k-Nearest Neighbor （k-NN）分类器，该分类器的基本思想是通过将测试图像与训练集带标签的图像进行比较，来给测试图像打上分类标签。k-Nearest Neighbor分类器存在以下不足：
-
-分类器必须记住所有...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/26</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/02/11</span>
                 </div>
                 <!-- tags  -->
                 
@@ -396,7 +337,9 @@ SVM和Softmax的比较
     
         <a class="post-tag" href="javascript:void(0);" data-tags = CS231n>CS231n</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = 线性分类>线性分类</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = 卷积神经网络>卷积神经网络</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = Convolution>Convolution</a>
     
 </div>
                 
@@ -406,466 +349,31 @@ SVM和Softmax的比较
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/26/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记3/" >
+            <a class="abstract-title" href = "/2018/02/11/hello-world/" >
                 
-                    <span>CS231n课程笔记翻译：神经网络笔记3</span>
+                    <span>Hello World</span>
             </a>
             <div class="abstract-content">
-                CS231n课程笔记翻译：神经网络笔记3原文如下内容列表：
-
-梯度检查
-合理性（Sanity）检查
-检查学习过程
-损失函数
-训练集与验证集准确率
-权重：更新比例
-每层的激活数据与梯度分布
-可视化 
-
-
-参数更新
-一阶（随机梯度下降）方法，动量方法，Nesterov动量方法
-学习率退火
-二阶方法
-逐参数适应学习率方法（Adagrad，RMSProp）
-
-
-超参数调优
-评价
-模型集成
-
-
-总结
-拓展引用
-
-学习过程在前面章节中，我们讨论了神经网络的静态部分：如何创建网络的连接、数据和损失函数。本节将致力于讲解神经网络的动态部分，即神经网络学习参数和搜索最优超参数的过程。
-梯度检查理论上将进行...
+                Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
+Quick StartCreate a new post1$ hexo new "My New Post"
+More info: Writing
+Run server1$ hexo server
+More...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/26</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/02/11</span>
                 </div>
                 <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = CS231n>CS231n</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 神经网络>神经网络</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/26/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记2/" >
-                
-                    <span>CS231n课程笔记翻译：神经网络笔记2</span>
-            </a>
-            <div class="abstract-content">
-                CS231n课程笔记翻译：神经网络笔记 2原文如下内容列表：
-
-设置数据和模型
-数据预处理
-权重初始化
-批量归一化（Batch Normalization）
-正则化（L2/L1/Maxnorm/Dropout）
-
-
-损失函数
-小结
-
-设置数据和模型在上一节中介绍了神经元的模型，它在计算内积后进行非线性激活函数计算，神经网络将这些神经元组织成各个层。这些做法共同定义了评分函数（score function） 的新形式，该形式是从前面线性分类章节中的简单线性映射发展而来的。具体来说，神经网络就是进行了一系列的线性映射与非线性激活函数交织的运算。本节将讨论更多的算法设计选项，比如数据预处理，权...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/26</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = CS231n>CS231n</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 神经网络>神经网络</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/26/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记1/" >
-                
-                    <span>CS231n课程笔记翻译：神经网络笔记1</span>
-            </a>
-            <div class="abstract-content">
-                CS231n课程笔记翻译：神经网络笔记原文如下内容列表：
-
-不用大脑做类比的快速简介
-单个神经元建模
-生物动机和连接
-作为线性分类器的单个神经元
-常用的激活函数 
-
-
-神经网络结构
-层组织
-前向传播计算例子
-表达能力
-设置层的数量和尺寸
-
-
-小节
-参考文献
-
-快速简介在不诉诸大脑的类比的情况下，依然是可以对神经网络算法进行介绍的。在线性分类一节中，在给出图像的情况下，是使用$s=Wx$来计算不同视觉类别的评分，其中$W$是一个矩阵，$x$是一个输入列向量，它包含了图像的全部像素数据。在使用数据库CIFAR-10的案例中，$x$是一个[3072x1]的列向量，$W$是一个[10x3072]...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/26</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = CS231n>CS231n</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 神经网络>神经网络</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/26/CS231n课程笔记翻译/CS231n课程笔记翻译：最优化笔记/" >
-                
-                    <span>CS231n课程笔记翻译：最优化笔记</span>
-            </a>
-            <div class="abstract-content">
-                CS231n课程笔记翻译：最优化笔记原文如下内容列表：
-
-简介
-
-损失函数可视化
-
-最优化
-
-策略#1：随机搜索
-
-
-
-
-策略#2：随机局部搜索
-策略#3：跟随梯度 
-
-
-梯度计算
-
-使用有限差值进行数值计算
-
-
-
-
-微分计算梯度
-
-
-梯度下降
-
-小结
-
-
-简介在上一节中，我们介绍了图像分类任务中的两个关键部分：
-
-基于参数的评分函数。该函数将原始图像像素映射为分类评分值（例如：一个线性函数）。
-损失函数。该函数能够根据分类评分和训练集图像数据实际分类的一致性，衡量某个具体参数集的质量好坏。损失函数有多种版本和不同的实现方式（例如：Softmax或SVM）。
-
-上节中，线性函数的形式是$...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/26</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = CS231n>CS231n</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 最优化>最优化</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = Optimization>Optimization</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/26/CS231n课程笔记翻译/CS231n课程笔记翻译：图像分类笔记/" >
-                
-                    <span>CS231n课程笔记翻译：图像分类笔记</span>
-            </a>
-            <div class="abstract-content">
-                CS231n课程笔记翻译：图像分类笔记原文如下这是一篇介绍性教程，面向非计算机视觉领域的同学。教程将向同学们介绍图像分类问题和数据驱动方法。下面是内容列表：
-
-图像分类、数据驱动方法和流程
-
-Nearest Neighbor分类器
-
-k-Nearest Neighbor 
-
-
-验证集、交叉验证集和超参数调参
-
-Nearest Neighbor的优劣
-
-小结
-
-小结：应用kNN实践
-
-拓展阅读
-
-
-图像分类目标：这一节我们将介绍图像分类问题。所谓图像分类问题，就是已有固定的分类标签集合，然后对于输入的图像，从分类标签集合中找出一个分类标签，最后把分类标签分配给该输入图像。虽然看起来挺简单的...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/26</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = CS231n>CS231n</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 图像分类>图像分类</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/26/CS231n课程笔记翻译/CS231n课程笔记翻译：反向传播笔记/" >
-                
-                    <span>CS231n课程笔记翻译：反向传播笔记</span>
-            </a>
-            <div class="abstract-content">
-                CS231n课程笔记翻译：反向传播笔记原文如下：内容列表：
-
-简介
-简单表达式和理解梯度
-复合表达式，链式法则，反向传播
-直观理解反向传播
-模块：Sigmoid例子
-反向传播实践：分段计算
-回传流中的模式
-用户向量化操作的梯度
-小结
-
-简介目标：本节将帮助读者对反向传播形成直观而专业的理解。反向传播是利用链式法则递归计算表达式的梯度的方法。理解反向传播过程及其精妙之处，对于理解、实现、设计和调试神经网络非常关键。
-问题陈述：这节的核心问题是：给定函数$f(x)$，其中$x$是输入数据的向量，需要计算函数$f$关于$x$的梯度，也就是$\nabla f(x)$。
-目标：之所以关注上述问题，...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/26</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = CS231n>CS231n</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 反向传播>反向传播</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/26/CS231n课程笔记翻译/CS231n课程笔记翻译：Python Numpy教程/" >
-                
-                    <span>CS231n课程笔记翻译：Python Numpy教程</span>
-            </a>
-            <div class="abstract-content">
-                CS231n课程笔记翻译：Python Numpy教程原文如下这篇教程由Justin Johnson创作。
-我们将使用Python编程语言来完成本课程的所有作业。Python是一门伟大的通用编程语言，在一些常用库（numpy, scipy, matplotlib）的帮助下，它又会变成一个强大的科学计算环境。
-我们期望你们中大多数人对于Python语言和Numpy库比较熟悉，而对于没有Python经验的同学，这篇教程可以帮助你们快速了解Python编程环境和如何使用Python作为科学计算工具。
-一部分同学对于Matlab有一定经验。对于这部分同学，我们推荐阅读 numpy for Mat...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/26</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = CS231n>CS231n</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = Numpy>Numpy</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/15/Python/Python_pip和conda安装错误解决/" >
-                
-                    <span>python_pip和conda安装错误解决</span>
-            </a>
-            <div class="abstract-content">
-                python_pip和conda安装错误解决##pip install 报错ProxyError
-错误为Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。
-解决：电脑设置成了全局代理，在浏览器&gt;设置&gt;Internet选项&gt;局域网设置中代理服务器的选项取消打钩即可。
-conda install 环境变量报错错误为Solving environment: failed
-解决：输入conda  update conda后即可
-
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/15</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = Python>Python</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = pip>pip</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = conda>conda</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = ProxyError>ProxyError</a>
-    
-</div>
                 
             </div>
         </article>
     
     <!-- paginator  -->
     
-    <nav class="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">NEXT &#62;</a>
-    </nav>
-    
 </main>
             <!-- profile -->
-            
-            <div class="profile">
-    <img class="profile-avatar" src= /avatar/leaf.jpg >
-    <div class="profile-name">Heroinlin</div>
-    
-    <div class="profile-signature">
-        witness me
-    </div>
-    
-    
-    <div class="profile-social">
-        
-    
-        
-            
-                <a href="mailto:heroinlj@gmail.com" class="iconfont-archer email" title=email ></a>
-            
-        
-    
-        
-            
-                <a href="https://github.com/heroinlin" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
-    
-        
-            
-                <span class="iconfont-archer wechat" title=wechat>
-                  
-                  <img class="profile-qr" src="/assets/example_qr.png" />
-                </span>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-    </div>
-    
-    
-        <div class="friends">
-            <div>FRIENDS</div>
-            
-                
-                    <span>
-                        <a href= //www.baidu.com target="_black">friendA</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //www.google.com target="_black">friendB</a>
-                    </span>
-                
-            
-                
-            
-        </div>
-    
-    
-        <div class="about-me">
-            <a href = "/about" >ABOUT ME</a>
-        </div>
-    
-</div>
             
         </div>
         <footer class="footer footer-unloaded">

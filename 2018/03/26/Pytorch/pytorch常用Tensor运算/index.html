@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <title>Tensor的数学运算 · heroinlin&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+        box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.7);
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180311 as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180311 media="(max-width: 980px)"/>
+    <link rel="icon" href= /assets/leaf.ico>
+    <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    <script src="/scripts/main.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >heroinlin&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Tensor的数学运算</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>heroinlin's Studio.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            Tensor的数学运算
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = Pytorch>Pytorch</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = Tensor>Tensor</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2018/03/26</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>#<strong>Tensor的数学运算</strong></p>
+<p>总结的方法包括：</p>
+<p>Tensor求和以及按索引求和：<strong>torch.sum()         torch.Tensor.indexadd()</strong></p>
+<p>Tensor元素乘积<strong>：torch.prod(input)</strong></p>
+<p>对Tensor求均值、方差、极值：</p>
+<p><strong>torch.mean()      torch.var()</strong></p>
+<p><strong>torch.max()         torch.min()</strong></p>
+<p>最后还有在NLP领域经常用到的：</p>
+<p>求Tensor的平方根倒数、线性插值、双曲正切</p>
+<p><strong>torch.rsqrt(input)     torch.lerp(star,end,weight)</strong></p>
+<p><strong>torch.tanh(input, out=None)</strong></p>
+<h2 id="元素求和"><a href="#元素求和" class="headerlink" title="元素求和"></a><strong>元素求和</strong></h2><p><strong>torch.sum(input)</strong> → float</p>
+<p>返回输入向量input中所有元素的和。</p>
+<p><strong>参数：</strong></p>
+<ul>
+<li>input (Tensor) - 输入张量</li>
+</ul>
+<p><strong>例子：</strong></p>
+<blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_sum</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.sum(a)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p> 0.6491 -0.1617  0.7009<br>[torch.FloatTensor of size 1x3]</p>
+<p>1.1884211152791977</p>
+</blockquote>
+<p><strong>torch.sum(input, dim, keepdim=False, out=None)</strong> → Tensor</p>
+<p>返回新的张量，其中包括输入张量input中指定维度dim中每行的和。</p>
+<p>若keepdim值为True，则在输出张量中，除了被操作的dim维度值降为1，其它维度与输入张量input相同。否则，dim维度相当于被执行torch.squeeze()维度压缩操作，导致此维度消失，最终输出张量会比输入张量少一个维度。</p>
+<p><strong>参数：</strong></p>
+<ul>
+<li>input (Tensor) - 输入Tensor</li>
+<li>dim (int) - 指定维度</li>
+<li>keepdim (bool) - 输出张量是否保持与输入张量有相同数量的维度</li>
+<li>out (Tensor,optional) - 结果张量</li>
+</ul>
+<p><strong>例子：</strong></p>
+<blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_sum_2d</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">4</span>, <span class="number">3</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.sum(a, <span class="number">0</span>, <span class="keyword">True</span>)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>-0.8452 -0.2816  0.2672<br> 1.0685  2.4003 -0.6541<br>-0.1700 -0.4373 -0.2217<br>-1.2500  1.1798 -0.6842<br>[torch.FloatTensor of size 4x3]</p>
+<p>-1.1968  2.8613 -1.2928<br>[torch.FloatTensor of size 1x3]</p>
+</blockquote>
+<h2 id="元素乘积"><a href="#元素乘积" class="headerlink" title="元素乘积"></a><strong>元素乘积</strong></h2><p><strong>torch.prod(input)</strong> → float</p>
+<p>返回输入张量input所有元素的乘积。</p>
+<p><strong>参数：</strong></p>
+<ul>
+<li>input (Tensor) - 输入张量</li>
+</ul>
+<p><strong>例子：</strong></p>
+<blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_prod</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.prod(a)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>-0.3751  0.3082 -0.7879<br>[torch.FloatTensor of size 1x3]</p>
+<p>0.09109678113290456</p>
+</blockquote>
+<p><strong>torch.prod(input, dim, keepdim=False, out=None)</strong> → Tensor</p>
+<p>返回新的张量，其中包括输入张量input中指定维度dim中每行的乘积。</p>
+<p>若keepdim值为True，则在输出张量中，除了被操作的dim维度值降为1，其它维度与输入张量input相同。否则，dim维度相当于被执行torch.squeeze()维度压缩操作，导致此维度消失，最终输出张量会比输入张量少一个维度。</p>
+<p><strong>参数：</strong></p>
+<ul>
+<li>input (Tensor) - 输入Tensor</li>
+<li>dim (int) - 指定维度</li>
+<li>keepdim (bool) - 输出张量是否保持与输入张量有相同数量的维度</li>
+<li>out (Tensor,optional) - 结果张量</li>
+</ul>
+<p><strong>例子：</strong></p>
+<blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_prod_2d</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">4</span>, <span class="number">2</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.prod(a, <span class="number">1</span>, <span class="keyword">True</span>)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p> 0.2707  0.4322<br>-2.0925  0.3860<br>-1.1050  1.2551<br>-0.9644 -0.8771<br>[torch.FloatTensor of size 4x2]</p>
+<p> 0.1170<br>-0.8077<br>-1.3869<br> 0.8459<br>[torch.FloatTensor of size 4x1]</p>
+</blockquote>
+<h2 id="按索引求和"><a href="#按索引求和" class="headerlink" title="按索引求和"></a><strong>按索引求和</strong></h2><p><strong>torch.Tensor.indexadd(dim, index, tensor)</strong> → Tensor</p>
+<p>按索引参数index中所确定的顺序，将参数张量tensor中的元素与执行本方法的张量的元素逐个相加。参数tensor的尺寸必须严格地与执行方法的张量匹配，否则会发生错误。</p>
+<p><strong>参数：</strong></p>
+<ul>
+<li>dim (int) - 索引index所指向的维度</li>
+<li>index (LongTensor) - 包含索引数的张量</li>
+<li>tensor (Tensor) - 含有相加元素的张量</li>
+</ul>
+<p><strong>例子：</strong></p>
+<blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_index_add</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     x = torch.Tensor([[<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>], [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>], [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]])</span><br><span class="line">&gt;     print(x)</span><br><span class="line">&gt;     t = torch.Tensor([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>], [<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]])</span><br><span class="line">&gt;     index = torch.LongTensor([<span class="number">0</span>, <span class="number">2</span>, <span class="number">1</span>])</span><br><span class="line">&gt;     x.index_add_(<span class="number">0</span>, index, t)</span><br><span class="line">&gt;     print(x)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>Output:</p>
+<p>1  1  1<br> 1  1  1<br> 1  1  1<br>[torch.FloatTensor of size 3x3]</p>
+<p>  2   3   4<br>  8   9  10<br>  5   6   7<br>[torch.FloatTensor of size 3x3]</p>
+</blockquote>
+<h2 id="平均数"><a href="#平均数" class="headerlink" title="平均数"></a><strong>平均数</strong></h2><p><strong>torch.mean(input)</strong></p>
+<p>返回输入张量input中每个元素的平均值。</p>
+<p><strong>参数：</strong></p>
+<ul>
+<li>input (Tensor) – 输入张量</li>
+</ul>
+<p><strong>例子：</strong></p>
+<blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_mean</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.mean(a)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p> 0.9257 -0.1373  1.5762<br>[torch.FloatTensor of size 1x3]</p>
+<p>0.788198247551918</p>
+</blockquote>
+<p><strong>torch.mean(input, dim, keepdim=False, out=None)</strong></p>
+<p>返回新的张量，其中包含输入张量input指定维度dim中每行的平均值。</p>
+<p>若keepdim值为True，则在输出张量中，除了被操作的dim维度值降为1，其它维度与输入张量input相同。否则，dim维度相当于被执行torch.squeeze()维度压缩操作，导致此维度消失，最终输出张量会比输入张量少一个维度。</p>
+<p><strong>参数：</strong></p>
+<ul>
+<li>input (Tensor) - 输入张量</li>
+<li>dim (int) - 指定进行均值计算的维度</li>
+<li>keepdim (bool, optional) - 输出张量是否保持与输入张量有相同数量的维度</li>
+<li>out (Tensor) - 结果张量</li>
+</ul>
+<p><strong>例子：</strong></p>
+<blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_mean_2d</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">3</span>, <span class="number">5</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.mean(a, <span class="number">0</span>, <span class="keyword">True</span>)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p> 0.3839 -1.2157  0.0210  1.1199  0.0319<br>-1.3452 -1.0125 -1.2500  1.0597 -0.9030<br> 0.1642  0.9110  0.8520  0.0481 -0.5234<br>[torch.FloatTensor of size 3x5]</p>
+<p>-0.2657 -0.4391 -0.1257  0.7425 -0.4648<br>[torch.FloatTensor of size 1x5]</p>
+</blockquote>
+<h2 id="方差"><a href="#方差" class="headerlink" title="方差"></a><strong>方差</strong></h2><p><strong>torch.var(input, unbiased=True)</strong> → float</p>
+<p>返回输入向量input中所有元素的方差。</p>
+<p><strong>参数：</strong></p>
+<ul>
+<li>input (Tensor) - 输入张量</li>
+<li>unbiased (bool) - 是否使用基于修正贝塞尔函数的无偏估计</li>
+</ul>
+<p><strong>例子：</strong></p>
+<blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_var</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.var(a)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>-0.7808  0.1883  0.7654<br>[torch.FloatTensor of size 1x3]</p>
+<p>0.6105006681458913</p>
+</blockquote>
+<p><strong>torch.var(input, dim, keepdim=False, unbiased=True, out=None)</strong> → Tensor</p>
+<p>返回新的张量，其中包括输入张量input中指定维度dim中每行的方差。</p>
+<p>若keepdim值为True，则在输出张量中，除了被操作的dim维度值降为1，其它维度与输入张量input相同。否则，dim维度相当于被执行torch.squeeze()维度压缩操作，导致此维度消失，最终输出张量会比输入张量少一个维度。</p>
+<p><strong>参数：</strong></p>
+<ul>
+<li>input (Tensor) - 输入Tensor</li>
+<li>dim (int) - 指定维度</li>
+<li>keepdim (bool) - 输出张量是否保持与输入张量有相同数量的维度</li>
+<li>unbiased (bool) - 是否使用基于修正贝塞尔函数的无偏估计</li>
+<li>out (Tensor,optional) - 结果张量</li>
+</ul>
+<p><strong>例子：</strong></p>
+<blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_var_2d</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">3</span>, <span class="number">5</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.var(a, <span class="number">0</span>, <span class="keyword">True</span>)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>-0.2789 -1.6603  1.1928  0.9614  1.2953<br> 0.9082  0.4015  1.1001 -0.9432  0.9254<br>-1.0593 -0.2636 -0.9274  0.0006  1.3933<br>[torch.FloatTensor of size 3x5]</p>
+<p> 0.9815  1.1074  1.4358  0.9069  0.0609<br>[torch.FloatTensor of size 1x5]</p>
+</blockquote>
+<h2 id="最大值"><a href="#最大值" class="headerlink" title="最大值"></a><strong>最大值</strong></h2><p><strong>torch.max(input)</strong> → float</p>
+<p>返回输入张量所有元素的最大值。</p>
+<p><strong>参数：</strong></p>
+<ul>
+<li>input (Tensor) - 输入张量</li>
+</ul>
+<p><strong>例子：</strong></p>
+<blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_max</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.max(a)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p> 0.8944  0.8395 -0.8867<br>[torch.FloatTensor of size 1x3]</p>
+<p>0.8944145441055298</p>
+</blockquote>
+<p><strong>torch.max(input, dim, keepdim=False, out=None)</strong> -&gt; (Tensor, LongTensor)</p>
+<p>返回新的张量，其中包括输入张量input中指定维度dim中每行的最大值，同时返回每个最大值的位置索引。</p>
+<p>若keepdim值为True，则在输出张量中，除了被操作的dim维度值降为1，其它维度与输入张量input相同。否则，dim维度相当于被执行torch.squeeze()维度压缩操作，导致此维度消失，最终输出张量会比输入张量少一个维度。</p>
+<p><strong>参数：</strong></p>
+<ul>
+<li>input (Tensor) - 输入Tensor</li>
+<li>dim (int) - 指定维度</li>
+<li>keepdim (bool) - 输出张量是否保持与输入张量有相同数量的维度</li>
+<li>out (tuple,optional) - 结果张量</li>
+</ul>
+<p><strong>例子：</strong></p>
+<blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_max_2d</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">3</span>, <span class="number">5</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.max(a, <span class="number">0</span>, <span class="keyword">True</span>)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p> 0.5306 -0.8915  2.7820  0.1723 -0.5061<br> 2.0535  0.2018 -3.1085 -0.7618  0.5924<br> 0.9906 -0.3212  0.1849  1.7002  0.8102<br>[torch.FloatTensor of size 3x5]</p>
+<p>(<br> 2.0535  0.2018  2.7820  1.7002  0.8102<br>[torch.FloatTensor of size 1x5]<br>,<br> 1  1  0  2  2<br>[torch.LongTensor of size 1x5]<br>)</p>
+</blockquote>
+<p><strong>torch.max(input, other, out=None)</strong> → Tensor</p>
+<p>逐个元素比较张量input与张量other，将比较出的最大值保存到输出张量中。<br>两个张量尺寸不需要完全相同，但需要支持自动扩展法则。</p>
+<p><strong>参数：</strong></p>
+<ul>
+<li>input (Tensor) - 输入Tensor</li>
+<li>other (Tensor) - 另一个输入的Tensor</li>
+<li>out (Tensor,optional) - 结果张量</li>
+</ul>
+<p><strong>例子：</strong></p>
+<blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_max_2tensor</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">4</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.randn(<span class="number">1</span>)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;     print(torch.max(a, b))</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>0.5369<br>-1.5926<br>-1.3574<br>-1.6009<br>[torch.FloatTensor of size 4]</p>
+<p>-0.1394<br>[torch.FloatTensor of size 1]</p>
+<p> 0.5369<br>-0.1394<br>-0.1394<br>-0.1394<br>[torch.FloatTensor of size 4]</p>
+</blockquote>
+<h2 id="最小值"><a href="#最小值" class="headerlink" title="最小值"></a><strong>最小值</strong></h2><p><strong>torch.min(input)</strong> → float</p>
+<p>返回输入张量所有元素的最小值。</p>
+<p><strong>参数：</strong></p>
+<ul>
+<li>input (Tensor) - 输入张量</li>
+</ul>
+<p><strong>例子：</strong></p>
+<blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_min</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.min(a)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>-0.8926  0.2079 -0.6790<br>[torch.FloatTensor of size 1x3]</p>
+<p>-0.8925955295562744</p>
+</blockquote>
+<p><strong>torch.min(input, dim, keepdim=False, out=None)</strong> -&gt; (Tensor, LongTensor)</p>
+<p>返回新的张量，其中包括输入张量input中指定维度dim中每行的最小值，同时返回每个最小值的位置索引。</p>
+<p>若keepdim值为True，则在输出张量中，除了被操作的dim维度值降为1，其它维度与输入张量input相同。否则，dim维度相当于被执行torch.squeeze()维度压缩操作，导致此维度消失，最终输出张量会比输入张量少一个维度。</p>
+<p><strong>参数：</strong></p>
+<ul>
+<li>input (Tensor) - 输入Tensor</li>
+<li>dim (int) - 指定维度</li>
+<li>keepdim (bool) - 输出张量是否保持与输入张量有相同数量的维度</li>
+<li>out (tuple,optional) - 结果张量</li>
+</ul>
+<p><strong>例子：</strong></p>
+<blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_min_2d</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">3</span>, <span class="number">5</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.min(a, <span class="number">0</span>, <span class="keyword">True</span>)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>-0.8179  1.1834 -0.2989  0.6051 -0.1072<br>-1.1543  0.0666 -0.7919  0.2359  1.1995<br>-0.8094  0.5873  0.5116 -0.6181  0.9788<br>[torch.FloatTensor of size 3x5]</p>
+<p>(<br>-1.1543  0.0666 -0.7919 -0.6181 -0.1072<br>[torch.FloatTensor of size 1x5]<br>,<br> 1  1  1  2  0<br>[torch.LongTensor of size 1x5]<br>)</p>
+</blockquote>
+<p><strong>torch.min(input, other, out=None)</strong> → Tensor</p>
+<p>逐个元素比较张量input与张量other，将比较出的最小值保存到输出张量中。<br>两个张量尺寸不需要完全相同，但需要支持自动扩展法则。</p>
+<p><strong>参数：</strong></p>
+<ul>
+<li>input (Tensor) - 输入Tensor</li>
+<li>other (Tensor) - 另一个输入的Tensor</li>
+<li>out (Tensor,optional) - 结果张量</li>
+</ul>
+<p><strong>例子：</strong></p>
+<blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_min_2tensor</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">1</span>,<span class="number">4</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.randn(<span class="number">1</span>)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;     print(torch.min(a, b))</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p> 0.3494  0.2155 -0.0723  0.8322<br>[torch.FloatTensor of size 1x4]</p>
+<p> 0.2635<br>[torch.FloatTensor of size 1]</p>
+<p> 0.2635  0.2155 -0.0723  0.2635<br>[torch.FloatTensor of size 1x4]</p>
+</blockquote>
+<h2 id="平方根倒数"><a href="#平方根倒数" class="headerlink" title="平方根倒数"></a><strong>平方根倒数</strong></h2><p><strong>torch.rsqrt(input)</strong> → Tensor</p>
+<p>返回新的张量，其中包含input张量每个元素平方根的倒数。</p>
+<p><strong>参数：</strong></p>
+<ul>
+<li>input (Tensor) – 输入张量</li>
+<li>out (Tensor, optional) – 输出张量</li>
+</ul>
+<p><strong>例子：</strong></p>
+<blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_rsqrt</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">1</span>, <span class="number">4</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.rsqrt(a)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p> 0.1615  0.3116 -0.3093 -1.5020<br>[torch.FloatTensor of size 1x4]</p>
+<p> 2.4884  1.7915     nan     nan<br>[torch.FloatTensor of size 1x4]</p>
+</blockquote>
+<h2 id="线性插值"><a href="#线性插值" class="headerlink" title="线性插值"></a><strong>线性插值</strong></h2><p><strong>torch.lerp(start,end,weight)</strong> → Tensor</p>
+<p>基于weight对输入的两个张量start与end逐个元素计算线性插值，结果返回至输出张量。</p>
+<p>返回结果是： $outs_i=start_i+weight*(end_i-start_i)$</p>
+<p><strong>参数：</strong></p>
+<ul>
+<li>start (Tensor) – 起始点张量</li>
+<li>end (Tensor) – 终止点张量</li>
+<li>weight (float) – 插入公式的 weight</li>
+<li>out (Tensor, optional) – 结果张量</li>
+</ul>
+<p><strong>例子：</strong></p>
+<blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_lerp</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     start = torch.arange(<span class="number">1</span>, <span class="number">5</span>)</span><br><span class="line">&gt;     print(start)</span><br><span class="line">&gt;     end = torch.Tensor(<span class="number">4</span>).fill_(<span class="number">10</span>)</span><br><span class="line">&gt;     print(end)</span><br><span class="line">&gt;     outs = torch.lerp(start, end, <span class="number">0.4</span>)</span><br><span class="line">&gt;     print(outs)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p> 1<br> 2<br> 3<br> 4<br>[torch.FloatTensor of size 4]</p>
+<p> 10<br> 10<br> 10<br> 10<br>[torch.FloatTensor of size 4]</p>
+<p> 4.6000<br> 5.2000<br> 5.8000<br> 6.4000<br>[torch.FloatTensor of size 4]</p>
+</blockquote>
+<h2 id="双曲正切"><a href="#双曲正切" class="headerlink" title="双曲正切"></a><strong>双曲正切</strong></h2><p><strong>torch.tanh(input, out=None)</strong> → Tensor</p>
+<p>返回新的张量，其中包括输入张量input中每个元素的双曲正切。</p>
+<p><strong>参数：</strong></p>
+<ul>
+<li>input (Tensor) - 输入张量</li>
+<li>out (Tensor,optional) - 结果张量</li>
+</ul>
+<p><strong>例子：</strong></p>
+<blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_tanh</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">1</span>, <span class="number">5</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     outs = torch.tanh(a)</span><br><span class="line">&gt;     print(outs)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>-0.4298  0.0992  0.1322  1.4975  0.8817<br>[torch.FloatTensor of size 1x5]</p>
+<p>-0.4051  0.0989  0.1314  0.9047  0.7073<br>[torch.FloatTensor of size 1x5]</p>
+</blockquote>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/03/26/CS231n课程笔记翻译/CS231n课程笔记翻译：线性分类笔记/" title= CS231n课程笔记翻译：线性分类笔记 >
+                    <div class="prevTitle">CS231n课程笔记翻译：线性分类笔记</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+<div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: "Mon Mar 26 2018 08:43:43 GMT+0800", // 可选。默认为 location.href
+        owner: 'heroinlin',
+        repo: 'heroinlin.github.io',
+        oauth: {
+            client_id: '33b4a51ea87942e922ca',
+            client_secret: '264679785d383afbc726145178abea84ff750743',
+        },
+    })
+    gitment.render('container')
+</script>
+
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:heroinlj@gmail.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="https://github.com/heroinlin" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/example_qr.png" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+        <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#元素求和"><span class="toc-number">1.</span> <span class="toc-text">元素求和</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#元素乘积"><span class="toc-number">2.</span> <span class="toc-text">元素乘积</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#按索引求和"><span class="toc-number">3.</span> <span class="toc-text">按索引求和</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#平均数"><span class="toc-number">4.</span> <span class="toc-text">平均数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方差"><span class="toc-number">5.</span> <span class="toc-text">方差</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最大值"><span class="toc-number">6.</span> <span class="toc-text">最大值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最小值"><span class="toc-number">7.</span> <span class="toc-text">最小值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#平方根倒数"><span class="toc-number">8.</span> <span class="toc-text">平方根倒数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线性插值"><span class="toc-number">9.</span> <span class="toc-text">线性插值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#双曲正切"><span class="toc-number">10.</span> <span class="toc-text">双曲正切</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 16 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/CS231n课程笔记翻译/CS231n课程笔记翻译：线性分类笔记/" >CS231n课程笔记翻译：线性分类笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记3/" >CS231n课程笔记翻译：神经网络笔记3</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/Pytorch/pytorch常用Tensor运算/" >Tensor的数学运算</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/CS231n课程笔记翻译/CS231n课程笔记翻译：最优化笔记/" >CS231n课程笔记翻译：最优化笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记1/" >CS231n课程笔记翻译：神经网络笔记1</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记2/" >CS231n课程笔记翻译：神经网络笔记2</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/CS231n课程笔记翻译/CS231n课程笔记翻译：反向传播笔记/" >CS231n课程笔记翻译：反向传播笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/CS231n课程笔记翻译/CS231n课程笔记翻译：Python Numpy教程/" >CS231n课程笔记翻译：Python Numpy教程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/CS231n课程笔记翻译/CS231n课程笔记翻译：图像分类笔记/" >CS231n课程笔记翻译：图像分类笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/15</span><a class="archive-post-title" href= "/2018/03/15/Python/Python_pip和conda安装错误解决/" >python_pip和conda安装错误解决</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/13</span><a class="archive-post-title" href= "/2018/03/13/linux/CentOS7添加应用到菜单栏/" >CentOS7添加应用到菜单栏</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_String模块/" >Python之String模块</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_文件操作/" >python中对文件、文件夹操作</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/07</span><a class="archive-post-title" href= "/2018/03/07/C&C++/调试报错问题解决方法/" >C及C++编译时候出现的一些问题与解决方案</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/hello-world/" >Hello World</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：卷积神经网络笔记/" >CS231n课程笔记翻译：卷积神经网络笔记</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="C&C++"><span class="iconfont-archer">&#xe606;</span>C&C++</span>
+    
+        <span class="sidebar-tag-name" data-tags="Debug"><span class="iconfont-archer">&#xe606;</span>Debug</span>
+    
+        <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
+    
+        <span class="sidebar-tag-name" data-tags="String"><span class="iconfont-archer">&#xe606;</span>String</span>
+    
+        <span class="sidebar-tag-name" data-tags="pip"><span class="iconfont-archer">&#xe606;</span>pip</span>
+    
+        <span class="sidebar-tag-name" data-tags="conda"><span class="iconfont-archer">&#xe606;</span>conda</span>
+    
+        <span class="sidebar-tag-name" data-tags="ProxyError"><span class="iconfont-archer">&#xe606;</span>ProxyError</span>
+    
+        <span class="sidebar-tag-name" data-tags="os"><span class="iconfont-archer">&#xe606;</span>os</span>
+    
+        <span class="sidebar-tag-name" data-tags="shutil"><span class="iconfont-archer">&#xe606;</span>shutil</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件操作"><span class="iconfont-archer">&#xe606;</span>文件操作</span>
+    
+        <span class="sidebar-tag-name" data-tags="CS231n"><span class="iconfont-archer">&#xe606;</span>CS231n</span>
+    
+        <span class="sidebar-tag-name" data-tags="Numpy"><span class="iconfont-archer">&#xe606;</span>Numpy</span>
+    
+        <span class="sidebar-tag-name" data-tags="卷积神经网络"><span class="iconfont-archer">&#xe606;</span>卷积神经网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="Convolution"><span class="iconfont-archer">&#xe606;</span>Convolution</span>
+    
+        <span class="sidebar-tag-name" data-tags="反向传播"><span class="iconfont-archer">&#xe606;</span>反向传播</span>
+    
+        <span class="sidebar-tag-name" data-tags="图像分类"><span class="iconfont-archer">&#xe606;</span>图像分类</span>
+    
+        <span class="sidebar-tag-name" data-tags="神经网络"><span class="iconfont-archer">&#xe606;</span>神经网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="最优化"><span class="iconfont-archer">&#xe606;</span>最优化</span>
+    
+        <span class="sidebar-tag-name" data-tags="Optimization"><span class="iconfont-archer">&#xe606;</span>Optimization</span>
+    
+        <span class="sidebar-tag-name" data-tags="线性分类"><span class="iconfont-archer">&#xe606;</span>线性分类</span>
+    
+        <span class="sidebar-tag-name" data-tags="Pytorch"><span class="iconfont-archer">&#xe606;</span>Pytorch</span>
+    
+        <span class="sidebar-tag-name" data-tags="Tensor"><span class="iconfont-archer">&#xe606;</span>Tensor</span>
+    
+        <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
+    
+        <span class="sidebar-tag-name" data-tags="Pycharm"><span class="iconfont-archer">&#xe606;</span>Pycharm</span>
+    
+        <span class="sidebar-tag-name" data-tags="快捷方式"><span class="iconfont-archer">&#xe606;</span>快捷方式</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="C-C"><span class="iconfont-archer">&#xe60a;</span>C-C</span>
+    
+        <span class="sidebar-category-name" data-categories="Python"><span class="iconfont-archer">&#xe60a;</span>Python</span>
+    
+        <span class="sidebar-category-name" data-categories="CS231n课程笔记翻译"><span class="iconfont-archer">&#xe60a;</span>CS231n课程笔记翻译</span>
+    
+        <span class="sidebar-category-name" data-categories="Pytorch"><span class="iconfont-archer">&#xe60a;</span>Pytorch</span>
+    
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: 'Heroinlin'
+    }
+</script>
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+	
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			showProcessingMessages: false, //关闭js加载过程信息
+			messageStyle: "none", //不显示信息
+			extensions: ["tex2jax.js"],
+			jax: ["input/TeX", "output/HTML-CSS"],
+			tex2jax: {
+				inlineMath: [ ['$','$'], ["\\(","\\)"] ], //行内公式选择符
+				displayMath: [ ['$$','$$'], ["\\[","\\]"] ], //段内公式选择符
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre','code','a'], //避开某些标签
+				ignoreClass:"comment-content" //避开含该Class的标签
+			},
+			"HTML-CSS": {
+				availableFonts: ["STIX","TeX"], //可选字体
+				showMathMenu: false //关闭右击菜单显示
+			}
+		});
+		MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+		</script>
+		<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    </body>
+</html>
+
+
