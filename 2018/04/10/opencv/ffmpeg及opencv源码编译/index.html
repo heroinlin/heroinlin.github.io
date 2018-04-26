@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <title>FFmpeg与OpenCV的源码编译 · heroinlin&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+        box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.7);
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180311 as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180311 media="(max-width: 980px)"/>
+    <link rel="icon" href= /assets/leaf.ico>
+    <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    <script src="/scripts/main.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >heroinlin&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">FFmpeg与OpenCV的源码编译</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>heroinlin's Studio.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            FFmpeg与OpenCV的源码编译
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = OpenCV>OpenCV</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = FFmpeg>FFmpeg</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2018/04/10</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="FFmpeg与OpenCV的源码编译"><a href="#FFmpeg与OpenCV的源码编译" class="headerlink" title="FFmpeg与OpenCV的源码编译"></a>FFmpeg与OpenCV的源码编译</h1><p>本示例在centos7下编译ffmpeg2.8.0及opencv3.2.0+opencv_contrib</p>
+<h2 id="FFmpeg的源码编译"><a href="#FFmpeg的源码编译" class="headerlink" title="FFmpeg的源码编译"></a>FFmpeg的源码编译</h2><h3 id="安装依赖包"><a href="#安装依赖包" class="headerlink" title="安装依赖包"></a>安装依赖包</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install autoconf automake bzip2 cmake freetype-devel gcc gcc-c++ git libtool make mercurial pkgconfig zlib-devel</span><br></pre></td></tr></table></figure>
+<h3 id="安装可选扩展库"><a href="#安装可选扩展库" class="headerlink" title="安装可选扩展库"></a>安装可选扩展库</h3><p>将可选扩展库下载于如下文件夹</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/ffmpeg_sources</span><br></pre></td></tr></table></figure>
+<p>####NASM</p>
+<p>An assembler used by some libraries. Highly recommended or your resulting build may be very slow.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cd ~/ffmpeg_sources</span><br><span class="line">curl -O -L http://www.nasm.us/pub/nasm/releasebuilds/2.13.02/nasm-2.13.02.tar.bz2</span><br><span class="line">tar xjvf nasm-2.13.02.tar.bz2</span><br><span class="line">cd nasm-2.13.02</span><br><span class="line">./autogen.sh</span><br><span class="line">./configure --prefix="$HOME/ffmpeg_build" --bindir="$HOME/bin"</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<p>####Yasm</p>
+<p>An assembler used by some libraries. Highly recommended or your resulting build may be very slow.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd ~/ffmpeg_sources</span><br><span class="line">curl -O -L http://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz</span><br><span class="line">tar xzvf yasm-1.3.0.tar.gz</span><br><span class="line">cd yasm-1.3.0</span><br><span class="line">./configure --prefix="$HOME/ffmpeg_build" --bindir="$HOME/bin"</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<h4 id="libx264"><a href="#libx264" class="headerlink" title="libx264"></a>libx264</h4><p>H.264 video encoder. See the <a href="https://trac.ffmpeg.org/wiki/Encode/H.264" target="_blank" rel="noopener">H.264 Encoding Guide</a> for more information and usage examples.</p>
+<p>Requires <code>ffmpeg</code> to be configured with <code>--enable-gpl</code> <code>--enable-libx264</code>.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd ~/ffmpeg_sources</span><br><span class="line">git clone --depth 1 http://git.videolan.org/git/x264</span><br><span class="line">cd x264</span><br><span class="line">PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./configure --prefix="$HOME/ffmpeg_build" --bindir="$HOME/bin" --enable-static</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<p><strong>Warning:</strong> If you get <code>Found no assembler. Minimum version is nasm-2.13</code> or similar after running <code>./configure</code> then the outdated nasm package from the repo is installed. Run <code>yum remove nasm &amp;&amp; hash -r</code> and x264 will then use your newly compiled nasm instead. Ensure environment is able to resolve path to nasm binary.</p>
+<h4 id="libx265"><a href="#libx265" class="headerlink" title="libx265"></a>libx265</h4><p>H.265/HEVC video encoder. See the <a href="https://trac.ffmpeg.org/wiki/Encode/H.265" target="_blank" rel="noopener">H.265 Encoding Guide</a> for more information and usage examples.</p>
+<p>Requires <code>ffmpeg</code> to be configured with <code>--enable-gpl</code> <code>--enable-libx265</code>.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd ~/ffmpeg_sources</span><br><span class="line">hg clone https://bitbucket.org/multicoreware/x265</span><br><span class="line">cd ~/ffmpeg_sources/x265/build/linux</span><br><span class="line">cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$HOME/ffmpeg_build" -DENABLE_SHARED:bool=off ../../source</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<h4 id="libfdk-aac"><a href="#libfdk-aac" class="headerlink" title="libfdk_aac"></a>libfdk_aac</h4><p>AAC audio encoder. See the <a href="https://trac.ffmpeg.org/wiki/Encode/AAC" target="_blank" rel="noopener">AAC Audio Encoding Guide</a> for more information and usage examples.</p>
+<p>Requires <code>ffmpeg</code> to be configured with <code>--enable-libfdk_aac</code> (and <code>--enable-nonfree</code> if you also included <code>--enable-gpl</code>).</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd ~/ffmpeg_sources</span><br><span class="line">git clone --depth 1 https://github.com/mstorsjo/fdk-aac</span><br><span class="line">cd fdk-aac</span><br><span class="line">autoreconf -fiv</span><br><span class="line">./configure --prefix="$HOME/ffmpeg_build" --disable-shared</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<h4 id="libmp3lame"><a href="#libmp3lame" class="headerlink" title="libmp3lame"></a>libmp3lame</h4><p>MP3 audio encoder.</p>
+<p>Requires <code>ffmpeg</code> to be configured with <code>--enable-libmp3lame</code>.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd ~/ffmpeg_sources</span><br><span class="line">curl -O -L http://downloads.sourceforge.net/project/lame/lame/3.100/lame-3.100.tar.gz</span><br><span class="line">tar xzvf lame-3.100.tar.gz</span><br><span class="line">cd lame-3.100</span><br><span class="line">./configure --prefix="$HOME/ffmpeg_build" --bindir="$HOME/bin" --disable-shared --enable-nasm</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<h4 id="libopus"><a href="#libopus" class="headerlink" title="libopus"></a>libopus</h4><p>Opus audio decoder and encoder.</p>
+<p>Requires <code>ffmpeg</code> to be configured with <code>--enable-libopus</code>.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd ~/ffmpeg_sources</span><br><span class="line">curl -O -L https://archive.mozilla.org/pub/opus/opus-1.2.1.tar.gz</span><br><span class="line">tar xzvf opus-1.2.1.tar.gz</span><br><span class="line">cd opus-1.2.1</span><br><span class="line">./configure --prefix="$HOME/ffmpeg_build" --disable-shared</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<h4 id="libogg"><a href="#libogg" class="headerlink" title="libogg"></a>libogg</h4><p>Ogg bitstream library. Required by <a href="https://trac.ffmpeg.org/wiki/CompilationGuide/Centos#libtheora" target="_blank" rel="noopener">libtheora</a> and <a href="https://trac.ffmpeg.org/wiki/CompilationGuide/Centos#libvorbis" target="_blank" rel="noopener">libvorbis</a>.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd ~/ffmpeg_sources</span><br><span class="line">curl -O -L http://downloads.xiph.org/releases/ogg/libogg-1.3.3.tar.gz</span><br><span class="line">tar xzvf libogg-1.3.3.tar.gz</span><br><span class="line">cd libogg-1.3.3</span><br><span class="line">./configure --prefix="$HOME/ffmpeg_build" --disable-shared</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<h4 id="libvorbis"><a href="#libvorbis" class="headerlink" title="libvorbis"></a>libvorbis</h4><p>Vorbis audio encoder. Requires <a href="https://trac.ffmpeg.org/wiki/CompilationGuide/Centos#libogg" target="_blank" rel="noopener">libogg</a>.</p>
+<p>Requires <code>ffmpeg</code> to be configured with <code>--enable-libvorbis</code>.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd ~/ffmpeg_sources</span><br><span class="line">curl -O -L http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.5.tar.gz</span><br><span class="line">tar xzvf libvorbis-1.3.5.tar.gz</span><br><span class="line">cd libvorbis-1.3.5</span><br><span class="line">./configure --prefix="$HOME/ffmpeg_build" --with-ogg="$HOME/ffmpeg_build" --disable-shared</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<h4 id="libvpx"><a href="#libvpx" class="headerlink" title="libvpx"></a>libvpx</h4><p>VP8/VP9 video encoder and decoder. See the <a href="https://trac.ffmpeg.org/wiki/Encode/VP9" target="_blank" rel="noopener">VP9 Video Encoding Guide</a> for more information and usage examples.</p>
+<p>Requires <code>ffmpeg</code> to be configured with <code>--enable-libvpx</code>.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd ~/ffmpeg_sources</span><br><span class="line">git clone --depth 1 https://chromium.googlesource.com/webm/libvpx.git</span><br><span class="line">cd libvpx</span><br><span class="line">./configure --prefix="$HOME/ffmpeg_build" --disable-examples --disable-unit-tests --enable-vp9-highbitdepth --as=yasm</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<h3 id="FFmpeg"><a href="#FFmpeg" class="headerlink" title="FFmpeg"></a>FFmpeg</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">cd ~/ffmpeg_sources</span><br><span class="line">curl -O -L https://ffmpeg.org/releases/ffmpeg-snapshot.tar.bz2</span><br><span class="line">tar xjvf ffmpeg-snapshot.tar.bz2</span><br><span class="line">cd ffmpeg</span><br><span class="line">PATH="$HOME/bin:$PATH" PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" </span><br><span class="line">./configure \</span><br><span class="line">  --prefix="$HOME/ffmpeg_build" \</span><br><span class="line">  --pkg-config-flags="--static" \</span><br><span class="line">  --extra-cflags="-I$HOME/ffmpeg_build/include" \</span><br><span class="line">  --extra-ldflags="-L$HOME/ffmpeg_build/lib" \</span><br><span class="line">  --extra-libs=-lpthread \</span><br><span class="line">  --extra-libs=-lm \</span><br><span class="line">  --bindir="$HOME/bin" \</span><br><span class="line">  --enable-shared \</span><br><span class="line">  --enable-gpl \</span><br><span class="line">  --enable-libfdk_aac \</span><br><span class="line">  --enable-libfreetype \</span><br><span class="line">  --enable-libmp3lame \</span><br><span class="line">  --enable-libopus \</span><br><span class="line">  --enable-libvorbis \</span><br><span class="line">  --enable-libvpx \</span><br><span class="line">  --enable-libx264 \</span><br><span class="line">  --enable-libx265 \</span><br><span class="line">  --enable-nonfree</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line">hash -r</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可直接跳过扩展库的安装，去除–enable 后的可选包，直接用–enable-shared及以上的命令即可</p>
+</blockquote>
+<h2 id="opencv的源码编译"><a href="#opencv的源码编译" class="headerlink" title="opencv的源码编译"></a>opencv的源码编译</h2><h3 id="安装依赖包-1"><a href="#安装依赖包-1" class="headerlink" title="安装依赖包"></a>安装依赖包</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install gtk2-devel</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>gtk2-devel不安装，之后会报错无法显示窗口 (对imshow函数的支持)</p>
+</blockquote>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p> 将ffmpeg的包放入环境变量</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gedit ~/.bashrc</span><br><span class="line">export FFMPEG_PATH=&lt;path-to-ffmpeg_build&gt;</span><br><span class="line">export C_INCLUDE_PATH=$FFMPEG_PATH/include:$C_INCLUDE_PATH</span><br><span class="line">export PKG_CONFIG_PATH=$FFMPEG_PATH/lib/pkgconfig:$PKG_CONFIG_PATH</span><br><span class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$FFMPEG_PATH/lib</span><br></pre></td></tr></table></figure>
+<p>更新环境变量source ~/.bashrc</p>
+<blockquote>
+<p>如未进行上述环境变量的修改，可按以下步骤代替(推荐直接修改环境变量)    </p>
+<p>OpenCV的CMakeLists.txt中关于检测是否有安装ffmpeg时，默认是到/usr 下去检测相应的头文件是否存在的，所以OpenCV使用ffmpeg时需要将相应的库和头文件放到/usr下（由于需要root权限， $HOME需要根据情况修改）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">  cp -a <span class="variable">$HOME</span>/ffmpeg_build/lib/*  /usr/lib/*</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">  cp -a <span class="variable">$HOME</span>/ffmpeg_build/include/*  /usr/include/*</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+</blockquote>
+<h3 id="添加contrib模块的编译"><a href="#添加contrib模块的编译" class="headerlink" title="添加contrib模块的编译"></a>添加contrib模块的编译</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir release</span><br><span class="line">cd release</span><br><span class="line">cmake  -D OPENCV_EXTRA_MODULES_PATH=&lt;&gt;/opencv_contrib-3.2.0/modules/ -DBUILD_SHARED_LIBS=NO ..</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<h3 id="读取视频测试"><a href="#读取视频测试" class="headerlink" title="读取视频测试"></a>读取视频测试</h3><ul>
+<li>DisplayVideo.cpp</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ( argc != <span class="number">2</span> )&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"usage: DisplayImage.out &lt;Video_Path&gt;\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">VideoCapture <span class="title">capture</span><span class="params">(argv[<span class="number">1</span>])</span></span>;<span class="comment">//打开视频文件 </span></span><br><span class="line">    Mat frame;</span><br><span class="line">    <span class="keyword">if</span> (!capture.isOpened())&#123;</span><br><span class="line">    	<span class="built_in">printf</span>(<span class="string">"open capture fail!\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">	namedWindow(<span class="string">"Display Video"</span>, <span class="number">0</span> );</span><br><span class="line">	<span class="keyword">int</span> auto_play_flag = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> decay_time;</span><br><span class="line">	auto_play_flag? decay_time=<span class="number">1</span>: decay_time=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (<span class="number">1</span>)&#123;</span><br><span class="line">    	capture &gt;&gt; frame;<span class="comment">//读取当前帧到frame矩阵中 </span></span><br><span class="line">        <span class="keyword">if</span> (frame.empty())&#123;</span><br><span class="line">        	capture.<span class="built_in">set</span>(CV_CAP_PROP_POS_FRAMES, <span class="number">0</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;    </span><br><span class="line">    	imshow(<span class="string">"Display Video"</span>, frame);</span><br><span class="line">    	<span class="keyword">int</span> key = waitKey(decay_time);</span><br><span class="line">        <span class="keyword">if</span> (key == <span class="number">27</span>)&#123;</span><br><span class="line">             <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (key == <span class="number">32</span>)&#123;</span><br><span class="line">            auto_play_flag = !auto_play_flag;</span><br><span class="line">            auto_play_flag ? decay_time = <span class="number">1</span> : decay_time = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>CMakeLists.txt</li>
+</ul>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">2.8</span>)</span><br><span class="line"><span class="keyword">project</span>( DisplayVideo )</span><br><span class="line"><span class="keyword">find_package</span>( OpenCV REQUIRED )</span><br><span class="line"><span class="keyword">add_executable</span>( DisplayVideo DisplayVideo.cpp )</span><br><span class="line"><span class="keyword">target_link_libraries</span>( DisplayVideo <span class="variable">$&#123;OpenCV_LIBS&#125;</span> )</span><br></pre></td></tr></table></figure>
+<ul>
+<li>编译及测试</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir build</span><br><span class="line">cd build</span><br><span class="line">cmake ..</span><br><span class="line">make</span><br><span class="line">./DisplayVideo test.avi</span><br></pre></td></tr></table></figure>
+<p>###opencv的卸载</p>
+<p>1）进入opencv的源代码文件夹下的release（这是你在安装opencv时候自己命名的，cmake时候所在的目录）</p>
+<p>2）依次执行下面的代码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">make uninstall</span><br><span class="line">cd ..</span><br><span class="line">rm -rf release</span><br><span class="line">sudo rm -rf /usr/local/include/opencv2 /usr/local/include/opencv /usr/include/opencv /usr/include/opencv2 /usr/local/share/opencv /usr/local/share/OpenCV /usr/share/opencv /usr/share/OpenCV /usr/local/bin/opencv* /usr/local/lib/libopencv*</span><br></pre></td></tr></table></figure>
+<h3 id="cmake时额外文件放置位置"><a href="#cmake时额外文件放置位置" class="headerlink" title="cmake时额外文件放置位置"></a>cmake时额外文件放置位置</h3><blockquote>
+<p>ippicv_linux_20151201.tgz放在</p>
+<p>opencv/3rdparty/ippicv/downloads/linux-808b791a6eac9ed78d32a7666804320e</p>
+<p>protobuf-cpp-3.1.0.tar.gz放在opencv_contrib/modules/dnn/.download/bd5e3eed635a8d32e2b99658633815ef/v3.1.0</p>
+<p>vgg_generated_48.i放在opencv_contrib/modules/xfeatures2d/cmake/.download/e8d0dcd54d1bcfdc29203d011a797179<br>vgg_generated_64.i放在opencv_contrib/modules/xfeatures2d/cmake/.download/7126a5d9a8884ebca5aea5d63d677225<br>vgg_generated_80.i放在opencv_contrib/modules/xfeatures2d/cmake/.download/7cd47228edec52b6d82f46511af325c5<br>vgg_generated_120.i放在opencv_contrib/modules/xfeatures2d/cmake/.download/151805e03568c9f490a5e3a872777b75</p>
+<p>boostdesc_binboost_064.i放在opencv_contrib/modules/xfeatures2d/cmake/.download/202e1b3e9fec871b04da31f7f016679f<br>boostdesc_binboost_128.i放在opencv_contrib/modules/xfeatures2d/cmake/.download/98ea99d399965c03d555cef3ea502a0b<br>boostdesc_binboost_256.i放在opencv_contrib/modules/xfeatures2d/cmake/.download/e6dcfa9f647779eb1ce446a8d759b6ea<br>boostdesc_bgm.i放在opencv_contrib/modules/xfeatures2d/cmake/.download/0ea90e7a8f3f7876d450e4149c97c74f<br>boostdesc_bgm_bi.i放在opencv_contrib/modules/xfeatures2d/cmake/.download/232c966b13651bd0e46a1497b0852191<br>boostdesc_bgm_hd.i 放在opencv_contrib/modules/xfeatures2d/cmake/.download/324426a24fa56ad9c5b8e3e0b3e5303e<br>boostdesc_lbgm.i放在opencv_contrib/modules/xfeatures2d/cmake/.download/0ae0675534aa318d9668f2a179c2a05</p>
+</blockquote>
+<h2 id="其他编译实验问题"><a href="#其他编译实验问题" class="headerlink" title="其他编译实验问题"></a>其他编译实验问题</h2><p>在centos6.5上编译opencv2.4.11及2.4.9时，匹配ffmpeg的2.8.0，2.3.1，2.6.4等版本时均编译失败。单独编译ffmpeg源码和opencv源码时不存在问题，怀疑是opencv低版本对ffmpeg源码中存在不支持的问题。</p>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2018/04/18/opencv/编译opencv精简库/" title= 编译opencv精简静态库 >
+                    <div class="nextTitle">编译opencv精简静态库</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/03/26/Pytorch/pytorch常用Tensor运算/" title= Tensor的数学运算 >
+                    <div class="prevTitle">Tensor的数学运算</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+<div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: "Tue Apr 10 2018 16:48:11 GMT+0800", // 可选。默认为 location.href
+        owner: 'heroinlin',
+        repo: 'heroinlin.github.io',
+        oauth: {
+            client_id: '33b4a51ea87942e922ca',
+            client_secret: '264679785d383afbc726145178abea84ff750743',
+        },
+    })
+    gitment.render('container')
+</script>
+
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:heroinlj@gmail.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="https://github.com/heroinlin" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/example_qr.png" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+        <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#FFmpeg与OpenCV的源码编译"><span class="toc-number">1.</span> <span class="toc-text">FFmpeg与OpenCV的源码编译</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#FFmpeg的源码编译"><span class="toc-number">1.1.</span> <span class="toc-text">FFmpeg的源码编译</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装依赖包"><span class="toc-number">1.1.1.</span> <span class="toc-text">安装依赖包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装可选扩展库"><span class="toc-number">1.1.2.</span> <span class="toc-text">安装可选扩展库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#libx264"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">libx264</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#libx265"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">libx265</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#libfdk-aac"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">libfdk_aac</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#libmp3lame"><span class="toc-number">1.1.2.4.</span> <span class="toc-text">libmp3lame</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#libopus"><span class="toc-number">1.1.2.5.</span> <span class="toc-text">libopus</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#libogg"><span class="toc-number">1.1.2.6.</span> <span class="toc-text">libogg</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#libvorbis"><span class="toc-number">1.1.2.7.</span> <span class="toc-text">libvorbis</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#libvpx"><span class="toc-number">1.1.2.8.</span> <span class="toc-text">libvpx</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FFmpeg"><span class="toc-number">1.1.3.</span> <span class="toc-text">FFmpeg</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#opencv的源码编译"><span class="toc-number">1.2.</span> <span class="toc-text">opencv的源码编译</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装依赖包-1"><span class="toc-number">1.2.1.</span> <span class="toc-text">安装依赖包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注意事项"><span class="toc-number">1.2.2.</span> <span class="toc-text">注意事项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加contrib模块的编译"><span class="toc-number">1.2.3.</span> <span class="toc-text">添加contrib模块的编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#读取视频测试"><span class="toc-number">1.2.4.</span> <span class="toc-text">读取视频测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cmake时额外文件放置位置"><span class="toc-number">1.2.5.</span> <span class="toc-text">cmake时额外文件放置位置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他编译实验问题"><span class="toc-number">1.3.</span> <span class="toc-text">其他编译实验问题</span></a></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 18 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/18</span><a class="archive-post-title" href= "/2018/04/18/opencv/编译opencv精简库/" >编译opencv精简静态库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/opencv/ffmpeg及opencv源码编译/" >FFmpeg与OpenCV的源码编译</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/Pytorch/pytorch常用Tensor运算/" >Tensor的数学运算</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/15</span><a class="archive-post-title" href= "/2018/03/15/Python/Python_pip和conda安装错误解决/" >python_pip和conda安装错误解决</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/13</span><a class="archive-post-title" href= "/2018/03/13/linux/CentOS7添加应用到菜单栏/" >CentOS7添加应用到菜单栏</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_String模块/" >Python之String模块</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_文件操作/" >python中对文件、文件夹操作</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/07</span><a class="archive-post-title" href= "/2018/03/07/C&C++/调试报错问题解决方法/" >C及C++编译时候出现的一些问题与解决方案</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记3/" >CS231n课程笔记翻译：神经网络笔记3</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/hello-world/" >Hello World</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：反向传播笔记/" >CS231n课程笔记翻译：反向传播笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：卷积神经网络笔记/" >CS231n课程笔记翻译：卷积神经网络笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：Python Numpy教程/" >CS231n课程笔记翻译：Python Numpy教程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：图像分类笔记/" >CS231n课程笔记翻译：图像分类笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记2/" >CS231n课程笔记翻译：神经网络笔记2</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：最优化笔记/" >CS231n课程笔记翻译：最优化笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：线性分类笔记/" >CS231n课程笔记翻译：线性分类笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记1/" >CS231n课程笔记翻译：神经网络笔记1</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="C&C++"><span class="iconfont-archer">&#xe606;</span>C&C++</span>
+    
+        <span class="sidebar-tag-name" data-tags="Debug"><span class="iconfont-archer">&#xe606;</span>Debug</span>
+    
+        <span class="sidebar-tag-name" data-tags="CS231n"><span class="iconfont-archer">&#xe606;</span>CS231n</span>
+    
+        <span class="sidebar-tag-name" data-tags="反向传播"><span class="iconfont-archer">&#xe606;</span>反向传播</span>
+    
+        <span class="sidebar-tag-name" data-tags="卷积神经网络"><span class="iconfont-archer">&#xe606;</span>卷积神经网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="Convolution"><span class="iconfont-archer">&#xe606;</span>Convolution</span>
+    
+        <span class="sidebar-tag-name" data-tags="Numpy"><span class="iconfont-archer">&#xe606;</span>Numpy</span>
+    
+        <span class="sidebar-tag-name" data-tags="图像分类"><span class="iconfont-archer">&#xe606;</span>图像分类</span>
+    
+        <span class="sidebar-tag-name" data-tags="神经网络"><span class="iconfont-archer">&#xe606;</span>神经网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="最优化"><span class="iconfont-archer">&#xe606;</span>最优化</span>
+    
+        <span class="sidebar-tag-name" data-tags="Optimization"><span class="iconfont-archer">&#xe606;</span>Optimization</span>
+    
+        <span class="sidebar-tag-name" data-tags="线性分类"><span class="iconfont-archer">&#xe606;</span>线性分类</span>
+    
+        <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
+    
+        <span class="sidebar-tag-name" data-tags="Pycharm"><span class="iconfont-archer">&#xe606;</span>Pycharm</span>
+    
+        <span class="sidebar-tag-name" data-tags="快捷方式"><span class="iconfont-archer">&#xe606;</span>快捷方式</span>
+    
+        <span class="sidebar-tag-name" data-tags="Pytorch"><span class="iconfont-archer">&#xe606;</span>Pytorch</span>
+    
+        <span class="sidebar-tag-name" data-tags="Tensor"><span class="iconfont-archer">&#xe606;</span>Tensor</span>
+    
+        <span class="sidebar-tag-name" data-tags="OpenCV，静态库，cmake"><span class="iconfont-archer">&#xe606;</span>OpenCV，静态库，cmake</span>
+    
+        <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
+    
+        <span class="sidebar-tag-name" data-tags="pip"><span class="iconfont-archer">&#xe606;</span>pip</span>
+    
+        <span class="sidebar-tag-name" data-tags="conda"><span class="iconfont-archer">&#xe606;</span>conda</span>
+    
+        <span class="sidebar-tag-name" data-tags="ProxyError"><span class="iconfont-archer">&#xe606;</span>ProxyError</span>
+    
+        <span class="sidebar-tag-name" data-tags="String"><span class="iconfont-archer">&#xe606;</span>String</span>
+    
+        <span class="sidebar-tag-name" data-tags="os"><span class="iconfont-archer">&#xe606;</span>os</span>
+    
+        <span class="sidebar-tag-name" data-tags="shutil"><span class="iconfont-archer">&#xe606;</span>shutil</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件操作"><span class="iconfont-archer">&#xe606;</span>文件操作</span>
+    
+        <span class="sidebar-tag-name" data-tags="OpenCV"><span class="iconfont-archer">&#xe606;</span>OpenCV</span>
+    
+        <span class="sidebar-tag-name" data-tags="FFmpeg"><span class="iconfont-archer">&#xe606;</span>FFmpeg</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="C-C"><span class="iconfont-archer">&#xe60a;</span>C-C</span>
+    
+        <span class="sidebar-category-name" data-categories="CS231n课程笔记翻译"><span class="iconfont-archer">&#xe60a;</span>CS231n课程笔记翻译</span>
+    
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
+        <span class="sidebar-category-name" data-categories="Pytorch"><span class="iconfont-archer">&#xe60a;</span>Pytorch</span>
+    
+        <span class="sidebar-category-name" data-categories="OpenCV"><span class="iconfont-archer">&#xe60a;</span>OpenCV</span>
+    
+        <span class="sidebar-category-name" data-categories="Python"><span class="iconfont-archer">&#xe60a;</span>Python</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: 'Heroinlin'
+    }
+</script>
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+	
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			showProcessingMessages: false, //关闭js加载过程信息
+			messageStyle: "none", //不显示信息
+			extensions: ["tex2jax.js"],
+			jax: ["input/TeX", "output/HTML-CSS"],
+			tex2jax: {
+				inlineMath: [ ['$','$'], ["\\(","\\)"] ], //行内公式选择符
+				displayMath: [ ['$$','$$'], ["\\[","\\]"] ], //段内公式选择符
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre','code','a'], //避开某些标签
+				ignoreClass:"comment-content" //避开含该Class的标签
+			},
+			"HTML-CSS": {
+				availableFonts: ["STIX","TeX"], //可选字体
+				showMathMenu: false //关闭右击菜单显示
+			}
+		});
+		MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+		</script>
+		<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    </body>
+</html>
+
+
