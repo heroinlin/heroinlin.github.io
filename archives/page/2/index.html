@@ -299,6 +299,61 @@
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/02/11/hello-world/" >
+                
+                    <span>Hello World</span>
+            </a>
+            <div class="abstract-content">
+                Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
+Quick StartCreate a new post1$ hexo new "My New Post"
+More info: Writing
+Run server1$ hexo server
+More...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/02/11</span>
+                </div>
+                <!-- tags  -->
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：Python Numpy教程/" >
+                
+                    <span>CS231n课程笔记翻译：Python Numpy教程</span>
+            </a>
+            <div class="abstract-content">
+                CS231n课程笔记翻译：Python Numpy教程原文如下这篇教程由Justin Johnson创作。
+我们将使用Python编程语言来完成本课程的所有作业。Python是一门伟大的通用编程语言，在一些常用库（numpy, scipy, matplotlib）的帮助下，它又会变成一个强大的科学计算环境。
+我们期望你们中大多数人对于Python语言和Numpy库比较熟悉，而对于没有Python经验的同学，这篇教程可以帮助你们快速了解Python编程环境和如何使用Python作为科学计算工具。
+一部分同学对于Matlab有一定经验。对于这部分同学，我们推荐阅读 numpy for Mat...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/02/11</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = CS231n>CS231n</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = Numpy>Numpy</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：卷积神经网络笔记/" >
                 
                     <span>CS231n课程笔记翻译：卷积神经网络笔记</span>
@@ -340,6 +395,48 @@
         <a class="post-tag" href="javascript:void(0);" data-tags = 卷积神经网络>卷积神经网络</a>
     
         <a class="post-tag" href="javascript:void(0);" data-tags = Convolution>Convolution</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：反向传播笔记/" >
+                
+                    <span>CS231n课程笔记翻译：反向传播笔记</span>
+            </a>
+            <div class="abstract-content">
+                CS231n课程笔记翻译：反向传播笔记原文如下：内容列表：
+
+简介
+简单表达式和理解梯度
+复合表达式，链式法则，反向传播
+直观理解反向传播
+模块：Sigmoid例子
+反向传播实践：分段计算
+回传流中的模式
+用户向量化操作的梯度
+小结
+
+简介目标：本节将帮助读者对反向传播形成直观而专业的理解。反向传播是利用链式法则递归计算表达式的梯度的方法。理解反向传播过程及其精妙之处，对于理解、实现、设计和调试神经网络非常关键。
+问题陈述：这节的核心问题是：给定函数$f(x)$，其中$x$是输入数据的向量，需要计算函数$f$关于$x$的梯度，也就是$\nabla f(x)$。
+目标：之所以关注上述问题，...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/02/11</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = CS231n>CS231n</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = 反向传播>反向传播</a>
     
 </div>
                 
@@ -511,46 +608,6 @@ Nearest Neighbor的优劣
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记2/" >
-                
-                    <span>CS231n课程笔记翻译：神经网络笔记2</span>
-            </a>
-            <div class="abstract-content">
-                CS231n课程笔记翻译：神经网络笔记 2原文如下内容列表：
-
-设置数据和模型
-数据预处理
-权重初始化
-批量归一化（Batch Normalization）
-正则化（L2/L1/Maxnorm/Dropout）
-
-
-损失函数
-小结
-
-设置数据和模型在上一节中介绍了神经元的模型，它在计算内积后进行非线性激活函数计算，神经网络将这些神经元组织成各个层。这些做法共同定义了评分函数（score function） 的新形式，该形式是从前面线性分类章节中的简单线性映射发展而来的。具体来说，神经网络就是进行了一系列的线性映射与非线性激活函数交织的运算。本节将讨论更多的算法设计选项，比如数据预处理，权...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/02/11</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = CS231n>CS231n</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 神经网络>神经网络</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
             <a class="abstract-title" href = "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记3/" >
                 
                     <span>CS231n课程笔记翻译：神经网络笔记3</span>
@@ -607,26 +664,24 @@ Nearest Neighbor的优劣
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：反向传播笔记/" >
+            <a class="abstract-title" href = "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记2/" >
                 
-                    <span>CS231n课程笔记翻译：反向传播笔记</span>
+                    <span>CS231n课程笔记翻译：神经网络笔记2</span>
             </a>
             <div class="abstract-content">
-                CS231n课程笔记翻译：反向传播笔记原文如下：内容列表：
+                CS231n课程笔记翻译：神经网络笔记 2原文如下内容列表：
 
-简介
-简单表达式和理解梯度
-复合表达式，链式法则，反向传播
-直观理解反向传播
-模块：Sigmoid例子
-反向传播实践：分段计算
-回传流中的模式
-用户向量化操作的梯度
+设置数据和模型
+数据预处理
+权重初始化
+批量归一化（Batch Normalization）
+正则化（L2/L1/Maxnorm/Dropout）
+
+
+损失函数
 小结
 
-简介目标：本节将帮助读者对反向传播形成直观而专业的理解。反向传播是利用链式法则递归计算表达式的梯度的方法。理解反向传播过程及其精妙之处，对于理解、实现、设计和调试神经网络非常关键。
-问题陈述：这节的核心问题是：给定函数$f(x)$，其中$x$是输入数据的向量，需要计算函数$f$关于$x$的梯度，也就是$\nabla f(x)$。
-目标：之所以关注上述问题，...
+设置数据和模型在上一节中介绍了神经元的模型，它在计算内积后进行非线性激活函数计算，神经网络将这些神经元组织成各个层。这些做法共同定义了评分函数（score function） 的新形式，该形式是从前面线性分类章节中的简单线性映射发展而来的。具体来说，神经网络就是进行了一系列的线性映射与非线性激活函数交织的运算。本节将讨论更多的算法设计选项，比如数据预处理，权...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
@@ -639,7 +694,7 @@ Nearest Neighbor的优劣
     
         <a class="post-tag" href="javascript:void(0);" data-tags = CS231n>CS231n</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = 反向传播>反向传播</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = 神经网络>神经网络</a>
     
 </div>
                 
@@ -694,37 +749,6 @@ SVM和Softmax的比较
         <a class="post-tag" href="javascript:void(0);" data-tags = CS231n>CS231n</a>
     
         <a class="post-tag" href="javascript:void(0);" data-tags = 线性分类>线性分类</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：Python Numpy教程/" >
-                
-                    <span>CS231n课程笔记翻译：Python Numpy教程</span>
-            </a>
-            <div class="abstract-content">
-                CS231n课程笔记翻译：Python Numpy教程原文如下这篇教程由Justin Johnson创作。
-我们将使用Python编程语言来完成本课程的所有作业。Python是一门伟大的通用编程语言，在一些常用库（numpy, scipy, matplotlib）的帮助下，它又会变成一个强大的科学计算环境。
-我们期望你们中大多数人对于Python语言和Numpy库比较熟悉，而对于没有Python经验的同学，这篇教程可以帮助你们快速了解Python编程环境和如何使用Python作为科学计算工具。
-一部分同学对于Matlab有一定经验。对于这部分同学，我们推荐阅读 numpy for Mat...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/02/11</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = CS231n>CS231n</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = Numpy>Numpy</a>
     
 </div>
                 
@@ -1069,7 +1093,14 @@ SVM和Softmax的比较
     
     
     
-    <div class="total-archive"> Total : 19 </div>
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 20 </div>
     
     <div class="post-archive">
     
@@ -1091,12 +1122,12 @@ SVM和Softmax的比较
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/opencv/ffmpeg及opencv源码编译/" >FFmpeg与OpenCV的源码编译</a>
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/yolo/" >目标检测网络之 YOLOv3</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2018/03/26/Pytorch/pytorch常用Tensor运算/" >Tensor的数学运算</a>
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/opencv/ffmpeg及opencv源码编译/" >FFmpeg与OpenCV的源码编译</a>
         </li>
     
     
@@ -1111,12 +1142,17 @@ SVM和Softmax的比较
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_String模块/" >Python之String模块</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_文件操作/" >python中对文件、文件夹操作</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_String模块/" >Python之String模块</a>
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Pytorch/pytorch常用Tensor运算/" >Tensor的数学运算</a>
         </li>
     
     
@@ -1126,12 +1162,17 @@ SVM和Softmax的比较
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：Python Numpy教程/" >CS231n课程笔记翻译：Python Numpy教程</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：线性分类笔记/" >CS231n课程笔记翻译：线性分类笔记</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/hello-world/" >Hello World</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：Python Numpy教程/" >CS231n课程笔记翻译：Python Numpy教程</a>
         </li>
     
     
@@ -1161,17 +1202,12 @@ SVM和Softmax的比较
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记2/" >CS231n课程笔记翻译：神经网络笔记2</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记3/" >CS231n课程笔记翻译：神经网络笔记3</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：线性分类笔记/" >CS231n课程笔记翻译：线性分类笔记</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记2/" >CS231n课程笔记翻译：神经网络笔记2</a>
         </li>
     
     </div>
@@ -1185,9 +1221,13 @@ SVM和Softmax的比较
     
         <span class="sidebar-tag-name" data-tags="CS231n"><span class="iconfont-archer">&#xe606;</span>CS231n</span>
     
+        <span class="sidebar-tag-name" data-tags="Numpy"><span class="iconfont-archer">&#xe606;</span>Numpy</span>
+    
         <span class="sidebar-tag-name" data-tags="卷积神经网络"><span class="iconfont-archer">&#xe606;</span>卷积神经网络</span>
     
         <span class="sidebar-tag-name" data-tags="Convolution"><span class="iconfont-archer">&#xe606;</span>Convolution</span>
+    
+        <span class="sidebar-tag-name" data-tags="反向传播"><span class="iconfont-archer">&#xe606;</span>反向传播</span>
     
         <span class="sidebar-tag-name" data-tags="最优化"><span class="iconfont-archer">&#xe606;</span>最优化</span>
     
@@ -1221,13 +1261,9 @@ SVM和Softmax的比较
     
         <span class="sidebar-tag-name" data-tags="caffe"><span class="iconfont-archer">&#xe606;</span>caffe</span>
     
-        <span class="sidebar-tag-name" data-tags="OpenCV，静态库，cmake"><span class="iconfont-archer">&#xe606;</span>OpenCV，静态库，cmake</span>
-    
         <span class="sidebar-tag-name" data-tags="OpenCV"><span class="iconfont-archer">&#xe606;</span>OpenCV</span>
     
         <span class="sidebar-tag-name" data-tags="FFmpeg"><span class="iconfont-archer">&#xe606;</span>FFmpeg</span>
-    
-        <span class="sidebar-tag-name" data-tags="反向传播"><span class="iconfont-archer">&#xe606;</span>反向传播</span>
     
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
     
@@ -1235,7 +1271,13 @@ SVM和Softmax的比较
     
         <span class="sidebar-tag-name" data-tags="快捷方式"><span class="iconfont-archer">&#xe606;</span>快捷方式</span>
     
-        <span class="sidebar-tag-name" data-tags="Numpy"><span class="iconfont-archer">&#xe606;</span>Numpy</span>
+        <span class="sidebar-tag-name" data-tags="OpenCV，静态库，cmake"><span class="iconfont-archer">&#xe606;</span>OpenCV，静态库，cmake</span>
+    
+        <span class="sidebar-tag-name" data-tags="yolo"><span class="iconfont-archer">&#xe606;</span>yolo</span>
+    
+        <span class="sidebar-tag-name" data-tags="darknet"><span class="iconfont-archer">&#xe606;</span>darknet</span>
+    
+        <span class="sidebar-tag-name" data-tags="object detection"><span class="iconfont-archer">&#xe606;</span>object detection</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -1283,6 +1325,8 @@ jsonContent:
         <span class="sidebar-category-name" data-categories="OpenCV"><span class="iconfont-archer">&#xe60a;</span>OpenCV</span>
     
         <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
+        <span class="sidebar-category-name" data-categories="object-detection"><span class="iconfont-archer">&#xe60a;</span>object-detection</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>

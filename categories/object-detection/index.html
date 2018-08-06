@@ -299,34 +299,31 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/15/Python/Python_pip和conda安装错误解决/" >
+            <a class="abstract-title" href = "/2018/04/12/deep_learning/object_detection/yolo/" >
                 
-                    <span>python_pip和conda安装错误解决</span>
+                    <span>目标检测网络之 YOLOv3</span>
             </a>
             <div class="abstract-content">
-                python_pip和conda安装错误解决##pip install 报错ProxyError
-错误为Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。
-解决：电脑设置成了全局代理，在浏览器&gt;设置&gt;Internet选项&gt;局域网设置中代理服务器的选项取消打钩即可。
-conda install 环境变量报错错误为Solving environment: failed
-解决：输入conda  update conda后即可
+                目标检测网络之 YOLOv3
+本文逐步介绍YOLO v1~v3的设计历程。
+YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground truth 的中心位置的坐标落入到某个格子，那么这个格子就负责检测出这个物体。
 
+网络结构YOLOv1网络借鉴了GoogLeNet分类网络结构。不同的是，YOLO未使用inception module，而是使用1x1卷积层（此处1x1卷积层的存在是为了跨通道信息整合）+3x3卷积层简单替代。YOLOv1网络在最后使用全连接层进行类别输出，因此全连接层的输出维度是 $S×S×(B×5+C)$。YOLOv1网络比VGG16快(浮点数少于...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/15</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/12</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = Python>Python</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = yolo>yolo</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = pip>pip</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = darknet>darknet</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = conda>conda</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = ProxyError>ProxyError</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = object detection>object detection</a>
     
 </div>
                 
