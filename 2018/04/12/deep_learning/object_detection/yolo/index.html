@@ -404,7 +404,7 @@ height:50vh;
 <p>在分类网络中移除最后一个1x1的层,在最后添加3个3x3x1024的卷积层,再接上输出是类别个数的1x1卷积.<br>对于输入图像尺寸为<code>Si x Si</code>,最终3x3卷积层输出的feature map是<code>Oi x Oi</code>(Oi=Si/(2^5)),对应输入图像的Oi x Oi个栅格，每个栅格预测<code>#anchors</code>种boxes大小，每个box包含4个坐标值,1个置信度和<code>#classes</code>个条件类别概率，所以输出维度是<code>Oi x Oi x #anchors x (5 + #classes)</code>。</p>
 <p>添加<strong>跨层跳跃连接</strong>（借鉴ResNet等思想）,融合粗细粒度的特征:将前面最后一个3x3x512卷积的特征图,对于416x416的输入,该层输出26x26x512,直接连接到最后新加的三个3x3卷积层的最后一个的前边.将26x26x512变形为13x13x2048与后边的13x13x1024特征按channel堆起来得到13x13x3072.从yolo-voc.cfg文件可以看到，第25层为route层，逆向9层拿到第16层26 <em> 26 </em> 512的输出，并由第26层的reorg层把26 <em> 26 </em> 512 变形为13 <em> 13 </em> 2048，再有第27层的route层连接24层和26层的输出，堆叠为13 <em> 13 </em> 3072，由最后一个卷积核为3 * 3的卷积层进行跨通道的信息融合并把通道降维为1024。</p>
 <p><strong>训练</strong>:作者在VOC07+12以及COCO2014数据集上迭代了160 epochs,初始学习率0.001,在60和90 epochs分别减小为0.1倍.<br>Darknet训练VOC的参数如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">learning_rate=0.0001</span><br><span class="line">batch=64</span><br><span class="line">max_batches = 45000 # 最大迭代batch数</span><br><span class="line">policy=steps # 学习率衰减策略</span><br><span class="line">steps=100,25000,35000 # 训练到这些batch次数时learning_rate按scale缩放</span><br><span class="line">scales=10,.1,.1 # 与steps对应</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">learning_rate=0.0001</span><br><span class="line">batch=64</span><br><span class="line">max_batches = 45000 # 最大迭代batch数</span><br><span class="line">policy=steps # 学习率衰减策略</span><br><span class="line">steps=100,25000,35000 # 训练到这些batch次数时learning_rate按scale缩放</span><br><span class="line">scales=10,.1,.1 # 与steps对应</span><br></pre></td></tr></table></figure>
 <p>网络结构如下(输入416,5个类别,5个anchor box; 此结构信息由Darknet框架启动时输出):</p>
 <p><img src="https://images2018.cnblogs.com/blog/606386/201803/606386-20180324181407843-936091130.png" alt="YOLO v2-network"></p>
 <p>YOLO v2-network</p>
@@ -481,16 +481,16 @@ height:50vh;
         <li class="next">
             
                 <div class="nextSlogan">Next Post</div>
-                <a href= "/2018/04/12/deep_learning/object_detection/目标检测评价指标/" title= 目标检测网络之评价指标 >
-                    <div class="nextTitle">目标检测网络之评价指标</div>
+                <a href= "/2018/04/13/caffe/windows10_caffe安装/" title= windows10编译caffe的python接口 >
+                    <div class="nextTitle">windows10编译caffe的python接口</div>
                 </a>
             
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2018/04/12/deep_learning/object_detection/R-CNN/" title= 目标检测网络之 R-CNN系列 >
-                    <div class="prevTitle">目标检测网络之 R-CNN系列</div>
+                <a href= "/2018/04/12/deep_learning/object_detection/SSD/" title= 目标检测网络之 SSD >
+                    <div class="prevTitle">目标检测网络之 SSD</div>
                 </a>
             
         </li>
@@ -940,7 +940,30 @@ top:50vh;
     
     
     
-    <div class="total-archive"> Total : 23 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 24 </div>
     
     <div class="post-archive">
     
@@ -949,6 +972,11 @@ top:50vh;
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2018/10/10/Python/Python_使用Struct解析二进制数据/" >python之Struct解析二进制数据</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -962,12 +990,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/SSD/" >目标检测网络之 SSD</a>
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/目标检测评价指标/" >目标检测网络之评价指标</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/R-CNN/" >目标检测网络之 R-CNN系列</a>
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/SSD/" >目标检测网络之 SSD</a>
         </li>
     
     
@@ -977,7 +1005,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/目标检测评价指标/" >目标检测网络之评价指标</a>
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/R-CNN/" >目标检测网络之 R-CNN系列</a>
         </li>
     
     
@@ -997,6 +1025,11 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_文件操作/" >python中对文件、文件夹操作</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_String模块/" >Python之String模块</a>
         </li>
     
@@ -1007,17 +1040,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_文件操作/" >python中对文件、文件夹操作</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">03/07</span><a class="archive-post-title" href= "/2018/03/07/C&C++/调试报错问题解决方法/" >C及C++编译时候出现的一些问题与解决方案</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记1/" >CS231n课程笔记翻译：神经网络笔记1</a>
         </li>
     
     
@@ -1027,7 +1050,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记2/" >CS231n课程笔记翻译：神经网络笔记2</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：图像分类笔记/" >CS231n课程笔记翻译：图像分类笔记</a>
         </li>
     
     
@@ -1037,22 +1060,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：反向传播笔记/" >CS231n课程笔记翻译：反向传播笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：卷积神经网络笔记/" >CS231n课程笔记翻译：卷积神经网络笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：图像分类笔记/" >CS231n课程笔记翻译：图像分类笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：最优化笔记/" >CS231n课程笔记翻译：最优化笔记</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记2/" >CS231n课程笔记翻译：神经网络笔记2</a>
         </li>
     
     
@@ -1063,6 +1071,26 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：线性分类笔记/" >CS231n课程笔记翻译：线性分类笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：卷积神经网络笔记/" >CS231n课程笔记翻译：卷积神经网络笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：最优化笔记/" >CS231n课程笔记翻译：最优化笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：反向传播笔记/" >CS231n课程笔记翻译：反向传播笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记1/" >CS231n课程笔记翻译：神经网络笔记1</a>
         </li>
     
     </div>
@@ -1076,13 +1104,11 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="CS231n"><span class="iconfont-archer">&#xe606;</span>CS231n</span>
     
-        <span class="sidebar-tag-name" data-tags="Numpy"><span class="iconfont-archer">&#xe606;</span>Numpy</span>
-    
-        <span class="sidebar-tag-name" data-tags="反向传播"><span class="iconfont-archer">&#xe606;</span>反向传播</span>
-    
         <span class="sidebar-tag-name" data-tags="卷积神经网络"><span class="iconfont-archer">&#xe606;</span>卷积神经网络</span>
     
         <span class="sidebar-tag-name" data-tags="Convolution"><span class="iconfont-archer">&#xe606;</span>Convolution</span>
+    
+        <span class="sidebar-tag-name" data-tags="反向传播"><span class="iconfont-archer">&#xe606;</span>反向传播</span>
     
         <span class="sidebar-tag-name" data-tags="图像分类"><span class="iconfont-archer">&#xe606;</span>图像分类</span>
     
@@ -1090,17 +1116,25 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="Optimization"><span class="iconfont-archer">&#xe606;</span>Optimization</span>
     
+        <span class="sidebar-tag-name" data-tags="Numpy"><span class="iconfont-archer">&#xe606;</span>Numpy</span>
+    
         <span class="sidebar-tag-name" data-tags="神经网络"><span class="iconfont-archer">&#xe606;</span>神经网络</span>
     
         <span class="sidebar-tag-name" data-tags="线性分类"><span class="iconfont-archer">&#xe606;</span>线性分类</span>
     
         <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
     
+        <span class="sidebar-tag-name" data-tags="String"><span class="iconfont-archer">&#xe606;</span>String</span>
+    
         <span class="sidebar-tag-name" data-tags="pip"><span class="iconfont-archer">&#xe606;</span>pip</span>
     
         <span class="sidebar-tag-name" data-tags="conda"><span class="iconfont-archer">&#xe606;</span>conda</span>
     
         <span class="sidebar-tag-name" data-tags="ProxyError"><span class="iconfont-archer">&#xe606;</span>ProxyError</span>
+    
+        <span class="sidebar-tag-name" data-tags="struct"><span class="iconfont-archer">&#xe606;</span>struct</span>
+    
+        <span class="sidebar-tag-name" data-tags="二进制文件"><span class="iconfont-archer">&#xe606;</span>二进制文件</span>
     
         <span class="sidebar-tag-name" data-tags="os"><span class="iconfont-archer">&#xe606;</span>os</span>
     
@@ -1112,15 +1146,7 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="Tensor"><span class="iconfont-archer">&#xe606;</span>Tensor</span>
     
-        <span class="sidebar-tag-name" data-tags="String"><span class="iconfont-archer">&#xe606;</span>String</span>
-    
         <span class="sidebar-tag-name" data-tags="caffe"><span class="iconfont-archer">&#xe606;</span>caffe</span>
-    
-        <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
-    
-        <span class="sidebar-tag-name" data-tags="Pycharm"><span class="iconfont-archer">&#xe606;</span>Pycharm</span>
-    
-        <span class="sidebar-tag-name" data-tags="快捷方式"><span class="iconfont-archer">&#xe606;</span>快捷方式</span>
     
         <span class="sidebar-tag-name" data-tags="OpenCV"><span class="iconfont-archer">&#xe606;</span>OpenCV</span>
     
@@ -1128,19 +1154,25 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="OpenCV，静态库，cmake"><span class="iconfont-archer">&#xe606;</span>OpenCV，静态库，cmake</span>
     
+        <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
+    
+        <span class="sidebar-tag-name" data-tags="Pycharm"><span class="iconfont-archer">&#xe606;</span>Pycharm</span>
+    
+        <span class="sidebar-tag-name" data-tags="快捷方式"><span class="iconfont-archer">&#xe606;</span>快捷方式</span>
+    
         <span class="sidebar-tag-name" data-tags="SSD"><span class="iconfont-archer">&#xe606;</span>SSD</span>
     
         <span class="sidebar-tag-name" data-tags="object detection"><span class="iconfont-archer">&#xe606;</span>object detection</span>
+    
+        <span class="sidebar-tag-name" data-tags="yolo"><span class="iconfont-archer">&#xe606;</span>yolo</span>
+    
+        <span class="sidebar-tag-name" data-tags="darknet"><span class="iconfont-archer">&#xe606;</span>darknet</span>
     
         <span class="sidebar-tag-name" data-tags="R-CNN"><span class="iconfont-archer">&#xe606;</span>R-CNN</span>
     
         <span class="sidebar-tag-name" data-tags="Fast R-CNN"><span class="iconfont-archer">&#xe606;</span>Fast R-CNN</span>
     
         <span class="sidebar-tag-name" data-tags="Faster R-CNN"><span class="iconfont-archer">&#xe606;</span>Faster R-CNN</span>
-    
-        <span class="sidebar-tag-name" data-tags="yolo"><span class="iconfont-archer">&#xe606;</span>yolo</span>
-    
-        <span class="sidebar-tag-name" data-tags="darknet"><span class="iconfont-archer">&#xe606;</span>darknet</span>
     
         <span class="sidebar-tag-name" data-tags="评价指标"><span class="iconfont-archer">&#xe606;</span>评价指标</span>
     
@@ -1191,9 +1223,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="caffe"><span class="iconfont-archer">&#xe60a;</span>caffe</span>
     
-        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
-    
         <span class="sidebar-category-name" data-categories="OpenCV"><span class="iconfont-archer">&#xe60a;</span>OpenCV</span>
+    
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
         <span class="sidebar-category-name" data-categories="object-detection"><span class="iconfont-archer">&#xe60a;</span>object-detection</span>
     
