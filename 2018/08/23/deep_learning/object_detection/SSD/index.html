@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <title>heroinlin&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+        box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.7);
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180311 as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180311 media="(max-width: 980px)"/>
+    <link rel="icon" href= /assets/leaf.ico>
+    <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    <script src="/scripts/main.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >heroinlin&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name"></a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>heroinlin's Studio.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            [Untitled Post]
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2018/08/23</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="Single-Shot-MultiBox-Detector"><a href="#Single-Shot-MultiBox-Detector" class="headerlink" title="Single Shot MultiBox Detector"></a>Single Shot MultiBox Detector</h1><p>论文地址: <a href="https://arxiv.org/pdf/1512.02325.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1512.02325.pdf</a></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>目标检测近年来已经取得了很重要的进展，主流的算法主要分为两个类型（参考<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/pdf/1711.06897.pdf" target="_blank" rel="noopener">RefineDet</a>）:</p>
+<ul>
+<li><p><strong>Two stages</strong></p>
+<p>以Faster RCNN为代表，即RPN网络先生成proposals目标定位，再对proposals进行classification+bounding box regression完成目标分类, two-stage方法的优势是准确度高</p>
+</li>
+<li><p><strong>Single shot</strong></p>
+<p>以YOLO/SSD为代表，均匀地在图片的不同位置进行密集抽样，抽样时可以采用不同尺度和长宽比，然后利用CNN提取特征后直接进行分类与回归, 一次性完成classification+bounding box regression, 所以其优势是速度快，但是均匀的密集采样的一个重要缺点是训练比较困难，这主要是因为正样本与负样本（背景）极其不均衡（参见<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1708.02002" target="_blank" rel="noopener">Focal Loss</a>），导致模型准确度稍低。</p>
+</li>
+</ul>
+<h2 id="1-SSD300网络结构"><a href="#1-SSD300网络结构" class="headerlink" title="1 SSD300网络结构"></a>1 SSD300网络结构</h2><center><img src="./images/ssd_yolo_对比.jpg"></center>
+
+<center><em>图 2 SSD300/YOLO网络结构对比</em> </center>
+
+<p>同为Single shot方式的SSD/YOLO区别：</p>
+<ul>
+<li>YOLO在卷积层后接全连接层，即检测时只利用了最高层Feature maps（包括Faster RCNN也是如此）</li>
+<li>SSD采用金字塔结构，即利用了conv4-3/conv-7/conv6-2/conv7-2/conv8_2/conv9_2这些大小不同的feature maps，在多个feature maps上同时进行softmax分类和位置回归</li>
+<li>SSD还加入了Prior box</li>
+</ul>
+<center><img src="./images/single_feature_map_and_pyramidal_feature_hierarchy.jpg"></center>
+
+<center> <em>图 3 单层 feature map预测和特征金字塔预测对比</em> </center>
+
+<h2 id="2-Prior-Box"><a href="#2-Prior-Box" class="headerlink" title="2 Prior Box"></a>2 Prior Box</h2><p>在SSD300中引入了Prior Box，实际上与Faster RCNN Anchor非常类似，就是一些目标的预选框，后续通过classification+bounding box regression获得真实目标的位置。</p>
+<p>SSD按照如下规则生成prior box：</p>
+<ul>
+<li>以feature map上每个点的中点为中心，生成一些列同心的prior box</li>
+<li>正方形prior box最小边长为和最大边长为：</li>
+</ul>
+<p>$$<br>\color {MidnightBlue}\mathit {\text{min_size}}<br>$$</p>
+<p>$$<br>\color {MidnightBlue}\mathit {\sqrt{\text{min_size}*\text{max_size}}}<br>$$</p>
+<ul>
+<li>每在prototxt设置一个aspect ratio，会生成2个长方形，长宽为：</li>
+</ul>
+<p>$$<br>\color {MidnightBlue}\mathit {\sqrt{\text{aspect_ratio}}*\text{min_size}}<br>$$</p>
+<p>$$<br>\color {MidnightBlue}\mathit {1/{\sqrt{\text{aspect_ratio}}*\text{min_size}}}<br>$$</p>
+<center><img src="./images/prior box.jpg"></center>
+
+<p>图4 prior box</p>
+<ul>
+<li>而每个feature map对应prior box的min_size和max_size由以下公式决定：</li>
+</ul>
+<center>$$s_k = s_{min} + \frac{s_{max}-s_{min}}{m-1}(k-1), \ \ k\in[1, m]$$ </center>
+
+<p>公式中的 $m$是指进行预测时使用feature map的数量，如SSD300使用conv4-3等6个feature maps进行预测，所以 $m=6$。同时原文设定$s_{min}=0.2$ ，$s_{max}=0.9$</p>
+<p>那么：</p>
+<ul>
+<li>对于conv4-3： $k=1$ , $min_size=s_1 <em>300$, $max_size=s_2</em>300$</li>
+<li>对于conv-7：$k=2$, $min_size=s_2 <em>300$, $max_size=s_3</em>300$</li>
+<li>….</li>
+</ul>
+<p>显然可以用上述公式推导出每个feature maps使用的Prior Box size。但是在SSD300中prior box设置并不能完全和上述公式对应：</p>
+<center><table> <tr> <th width="10%,bgcolor=#eeeeee"></th> <th width="10%,bgcolor=#eeeeee">min_size</th> &lt;th width=10%,bgcolor=#eeeeee”&gt;max_size </tr> <tr> <td bgcolor="#eeeeee"> conv4_3</td> <td> 30  </td> <td> 60</td> </tr>  <tr> <td bgcolor="#eeeeee"> fc7</td> <td> 60  </td> <td> 111</td> </tr><tr> <td bgcolor="#eeeeee"> conv6_2</td> <td> 111</td> <td> 162</td> </tr><tr> <td bgcolor="#eeeeee"> conv7_2</td> <td> 162</td> <td> 213</td> </tr><tr> <td bgcolor="#eeeeee"> conv8_2</td> <td> 213</td> <td> 264</td> </tr><tr> <td bgcolor="#eeeeee"> conv9_2</td> <td> 264  </td> <td> 315</td> </tr></table> </center>
+
+<p>不过依然可以看出：<strong>SSD使用感受野小的feature map检测小目标，使用感受野大的feature map检测更大目标</strong>。</p>
+<p>更具体一点，来看SSD300在conv4_3层的Prior Box设置conv4_3生成prior box的conv4_3_norm_priorbox层prototxt定义如下，可以清晰的看到 $min_size$ 和 $max_size$以及 $aspect_ratio$等值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">layer &#123;</span><br><span class="line">  name: &quot;conv4_3_norm_mbox_priorbox&quot;</span><br><span class="line">  type: &quot;PriorBox&quot;</span><br><span class="line">  bottom: &quot;conv4_3_norm&quot;</span><br><span class="line">  bottom: &quot;data&quot;</span><br><span class="line">  top: &quot;conv4_3_norm_mbox_priorbox&quot;</span><br><span class="line">  prior_box_param &#123;</span><br><span class="line">    min_size: 30.0</span><br><span class="line">    max_size: 60.0</span><br><span class="line">    aspect_ratio: 2</span><br><span class="line">    flip: true</span><br><span class="line">    clip: false</span><br><span class="line">    variance: 0.1</span><br><span class="line">    variance: 0.1</span><br><span class="line">    variance: 0.2</span><br><span class="line">    variance: 0.2</span><br><span class="line">    step: 8</span><br><span class="line">    offset: 0.5</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>知道了priorbox如何产生，接下来分析prior box如何使用。这里还是以conv4_3分析。</p>
+<center><img src="/images/图5.jpg"></center>
+
+<p>图5</p>
+<p>从图5可以看到，在conv4_3网络分为了3条线路：</p>
+<ol>
+<li>经过一次batch norm+一次卷积后，生成了<strong>[1, num_class*num_priorbox, layer_height, layer_width]</strong>大小的feature用于softmax分类目标和非目标（其中num_class是目标类别，SSD300中num_class = 21，即20个类别+1个背景)</li>
+<li>经过一次batch norm+一次卷积后，生成了<strong>[1, 4*num_priorbox, layer_height, layer_width]</strong>大小的feature用于bounding box regression（即每个点一组[dxmin，dymin，dxmax，dymax]，参考<a href="https://zhuanlan.zhihu.com/p/31426458" target="_blank" rel="noopener">Faster R-CNN</a> 2.5节）</li>
+<li>生成了<strong>[1, 2, 4*num_priorbox<em>layer_height</em>layer_width]</strong>大小的prior box blob，其中2个channel分别存储prior box的4个点坐标(x1, y1, x2, y2)和对应的4个参数variance</li>
+</ol>
+<p>后续通过softmax分类判定Prior box是否包含目标，然后再通过bounding box regression即可可获取目标的精确位置，熟悉Faster RCNN的读者应该对上述过程应该并不陌生。其实pribox box的与Faster RCNN中的anchor非常类似，都是目标的预设框，没有本质的差异。区别是每个位置的prior box一般是4~6个，少于Faster RCNN默认的9个anchor；同时prior box是设置在不同尺度的feature maps上的，而且大小不同。</p>
+<p>还有一个细节就是上面prototxt中的4个variance，这实际上是一种bounding regression中的权重。在图4线路(2)中，网络输出[dxmin，dymin，dxmax，dymax]，即对应下面代码中bbox；然后利用如下方法进行针对prior box的位置回归：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">decode_bbox-&gt;set_xmin(</span><br><span class="line">     prior_bbox.xmin() + prior_variance[<span class="number">0</span>] * bbox.xmin() * prior_width);</span><br><span class="line"> decode_bbox-&gt;set_ymin(</span><br><span class="line">     prior_bbox.ymin() + prior_variance[<span class="number">1</span>] * bbox.ymin() * prior_height);</span><br><span class="line"> decode_bbox-&gt;set_xmax(</span><br><span class="line">     prior_bbox.xmax() + prior_variance[<span class="number">2</span>] * bbox.xmax() * prior_width);</span><br><span class="line"> decode_bbox-&gt;set_ymax(</span><br><span class="line">     prior_bbox.ymax() + prior_variance[<span class="number">3</span>] * bbox.ymax() * prior_height);</span><br></pre></td></tr></table></figure>
+<p>上述代码可以在SSD box_utils.cpp的void DecodeBBox()函数见到。</p>
+<h2 id="3-SSD的数据流"><a href="#3-SSD的数据流" class="headerlink" title="3 SSD的数据流"></a>3 SSD的数据流</h2><p>对于新学习SSD的人，肯定有一个很大的困惑，就是这么多feature maps和Prior Box，如何组合在一起进行forwards/backwards。本节专门介绍SSD的数据流动方式，也许有点难。但是只有了解SSD的数据流动方式才能真的理解。</p>
+<center><img src="/images/原理图.jpg"></center>
+
+<center><em>图6</em></center>
+
+<p>上一节以conv4_3 feature map分析了如何检测到目标的真实位置，但是SSD 300是使用包括conv4_3在内的共计6个feature maps一同检测出最终目标的。在网络运行的时候显然不能像图6一样：一个feature map单独计算一次multiclass softmax socre+box regression（虽然原理如此，但是不能如此实现）。</p>
+<p>那么多个feature maps如何协同工作？这时候就要用到Permute，Flatten和Concat这3种层了。其中conv4_3_norm_conf_perm的prototxt定义如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">layer &#123;</span><br><span class="line">  name: &quot;conv4_3_norm_mbox_conf_perm&quot;</span><br><span class="line">  type: &quot;Permute&quot;</span><br><span class="line">  bottom: &quot;conv4_3_norm_mbox_conf&quot;</span><br><span class="line">  top: &quot;conv4_3_norm_mbox_conf_perm&quot;</span><br><span class="line">  permute_param &#123;</span><br><span class="line">    order: 0</span><br><span class="line">    order: 2</span><br><span class="line">    order: 3</span><br><span class="line">    order: 1</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Permute是SSD中自带的层，上面conv4_3_norm_mbox_conf_perm的的定义。Permute相当于交换caffe blob中的数据维度。在正常情况下caffe blob的顺序为：</p>
+<p><strong>bottom blob = [batch_num, channel, height, width]</strong></p>
+<p>经过conv4_3_norm_mbox_conf_perm后的caffe blob为：</p>
+<p><strong>top blob = [batch_num, height, width, channel]</strong></p>
+<p>而Flattlen和Concat层都是caffe自带层，请参照<a href="https://link.zhihu.com/?target=http%3A//caffe.berkeleyvision.org/tutorial/layers.html" target="_blank" rel="noopener">caffe official documentation</a>理解。</p>
+<center><img src="/images/caffe blob shape变化.jpg "></center>
+
+<center><em>图7 SSD中部分层caffe blob shape变化</em></center>
+
+<p>那么接下来以conv4_3和fc7为例分析SSD是如何将不同size的feature map组合在一起进行prediction。图7展示了conv4_3和fc7合并在一起的过程中caffe blob shape变化（其他层类似，考虑到图片大小没有画出来，请脑补）。</p>
+<ul>
+<li>对于conv4_3 feature map，conv4_3_norm_priorbox（priorbox层）设置了每个点共有4个prior box。由于SSD 300共有21个分类，所以conv4_3_norm_mbox_conf的channel值为num_priorbox <em> num_class = 4 </em> 21 = 84；而每个prior box都要回归出4个位置变换量，所以conv4_3_norm_mbox_loc的caffe blob channel值为4 * 4 = 16。</li>
+<li>fc7每个点有6个prior box，其他feature map同理。</li>
+<li>经过一系列图7展示的caffe blob shape变化后，最后拼接成mbox_conf和mbox_loc。而mbox_conf后接reshape，再进行softmax（为何在softmax前进行reshape，Faster RCNN有提及）。</li>
+<li>最后这些值输出detection_out_layer，获得检测结果</li>
+</ul>
+<p>可以看到，SSD一次判断priorbox到底是背景 or 是20种目标类别之一，相当于将Faster R-CNN的RPN与后续proposal再分类进行了整合。</p>
+<center><img src="/images/SSD300.jpg"></center>
+
+<center><em>图8 SSD300</em></center>
+
+<h2 id="4-SSD网络结构优劣分析"><a href="#4-SSD网络结构优劣分析" class="headerlink" title="4 SSD网络结构优劣分析"></a>4 SSD网络结构优劣分析</h2><p>SSD算法的优点应该很明显：运行速度可以和YOLO媲美，检测精度可以和Faster RCNN媲美。除此之外，还有一些鸡毛蒜皮的优点，不解释了。这里谈谈缺点：</p>
+<ol>
+<li>需要人工设置prior box的min_size，max_size和aspect_ratio值。网络中prior box的基础大小和形状不能直接通过学习获得，而是需要手工设置。而网络中每一层feature使用的prior box大小和形状恰好都不一样，导致调试过程非常依赖经验。</li>
+<li>虽然采用了pyramdial feature hierarchy的思路，但是对小目标的recall依然一般，并没有达到碾压Faster RCNN的级别。作者认为，这是由于SSD使用conv4_3低级feature去检测小目标，而低级特征卷积层数少，存在特征提取不充分的问题。</li>
+</ol>
+<h2 id="5-SSD训练过程"><a href="#5-SSD训练过程" class="headerlink" title="5 SSD训练过程"></a>5 SSD训练过程</h2><p><img src="https://pic2.zhimg.com/v2-79dccc5fbc3d31a24e4d0e42511cb653_b.jpg" alt="img"></p>
+<p>对于SSD，虽然paper中指出采用了所谓的“multibox loss”，但是依然可以清晰看到SSD loss分为了confidence loss和location loss(bouding box regression loss)两部分，其中N是match到GT（Ground Truth）的prior box数量；而α参数用于调整confidence loss和location loss之间的比例，默认α=1。SSD中的confidence loss是典型的softmax loss：</p>
+<p><img src="https://pic1.zhimg.com/v2-42c6a269bbfbae035b0f74c0602b14ba_b.jpg" alt="img"></p>
+<p>其中</p>
+<p><img src="https://pic2.zhimg.com/v2-46a8eb39bab8396443cc3a8bcedd777d_b.jpg" alt="img"></p>
+<p>代表第i个prior box匹配到了第j个class为p类别的GT box；而location loss是典型的smooth L1 loss：</p>
+<p><img src="https://pic1.zhimg.com/v2-e7b5c31560d34fdd309b05c1e23a9dab_b.jpg" alt="img"></p>
+<p><strong>Matching strategy：</strong></p>
+<p>在训练时，groundtruth boxes 与 default boxes（就是prior boxes） 按照如下方式进行配对：</p>
+<ul>
+<li>首先，寻找与每一个ground truth box有最大的jaccard overlap的default box，这样就能保证每一个groundtruth box与唯一的一个default box对应起来（所谓的jaccard overlap就是IoU，如图9）。</li>
+<li>SSD之后又将剩余还没有配对的default box与任意一个groundtruth box尝试配对，只要两者之间的jaccard overlap大于阈值，就认为match（SSD 300 阈值为0.5）。</li>
+<li>显然配对到GT的default box就是positive，没有配对到GT的default box就是negative。</li>
+</ul>
+<center><img src="/images/A交B.jpg"></center>
+
+<center><img src="/images/A并B.jpg"></center>
+
+<p><img src="https://pic4.zhimg.com/v2-8f2601b4c788246bd6138cf99c15f1bf_b.jpg" alt="img"></p>
+<center><em>图9 jaccard overlap</em></center>
+
+<p><strong>Hard negative mining：</strong></p>
+<p>值得注意的是，一般情况下negative default boxes数量&gt;&gt;positive default boxes数量，直接训练会导致网络过于重视负样本，从而loss不稳定。所以需要采取：</p>
+<ul>
+<li>所以SSD在训练时会依据confidience score排序default box，挑选其中confidence高的box进行训练，控制 $positive:negative=1:3$</li>
+</ul>
+<p><strong>Data augmentation：</strong></p>
+<p>数据增广。即对每一张image进行如下之一变换获取一个patch进行训练：</p>
+<ul>
+<li>直接使用原始的图像（即不进行变换）</li>
+<li>采样一个patch，保证与GT之间最小的IoU为：0.1，0.3，0.5，0.7 或 0.9</li>
+<li>完全随机的采样一个patch</li>
+</ul>
+<center><img src="/images/Random crop.jpg"></center>
+
+<center><em>图10 Random crop</em></center>
+
+<p>同时在原文中还提到：</p>
+<ul>
+<li>采样的patch占原始图像大小比例在 $[0.1,1]$ 之间</li>
+<li>采样的patch的长宽比在 $[0.5,2]$之间</li>
+<li>当 Ground truth box中心恰好在采样的patch中时，保留整个GT box</li>
+<li>最后每个patch被resize到固定大小，并且以0.5的概率随机的水平翻转</li>
+</ul>
+<p>最终以这些处理好的patches进行训练。</p>
+<p>其实Matching strategy，Hard negative mining，Data augmentation，都是为了加快网络收敛而设计的。尤其是Data augmentation，翻来覆去的randomly crop，保证每一个prior box都获得充分训练而已。后续有Focal loss解决这个问题。</p>
+<p>SSD github : <a href="https://link.zhihu.com/?target=https%3A//github.com/weiliu89/caffe/tree/ssd" target="_blank" rel="noopener">https://github.com/weiliu89/caffe/tree/ssd</a></p>
+<p>SSD paper : <a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1512.02325" target="_blank" rel="noopener">https://arxiv.org/abs/1512.02325</a></p>
+<p>SSD eccv2016 slide pdf : <a href="https://link.zhihu.com/?target=http%3A//www.cs.unc.edu/%7Ewliu/papers/ssd_eccv2016_slide.pdf" target="_blank" rel="noopener">http://www.cs.unc.edu/~wliu/papers/ssd_eccv2016_slide.pdf</a></p>
+<p>Focal Loss for Dense Object Detection ：<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1708.02002" target="_blank" rel="noopener">https://arxiv.org/abs/1708.02002</a></p>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2018/09/18/deep_learning/object_detection/R-CNN/" title=  >
+                    <div class="nextTitle">[Untitled Post]</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/04/18/opencv/编译opencv精简库/" title= 编译opencv精简静态库 >
+                    <div class="prevTitle">编译opencv精简静态库</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+<div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: "Thu Aug 23 2018 14:33:45 GMT+0800", // 可选。默认为 location.href
+        owner: 'heroinlin',
+        repo: 'heroinlin.github.io',
+        oauth: {
+            client_id: '33b4a51ea87942e922ca',
+            client_secret: '264679785d383afbc726145178abea84ff750743',
+        },
+    })
+    gitment.render('container')
+</script>
+
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:heroinlj@gmail.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="https://github.com/heroinlin" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/example_qr.png" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+        <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Single-Shot-MultiBox-Detector"><span class="toc-number">1.</span> <span class="toc-text">Single Shot MultiBox Detector</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-SSD300网络结构"><span class="toc-number">1.2.</span> <span class="toc-text">1 SSD300网络结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Prior-Box"><span class="toc-number">1.3.</span> <span class="toc-text">2 Prior Box</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-SSD的数据流"><span class="toc-number">1.4.</span> <span class="toc-text">3 SSD的数据流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-SSD网络结构优劣分析"><span class="toc-number">1.5.</span> <span class="toc-text">4 SSD网络结构优劣分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-SSD训练过程"><span class="toc-number">1.6.</span> <span class="toc-text">5 SSD训练过程</span></a></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 23 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/30</span><a class="archive-post-title" href= "/2018/09/30/deep_learning/object_detection/目标检测评价指标/" >[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/18</span><a class="archive-post-title" href= "/2018/09/18/deep_learning/object_detection/R-CNN/" >[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/18</span><a class="archive-post-title" href= "/2018/04/18/opencv/编译opencv精简库/" >编译opencv精简静态库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/13</span><a class="archive-post-title" href= "/2018/04/13/caffe/windows10_caffe安装/" >windows10编译caffe的python接口</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/yolo/" >目标检测网络之 YOLOv3</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/opencv/ffmpeg及opencv源码编译/" >FFmpeg与OpenCV的源码编译</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/15</span><a class="archive-post-title" href= "/2018/03/15/Python/Python_pip和conda安装错误解决/" >python_pip和conda安装错误解决</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/13</span><a class="archive-post-title" href= "/2018/03/13/linux/CentOS7添加应用到菜单栏/" >CentOS7添加应用到菜单栏</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_String模块/" >Python之String模块</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Pytorch/pytorch常用Tensor运算/" >Tensor的数学运算</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_文件操作/" >python中对文件、文件夹操作</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/07</span><a class="archive-post-title" href= "/2018/03/07/C&C++/调试报错问题解决方法/" >C及C++编译时候出现的一些问题与解决方案</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记2/" >CS231n课程笔记翻译：神经网络笔记2</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/hello-world/" >Hello World</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：反向传播笔记/" >CS231n课程笔记翻译：反向传播笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：卷积神经网络笔记/" >CS231n课程笔记翻译：卷积神经网络笔记</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/23/deep_learning/object_detection/SSD/" >[Untitled Post]</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：线性分类笔记/" >CS231n课程笔记翻译：线性分类笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：Python Numpy教程/" >CS231n课程笔记翻译：Python Numpy教程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：图像分类笔记/" >CS231n课程笔记翻译：图像分类笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记3/" >CS231n课程笔记翻译：神经网络笔记3</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：最优化笔记/" >CS231n课程笔记翻译：最优化笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记1/" >CS231n课程笔记翻译：神经网络笔记1</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="C&C++"><span class="iconfont-archer">&#xe606;</span>C&C++</span>
+    
+        <span class="sidebar-tag-name" data-tags="Debug"><span class="iconfont-archer">&#xe606;</span>Debug</span>
+    
+        <span class="sidebar-tag-name" data-tags="Pytorch"><span class="iconfont-archer">&#xe606;</span>Pytorch</span>
+    
+        <span class="sidebar-tag-name" data-tags="Tensor"><span class="iconfont-archer">&#xe606;</span>Tensor</span>
+    
+        <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
+    
+        <span class="sidebar-tag-name" data-tags="pip"><span class="iconfont-archer">&#xe606;</span>pip</span>
+    
+        <span class="sidebar-tag-name" data-tags="conda"><span class="iconfont-archer">&#xe606;</span>conda</span>
+    
+        <span class="sidebar-tag-name" data-tags="ProxyError"><span class="iconfont-archer">&#xe606;</span>ProxyError</span>
+    
+        <span class="sidebar-tag-name" data-tags="String"><span class="iconfont-archer">&#xe606;</span>String</span>
+    
+        <span class="sidebar-tag-name" data-tags="os"><span class="iconfont-archer">&#xe606;</span>os</span>
+    
+        <span class="sidebar-tag-name" data-tags="shutil"><span class="iconfont-archer">&#xe606;</span>shutil</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件操作"><span class="iconfont-archer">&#xe606;</span>文件操作</span>
+    
+        <span class="sidebar-tag-name" data-tags="CS231n"><span class="iconfont-archer">&#xe606;</span>CS231n</span>
+    
+        <span class="sidebar-tag-name" data-tags="反向传播"><span class="iconfont-archer">&#xe606;</span>反向传播</span>
+    
+        <span class="sidebar-tag-name" data-tags="卷积神经网络"><span class="iconfont-archer">&#xe606;</span>卷积神经网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="Convolution"><span class="iconfont-archer">&#xe606;</span>Convolution</span>
+    
+        <span class="sidebar-tag-name" data-tags="Numpy"><span class="iconfont-archer">&#xe606;</span>Numpy</span>
+    
+        <span class="sidebar-tag-name" data-tags="图像分类"><span class="iconfont-archer">&#xe606;</span>图像分类</span>
+    
+        <span class="sidebar-tag-name" data-tags="最优化"><span class="iconfont-archer">&#xe606;</span>最优化</span>
+    
+        <span class="sidebar-tag-name" data-tags="Optimization"><span class="iconfont-archer">&#xe606;</span>Optimization</span>
+    
+        <span class="sidebar-tag-name" data-tags="神经网络"><span class="iconfont-archer">&#xe606;</span>神经网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
+    
+        <span class="sidebar-tag-name" data-tags="Pycharm"><span class="iconfont-archer">&#xe606;</span>Pycharm</span>
+    
+        <span class="sidebar-tag-name" data-tags="快捷方式"><span class="iconfont-archer">&#xe606;</span>快捷方式</span>
+    
+        <span class="sidebar-tag-name" data-tags="OpenCV，静态库，cmake"><span class="iconfont-archer">&#xe606;</span>OpenCV，静态库，cmake</span>
+    
+        <span class="sidebar-tag-name" data-tags="OpenCV"><span class="iconfont-archer">&#xe606;</span>OpenCV</span>
+    
+        <span class="sidebar-tag-name" data-tags="FFmpeg"><span class="iconfont-archer">&#xe606;</span>FFmpeg</span>
+    
+        <span class="sidebar-tag-name" data-tags="caffe"><span class="iconfont-archer">&#xe606;</span>caffe</span>
+    
+        <span class="sidebar-tag-name" data-tags="线性分类"><span class="iconfont-archer">&#xe606;</span>线性分类</span>
+    
+        <span class="sidebar-tag-name" data-tags="yolo"><span class="iconfont-archer">&#xe606;</span>yolo</span>
+    
+        <span class="sidebar-tag-name" data-tags="darknet"><span class="iconfont-archer">&#xe606;</span>darknet</span>
+    
+        <span class="sidebar-tag-name" data-tags="object detection"><span class="iconfont-archer">&#xe606;</span>object detection</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="C-C"><span class="iconfont-archer">&#xe60a;</span>C-C</span>
+    
+        <span class="sidebar-category-name" data-categories="Pytorch"><span class="iconfont-archer">&#xe60a;</span>Pytorch</span>
+    
+        <span class="sidebar-category-name" data-categories="Python"><span class="iconfont-archer">&#xe60a;</span>Python</span>
+    
+        <span class="sidebar-category-name" data-categories="CS231n课程笔记翻译"><span class="iconfont-archer">&#xe60a;</span>CS231n课程笔记翻译</span>
+    
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
+        <span class="sidebar-category-name" data-categories="OpenCV"><span class="iconfont-archer">&#xe60a;</span>OpenCV</span>
+    
+        <span class="sidebar-category-name" data-categories="caffe"><span class="iconfont-archer">&#xe60a;</span>caffe</span>
+    
+        <span class="sidebar-category-name" data-categories="object-detection"><span class="iconfont-archer">&#xe60a;</span>object-detection</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: 'Heroinlin'
+    }
+</script>
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+	
+		<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			showProcessingMessages: false, //关闭js加载过程信息
+			messageStyle: "none", //不显示信息
+			extensions: ["tex2jax.js"],
+			jax: ["input/TeX", "output/HTML-CSS"],
+			tex2jax: {
+				inlineMath: [ ['$','$'], ["\\(","\\)"] ], //行内公式选择符
+				displayMath: [ ['$$','$$'], ["\\[","\\]"] ], //段内公式选择符
+				skipTags: ['script', 'noscript', 'style', 'textarea', 'pre','code','a'], //避开某些标签
+				ignoreClass:"comment-content" //避开含该Class的标签
+			},
+			"HTML-CSS": {
+				availableFonts: ["STIX","TeX"], //可选字体
+				showMathMenu: false //关闭右击菜单显示
+			}
+		});
+		MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+		</script>
+		<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    </body>
+</html>
+
+

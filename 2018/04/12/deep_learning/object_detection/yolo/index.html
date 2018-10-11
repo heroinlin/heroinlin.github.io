@@ -438,18 +438,6 @@ height:50vh;
 <p><img src="https://images2018.cnblogs.com/blog/606386/201803/606386-20180327004340505-1572852891.png" alt="YOLOv3-arch"></p>
 <p>YOLOv3-arch</p>
 <p>YOLOv3在<a href="mailto:mAP@0.5mAP" target="_blank" rel="noopener">mAP@0.5mAP</a>@0.5及小目标APSAPS上具有不错的结果,但随着IOU的增大,性能下降,说明YOLOv3不能很好地与ground truth切合.</p>
-<p><strong>边框预测</strong><br>作者尝试了常规的预测方式(Faster R-CNN),然而并不奏效: x,y的偏移作为box的长宽的线性变换.</p>
-<p>⎧⎩⎨⎪⎪⎪⎪⎪⎪⎪⎪Gxˆ=Pwtx(P)+PxGyˆ=Phty(P)+PyGwˆ=Pwetw(P)Ghˆ=Pheth(P){Gx^=Pwtx(P)+PxGy^=Phty(P)+PyGw^=Pwetw(P)Gh^=Pheth(P)</p>
-<p>仍采用之前的logistic方式:</p>
-<p>bxbybwbh=σ(tx)+cx=σ(ty)+cy=pwetw=pheth(1)(2)(3)(4)(1)bx=σ(tx)+cx(2)by=σ(ty)+cy(3)bw=pwetw(4)bh=pheth</p>
-<p>其中</p>
-<p>cx,cycx,cy</p>
-<p>是网格的坐标偏移量,</p>
-<p>pw,phpw,ph</p>
-<p>是预设的anchor box的边长.最终得到的边框坐标值是</p>
-<p>b∗b∗</p>
-<p>,而网络学习目标是</p>
-<p>t∗t∗</p>
 <p>.</p>
 <h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><p>优点</p>
 <ul>
@@ -893,7 +881,72 @@ top:50vh;
     
     
     
-    <div class="total-archive"> Total : 20 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 23 </div>
     
     <div class="post-archive">
     
@@ -902,6 +955,16 @@ top:50vh;
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/30</span><a class="archive-post-title" href= "/2018/09/30/deep_learning/object_detection/目标检测评价指标/" >[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/18</span><a class="archive-post-title" href= "/2018/09/18/deep_learning/object_detection/R-CNN/" >[Untitled Post]</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -940,12 +1003,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_文件操作/" >python中对文件、文件夹操作</a>
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Pytorch/pytorch常用Tensor运算/" >Tensor的数学运算</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Pytorch/pytorch常用Tensor运算/" >Tensor的数学运算</a>
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_文件操作/" >python中对文件、文件夹操作</a>
         </li>
     
     
@@ -955,7 +1018,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：线性分类笔记/" >CS231n课程笔记翻译：线性分类笔记</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记2/" >CS231n课程笔记翻译：神经网络笔记2</a>
         </li>
     
     
@@ -965,7 +1028,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：Python Numpy教程/" >CS231n课程笔记翻译：Python Numpy教程</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：反向传播笔记/" >CS231n课程笔记翻译：反向传播笔记</a>
         </li>
     
     
@@ -974,13 +1037,36 @@ top:50vh;
         </li>
     
     
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：反向传播笔记/" >CS231n课程笔记翻译：反向传播笔记</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/23/deep_learning/object_detection/SSD/" >[Untitled Post]</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：线性分类笔记/" >CS231n课程笔记翻译：线性分类笔记</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：最优化笔记/" >CS231n课程笔记翻译：最优化笔记</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：Python Numpy教程/" >CS231n课程笔记翻译：Python Numpy教程</a>
         </li>
     
     
@@ -990,17 +1076,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记1/" >CS231n课程笔记翻译：神经网络笔记1</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记3/" >CS231n课程笔记翻译：神经网络笔记3</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记2/" >CS231n课程笔记翻译：神经网络笔记2</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：最优化笔记/" >CS231n课程笔记翻译：最优化笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记1/" >CS231n课程笔记翻译：神经网络笔记1</a>
         </li>
     
     </div>
@@ -1012,29 +1098,11 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="Debug"><span class="iconfont-archer">&#xe606;</span>Debug</span>
     
-        <span class="sidebar-tag-name" data-tags="CS231n"><span class="iconfont-archer">&#xe606;</span>CS231n</span>
+        <span class="sidebar-tag-name" data-tags="Pytorch"><span class="iconfont-archer">&#xe606;</span>Pytorch</span>
     
-        <span class="sidebar-tag-name" data-tags="Numpy"><span class="iconfont-archer">&#xe606;</span>Numpy</span>
-    
-        <span class="sidebar-tag-name" data-tags="卷积神经网络"><span class="iconfont-archer">&#xe606;</span>卷积神经网络</span>
-    
-        <span class="sidebar-tag-name" data-tags="Convolution"><span class="iconfont-archer">&#xe606;</span>Convolution</span>
-    
-        <span class="sidebar-tag-name" data-tags="反向传播"><span class="iconfont-archer">&#xe606;</span>反向传播</span>
-    
-        <span class="sidebar-tag-name" data-tags="最优化"><span class="iconfont-archer">&#xe606;</span>最优化</span>
-    
-        <span class="sidebar-tag-name" data-tags="Optimization"><span class="iconfont-archer">&#xe606;</span>Optimization</span>
-    
-        <span class="sidebar-tag-name" data-tags="图像分类"><span class="iconfont-archer">&#xe606;</span>图像分类</span>
-    
-        <span class="sidebar-tag-name" data-tags="神经网络"><span class="iconfont-archer">&#xe606;</span>神经网络</span>
-    
-        <span class="sidebar-tag-name" data-tags="线性分类"><span class="iconfont-archer">&#xe606;</span>线性分类</span>
+        <span class="sidebar-tag-name" data-tags="Tensor"><span class="iconfont-archer">&#xe606;</span>Tensor</span>
     
         <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
-    
-        <span class="sidebar-tag-name" data-tags="String"><span class="iconfont-archer">&#xe606;</span>String</span>
     
         <span class="sidebar-tag-name" data-tags="pip"><span class="iconfont-archer">&#xe606;</span>pip</span>
     
@@ -1042,21 +1110,31 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="ProxyError"><span class="iconfont-archer">&#xe606;</span>ProxyError</span>
     
+        <span class="sidebar-tag-name" data-tags="String"><span class="iconfont-archer">&#xe606;</span>String</span>
+    
         <span class="sidebar-tag-name" data-tags="os"><span class="iconfont-archer">&#xe606;</span>os</span>
     
         <span class="sidebar-tag-name" data-tags="shutil"><span class="iconfont-archer">&#xe606;</span>shutil</span>
     
         <span class="sidebar-tag-name" data-tags="文件操作"><span class="iconfont-archer">&#xe606;</span>文件操作</span>
     
-        <span class="sidebar-tag-name" data-tags="Pytorch"><span class="iconfont-archer">&#xe606;</span>Pytorch</span>
+        <span class="sidebar-tag-name" data-tags="CS231n"><span class="iconfont-archer">&#xe606;</span>CS231n</span>
     
-        <span class="sidebar-tag-name" data-tags="Tensor"><span class="iconfont-archer">&#xe606;</span>Tensor</span>
+        <span class="sidebar-tag-name" data-tags="反向传播"><span class="iconfont-archer">&#xe606;</span>反向传播</span>
     
-        <span class="sidebar-tag-name" data-tags="caffe"><span class="iconfont-archer">&#xe606;</span>caffe</span>
+        <span class="sidebar-tag-name" data-tags="卷积神经网络"><span class="iconfont-archer">&#xe606;</span>卷积神经网络</span>
     
-        <span class="sidebar-tag-name" data-tags="OpenCV"><span class="iconfont-archer">&#xe606;</span>OpenCV</span>
+        <span class="sidebar-tag-name" data-tags="Convolution"><span class="iconfont-archer">&#xe606;</span>Convolution</span>
     
-        <span class="sidebar-tag-name" data-tags="FFmpeg"><span class="iconfont-archer">&#xe606;</span>FFmpeg</span>
+        <span class="sidebar-tag-name" data-tags="Numpy"><span class="iconfont-archer">&#xe606;</span>Numpy</span>
+    
+        <span class="sidebar-tag-name" data-tags="图像分类"><span class="iconfont-archer">&#xe606;</span>图像分类</span>
+    
+        <span class="sidebar-tag-name" data-tags="最优化"><span class="iconfont-archer">&#xe606;</span>最优化</span>
+    
+        <span class="sidebar-tag-name" data-tags="Optimization"><span class="iconfont-archer">&#xe606;</span>Optimization</span>
+    
+        <span class="sidebar-tag-name" data-tags="神经网络"><span class="iconfont-archer">&#xe606;</span>神经网络</span>
     
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
     
@@ -1065,6 +1143,14 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="快捷方式"><span class="iconfont-archer">&#xe606;</span>快捷方式</span>
     
         <span class="sidebar-tag-name" data-tags="OpenCV，静态库，cmake"><span class="iconfont-archer">&#xe606;</span>OpenCV，静态库，cmake</span>
+    
+        <span class="sidebar-tag-name" data-tags="OpenCV"><span class="iconfont-archer">&#xe606;</span>OpenCV</span>
+    
+        <span class="sidebar-tag-name" data-tags="FFmpeg"><span class="iconfont-archer">&#xe606;</span>FFmpeg</span>
+    
+        <span class="sidebar-tag-name" data-tags="caffe"><span class="iconfont-archer">&#xe606;</span>caffe</span>
+    
+        <span class="sidebar-tag-name" data-tags="线性分类"><span class="iconfont-archer">&#xe606;</span>线性分类</span>
     
         <span class="sidebar-tag-name" data-tags="yolo"><span class="iconfont-archer">&#xe606;</span>yolo</span>
     
@@ -1107,17 +1193,17 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="C-C"><span class="iconfont-archer">&#xe60a;</span>C-C</span>
     
-        <span class="sidebar-category-name" data-categories="CS231n课程笔记翻译"><span class="iconfont-archer">&#xe60a;</span>CS231n课程笔记翻译</span>
+        <span class="sidebar-category-name" data-categories="Pytorch"><span class="iconfont-archer">&#xe60a;</span>Pytorch</span>
     
         <span class="sidebar-category-name" data-categories="Python"><span class="iconfont-archer">&#xe60a;</span>Python</span>
     
-        <span class="sidebar-category-name" data-categories="Pytorch"><span class="iconfont-archer">&#xe60a;</span>Pytorch</span>
+        <span class="sidebar-category-name" data-categories="CS231n课程笔记翻译"><span class="iconfont-archer">&#xe60a;</span>CS231n课程笔记翻译</span>
     
-        <span class="sidebar-category-name" data-categories="caffe"><span class="iconfont-archer">&#xe60a;</span>caffe</span>
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
         <span class="sidebar-category-name" data-categories="OpenCV"><span class="iconfont-archer">&#xe60a;</span>OpenCV</span>
     
-        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+        <span class="sidebar-category-name" data-categories="caffe"><span class="iconfont-archer">&#xe60a;</span>caffe</span>
     
         <span class="sidebar-category-name" data-categories="object-detection"><span class="iconfont-archer">&#xe60a;</span>object-detection</span>
     
