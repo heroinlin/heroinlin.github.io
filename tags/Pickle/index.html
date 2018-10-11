@@ -299,215 +299,30 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：图像分类笔记/" >
+            <a class="abstract-title" href = "/2018/10/10/Python/Python_数据持久化——JSON与Pickle/" >
                 
-                    <span>CS231n课程笔记翻译：图像分类笔记</span>
+                    <span>python之JSON与Pickle</span>
             </a>
             <div class="abstract-content">
-                CS231n课程笔记翻译：图像分类笔记原文如下这是一篇介绍性教程，面向非计算机视觉领域的同学。教程将向同学们介绍图像分类问题和数据驱动方法。下面是内容列表：
-
-图像分类、数据驱动方法和流程
-
-Nearest Neighbor分类器
-
-k-Nearest Neighbor 
-
-
-验证集、交叉验证集和超参数调参
-
-Nearest Neighbor的优劣
-
-小结
-
-小结：应用kNN实践
-
-拓展阅读
-
-
-图像分类目标：这一节我们将介绍图像分类问题。所谓图像分类问题，就是已有固定的分类标签集合，然后对于输入的图像，从分类标签集合中找出一个分类标签，最后把分类标签分配给该输入图像。虽然看起来挺简单的...
+                #python之数据持久化
+Python的数据持久化方式有很多种，JSON与Pickle是其中两种比较好用又相对轻量级的。两者的使用方式非常相近。
+JSONpython中处理JSON的库就是json模块，需要用到的方法大致就是以下4个，其实它们的参数有很多这里暂且省略。
+12345678import jsonperson = &#123;'姓名': 'Jame', '年龄' : 27&#125;fp = open('person.json', 'w')json.dump(person, fp)fp.close()person_info = json.dumps(person)x = js...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/02/11</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/10/10</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = CS231n>CS231n</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = Python>Python</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = 图像分类>图像分类</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = JSON>JSON</a>
     
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：卷积神经网络笔记/" >
-                
-                    <span>CS231n课程笔记翻译：卷积神经网络笔记</span>
-            </a>
-            <div class="abstract-content">
-                CS231n课程笔记翻译：卷积神经网络笔记原文如下内容列表：
-
-结构概述
-用来构建卷积神经网络的各种层
-卷积层
-汇聚层
-归一化层
-全连接层
-将全连接层转化成卷积层
-
-
-卷积神经网络的结构
-层的排列规律
-层的尺寸设置规律
-案例学习（LeNet / AlexNet / ZFNet / GoogLeNet / VGGNet）
-计算上的考量
-
-
-拓展资源
-
-卷积神经网络（CNNs / ConvNets）卷积神经网络和上一章讲的常规神经网络非常相似：它们都是由神经元组成，神经元中有具有学习能力的权重和偏差。每个神经元都得到一些输入数据，进行内积运算后再进行激活函数运算。整个网络依旧是一个可导的评分...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/02/11</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = CS231n>CS231n</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 卷积神经网络>卷积神经网络</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = Convolution>Convolution</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：反向传播笔记/" >
-                
-                    <span>CS231n课程笔记翻译：反向传播笔记</span>
-            </a>
-            <div class="abstract-content">
-                CS231n课程笔记翻译：反向传播笔记原文如下：内容列表：
-
-简介
-简单表达式和理解梯度
-复合表达式，链式法则，反向传播
-直观理解反向传播
-模块：Sigmoid例子
-反向传播实践：分段计算
-回传流中的模式
-用户向量化操作的梯度
-小结
-
-简介目标：本节将帮助读者对反向传播形成直观而专业的理解。反向传播是利用链式法则递归计算表达式的梯度的方法。理解反向传播过程及其精妙之处，对于理解、实现、设计和调试神经网络非常关键。
-问题陈述：这节的核心问题是：给定函数$f(x)$，其中$x$是输入数据的向量，需要计算函数$f$关于$x$的梯度，也就是$\nabla f(x)$。
-目标：之所以关注上述问题，...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/02/11</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = CS231n>CS231n</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 反向传播>反向传播</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：Python Numpy教程/" >
-                
-                    <span>CS231n课程笔记翻译：Python Numpy教程</span>
-            </a>
-            <div class="abstract-content">
-                CS231n课程笔记翻译：Python Numpy教程原文如下这篇教程由Justin Johnson创作。
-我们将使用Python编程语言来完成本课程的所有作业。Python是一门伟大的通用编程语言，在一些常用库（numpy, scipy, matplotlib）的帮助下，它又会变成一个强大的科学计算环境。
-我们期望你们中大多数人对于Python语言和Numpy库比较熟悉，而对于没有Python经验的同学，这篇教程可以帮助你们快速了解Python编程环境和如何使用Python作为科学计算工具。
-一部分同学对于Matlab有一定经验。对于这部分同学，我们推荐阅读 numpy for Mat...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/02/11</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = CS231n>CS231n</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = Numpy>Numpy</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记1/" >
-                
-                    <span>CS231n课程笔记翻译：神经网络笔记1</span>
-            </a>
-            <div class="abstract-content">
-                CS231n课程笔记翻译：神经网络笔记原文如下内容列表：
-
-不用大脑做类比的快速简介
-单个神经元建模
-生物动机和连接
-作为线性分类器的单个神经元
-常用的激活函数 
-
-
-神经网络结构
-层组织
-前向传播计算例子
-表达能力
-设置层的数量和尺寸
-
-
-小节
-参考文献
-
-快速简介在不诉诸大脑的类比的情况下，依然是可以对神经网络算法进行介绍的。在线性分类一节中，在给出图像的情况下，是使用$s=Wx$来计算不同视觉类别的评分，其中$W$是一个矩阵，$x$是一个输入列向量，它包含了图像的全部像素数据。在使用数据库CIFAR-10的案例中，$x$是一个[3072x1]的列向量，$W$是一个[10x3072]...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/02/11</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = CS231n>CS231n</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 神经网络>神经网络</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = Pickle>Pickle</a>
     
 </div>
                 
@@ -515,10 +330,6 @@ Nearest Neighbor的优劣
         </article>
     
     <!-- paginator  -->
-    
-    <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/page/2/">&#60; PREV</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span>
-    </nav>
     
 </main>
             <!-- profile -->

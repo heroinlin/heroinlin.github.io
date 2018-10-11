@@ -9,7 +9,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
-    <title>heroinlin&#39;s Studio</title>
+    <title>python之JSON与Pickle · heroinlin&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -251,12 +251,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >heroinlin&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">python之JSON与Pickle</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>heroinlin's Studio.</a>
 </header>
@@ -270,256 +281,172 @@
 
 
 
+height:50vh;
+
 >
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-placeholder"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
+            python之JSON与Pickle
+            <!-- 404 -->
+            
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = Python>Python</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = JSON>JSON</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = Pickle>Pickle</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2018/10/10</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
         
     </div>
 </div>
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
 
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：图像分类笔记/" >
-                
-                    <span>CS231n课程笔记翻译：图像分类笔记</span>
-            </a>
-            <div class="abstract-content">
-                CS231n课程笔记翻译：图像分类笔记原文如下这是一篇介绍性教程，面向非计算机视觉领域的同学。教程将向同学们介绍图像分类问题和数据驱动方法。下面是内容列表：
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>#python之数据持久化</p>
+<p>Python的数据持久化方式有很多种，JSON与Pickle是其中两种比较好用又相对轻量级的。两者的使用方式非常相近。</p>
+<h2 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h2><p>python中处理JSON的库就是json模块，需要用到的方法大致就是以下4个，其实它们的参数有很多这里暂且省略。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line">person = &#123;<span class="string">'姓名'</span>: <span class="string">'Jame'</span>, <span class="string">'年龄'</span> : <span class="number">27</span>&#125;</span><br><span class="line">fp = open(<span class="string">'person.json'</span>, <span class="string">'w'</span>)</span><br><span class="line">json.dump(person, fp)</span><br><span class="line">fp.close()</span><br><span class="line">person_info = json.dumps(person)</span><br><span class="line">x = json.load(open(<span class="string">'person.json'</span>, <span class="string">'r'</span>))</span><br><span class="line">y = json.loads(person_info)</span><br></pre></td></tr></table></figure>
+<p>可以看到，结尾带s就是在字符串层面上操作，如果不带s就是在文件层级操作。person是需要转化的对象，可以是一个字典或者列表。</p>
+<p>dumps返回的是一个字符串，load和loads则会返回python的对象。</p>
+<p>以上是最简单的一些使用方式，这里还有一些实用的参数可以选择。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import json</span><br><span class="line">obj = &#123;u&apos;姓名&apos; : u&apos;无名氏&apos;, u&apos;国籍&apos; : u&apos;中国&apos;&#125;</span><br><span class="line">s = json.dumps(obj, ensure_ascii=False, indent=4)</span><br><span class="line">obj2 = json.loads(s, encoding=&apos;utf8&apos;)</span><br></pre></td></tr></table></figure>
+<p>ensure_ascii参数，是在有中文的情况下，设置为False可以防止将其解码而得到乱码，在loads的时候可以指定encoding来保持编码。</p>
+<p>indent参数如果不指定的话，输出的字符串就是紧凑的形式，indent指定为4就可以输出缩进为4的pretty形式，在需要给人看的时候用这个不错。</p>
+<h3 id="JSON序列化datetime问题"><a href="#JSON序列化datetime问题" class="headerlink" title="JSON序列化datetime问题"></a>JSON序列化datetime问题</h3><p>python自己的json.dumps不能序列化datetime对象，如果需要dump这类对象时可以自己定义JSONEncoder</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> date, datetime</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AdvEncoder</span><span class="params">(json.JSONEncoder)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">default</span><span class="params">(self, obj)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> isinstance(obj, datetime):</span><br><span class="line">            <span class="keyword">return</span> obj.strftime(<span class="string">'%Y-%m-%d %H:%M:%S'</span>)</span><br><span class="line">        <span class="keyword">elif</span> isinstance(obj, date):</span><br><span class="line">            <span class="keyword">return</span> obj.strftime(<span class="string">'%Y-%m-%d'</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> super().default(self, obj)</span><br><span class="line"></span><br><span class="line">obj = &#123;&#125;</span><br><span class="line">json.dumps(obj, cls=MyEncoder)</span><br></pre></td></tr></table></figure>
+<p>这样在dump时指定cls参数就可以完成序列化datetime的任务了，如果觉得麻烦的话，可以使用偏函数的方法自己封装一下。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> functools</span><br><span class="line">adumps = functools.partial(json.dumps, cls=AdvEncoder)</span><br><span class="line">d = datetime.now()</span><br><span class="line">adumps(d)</span><br></pre></td></tr></table></figure>
+<h2 id="Pickle"><a href="#Pickle" class="headerlink" title="Pickle"></a>Pickle</h2><p>常用的函数和JSON的相同，这里只介绍一下dump与load。</p>
+<h3 id="函数说明"><a href="#函数说明" class="headerlink" title="函数说明"></a>函数说明</h3><p>Python中可以使用 pickle 模块将对象转化为文件保存在磁盘上，在需要的时候再读取并还原。具体用法如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`pickle.dump(obj, ``file``[, protocol])`</span><br></pre></td></tr></table></figure>
+<p>这是将对象持久化的方法，参数的含义分别为：<br><strong>obj</strong>: 要持久化保存的对象；<br><strong>file</strong>: 一个拥有 <em>write()</em> 方法的对象，并且这个 <em>write()</em> 方法能接收一个字符串作为参数。这个对象可以是一个以写模式打开的文件对象或者一个 StringIO 对象，或者其他自定义的满足条件的对象。<br><strong>protocol</strong>: 这是一个可选的参数，默认为 0 ，如果设置为 1 或 True，则以高压缩的二进制格式保存持久化后的对象，否则以ASCII格式保存，设置为负数与0相同。</p>
+<p>对象被持久化后怎么还原呢？pickle 模块也提供了相应的方法，如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`pickle.load(``file``)`</span><br></pre></td></tr></table></figure>
+<p>只有一个参数 file ，对应于上面 dump 方法中的 file 参数。这个 file 必须是一个拥有一个能接收一个整数为参数的 <em>read()</em> 方法以及一个不接收任何参数的 <em>readline()</em> 方法，并且这两个方法的返回值都应该是字符串。这可以是一个打开为读的文件对象、StringIO 对象或其他任何满足条件的对象。</p>
+<h3 id="实例代码"><a href="#实例代码" class="headerlink" title="实例代码"></a>实例代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line">person = &#123;<span class="string">'姓名'</span>: <span class="string">'Jame'</span>, <span class="string">'年龄'</span> : <span class="number">27</span>&#125;</span><br><span class="line">list_obj = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>]</span><br><span class="line">f = open(<span class="string">'person.pkl'</span>, <span class="string">'wb'</span>)</span><br><span class="line">pickle.dump(person, f, protocol=<span class="number">-1</span>)</span><br><span class="line">pickle.dump(list_obj, f, protocol=<span class="number">-1</span>)</span><br><span class="line">f.close()</span><br><span class="line"></span><br><span class="line">f = open(<span class="string">'person.pkl'</span>, <span class="string">'rb'</span>)</span><br><span class="line">person_info = pickle.load(f)</span><br><span class="line">list_obj_info = pickle.load(f)</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+<p>可以看出上面的程序在文件里存储了2个对象，load的时候可以执行2次，person_info得到的是之前person的对象，list_obj_info的是之前list_obj的对象。不要写成这样：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">person_info = pickle.load(open(<span class="string">'person.pkl'</span>, <span class="string">'rb'</span>))</span><br><span class="line">list_obj_info = pickle.load(open(<span class="string">'person.pkl'</span>, <span class="string">'rb'</span>))</span><br></pre></td></tr></table></figure>
+<p>这样得到的person_info,list_obj_info都是person_info的对象，原因嘛，可以想一想文件操作的方式，很好理解。</p>
+<p>但存储了几个对象就只能load几次，如果load超过了存储的对象，会抛出EOFError异常。</p>
+<p>可以用下面这种方式进行修改</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line">person = &#123;<span class="string">'姓名'</span>: <span class="string">'Jame'</span>, <span class="string">'年龄'</span> : <span class="number">27</span>&#125;</span><br><span class="line">list_obj = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>]</span><br><span class="line">f = open(<span class="string">'person.pkl'</span>, <span class="string">'wb'</span>)</span><br><span class="line">pickle.dump([person, list_obj], f, protocol=<span class="number">-1</span>)</span><br><span class="line">f.close()</span><br><span class="line"><span class="comment"># all_infos = pickle.load(open('person.pkl', 'rb'))</span></span><br><span class="line"><span class="comment"># person_info = all_infos[0]</span></span><br><span class="line"><span class="comment"># list_obj_info = all_infos[1]</span></span><br><span class="line">person_info = pickle.load(open(<span class="string">'person.pkl'</span>, <span class="string">'rb'</span>))[<span class="number">0</span>]</span><br><span class="line">list_obj_info = pickle.load(open(<span class="string">'person.pkl'</span>, <span class="string">'rb'</span>))[<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<p>这里能够存储的对象可以是任意对象，字典、列表、元组、numpy数组、SocketServer…..</p>
+<p>另外，pickle 模块还提供 dumps 和 loads 两个方法，用法与上面的 dump 和 load 方法类似，只是不需要输入 file 参数，输入及输出都是字符串对象，有些场景中使用这两个方法可能更为方便。</p>
+<h2 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h2><p>官方文档中对于这2者也有一段比较的话，我就直接拿来用了</p>
+<ul>
+<li>JSON是文本形式的存储，Pickle则是二进制形式（至少常用二进制）</li>
+<li>JSON是人可读的，Pickle不可读</li>
+<li>JSON广泛应用于除Python外的其他领域，Pickle是Python独有的。</li>
+<li>JSON只能dump一些python的内置对象，Pickle可以存储几乎所有对象。</li>
+</ul>
+<p>在我看来，如果偏向应用特别是web应用方面，可以常用JSON格式。如果偏向算法方面，尤其是机器学习，则应该使用cPickle，pylearn2库中保存model就是使用这项技术的。</p>
+<p>至于重量级的那就很多了，基本都跟数据库有关。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://brieflyx.me/2015/python-module/python-data-persistence/" target="_blank" rel="noopener">Python 数据持久化方式——JSON与Pickle</a></p>
+<p><a href="https://blog.oldj.net/2010/05/26/python-pickle/" target="_blank" rel="noopener">Python中使用pickle持久化对象</a></p>
+<p><a href="http://www.isware.cn/python-modules/01-data-persistence-and-exchange/pickle/" target="_blank" rel="noopener">[Python常用库]pickle</a></p>
+<p><a href="https://python-cookbook.readthedocs.io/zh_CN/stable/c05/p21_serializing_python_objects.html" target="_blank" rel="noopener">序列化Python对象</a></p>
 
-图像分类、数据驱动方法和流程
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2018/10/10/Python/Python_使用Struct解析二进制数据/" title= python之Struct解析二进制数据 >
+                    <div class="nextTitle">python之Struct解析二进制数据</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/04/18/opencv/编译opencv精简库/" title= 编译opencv精简静态库 >
+                    <div class="prevTitle">编译opencv精简静态库</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
 
-Nearest Neighbor分类器
+<!-- City版安装代码已完成 -->
+    
+    
+<div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: "Wed Oct 10 2018 10:48:11 GMT+0800", // 可选。默认为 location.href
+        owner: 'heroinlin',
+        repo: 'heroinlin.github.io',
+        oauth: {
+            client_id: '33b4a51ea87942e922ca',
+            client_secret: '264679785d383afbc726145178abea84ff750743',
+        },
+    })
+    gitment.render('container')
+</script>
 
-k-Nearest Neighbor 
+    <!--PC版-->
 
-
-验证集、交叉验证集和超参数调参
-
-Nearest Neighbor的优劣
-
-小结
-
-小结：应用kNN实践
-
-拓展阅读
-
-
-图像分类目标：这一节我们将介绍图像分类问题。所谓图像分类问题，就是已有固定的分类标签集合，然后对于输入的图像，从分类标签集合中找出一个分类标签，最后把分类标签分配给该输入图像。虽然看起来挺简单的...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/02/11</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = CS231n>CS231n</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 图像分类>图像分类</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：卷积神经网络笔记/" >
-                
-                    <span>CS231n课程笔记翻译：卷积神经网络笔记</span>
-            </a>
-            <div class="abstract-content">
-                CS231n课程笔记翻译：卷积神经网络笔记原文如下内容列表：
-
-结构概述
-用来构建卷积神经网络的各种层
-卷积层
-汇聚层
-归一化层
-全连接层
-将全连接层转化成卷积层
-
-
-卷积神经网络的结构
-层的排列规律
-层的尺寸设置规律
-案例学习（LeNet / AlexNet / ZFNet / GoogLeNet / VGGNet）
-计算上的考量
-
-
-拓展资源
-
-卷积神经网络（CNNs / ConvNets）卷积神经网络和上一章讲的常规神经网络非常相似：它们都是由神经元组成，神经元中有具有学习能力的权重和偏差。每个神经元都得到一些输入数据，进行内积运算后再进行激活函数运算。整个网络依旧是一个可导的评分...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/02/11</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = CS231n>CS231n</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 卷积神经网络>卷积神经网络</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = Convolution>Convolution</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：反向传播笔记/" >
-                
-                    <span>CS231n课程笔记翻译：反向传播笔记</span>
-            </a>
-            <div class="abstract-content">
-                CS231n课程笔记翻译：反向传播笔记原文如下：内容列表：
-
-简介
-简单表达式和理解梯度
-复合表达式，链式法则，反向传播
-直观理解反向传播
-模块：Sigmoid例子
-反向传播实践：分段计算
-回传流中的模式
-用户向量化操作的梯度
-小结
-
-简介目标：本节将帮助读者对反向传播形成直观而专业的理解。反向传播是利用链式法则递归计算表达式的梯度的方法。理解反向传播过程及其精妙之处，对于理解、实现、设计和调试神经网络非常关键。
-问题陈述：这节的核心问题是：给定函数$f(x)$，其中$x$是输入数据的向量，需要计算函数$f$关于$x$的梯度，也就是$\nabla f(x)$。
-目标：之所以关注上述问题，...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/02/11</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = CS231n>CS231n</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 反向传播>反向传播</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：Python Numpy教程/" >
-                
-                    <span>CS231n课程笔记翻译：Python Numpy教程</span>
-            </a>
-            <div class="abstract-content">
-                CS231n课程笔记翻译：Python Numpy教程原文如下这篇教程由Justin Johnson创作。
-我们将使用Python编程语言来完成本课程的所有作业。Python是一门伟大的通用编程语言，在一些常用库（numpy, scipy, matplotlib）的帮助下，它又会变成一个强大的科学计算环境。
-我们期望你们中大多数人对于Python语言和Numpy库比较熟悉，而对于没有Python经验的同学，这篇教程可以帮助你们快速了解Python编程环境和如何使用Python作为科学计算工具。
-一部分同学对于Matlab有一定经验。对于这部分同学，我们推荐阅读 numpy for Mat...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/02/11</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = CS231n>CS231n</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = Numpy>Numpy</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记1/" >
-                
-                    <span>CS231n课程笔记翻译：神经网络笔记1</span>
-            </a>
-            <div class="abstract-content">
-                CS231n课程笔记翻译：神经网络笔记原文如下内容列表：
-
-不用大脑做类比的快速简介
-单个神经元建模
-生物动机和连接
-作为线性分类器的单个神经元
-常用的激活函数 
+    <!--PC版-->
 
 
-神经网络结构
-层组织
-前向传播计算例子
-表达能力
-设置层的数量和尺寸
-
-
-小节
-参考文献
-
-快速简介在不诉诸大脑的类比的情况下，依然是可以对神经网络算法进行介绍的。在线性分类一节中，在给出图像的情况下，是使用$s=Wx$来计算不同视觉类别的评分，其中$W$是一个矩阵，$x$是一个输入列向量，它包含了图像的全部像素数据。在使用数据库CIFAR-10的案例中，$x$是一个[3072x1]的列向量，$W$是一个[10x3072]...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/02/11</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = CS231n>CS231n</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 神经网络>神经网络</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    <!-- paginator  -->
-    
-    <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/page/2/">&#60; PREV</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span>
-    </nav>
-    
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -592,6 +519,24 @@ Nearest Neighbor的优劣
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JSON"><span class="toc-number">1.</span> <span class="toc-text">JSON</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JSON序列化datetime问题"><span class="toc-number">1.1.</span> <span class="toc-text">JSON序列化datetime问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pickle"><span class="toc-number">2.</span> <span class="toc-text">Pickle</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数说明"><span class="toc-number">2.1.</span> <span class="toc-text">函数说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实例代码"><span class="toc-number">2.2.</span> <span class="toc-text">实例代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#比较"><span class="toc-number">3.</span> <span class="toc-text">比较</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1283,6 +1228,8 @@ jsonContent:
 		<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 	
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
     
     </body>
 </html>
