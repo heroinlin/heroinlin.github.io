@@ -299,6 +299,84 @@
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/12/deep_learning/object_detection/SSD/" >
+                
+                    <span>目标检测网络之 SSD</span>
+            </a>
+            <div class="abstract-content">
+                Single Shot MultiBox Detector论文地址: https://arxiv.org/pdf/1512.02325.pdf
+前言目标检测近年来已经取得了很重要的进展，主流的算法主要分为两个类型（参考RefineDet）:
+
+Two stages
+以Faster RCNN为代表，即RPN网络先生成proposals目标定位，再对proposals进行classification+bounding box regression完成目标分类, two-stage方法的优势是准确度高
+
+Single shot
+以YOLO/SSD为代表，均匀地在图片的不同位置进行密集抽样，抽样...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/12</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = SSD>SSD</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = object detection>object detection</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/12/deep_learning/object_detection/R-CNN/" >
+                
+                    <span>目标检测网络之 R-CNN系列</span>
+            </a>
+            <div class="abstract-content">
+                R-CNN前言目标检测(object detection)就是在给定的图片中精确找到物体所在位置，并标注出物体的类别。object detection要解决的问题就是物体在哪里，是什么这整个流程的问题。一般需要经过两个步骤：
+
+图像识别(classification)输入：图片输出：物体的类别评估方法：准确率
+
+
+定位(localization)
+输入：图片输出：方框在图片中的位置（x,y,w,h）评估方法：检测评价函数 intersection-over-union ( IOU ) 
+
+
+
+
+思路思路一：看做回归问题看做回归问题，我们需要预测出（x,y,w,h）四个参数的值，从而得出方...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/12</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = object detection>object detection</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = R-CNN>R-CNN</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = Fast R-CNN>Fast R-CNN</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = Faster R-CNN>Faster R-CNN</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/04/12/deep_learning/object_detection/yolo/" >
                 
                     <span>目标检测网络之 YOLOv3</span>
@@ -319,11 +397,48 @@ YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground
                 
                 <div class= abstract-tags >
     
+        <a class="post-tag" href="javascript:void(0);" data-tags = object detection>object detection</a>
+    
         <a class="post-tag" href="javascript:void(0);" data-tags = yolo>yolo</a>
     
         <a class="post-tag" href="javascript:void(0);" data-tags = darknet>darknet</a>
     
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/12/deep_learning/object_detection/目标检测评价指标/" >
+                
+                    <span>目标检测网络之评价指标</span>
+            </a>
+            <div class="abstract-content">
+                目标检测中的评价指标主要包括召回率( Recall )，精确率(Precision)，平均正确率(Average_precision(AP) )，交除并(Intersection-over-Union(IoU))
+大雁与飞机假设现在有这样一个测试集，测试集中的图片只由大雁和飞机两种图片组成，如下图所示： 
+ 
+
+假设你的分类系统最终的目的是：能取出测试集中所有飞机的图片，而不是大雁的图片。
+现在做如下的定义： True positives :   飞机的图片被正确的识别成了飞机。 True negatives:  大雁的图片没有被识别出来，系统正确地认为它们是大雁。 False posi...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/12</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
         <a class="post-tag" href="javascript:void(0);" data-tags = object detection>object detection</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = 评价指标>评价指标</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = map>map</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = iou>iou</a>
     
 </div>
                 
@@ -730,12 +845,6 @@ YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground
     
     
     
-    
-    
-    
-    
-    
-    
     <div class="total-archive"> Total : 23 </div>
     
     <div class="post-archive">
@@ -745,16 +854,6 @@ YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/30</span><a class="archive-post-title" href= "/2018/09/30/deep_learning/object_detection/目标检测评价指标/" >[Untitled Post]</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">09/18</span><a class="archive-post-title" href= "/2018/09/18/deep_learning/object_detection/R-CNN/" >[Untitled Post]</a>
-        </li>
     
     
         <li class="archive-post-item">
@@ -768,7 +867,22 @@ YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/SSD/" >目标检测网络之 SSD</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/R-CNN/" >目标检测网络之 R-CNN系列</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/yolo/" >目标检测网络之 YOLOv3</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/目标检测评价指标/" >目标检测网络之评价指标</a>
         </li>
     
     
@@ -808,12 +922,22 @@ YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记2/" >CS231n课程笔记翻译：神经网络笔记2</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记1/" >CS231n课程笔记翻译：神经网络笔记1</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/hello-world/" >Hello World</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记2/" >CS231n课程笔记翻译：神经网络笔记2</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：Python Numpy教程/" >CS231n课程笔记翻译：Python Numpy教程</a>
         </li>
     
     
@@ -827,46 +951,8 @@ YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground
         </li>
     
     
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/23/deep_learning/object_detection/SSD/" >[Untitled Post]</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2018 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：线性分类笔记/" >CS231n课程笔记翻译：线性分类笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：Python Numpy教程/" >CS231n课程笔记翻译：Python Numpy教程</a>
-        </li>
-    
-    
         <li class="archive-post-item">
             <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：图像分类笔记/" >CS231n课程笔记翻译：图像分类笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记3/" >CS231n课程笔记翻译：神经网络笔记3</a>
         </li>
     
     
@@ -876,7 +962,12 @@ YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记1/" >CS231n课程笔记翻译：神经网络笔记1</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记3/" >CS231n课程笔记翻译：神经网络笔记3</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：线性分类笔记/" >CS231n课程笔记翻译：线性分类笔记</a>
         </li>
     
     </div>
@@ -888,35 +979,15 @@ YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground
     
         <span class="sidebar-tag-name" data-tags="Debug"><span class="iconfont-archer">&#xe606;</span>Debug</span>
     
-        <span class="sidebar-tag-name" data-tags="Pytorch"><span class="iconfont-archer">&#xe606;</span>Pytorch</span>
-    
-        <span class="sidebar-tag-name" data-tags="Tensor"><span class="iconfont-archer">&#xe606;</span>Tensor</span>
-    
-        <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
-    
-        <span class="sidebar-tag-name" data-tags="pip"><span class="iconfont-archer">&#xe606;</span>pip</span>
-    
-        <span class="sidebar-tag-name" data-tags="conda"><span class="iconfont-archer">&#xe606;</span>conda</span>
-    
-        <span class="sidebar-tag-name" data-tags="ProxyError"><span class="iconfont-archer">&#xe606;</span>ProxyError</span>
-    
-        <span class="sidebar-tag-name" data-tags="String"><span class="iconfont-archer">&#xe606;</span>String</span>
-    
-        <span class="sidebar-tag-name" data-tags="os"><span class="iconfont-archer">&#xe606;</span>os</span>
-    
-        <span class="sidebar-tag-name" data-tags="shutil"><span class="iconfont-archer">&#xe606;</span>shutil</span>
-    
-        <span class="sidebar-tag-name" data-tags="文件操作"><span class="iconfont-archer">&#xe606;</span>文件操作</span>
-    
         <span class="sidebar-tag-name" data-tags="CS231n"><span class="iconfont-archer">&#xe606;</span>CS231n</span>
+    
+        <span class="sidebar-tag-name" data-tags="Numpy"><span class="iconfont-archer">&#xe606;</span>Numpy</span>
     
         <span class="sidebar-tag-name" data-tags="反向传播"><span class="iconfont-archer">&#xe606;</span>反向传播</span>
     
         <span class="sidebar-tag-name" data-tags="卷积神经网络"><span class="iconfont-archer">&#xe606;</span>卷积神经网络</span>
     
         <span class="sidebar-tag-name" data-tags="Convolution"><span class="iconfont-archer">&#xe606;</span>Convolution</span>
-    
-        <span class="sidebar-tag-name" data-tags="Numpy"><span class="iconfont-archer">&#xe606;</span>Numpy</span>
     
         <span class="sidebar-tag-name" data-tags="图像分类"><span class="iconfont-archer">&#xe606;</span>图像分类</span>
     
@@ -926,27 +997,61 @@ YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground
     
         <span class="sidebar-tag-name" data-tags="神经网络"><span class="iconfont-archer">&#xe606;</span>神经网络</span>
     
+        <span class="sidebar-tag-name" data-tags="线性分类"><span class="iconfont-archer">&#xe606;</span>线性分类</span>
+    
+        <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
+    
+        <span class="sidebar-tag-name" data-tags="pip"><span class="iconfont-archer">&#xe606;</span>pip</span>
+    
+        <span class="sidebar-tag-name" data-tags="conda"><span class="iconfont-archer">&#xe606;</span>conda</span>
+    
+        <span class="sidebar-tag-name" data-tags="ProxyError"><span class="iconfont-archer">&#xe606;</span>ProxyError</span>
+    
+        <span class="sidebar-tag-name" data-tags="os"><span class="iconfont-archer">&#xe606;</span>os</span>
+    
+        <span class="sidebar-tag-name" data-tags="shutil"><span class="iconfont-archer">&#xe606;</span>shutil</span>
+    
+        <span class="sidebar-tag-name" data-tags="文件操作"><span class="iconfont-archer">&#xe606;</span>文件操作</span>
+    
+        <span class="sidebar-tag-name" data-tags="Pytorch"><span class="iconfont-archer">&#xe606;</span>Pytorch</span>
+    
+        <span class="sidebar-tag-name" data-tags="Tensor"><span class="iconfont-archer">&#xe606;</span>Tensor</span>
+    
+        <span class="sidebar-tag-name" data-tags="String"><span class="iconfont-archer">&#xe606;</span>String</span>
+    
+        <span class="sidebar-tag-name" data-tags="caffe"><span class="iconfont-archer">&#xe606;</span>caffe</span>
+    
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
     
         <span class="sidebar-tag-name" data-tags="Pycharm"><span class="iconfont-archer">&#xe606;</span>Pycharm</span>
     
         <span class="sidebar-tag-name" data-tags="快捷方式"><span class="iconfont-archer">&#xe606;</span>快捷方式</span>
     
-        <span class="sidebar-tag-name" data-tags="OpenCV，静态库，cmake"><span class="iconfont-archer">&#xe606;</span>OpenCV，静态库，cmake</span>
-    
         <span class="sidebar-tag-name" data-tags="OpenCV"><span class="iconfont-archer">&#xe606;</span>OpenCV</span>
     
         <span class="sidebar-tag-name" data-tags="FFmpeg"><span class="iconfont-archer">&#xe606;</span>FFmpeg</span>
     
-        <span class="sidebar-tag-name" data-tags="caffe"><span class="iconfont-archer">&#xe606;</span>caffe</span>
+        <span class="sidebar-tag-name" data-tags="OpenCV，静态库，cmake"><span class="iconfont-archer">&#xe606;</span>OpenCV，静态库，cmake</span>
     
-        <span class="sidebar-tag-name" data-tags="线性分类"><span class="iconfont-archer">&#xe606;</span>线性分类</span>
+        <span class="sidebar-tag-name" data-tags="SSD"><span class="iconfont-archer">&#xe606;</span>SSD</span>
+    
+        <span class="sidebar-tag-name" data-tags="object detection"><span class="iconfont-archer">&#xe606;</span>object detection</span>
+    
+        <span class="sidebar-tag-name" data-tags="R-CNN"><span class="iconfont-archer">&#xe606;</span>R-CNN</span>
+    
+        <span class="sidebar-tag-name" data-tags="Fast R-CNN"><span class="iconfont-archer">&#xe606;</span>Fast R-CNN</span>
+    
+        <span class="sidebar-tag-name" data-tags="Faster R-CNN"><span class="iconfont-archer">&#xe606;</span>Faster R-CNN</span>
     
         <span class="sidebar-tag-name" data-tags="yolo"><span class="iconfont-archer">&#xe606;</span>yolo</span>
     
         <span class="sidebar-tag-name" data-tags="darknet"><span class="iconfont-archer">&#xe606;</span>darknet</span>
     
-        <span class="sidebar-tag-name" data-tags="object detection"><span class="iconfont-archer">&#xe606;</span>object detection</span>
+        <span class="sidebar-tag-name" data-tags="评价指标"><span class="iconfont-archer">&#xe606;</span>评价指标</span>
+    
+        <span class="sidebar-tag-name" data-tags="map"><span class="iconfont-archer">&#xe606;</span>map</span>
+    
+        <span class="sidebar-tag-name" data-tags="iou"><span class="iconfont-archer">&#xe606;</span>iou</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -983,17 +1088,17 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="C-C"><span class="iconfont-archer">&#xe60a;</span>C-C</span>
     
-        <span class="sidebar-category-name" data-categories="Pytorch"><span class="iconfont-archer">&#xe60a;</span>Pytorch</span>
+        <span class="sidebar-category-name" data-categories="CS231n课程笔记翻译"><span class="iconfont-archer">&#xe60a;</span>CS231n课程笔记翻译</span>
     
         <span class="sidebar-category-name" data-categories="Python"><span class="iconfont-archer">&#xe60a;</span>Python</span>
     
-        <span class="sidebar-category-name" data-categories="CS231n课程笔记翻译"><span class="iconfont-archer">&#xe60a;</span>CS231n课程笔记翻译</span>
+        <span class="sidebar-category-name" data-categories="Pytorch"><span class="iconfont-archer">&#xe60a;</span>Pytorch</span>
+    
+        <span class="sidebar-category-name" data-categories="caffe"><span class="iconfont-archer">&#xe60a;</span>caffe</span>
     
         <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
         <span class="sidebar-category-name" data-categories="OpenCV"><span class="iconfont-archer">&#xe60a;</span>OpenCV</span>
-    
-        <span class="sidebar-category-name" data-categories="caffe"><span class="iconfont-archer">&#xe60a;</span>caffe</span>
     
         <span class="sidebar-category-name" data-categories="object-detection"><span class="iconfont-archer">&#xe60a;</span>object-detection</span>
     
