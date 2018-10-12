@@ -9,7 +9,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
-    <title>python中对文件、文件夹操作 · heroinlin&#39;s Studio</title>
+    <title>heroinlin&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -251,23 +251,12 @@
 </head>
 
     
-        <body class="post-body">
-    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
-    
-    <div class="banner">
-            <div class="blog-title">
-                <a href="/" >heroinlin&#39;s Studio.</a>
-            </div>
-            <div class="post-title">
-                <a href="#" class="post-name">python中对文件、文件夹操作</a>
-            </div>
-    </div>
     
     <a class="home-link" href=/>heroinlin's Studio.</a>
 </header>
@@ -281,185 +270,67 @@
 
 
 
-height:50vh;
-
 >
     
     <!-- 主页  -->
-    
-    
-    <!-- 404页  -->
             
-    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/)"></div>
     <div class="site-intro-placeholder"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            python中对文件、文件夹操作
-            <!-- 404 -->
-            
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
-            
-            <!-- 404 -->
-            
         </p>
         <!-- 文章页meta -->
-        
-            <!-- 文章页标签  -->
-            
-                <div class= post-intro-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = Python>Python</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = os>os</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = shutil>shutil</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 文件操作>文件操作</a>
-    
-</div>
-            
-            <div class="post-intro-meta">
-                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                <span class="post-intro-time">2018/03/12</span>
-                
-                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                    <span class="iconfont-archer">&#xe602;</span>
-                    <span id="busuanzi_value_page_pv"></span>
-                </span>
-                
-                <span class="shareWrapper">
-                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
-                    <span class="shareText">Share</span>
-                    <ul class="shareList">
-                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
-                            <div class="share-qrcode"></div>
-                        </li>
-                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
-                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
-                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
-                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
-                    </ul>
-                </span>
-            </div>
         
     </div>
 </div>
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
 
         <div class="container container-unloaded">
-            <main class="main post-page">
-    <article class="article-entry">
-        <p>#python中对文件、文件夹操作</p>
-<p><strong>python中对文件、文件夹（文件操作函数）的操作需要涉及到os模块和shutil模块。</strong></p>
-<p>##os模块</p>
-<p>得到当前工作目录，即当前Python脚本工作的目录路径: <strong>os.getcwd()</strong></p>
-<p>返回指定目录下的所有文件和目录名:<strong>os.listdir()</strong></p>
-<p>函数用来删除一个文件:<strong>os.remove()</strong></p>
-<p>删除多个目录：<strong>os.removedirs（r“c：\python”）</strong></p>
-<p>检验给出的路径是否是一个文件：<strong>os.path.isfile()</strong></p>
-<p>检验给出的路径是否是一个目录：<strong>os.path.isdir()</strong></p>
-<p>判断是否是绝对路径：<strong>os.path.isabs()</strong></p>
-<p>检验给出的路径是否真地存:<strong>os.path.exists()</strong></p>
-<p>返回一个路径的目录名和文件名:<strong>os.path.split()  </strong>   eg os.path.split(‘/home/swaroop/byte/code/poem.txt’) 结果：(‘/home/swaroop/byte/code’, ‘poem.txt’) </p>
-<p>分离扩展名：<strong>os.path.splitext()</strong></p>
-<p>获取路径名：<strong>os.path.dirname()</strong></p>
-<p>获取文件名：<strong>os.path.basename()</strong></p>
-<p>运行shell命令: <strong>os.system()</strong></p>
-<p>读取和设置环境变量:<strong>os.getenv() 与os.putenv()</strong></p>
-<p>给出当前平台使用的行终止符:<strong>os.linesep    </strong>Windows使用’\r\n’，Linux使用’\n’而Mac使用’\r’</p>
-<p>指示你正在使用的平台：<strong>os.name </strong>      对于Windows，它是’nt’，而对于Linux/Unix用户，它是’posix’</p>
-<p>重命名：<strong>os.rename（old， new）</strong></p>
-<p>创建多级目录：<strong>os.makedirs（r“c：\python\test”）</strong></p>
-<p>创建单个目录：<strong>os.mkdir（“test”）</strong></p>
-<p>获取文件属性：<strong>os.stat（file）</strong></p>
-<p>修改文件权限与时间戳：<strong>os.chmod（file）</strong></p>
-<p>终止当前进程：<strong>os.exit（）</strong></p>
-<p>获取文件大小：<strong>os.path.getsize（filename）</strong></p>
-<p>##文件读写操作</p>
-<p><strong>文件操作：os.mknod(“test.txt”) </strong>       创建空文件<br><strong>fp = open(“test.txt”,w)  </strong>   直接打开一个文件，如果文件不存在则创建文件</p>
-<p>关于open 模式：</p>
-<p>w     以写方式打开，<br>a     以追加模式打开 (从 EOF 开始, 必要时创建新文件)<br>r+     以读写模式打开<br>w+     以读写模式打开 (参见 w )<br>a+     以读写模式打开 (参见 a )<br>rb     以二进制读模式打开<br>wb     以二进制写模式打开 (参见 w )<br>ab     以二进制追加模式打开 (参见 a )<br>rb+    以二进制读写模式打开 (参见 r+ )<br>wb+    以二进制读写模式打开 (参见 w+ )<br>ab+    以二进制读写模式打开 (参见 a+ )</p>
-<p><strong>fp.read([size])  </strong>                   #size为读取的长度，以byte为单位</p>
-<p><strong>fp.readline([size])  </strong>               #读一行，如果定义了size，有可能返回的只是一行的一部分</p>
-<p><strong>fp.readlines([size])   </strong>             #把文件每一行作为一个list的一个成员，并返回这个list。其实它的内部是通过循环调用readline()来实现的。如果提供size参数，size是表示读取内容的总长，也就是说可能只读到文件的一部分。</p>
-<p><strong>fp.write(str)   </strong>                   #把str写到文件中，write()并不会在str后加上一个换行符</p>
-<p><strong>fp.writelines(seq)    </strong>        #把seq的内容全部写到文件中(多行一次性写入)。这个函数也只是忠实地写入，不会在每行后面加上任何东西。</p>
-<p><strong>fp.close()   </strong>                     #关闭文件。python会在一个文件不用后自动关闭文件，不过这一功能没有保证，最好还是养成自己关闭的习惯。  如果一个文件在关闭后还对其进行操作会产生ValueError</p>
-<p><strong>fp.flush()   </strong>                                   #把缓冲区的内容写入硬盘</p>
-<p><strong>fp.fileno()    </strong>                                  #返回一个长整型的”文件标签“</p>
-<p><strong>fp.isatty()    </strong>                                  #文件是否是一个终端设备文件（unix系统中的）</p>
-<p><strong>fp.tell()</strong>                                         #返回文件操作标记的当前位置，以文件的开头为原点</p>
-<p><strong>fp.next()    </strong>                                   #返回下一行，并将文件操作标记位移到下一行。把一个file用于for … in file这样的语句时，就是调用next()函数来实现遍历的。</p>
-<p><strong>fp.seek(offset[,whence])  </strong>            #将文件打操作标记移到offset的位置。这个offset一般是相对于文件的开头来计算的，一般为正数。但如果提供了whence参数就不一定了，whence可以为0表示从头开始计算，1表示以当前位置为原点计算。2表示以文件末尾为原点进行计算。需要注意，如果文件以a或a+的模式打开，每次进行写操作时，文件操作标记会自动返回到文件末尾。</p>
-<p><strong>fp.truncate([size])   </strong>                    #把文件裁成规定的大小，默认的是裁到当前文件操作标记的位置。如果size比文件的大小还要大，依据系统的不同可能是不改变文件，也可能是用0把文件补到相应的大小，也可能是以一些随机的内容加上去。</p>
-<h2 id="目录操作"><a href="#目录操作" class="headerlink" title="目录操作"></a>目录操作</h2><p><strong>目录操作：os.mkdir(“file”)     </strong>              创建目录<br>复制文件：<br><strong>shutil.copyfile(“oldfile”,”newfile”) </strong>      oldfile和newfile都只能是文件<br><strong>shutil.copy(“oldfile”,”newfile”)   </strong>         oldfile只能是文件夹，newfile可以是文件，也可以是目标目录<br>复制文件夹：<br><strong>shutil.copytree(“olddir”,”newdir”) </strong>       olddir和newdir都只能是目录，且newdir必须不存在<br>重命名文件（目录）<br><strong>os.rename(“oldname”,”newname”) </strong>      文件或目录都是使用这条命令<br>移动文件（目录）<br><strong>shutil.move(“oldpos”,”newpos”)   </strong><br>删除文件<br><strong>os.remove(“file”)</strong><br>删除目录<br><strong>os.rmdir(“dir”)</strong>只能删除空目录<br><strong>shutil.rmtree(“dir”)  </strong>  空目录、有内容的目录都可以删<br>转换目录<br><strong>os.chdir(“path”)   </strong>换路径</p>
-<p><strong>相关例子 </strong></p>
-<ul>
-<li>将文件夹下所有图片名称加上’_fc’</li>
-</ul>
-<p><strong>python代码:</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="comment">#str.split(string)分割字符串</span></span><br><span class="line"><span class="comment">#'连接符'.join(list) 将列表组成字符串</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">change_name</span><span class="params">(path)</span>:</span></span><br><span class="line">    <span class="keyword">global</span> i</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.isdir(path) <span class="keyword">and</span> <span class="keyword">not</span> os.path.isfile(path):</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">    <span class="keyword">if</span> os.path.isfile(path):</span><br><span class="line">        file_path = os.path.split(path) <span class="comment">#分割出目录与文件</span></span><br><span class="line">        lists = file_path[<span class="number">1</span>].split(<span class="string">'.'</span>) <span class="comment">#分割出文件与文件扩展名</span></span><br><span class="line">        file_ext = lists[<span class="number">-1</span>] <span class="comment">#取出后缀名(列表切片操作)</span></span><br><span class="line">        img_ext = [<span class="string">'bmp'</span>,<span class="string">'jpeg'</span>,<span class="string">'gif'</span>,<span class="string">'psd'</span>,<span class="string">'png'</span>,<span class="string">'jpg'</span>]</span><br><span class="line">        <span class="keyword">if</span> file_ext <span class="keyword">in</span> img_ext:</span><br><span class="line">            os.rename(path,file_path[<span class="number">0</span>]+<span class="string">'/'</span>+lists[<span class="number">0</span>]+<span class="string">'_fc.'</span>+file_ext)</span><br><span class="line">            i+=<span class="number">1</span> <span class="comment">#注意这里的i是一个陷阱</span></span><br><span class="line">        <span class="comment">#或者</span></span><br><span class="line">        <span class="comment">#img_ext = 'bmp|jpeg|gif|psd|png|jpg'</span></span><br><span class="line">        <span class="comment">#if file_ext in img_ext:</span></span><br><span class="line">        <span class="comment">#    print('ok---'+file_ext)</span></span><br><span class="line">    <span class="keyword">elif</span> os.path.isdir(path):</span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> os.listdir(path):</span><br><span class="line">            change_name(os.path.join(path,x)) <span class="comment">#os.path.join()在路径处理上很有用</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    img_dir = <span class="string">'D:\\xx\\xx\\images'</span></span><br><span class="line">    img_dir = img_dir.replace(<span class="string">'\\'</span>,<span class="string">'/'</span>)</span><br><span class="line">    start = time.time()</span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    change_name(img_dir)</span><br><span class="line">    c = time.time() - start</span><br><span class="line">    print(<span class="string">'程序运行耗时:%0.2f'</span>%(c))</span><br><span class="line">    print(<span class="string">'总共处理了 %s 张图片'</span>%(i))</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p> 输出结果：</p>
-<p>程序运行耗时:0.11<br>总共处理了 109 张图片</p>
-</blockquote>
-
-    </article>
-    <!-- 前后页  -->
-    <ul class="post-paginator">
-        <li class="next">
-            
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2018/03/12/Pytorch/pytorch常用Tensor运算/" title= Tensor的数学运算 >
-                    <div class="nextTitle">Tensor的数学运算</div>
-                </a>
-            
-        </li>
-        <li class="previous">
-            
-                <div class="prevSlogan">Previous Post</div>
-                <a href= "/2018/03/07/C&C++/调试报错问题解决方法/" title= C及C++编译时候出现的一些问题与解决方案 >
-                    <div class="prevTitle">C及C++编译时候出现的一些问题与解决方案</div>
-                </a>
-            
-        </li>
-    </ul>
-    <!-- 评论插件 -->
-    <!-- 来必力City版安装代码 -->
-
-<!-- City版安装代码已完成 -->
+            <main class="main index-page">
     
     
-<div id="container"></div>
-<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
-<script>
-    var gitment = new Gitment({
-        id: "Mon Mar 12 2018 10:48:11 GMT+0800", // 可选。默认为 location.href
-        owner: 'heroinlin',
-        repo: 'heroinlin.github.io',
-        oauth: {
-            client_id: '33b4a51ea87942e922ca',
-            client_secret: '264679785d383afbc726145178abea84ff750743',
-        },
-    })
-    gitment.render('container')
-</script>
-
-    <!--PC版-->
-
-    <!--PC版-->
-
-
     
-    <!-- 评论 -->
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/10/10/Python/Python_argparse/" >
+                
+                    <span>python之argparse命令行选项与参数解析</span>
+            </a>
+            <div class="abstract-content">
+                python之argparse命令行选项与参数解析argparse 是 Python 内置的一个用于命令项选项与参数解析的模块，通过在程序中定义好我们需要的参数，argparse 将会从 sys.argv 中解析出这些参数，并自动生成帮助和使用信息。当然，Python 也有第三方的库可用于命令行解析，而且功能也更加强大，比如 docopt，Click。
+Argparse使用方法创建 ArgumentParser() 对象1ArgumentParser(prog=None, usage=None, description=None, epilog=None)
+
+prog（不建议更改）程序名...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/10/10</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = Python>Python</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = argparse>argparse</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = 参数>参数</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    <!-- paginator  -->
+    
 </main>
             <!-- profile -->
             
@@ -532,24 +403,6 @@ height:50vh;
 </footer>
     </div>
     <!-- toc -->
-    
-    <div class="toc-wrapper" style=
-    
-
-
-
-
-
-
-
-top:50vh;
-
-    >
-        <div class="toc-catalog">
-            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
-        </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#目录操作"><span class="toc-number">1.</span> <span class="toc-text">目录操作</span></a></li></ol>
-    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1273,8 +1126,6 @@ jsonContent:
 		<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 	
     <!-- async load share.js -->
-    
-        <script src="/scripts/share.js" async></script>    
     
     </body>
 </html>
