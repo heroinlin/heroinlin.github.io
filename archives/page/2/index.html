@@ -299,16 +299,19 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/12/deep_learning/object_detection/yolo/" >
+            <a class="abstract-title" href = "/2018/04/12/deep_learning/object_detection/SSD/" >
                 
-                    <span>目标检测网络之 YOLOv3</span>
+                    <span>目标检测网络之 SSD</span>
             </a>
             <div class="abstract-content">
-                目标检测网络之 YOLOv3
-本文逐步介绍YOLO v1~v3的设计历程。
-YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground truth 的中心位置的坐标落入到某个格子，那么这个格子就负责检测出这个物体。
+                Single Shot MultiBox Detector论文地址: https://arxiv.org/pdf/1512.02325.pdf
+前言目标检测近年来已经取得了很重要的进展，主流的算法主要分为两个类型（参考RefineDet）:
 
-网络结构YOLOv1网络借鉴了GoogLeNet分类网络结构。不同的是，YOLO未使用inception module，而是使用1x1卷积层（此处1x1卷积层的存在是为了跨通道信息整合）+3x3卷积层简单替代。YOLOv1网络在最后使用全连接层进行类别输出，因此全连接层的输出维度是 $S×S×(B×5+C)$。YOLOv1网络比VGG16快(浮点数少于...
+Two stages
+以Faster RCNN为代表，即RPN网络先生成proposals目标定位，再对proposals进行classification+bounding box regression完成目标分类, two-stage方法的优势是准确度高
+
+Single shot
+以YOLO/SSD为代表，均匀地在图片的不同位置进行密集抽样，抽样...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
@@ -319,11 +322,9 @@ YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground
                 
                 <div class= abstract-tags >
     
+        <a class="post-tag" href="javascript:void(0);" data-tags = SSD>SSD</a>
+    
         <a class="post-tag" href="javascript:void(0);" data-tags = object detection>object detection</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = yolo>yolo</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = darknet>darknet</a>
     
 </div>
                 
@@ -561,6 +562,44 @@ CentOS桌面的所有菜单项都存储在如下的位置中：
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/03/12/Pytorch/pytorch_Tensor/" >
+                
+                    <span>Tensor的数学运算</span>
+            </a>
+            <div class="abstract-content">
+                #Tensor的数学运算
+总结的方法包括：
+Tensor求和以及按索引求和：torch.sum()         torch.Tensor.indexadd()
+Tensor元素乘积：torch.prod(input)
+对Tensor求均值、方差、极值：
+torch.mean()      torch.var()
+torch.max()         torch.min()
+最后还有在NLP领域经常用到的：
+求Tensor的平方根倒数、线性插值、双曲正切
+torch.rsqrt(input)     torch.lerp(star,end,weight)
+torch.tanh(inp...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/12</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = Pytorch>Pytorch</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = Tensor>Tensor</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/03/12/Python/Python_webbrowser/" >
                 
                     <span>python之webbrowser</span>
@@ -596,16 +635,14 @@ CentOS桌面的所有菜单项都存储在如下的位置中：
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/12/Python/Python_shutil/" >
+            <a class="abstract-title" href = "/2018/03/12/Python/Python_String/" >
                 
-                    <span>python之Shutil</span>
+                    <span>Python之String模块</span>
             </a>
             <div class="abstract-content">
-                #python之Shutil文件、文件夹高级操作
-复制操作copyfileobj1shutil.copyfileobj(fsrc, fdst[, length=16\*1024])
-copy文件内容到另一个文件，可以copy指定大小的内容。这个方法是shutil模块中其它拷贝方法的基础，其它方法在本质上都是调用这个方法。
-让我们看一下它的源码：
-123456def copyfileobj(fsrc, fdst, length=16*1024):    while 1:        buf = fsrc.read(length)        if not buf:           ...
+                #Python之String模块
+本部分是对python中的string模块进行解析，添加函数中文说明与实例说明
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
@@ -618,49 +655,7 @@ copy文件内容到另一个文件，可以copy指定大小的内容。这个方
     
         <a class="post-tag" href="javascript:void(0);" data-tags = Python>Python</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = shutil>shutil</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 文件操作>文件操作</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 解压缩>解压缩</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/12/Pytorch/pytorch_Tensor/" >
-                
-                    <span>Tensor的数学运算</span>
-            </a>
-            <div class="abstract-content">
-                #Tensor的数学运算
-总结的方法包括：
-Tensor求和以及按索引求和：torch.sum()         torch.Tensor.indexadd()
-Tensor元素乘积：torch.prod(input)
-对Tensor求均值、方差、极值：
-torch.mean()      torch.var()
-torch.max()         torch.min()
-最后还有在NLP领域经常用到的：
-求Tensor的平方根倒数、线性插值、双曲正切
-torch.rsqrt(input)     torch.lerp(star,end,weight)
-torch.tanh(inp...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/12</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = Pytorch>Pytorch</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = Tensor>Tensor</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = String>String</a>
     
 </div>
                 
@@ -1264,6 +1259,8 @@ torch.tanh(inp...
     
     
     
+    
+    
     <div class="total-archive"> Total : 34 </div>
     
     <div class="post-archive">
@@ -1276,7 +1273,7 @@ torch.tanh(inp...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/05</span><a class="archive-post-title" href= "/2019/03/05/blogs/linux修改密码和添加用户/" >[Untitled Post]</a>
+            <span class="archive-post-date">03/05</span><a class="archive-post-title" href= "/2019/03/05/blogs/linux_user_password/" >[Untitled Post]</a>
         </li>
     
     
@@ -1286,7 +1283,7 @@ torch.tanh(inp...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/05</span><a class="archive-post-title" href= "/2019/03/05/blogs/科学上网：Google Cloud 安装SSR与BBR加速/" >[Untitled Post]</a>
+            <span class="archive-post-date">03/05</span><a class="archive-post-title" href= "/2019/03/05/blogs/Google_Cloud _SSR_BBR/" >[Untitled Post]</a>
         </li>
     
     
@@ -1300,17 +1297,17 @@ torch.tanh(inp...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2018/10/10/Python/Python_Struct/" >python之Struct解析二进制数据</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2018/10/10/Python/Python_argparse/" >python之argparse命令行选项与参数解析</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2018/10/10/Python/Python_JSON_and_Pickle/" >python之JSON与Pickle</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2018/10/10/Python/Python_Struct/" >python之Struct解析二进制数据</a>
         </li>
     
     
@@ -1325,7 +1322,12 @@ torch.tanh(inp...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/SSD/" >目标检测网络之 SSD</a>
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/yolo/" >目标检测网络之 YOLOv3</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/math/merge_mean_vart/" >均值方差合并</a>
         </li>
     
     
@@ -1335,17 +1337,12 @@ torch.tanh(inp...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/yolo/" >目标检测网络之 YOLOv3</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/metric/" >目标检测网络之评价指标</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/math/merge_mean_vart/" >均值方差合并</a>
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/SSD/" >目标检测网络之 SSD</a>
         </li>
     
     
@@ -1370,7 +1367,12 @@ torch.tanh(inp...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_File/" >python中对文件、文件夹操作</a>
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_String/" >Python之String模块</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_webbrowser/" >python之webbrowser</a>
         </li>
     
     
@@ -1380,17 +1382,12 @@ torch.tanh(inp...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_String/" >Python之String模块</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_selenium/" >python之Selenium</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_webbrowser/" >python之webbrowser</a>
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_File/" >python中对文件、文件夹操作</a>
         </li>
     
     
@@ -1430,12 +1427,12 @@ torch.tanh(inp...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Neural_Network2/" >CS231n课程笔记翻译：神经网络笔记2</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Python_Numpy/" >CS231n课程笔记翻译：Python Numpy教程</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Python_Numpy/" >CS231n课程笔记翻译：Python Numpy教程</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Neural_Network2/" >CS231n课程笔记翻译：神经网络笔记2</a>
         </li>
     
     
@@ -1458,15 +1455,11 @@ torch.tanh(inp...
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
-    
-        <span class="sidebar-tag-name" data-tags="JSON"><span class="iconfont-archer">&#xe606;</span>JSON</span>
-    
-        <span class="sidebar-tag-name" data-tags="Pickle"><span class="iconfont-archer">&#xe606;</span>Pickle</span>
-    
         <span class="sidebar-tag-name" data-tags="C&C++"><span class="iconfont-archer">&#xe606;</span>C&C++</span>
     
         <span class="sidebar-tag-name" data-tags="Debug"><span class="iconfont-archer">&#xe606;</span>Debug</span>
+    
+        <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
     
         <span class="sidebar-tag-name" data-tags="os"><span class="iconfont-archer">&#xe606;</span>os</span>
     
@@ -1474,15 +1467,19 @@ torch.tanh(inp...
     
         <span class="sidebar-tag-name" data-tags="文件操作"><span class="iconfont-archer">&#xe606;</span>文件操作</span>
     
+        <span class="sidebar-tag-name" data-tags="JSON"><span class="iconfont-archer">&#xe606;</span>JSON</span>
+    
+        <span class="sidebar-tag-name" data-tags="Pickle"><span class="iconfont-archer">&#xe606;</span>Pickle</span>
+    
+        <span class="sidebar-tag-name" data-tags="argparse"><span class="iconfont-archer">&#xe606;</span>argparse</span>
+    
+        <span class="sidebar-tag-name" data-tags="参数"><span class="iconfont-archer">&#xe606;</span>参数</span>
+    
         <span class="sidebar-tag-name" data-tags="pip"><span class="iconfont-archer">&#xe606;</span>pip</span>
     
         <span class="sidebar-tag-name" data-tags="conda"><span class="iconfont-archer">&#xe606;</span>conda</span>
     
         <span class="sidebar-tag-name" data-tags="ProxyError"><span class="iconfont-archer">&#xe606;</span>ProxyError</span>
-    
-        <span class="sidebar-tag-name" data-tags="argparse"><span class="iconfont-archer">&#xe606;</span>argparse</span>
-    
-        <span class="sidebar-tag-name" data-tags="参数"><span class="iconfont-archer">&#xe606;</span>参数</span>
     
         <span class="sidebar-tag-name" data-tags="Selenium"><span class="iconfont-archer">&#xe606;</span>Selenium</span>
     
@@ -1492,13 +1489,23 @@ torch.tanh(inp...
     
         <span class="sidebar-tag-name" data-tags="webbrowsers"><span class="iconfont-archer">&#xe606;</span>webbrowsers</span>
     
-        <span class="sidebar-tag-name" data-tags="caffe"><span class="iconfont-archer">&#xe606;</span>caffe</span>
-    
         <span class="sidebar-tag-name" data-tags="blog"><span class="iconfont-archer">&#xe606;</span>blog</span>
     
         <span class="sidebar-tag-name" data-tags="Docker"><span class="iconfont-archer">&#xe606;</span>Docker</span>
     
         <span class="sidebar-tag-name" data-tags="Hexo"><span class="iconfont-archer">&#xe606;</span>Hexo</span>
+    
+        <span class="sidebar-tag-name" data-tags="caffe"><span class="iconfont-archer">&#xe606;</span>caffe</span>
+    
+        <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
+    
+        <span class="sidebar-tag-name" data-tags="Pycharm"><span class="iconfont-archer">&#xe606;</span>Pycharm</span>
+    
+        <span class="sidebar-tag-name" data-tags="快捷方式"><span class="iconfont-archer">&#xe606;</span>快捷方式</span>
+    
+        <span class="sidebar-tag-name" data-tags="数学公式"><span class="iconfont-archer">&#xe606;</span>数学公式</span>
+    
+        <span class="sidebar-tag-name" data-tags="OpenCV，静态库，cmake"><span class="iconfont-archer">&#xe606;</span>OpenCV，静态库，cmake</span>
     
         <span class="sidebar-tag-name" data-tags="struct"><span class="iconfont-archer">&#xe606;</span>struct</span>
     
@@ -1508,25 +1515,13 @@ torch.tanh(inp...
     
         <span class="sidebar-tag-name" data-tags="Tensor"><span class="iconfont-archer">&#xe606;</span>Tensor</span>
     
-        <span class="sidebar-tag-name" data-tags="OpenCV，静态库，cmake"><span class="iconfont-archer">&#xe606;</span>OpenCV，静态库，cmake</span>
-    
-        <span class="sidebar-tag-name" data-tags="数学公式"><span class="iconfont-archer">&#xe606;</span>数学公式</span>
-    
-        <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
-    
-        <span class="sidebar-tag-name" data-tags="Pycharm"><span class="iconfont-archer">&#xe606;</span>Pycharm</span>
-    
-        <span class="sidebar-tag-name" data-tags="快捷方式"><span class="iconfont-archer">&#xe606;</span>快捷方式</span>
-    
-        <span class="sidebar-tag-name" data-tags="CS231n"><span class="iconfont-archer">&#xe606;</span>CS231n</span>
-    
-        <span class="sidebar-tag-name" data-tags="反向传播"><span class="iconfont-archer">&#xe606;</span>反向传播</span>
-    
         <span class="sidebar-tag-name" data-tags="OpenCV"><span class="iconfont-archer">&#xe606;</span>OpenCV</span>
     
         <span class="sidebar-tag-name" data-tags="FFmpeg"><span class="iconfont-archer">&#xe606;</span>FFmpeg</span>
     
-        <span class="sidebar-tag-name" data-tags="String"><span class="iconfont-archer">&#xe606;</span>String</span>
+        <span class="sidebar-tag-name" data-tags="CS231n"><span class="iconfont-archer">&#xe606;</span>CS231n</span>
+    
+        <span class="sidebar-tag-name" data-tags="反向传播"><span class="iconfont-archer">&#xe606;</span>反向传播</span>
     
         <span class="sidebar-tag-name" data-tags="图像分类"><span class="iconfont-archer">&#xe606;</span>图像分类</span>
     
@@ -1535,6 +1530,8 @@ torch.tanh(inp...
         <span class="sidebar-tag-name" data-tags="最优化"><span class="iconfont-archer">&#xe606;</span>最优化</span>
     
         <span class="sidebar-tag-name" data-tags="Optimization"><span class="iconfont-archer">&#xe606;</span>Optimization</span>
+    
+        <span class="sidebar-tag-name" data-tags="String"><span class="iconfont-archer">&#xe606;</span>String</span>
     
         <span class="sidebar-tag-name" data-tags="SSD"><span class="iconfont-archer">&#xe606;</span>SSD</span>
     
@@ -1550,15 +1547,15 @@ torch.tanh(inp...
     
         <span class="sidebar-tag-name" data-tags="Numpy"><span class="iconfont-archer">&#xe606;</span>Numpy</span>
     
-        <span class="sidebar-tag-name" data-tags="yolo"><span class="iconfont-archer">&#xe606;</span>yolo</span>
-    
-        <span class="sidebar-tag-name" data-tags="darknet"><span class="iconfont-archer">&#xe606;</span>darknet</span>
-    
         <span class="sidebar-tag-name" data-tags="R-CNN"><span class="iconfont-archer">&#xe606;</span>R-CNN</span>
     
         <span class="sidebar-tag-name" data-tags="Fast R-CNN"><span class="iconfont-archer">&#xe606;</span>Fast R-CNN</span>
     
         <span class="sidebar-tag-name" data-tags="Faster R-CNN"><span class="iconfont-archer">&#xe606;</span>Faster R-CNN</span>
+    
+        <span class="sidebar-tag-name" data-tags="yolo"><span class="iconfont-archer">&#xe606;</span>yolo</span>
+    
+        <span class="sidebar-tag-name" data-tags="darknet"><span class="iconfont-archer">&#xe606;</span>darknet</span>
     
         <span class="sidebar-tag-name" data-tags="卷积神经网络"><span class="iconfont-archer">&#xe606;</span>卷积神经网络</span>
     
@@ -1597,21 +1594,21 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="Python"><span class="iconfont-archer">&#xe60a;</span>Python</span>
-    
         <span class="sidebar-category-name" data-categories="C-C"><span class="iconfont-archer">&#xe60a;</span>C-C</span>
     
-        <span class="sidebar-category-name" data-categories="caffe"><span class="iconfont-archer">&#xe60a;</span>caffe</span>
+        <span class="sidebar-category-name" data-categories="Python"><span class="iconfont-archer">&#xe60a;</span>Python</span>
     
         <span class="sidebar-category-name" data-categories="blog"><span class="iconfont-archer">&#xe60a;</span>blog</span>
     
-        <span class="sidebar-category-name" data-categories="Pytorch"><span class="iconfont-archer">&#xe60a;</span>Pytorch</span>
+        <span class="sidebar-category-name" data-categories="caffe"><span class="iconfont-archer">&#xe60a;</span>caffe</span>
     
-        <span class="sidebar-category-name" data-categories="OpenCV"><span class="iconfont-archer">&#xe60a;</span>OpenCV</span>
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
         <span class="sidebar-category-name" data-categories="Math"><span class="iconfont-archer">&#xe60a;</span>Math</span>
     
-        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+        <span class="sidebar-category-name" data-categories="OpenCV"><span class="iconfont-archer">&#xe60a;</span>OpenCV</span>
+    
+        <span class="sidebar-category-name" data-categories="Pytorch"><span class="iconfont-archer">&#xe60a;</span>Pytorch</span>
     
         <span class="sidebar-category-name" data-categories="CS231n课程笔记翻译"><span class="iconfont-archer">&#xe60a;</span>CS231n课程笔记翻译</span>
     
