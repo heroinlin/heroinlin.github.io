@@ -299,21 +299,38 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2019/03/05/blogs/linux_user_password/" >
+            <a class="abstract-title" href = "/2018/04/11/blogs/Docker_Hexo_Nginx_blog/" >
                 
-                    <span>[Untitled Post]</span>
+                    <span>Mac下使用Docker+Hexo搭建博客</span>
             </a>
             <div class="abstract-content">
-                linux修改密码和添加用户默认root账户是没有密码的，使用sudo su进入root账户，输入passwd进行密码的设置，输入passwd -d heroin， 可以删除heroin账户原先设置的密码，切换到heroin账户后，输入passwd可以重新设置heroin账户的密码
-切换到root账户后，输入gpasswd -a heroin root 可以将heroin账户加入root组
+                Mac下使用Docker+Hexo搭建博客Docker的安装下载Docker.dmg文件，双击进行安装。之后安装Kitematic。
+
+Hexo配置安装完后打开Kitematic，搜索Hexo创建hexo-with-hexo-hey，将Settings中的Volumes路径更改为之前搭建的Hexo博客所在文件夹路径
+
+点击START，之后点击EXEC进入命令行模式，复制.ssh文件夹到Docker中的/home文件夹下，执行hexo的发布命令
+1hexo clean
+1hexo g
+1hexo d
+即可进行博客的发布，此时发布的内容可登入对应的github.io.git网址查看
 
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/05</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/11</span>
                 </div>
                 <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = blog>blog</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = Docker>Docker</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = Hexo>Hexo</a>
+    
+</div>
                 
             </div>
         </article>
@@ -321,62 +338,41 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2019/03/05/blogs/Google_Cloud _SSR_BBR/" >
+            <a class="abstract-title" href = "/2018/04/10/opencv/ffmpeg_and_opencv_build_by_source_code/" >
                 
-                    <span>[Untitled Post]</span>
+                    <span>FFmpeg与OpenCV的源码编译</span>
             </a>
             <div class="abstract-content">
-                科学上网：Google Cloud 安装SSR与BBR加速基础准备
-可以访问谷歌云官网的网络环境 （不科学上网就访问不了，可先其他地方借用/购买/试用SSR
-申请一张全币信用卡用于申请免费试用 （国内几家全币信用卡基本免年费）
-
-创建和配置Google云实例创建实例
-在计算引擎-VM实例中点击创建
-地区选择:根据需要 一般选择台湾
-机器类型：小型 / 微型 (我选择微型 费用较低，相对可以用更多免费流量 不过一般用不完，好像后面也可以增加配额等操作
-启动磁盘：根据自己熟悉的选， linux走命令行大部分也没差
-防火墙：允许HTTP流量，允许HTTPS流量
-
-配置
-防火墙配置
-新建一个防火...
+                FFmpeg与OpenCV的源码编译本示例在centos7下编译ffmpeg2.8.0及opencv3.2.0+opencv_contrib
+FFmpeg的源码编译安装依赖包1yum install autoconf automake bzip2 cmake freetype-devel gcc gcc-c++ git libtool make mercurial pkgconfig zlib-devel
+安装可选扩展库将可选扩展库下载于如下文件夹
+1mkdir ~/ffmpeg_sources
+####NASM
+An assembler used by some libraries. ...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/05</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/10</span>
                 </div>
                 <!-- tags  -->
                 
-            </div>
-        </article>
+                <div class= abstract-tags >
     
+        <a class="post-tag" href="javascript:void(0);" data-tags = OpenCV>OpenCV</a>
     
+        <a class="post-tag" href="javascript:void(0);" data-tags = FFmpeg>FFmpeg</a>
     
-        <article class="index-post">
-            <a class="abstract-title" href = "/2019/03/05/blogs/Docker_Nginx_Hexo_blog/" >
-                
-                    <span>[Untitled Post]</span>
-            </a>
-            <div class="abstract-content">
-                使用Docker搭建Nginx环境挂载Hexo博客介绍原先我的博客是挂载在github pages上面的，但是因为github pages的服务器在国外，国内访问速度就会有点感人，于是就想把我的博客挂载在自己阿里云的服务器上面。
-环境
-一台有独立ip的服务器（centos 7)
-在本地搭建好了hexo框架
-
-实现因为我的博客是hexo写的，众所周知这是一个快速生成静态博客的框架，既然是静态网页，web服务器方面当然是选择nginx了，为什么选择nginx不选择apache呢，因为nginx轻量级，同样起web服务，比apache 占用更少的内存及资源、抗并发，nginx 处理请求是异步非...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/05</span>
-                </div>
-                <!-- tags  -->
+</div>
                 
             </div>
         </article>
     
     <!-- paginator  -->
+    
+    <nav class="page-nav">
+        <a class="extend prev" rel="prev" href="/archives/2018/04/">&#60; PREV</a><a class="page-number" href="/archives/2018/04/">1</a><span class="page-number current">2</span>
+    </nav>
     
 </main>
             <!-- profile -->
@@ -971,36 +967,20 @@
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-archive"> Total : 34 </div>
     
     <div class="post-archive">
     
     
     
-    
-    <div class="archive-year"> 2019 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/05</span><a class="archive-post-title" href= "/2019/03/05/blogs/linux_user_password/" >[Untitled Post]</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/05</span><a class="archive-post-title" href= "/2019/03/05/blogs/Docker_Nginx_Hexo_blog/" >[Untitled Post]</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/05</span><a class="archive-post-title" href= "/2019/03/05/blogs/Google_Cloud _SSR_BBR/" >[Untitled Post]</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
@@ -1032,7 +1012,7 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/yolo/" >目标检测网络之 YOLOv3</a>
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/metric/" >目标检测网络之评价指标</a>
         </li>
     
     
@@ -1042,17 +1022,32 @@
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/yolo/" >目标检测网络之 YOLOv3</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/R-CNN/" >目标检测网络之 R-CNN系列</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/metric/" >目标检测网络之评价指标</a>
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/SSD/" >目标检测网络之 SSD</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/SSD/" >目标检测网络之 SSD</a>
+            <span class="archive-post-date">04/11</span><a class="archive-post-title" href= "/2018/04/11/blogs/linux_user_password/" >linux修改密码和添加用户</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/11</span><a class="archive-post-title" href= "/2018/04/11/blogs/Google_Cloud _SSR_BBR/" >科学上网：Google Cloud 安装SSR与BBR加速</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/11</span><a class="archive-post-title" href= "/2018/04/11/blogs/Docker_Nginx_Hexo_blog/" >使用Docker搭建Nginx环境挂载Hexo博客</a>
         </li>
     
     
@@ -1082,22 +1077,22 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_webbrowser/" >python之webbrowser</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_shutil/" >python之Shutil</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_selenium/" >python之Selenium</a>
         </li>
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_webbrowser/" >python之webbrowser</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_File/" >python中对文件、文件夹操作</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_shutil/" >python之Shutil</a>
         </li>
     
     
@@ -1137,12 +1132,12 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Python_Numpy/" >CS231n课程笔记翻译：Python Numpy教程</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Neural_Network2/" >CS231n课程笔记翻译：神经网络笔记2</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Neural_Network2/" >CS231n课程笔记翻译：神经网络笔记2</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Python_Numpy/" >CS231n课程笔记翻译：Python Numpy教程</a>
         </li>
     
     
@@ -1204,6 +1199,18 @@
         <span class="sidebar-tag-name" data-tags="Docker"><span class="iconfont-archer">&#xe606;</span>Docker</span>
     
         <span class="sidebar-tag-name" data-tags="Hexo"><span class="iconfont-archer">&#xe606;</span>Hexo</span>
+    
+        <span class="sidebar-tag-name" data-tags="Nginx"><span class="iconfont-archer">&#xe606;</span>Nginx</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSR"><span class="iconfont-archer">&#xe606;</span>SSR</span>
+    
+        <span class="sidebar-tag-name" data-tags="BBR"><span class="iconfont-archer">&#xe606;</span>BBR</span>
+    
+        <span class="sidebar-tag-name" data-tags="shadowsocks"><span class="iconfont-archer">&#xe606;</span>shadowsocks</span>
+    
+        <span class="sidebar-tag-name" data-tags="linux"><span class="iconfont-archer">&#xe606;</span>linux</span>
+    
+        <span class="sidebar-tag-name" data-tags="passwd"><span class="iconfont-archer">&#xe606;</span>passwd</span>
     
         <span class="sidebar-tag-name" data-tags="caffe"><span class="iconfont-archer">&#xe606;</span>caffe</span>
     

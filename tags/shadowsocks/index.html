@@ -251,23 +251,12 @@
 </head>
 
     
-        <body class="post-body">
-    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
-    
-    <div class="banner">
-            <div class="blog-title">
-                <a href="/" >heroinlin&#39;s Studio.</a>
-            </div>
-            <div class="post-title">
-                <a href="#" class="post-name"></a>
-            </div>
-    </div>
     
     <a class="home-link" href=/>heroinlin's Studio.</a>
 </header>
@@ -281,161 +270,77 @@
 
 
 
-height:50vh;
-
 >
     
     <!-- 主页  -->
-    
-    
-    <!-- 404页  -->
             
-    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/)"></div>
     <div class="site-intro-placeholder"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            [Untitled Post]
-            <!-- 404 -->
-            
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
-            
-            <!-- 404 -->
-            
         </p>
         <!-- 文章页meta -->
-        
-            <!-- 文章页标签  -->
-            
-            <div class="post-intro-meta">
-                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                <span class="post-intro-time">2019/03/05</span>
-                
-                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                    <span class="iconfont-archer">&#xe602;</span>
-                    <span id="busuanzi_value_page_pv"></span>
-                </span>
-                
-                <span class="shareWrapper">
-                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
-                    <span class="shareText">Share</span>
-                    <ul class="shareList">
-                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
-                            <div class="share-qrcode"></div>
-                        </li>
-                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
-                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
-                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
-                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
-                    </ul>
-                </span>
-            </div>
         
     </div>
 </div>
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
 
         <div class="container container-unloaded">
-            <main class="main post-page">
-    <article class="article-entry">
-        <h1 id="科学上网：Google-Cloud-安装SSR与BBR加速"><a href="#科学上网：Google-Cloud-安装SSR与BBR加速" class="headerlink" title="科学上网：Google Cloud 安装SSR与BBR加速"></a>科学上网：Google Cloud 安装SSR与BBR加速</h1><h2 id="基础准备"><a href="#基础准备" class="headerlink" title="基础准备"></a>基础准备</h2><ul>
-<li>可以访问<a href="https://cloud.google.com/" target="_blank" rel="noopener">谷歌云官网</a>的网络环境 （不科学上网就访问不了，可先其他地方借用/购买/试用SSR</li>
-<li>申请一张全币信用卡用于申请免费试用 （国内几家全币信用卡基本免年费）</li>
-</ul>
-<h2 id="创建和配置Google云实例"><a href="#创建和配置Google云实例" class="headerlink" title="创建和配置Google云实例"></a>创建和配置Google云实例</h2><h3 id="创建实例"><a href="#创建实例" class="headerlink" title="创建实例"></a>创建实例</h3><ol>
-<li>在<a href="https://console.cloud.google.com/compute/instances" target="_blank" rel="noopener">计算引擎-VM实例</a>中点击创建</li>
-<li>地区选择:根据需要 一般选择台湾</li>
-<li>机器类型：小型 / 微型 (我选择微型 费用较低，相对可以用更多免费流量 不过一般用不完，好像后面也可以增加配额等操作</li>
-<li>启动磁盘：根据自己熟悉的选， linux走命令行大部分也没差</li>
-<li>防火墙：允许HTTP流量，允许HTTPS流量</li>
-</ol>
-<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><ol>
-<li><p>防火墙配置</p>
-<p>新建一个防火墙规则 <a href="https://console.cloud.google.com/networking/firewalls/add" target="_blank" rel="noopener">VPS-防火墙规则</a></p>
-<p>进行以下配置：流量方向<code>入站</code>、来源ip地址<code>0.0.0.0/0</code>、协议和端口<code>全部允许</code></p>
-</li>
-<li><p>外部IP设置成静态IP</p>
-<p>在<a href="https://console.cloud.google.com/networking/addresses/list" target="_blank" rel="noopener">VPS-外部IP地址</a> （点击直达）中在相应的实例 类型中临时改为静态即可</p>
-<p>这个主要是为了避免服务器重启IP变化</p>
-</li>
-</ol>
-<h2 id="服务器部署SSR-BBR"><a href="#服务器部署SSR-BBR" class="headerlink" title="服务器部署SSR+BBR"></a>服务器部署SSR+BBR</h2><h3 id="使用ssh终端连接服务器"><a href="#使用ssh终端连接服务器" class="headerlink" title="使用ssh终端连接服务器"></a>使用ssh终端连接服务器</h3><p>进行ssh登录，将用户名和ip地址替换为你的服务器的用户名与ip地址</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh 用户名@ip地址</span><br></pre></td></tr></table></figure>
-<h3 id="安装ss"><a href="#安装ss" class="headerlink" title="安装ss"></a>安装<code>ss</code></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget --no-check-certificate  https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh</span><br><span class="line">chmod +x shadowsocks.sh</span><br><span class="line">./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log</span><br></pre></td></tr></table></figure>
-<p>到这步已经可以使用SS科学上网.后续步骤安装BBR可以进行一定加速</p>
-<h3 id="配置多用户-可选"><a href="#配置多用户-可选" class="headerlink" title="配置多用户(可选)"></a>配置多用户(可选)</h3><p>有时候想给小伙伴一起分享这个ss，但又不想一起用一个号，那么我们最好配置多个用户</p>
-<h4 id="在登录的状态下，输入以下命令，查看配置文件"><a href="#在登录的状态下，输入以下命令，查看配置文件" class="headerlink" title="在登录的状态下，输入以下命令，查看配置文件"></a>在登录的状态下，输入以下命令，查看配置文件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat  /etc/shadowsocks.json</span><br></pre></td></tr></table></figure>
-<h4 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/shadowsocks.json</span><br></pre></td></tr></table></figure>
-<p>默认配置</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    "server":"0.0.0.0",</span><br><span class="line">    "server_port":443,</span><br><span class="line">    "local_address":"127.0.0.1",</span><br><span class="line">    "local_port":1080,</span><br><span class="line">    "password":"aabbcc",</span><br><span class="line">    "timeout":300,</span><br><span class="line">    "method":"aes-256-cfb",</span><br><span class="line">    "fast_open":false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>点击<code>i</code>键进行编辑</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    "server":"0.0.0.0",</span><br><span class="line">    "local_address":"127.0.0.1",</span><br><span class="line">    "local_port":1080,</span><br><span class="line">    "port_password":&#123;</span><br><span class="line">         "443":"pwd000",</span><br><span class="line">         "9001":"pwd123",</span><br><span class="line">         "9002":"pwd234",</span><br><span class="line">         "9003":"pwd345",</span><br><span class="line">         "9004":"pwd456"                    </span><br><span class="line">    &#125;,</span><br><span class="line">    "timeout":300,</span><br><span class="line">    "method":"aes-256-cfb",</span><br><span class="line">    "fast_open": false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>编辑完毕后，点击<code>esc</code>键，再输入<code>:wq</code>保存</p>
-<h4 id="开放端口"><a href="#开放端口" class="headerlink" title="开放端口"></a>开放端口</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看已开放端口</span></span><br><span class="line"> firewall-cmd --list-ports</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 开启端口 以开启8388端口为例</span></span><br><span class="line"> firewall-cmd --zone=public --add-port=8388/tcp --permanent</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 重启防火墙</span></span><br><span class="line"> firewall-cmd --reload</span><br></pre></td></tr></table></figure>
-<p>在这里将新建的端口全部打开，如果不执行这部操作，很可能连接不上</p>
-<p>####重启ss</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssserver -c/etc/shadowsocks.json -d restart</span><br></pre></td></tr></table></figure>
-<p>重启成功后，就可以将地址与密码分享给你的小伙伴咯。</p>
-<h3 id="BBR加速"><a href="#BBR加速" class="headerlink" title="BBR加速"></a>BBR加速</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh </span><br><span class="line">chmod +x bbr.sh </span><br><span class="line">./bbr.sh</span><br></pre></td></tr></table></figure>
-<p>重启VM</p>
-<p>配置BBR</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_available_congestion_control</span><br></pre></td></tr></table></figure>
-
-    </article>
-    <!-- 前后页  -->
-    <ul class="post-paginator">
-        <li class="next">
-            
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2019/03/05/blogs/linux_user_password/" title=  >
-                    <div class="nextTitle">[Untitled Post]</div>
-                </a>
-            
-        </li>
-        <li class="previous">
-            
-                <div class="prevSlogan">Previous Post</div>
-                <a href= "/2019/03/05/blogs/Docker_Nginx_Hexo_blog/" title=  >
-                    <div class="prevTitle">[Untitled Post]</div>
-                </a>
-            
-        </li>
-    </ul>
-    <!-- 评论插件 -->
-    <!-- 来必力City版安装代码 -->
-
-<!-- City版安装代码已完成 -->
+            <main class="main index-page">
     
     
-<div id="container"></div>
-<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
-<script>
-    var gitment = new Gitment({
-        id: "Tue Mar 05 2019 00:41:49 GMT+0800", // 可选。默认为 location.href
-        owner: 'heroinlin',
-        repo: 'heroinlin.github.io',
-        oauth: {
-            client_id: '33b4a51ea87942e922ca',
-            client_secret: '264679785d383afbc726145178abea84ff750743',
-        },
-    })
-    gitment.render('container')
-</script>
-
-    <!--PC版-->
-
-    <!--PC版-->
-
-
     
-    <!-- 评论 -->
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/11/blogs/Google_Cloud _SSR_BBR/" >
+                
+                    <span>科学上网：Google Cloud 安装SSR与BBR加速</span>
+            </a>
+            <div class="abstract-content">
+                科学上网：Google Cloud 安装SSR与BBR加速基础准备
+可以访问谷歌云官网的网络环境 （不科学上网就访问不了，可先其他地方借用/购买/试用SSR
+申请一张全币信用卡用于申请免费试用 （国内几家全币信用卡基本免年费）
+
+创建和配置Google云实例创建实例
+在计算引擎-VM实例中点击创建
+地区选择:根据需要 一般选择台湾
+机器类型：小型 / 微型 (我选择微型 费用较低，相对可以用更多免费流量 不过一般用不完，好像后面也可以增加配额等操作
+启动磁盘：根据自己熟悉的选， linux走命令行大部分也没差
+防火墙：允许HTTP流量，允许HTTPS流量
+
+配置
+防火墙配置
+新建一个防火...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/11</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = SSR>SSR</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = BBR>BBR</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = shadowsocks>shadowsocks</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    <!-- paginator  -->
+    
 </main>
             <!-- profile -->
             
@@ -508,24 +413,6 @@ height:50vh;
 </footer>
     </div>
     <!-- toc -->
-    
-    <div class="toc-wrapper" style=
-    
-
-
-
-
-
-
-
-top:50vh;
-
-    >
-        <div class="toc-catalog">
-            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
-        </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#科学上网：Google-Cloud-安装SSR与BBR加速"><span class="toc-number">1.</span> <span class="toc-text">科学上网：Google Cloud 安装SSR与BBR加速</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基础准备"><span class="toc-number">1.1.</span> <span class="toc-text">基础准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建和配置Google云实例"><span class="toc-number">1.2.</span> <span class="toc-text">创建和配置Google云实例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建实例"><span class="toc-number">1.2.1.</span> <span class="toc-text">创建实例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置"><span class="toc-number">1.2.2.</span> <span class="toc-text">配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#服务器部署SSR-BBR"><span class="toc-number">1.3.</span> <span class="toc-text">服务器部署SSR+BBR</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用ssh终端连接服务器"><span class="toc-number">1.3.1.</span> <span class="toc-text">使用ssh终端连接服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装ss"><span class="toc-number">1.3.2.</span> <span class="toc-text">安装ss</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置多用户-可选"><span class="toc-number">1.3.3.</span> <span class="toc-text">配置多用户(可选)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#在登录的状态下，输入以下命令，查看配置文件"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">在登录的状态下，输入以下命令，查看配置文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#修改配置文件"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">修改配置文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#开放端口"><span class="toc-number">1.3.3.3.</span> <span class="toc-text">开放端口</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BBR加速"><span class="toc-number">1.3.4.</span> <span class="toc-text">BBR加速</span></a></li></ol></li></ol></li></ol>
-    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1047,36 +934,20 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-archive"> Total : 34 </div>
     
     <div class="post-archive">
     
     
     
-    
-    <div class="archive-year"> 2019 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/05</span><a class="archive-post-title" href= "/2019/03/05/blogs/linux_user_password/" >[Untitled Post]</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/05</span><a class="archive-post-title" href= "/2019/03/05/blogs/Docker_Nginx_Hexo_blog/" >[Untitled Post]</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/05</span><a class="archive-post-title" href= "/2019/03/05/blogs/Google_Cloud _SSR_BBR/" >[Untitled Post]</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
@@ -1108,7 +979,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/yolo/" >目标检测网络之 YOLOv3</a>
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/metric/" >目标检测网络之评价指标</a>
         </li>
     
     
@@ -1118,17 +989,32 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/yolo/" >目标检测网络之 YOLOv3</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/R-CNN/" >目标检测网络之 R-CNN系列</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/metric/" >目标检测网络之评价指标</a>
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/SSD/" >目标检测网络之 SSD</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/SSD/" >目标检测网络之 SSD</a>
+            <span class="archive-post-date">04/11</span><a class="archive-post-title" href= "/2018/04/11/blogs/linux_user_password/" >linux修改密码和添加用户</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/11</span><a class="archive-post-title" href= "/2018/04/11/blogs/Google_Cloud _SSR_BBR/" >科学上网：Google Cloud 安装SSR与BBR加速</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/11</span><a class="archive-post-title" href= "/2018/04/11/blogs/Docker_Nginx_Hexo_blog/" >使用Docker搭建Nginx环境挂载Hexo博客</a>
         </li>
     
     
@@ -1158,22 +1044,22 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_webbrowser/" >python之webbrowser</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_shutil/" >python之Shutil</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_selenium/" >python之Selenium</a>
         </li>
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_webbrowser/" >python之webbrowser</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_File/" >python中对文件、文件夹操作</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_shutil/" >python之Shutil</a>
         </li>
     
     
@@ -1213,12 +1099,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Python_Numpy/" >CS231n课程笔记翻译：Python Numpy教程</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Neural_Network2/" >CS231n课程笔记翻译：神经网络笔记2</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Neural_Network2/" >CS231n课程笔记翻译：神经网络笔记2</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Python_Numpy/" >CS231n课程笔记翻译：Python Numpy教程</a>
         </li>
     
     
@@ -1280,6 +1166,18 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="Docker"><span class="iconfont-archer">&#xe606;</span>Docker</span>
     
         <span class="sidebar-tag-name" data-tags="Hexo"><span class="iconfont-archer">&#xe606;</span>Hexo</span>
+    
+        <span class="sidebar-tag-name" data-tags="Nginx"><span class="iconfont-archer">&#xe606;</span>Nginx</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSR"><span class="iconfont-archer">&#xe606;</span>SSR</span>
+    
+        <span class="sidebar-tag-name" data-tags="BBR"><span class="iconfont-archer">&#xe606;</span>BBR</span>
+    
+        <span class="sidebar-tag-name" data-tags="shadowsocks"><span class="iconfont-archer">&#xe606;</span>shadowsocks</span>
+    
+        <span class="sidebar-tag-name" data-tags="linux"><span class="iconfont-archer">&#xe606;</span>linux</span>
+    
+        <span class="sidebar-tag-name" data-tags="passwd"><span class="iconfont-archer">&#xe606;</span>passwd</span>
     
         <span class="sidebar-tag-name" data-tags="caffe"><span class="iconfont-archer">&#xe606;</span>caffe</span>
     
@@ -1442,8 +1340,6 @@ jsonContent:
 		<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 	
     <!-- async load share.js -->
-    
-        <script src="/scripts/share.js" async></script>    
     
     </body>
 </html>

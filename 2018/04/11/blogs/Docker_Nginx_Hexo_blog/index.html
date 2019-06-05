@@ -9,7 +9,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
-    <title>heroinlin&#39;s Studio</title>
+    <title>使用Docker搭建Nginx环境挂载Hexo博客 · heroinlin&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -265,7 +265,7 @@
                 <a href="/" >heroinlin&#39;s Studio.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name"></a>
+                <a href="#" class="post-name">使用Docker搭建Nginx环境挂载Hexo博客</a>
             </div>
     </div>
     
@@ -297,7 +297,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            [Untitled Post]
+            使用Docker搭建Nginx环境挂载Hexo博客
             <!-- 404 -->
             
         </h1>
@@ -313,9 +313,21 @@ height:50vh;
         
             <!-- 文章页标签  -->
             
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = blog>blog</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = Docker>Docker</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = Hexo>Hexo</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = Nginx>Nginx</a>
+    
+</div>
+            
             <div class="post-intro-meta">
                 <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                <span class="post-intro-time">2019/03/05</span>
+                <span class="post-intro-time">2018/04/11</span>
                 
                 <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                     <span class="iconfont-archer">&#xe602;</span>
@@ -344,20 +356,92 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="linux修改密码和添加用户"><a href="#linux修改密码和添加用户" class="headerlink" title="linux修改密码和添加用户"></a>linux修改密码和添加用户</h1><p>默认root账户是没有密码的，使用<code>sudo su</code>进入root账户，输入passwd进行密码的设置，输入passwd -d heroin， 可以删除heroin账户原先设置的密码，切换到heroin账户后，输入passwd可以重新设置heroin账户的密码</p>
-<p>切换到root账户后，输入gpasswd -a heroin root 可以将heroin账户加入root组</p>
+        <h1 id="使用Docker搭建Nginx环境挂载Hexo博客"><a href="#使用Docker搭建Nginx环境挂载Hexo博客" class="headerlink" title="使用Docker搭建Nginx环境挂载Hexo博客"></a>使用Docker搭建Nginx环境挂载Hexo博客</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>原先我的博客是挂载在github pages上面的，但是因为github pages的服务器在国外，国内访问速度就会有点感人，于是就想把我的博客挂载在自己阿里云的服务器上面。</p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><ol>
+<li>一台有独立ip的服务器（centos 7)</li>
+<li>在本地搭建好了hexo框架</li>
+</ol>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>因为我的博客是hexo写的，众所周知这是一个快速生成静态博客的框架，既然是静态网页，web服务器方面当然是选择nginx了，为什么选择nginx不选择apache呢，因为nginx轻量级，同样起web服务，比apache 占用更少的内存及资源、抗并发，nginx 处理请求是异步非阻塞的，而apache 则是阻塞型的，在高并发下nginx 能保持低资源低消耗高性能、高度模块化的设计，编写模块相对简单、社区活跃。等等的优点。<br> 既然选择了nginx,那选择如何搭建了，普通安装或者编译nginx,多多少少会有各种残留，这对一个系统洁癖的人来说，却是非常痛苦的，所以我选择了使用docker安装nginx。</p>
+<h2 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装docker</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜　curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun</span><br></pre></td></tr></table></figure>
+<p>然后进入阿里云docker库首页<a href="https://dev.aliyun.com/" target="_blank" rel="noopener">https://dev.aliyun.com/</a><br> 登入<br> 然后进入管理中心<br> 点击加速器，复制链接</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir -p /etc/docker</span><br><span class="line">sudo tee /etc/docker/daemon.json &lt;&lt;-'EOF'</span><br><span class="line">&#123;</span><br><span class="line">  "registry-mirrors": ["https://dev.aliyun.com"]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
+<h4 id="安装docker-compose"><a href="#安装docker-compose" class="headerlink" title="安装docker-compose"></a>安装docker-compose</h4><p>下载shell脚本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜　sudo curl -L "https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure>
+<p>修改权限</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜　sudo chmod +x /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure>
+<p>测试</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜　docker-compose --version</span><br><span class="line">docker-compose version 1.22.0, build 1719ceb</span><br></pre></td></tr></table></figure>
+<p>通过docker-compose管理生成容器</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">➜　cd /home/   </span><br><span class="line">➜　mkdir blog &amp;&amp; cd blog　　　//创建一个blog的目录</span><br><span class="line">➜　vi docker-compose.yml　　　//创建一个名叫docker-compose.yml的文件</span><br><span class="line"><span class="meta">#</span><span class="bash">写入</span></span><br><span class="line">version: '3'</span><br><span class="line">services:</span><br><span class="line">  nginx:</span><br><span class="line">    restart: 'always'</span><br><span class="line">    image: 'nginx'</span><br><span class="line">    ports:</span><br><span class="line">      - '80:80'</span><br><span class="line">      - '443:443'</span><br><span class="line">    volumes:</span><br><span class="line">      - '/home/blog/www/public:/usr/share/nginx/html'　#这里的/home/blog/www/public是主机的目录,意思是把这个目录挂载到容器的/usr/share/nginx/html目录中，该目录防止了网页的静态文件</span><br><span class="line">      - '/home/blog/log:/var/log/nginx/'　#同理,log文件夹里是nginx的日志文件</span><br><span class="line">      - '/home/blog/conf:/etc/nginx/conf.d'　　#同理，配置文件</span><br><span class="line"><span class="meta">#</span><span class="bash">:wq保存退出</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意删除上边的汉字注释及前部的空格，有些服务器默认不对中文支持</p>
+</blockquote>
+<p>创建挂载目录<br> 在/home/blog/下创建/www、/log、/conf三个目录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜　mkdir &#123;www,log,conf&#125;</span><br><span class="line">➜　cd conf</span><br><span class="line">➜　vi default.conf</span><br></pre></td></tr></table></figure>
+<p>添加以下内容</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">listen       80;</span><br><span class="line">server_name  localhost;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">charset koi8-r;</span></span><br><span class="line"><span class="meta">#</span><span class="bash">access_log  /var/<span class="built_in">log</span>/nginx/<span class="built_in">log</span>/host.access.log  main;</span></span><br><span class="line">root   /usr/share/nginx/html;</span><br><span class="line">location / &#123;</span><br><span class="line">    root   /usr/share/nginx/html;</span><br><span class="line">    index  index.html index.htm;</span><br><span class="line">    ## 下面三行是添加的。</span><br><span class="line">    autoindex on;</span><br><span class="line">    autoindex_exact_size on;</span><br><span class="line">    autoindex_localtime on;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">error_page  404              /404.html;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> redirect server error pages to the static page /50x.html</span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line">error_page   500 502 503 504  /50x.html;</span><br><span class="line">location = /50x.html &#123;</span><br><span class="line">    root   /usr/share/nginx/html;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> proxy the PHP scripts to Apache listening on 0.0.0.1:80</span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line">location ~ \.php$ &#123;</span><br><span class="line">    proxy_pass   http://0.0.0.1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> pass the PHP scripts to FastCGI server listening on 0.0.0.1:9000</span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line">location ~ \.php$ &#123;</span><br><span class="line">    root           html;</span><br><span class="line">    fastcgi_pass   0.0.0.1:9000;</span><br><span class="line">    fastcgi_index  index.php;</span><br><span class="line">    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;</span><br><span class="line">    include        fastcgi_params;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> deny access to .htaccess files, <span class="keyword">if</span> Apache<span class="string">'s document root</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> concurs with nginx<span class="string">'s one</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line">location ~ /\.ht &#123;</span><br><span class="line">    deny  all;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="获取nginx镜像"><a href="#获取nginx镜像" class="headerlink" title="获取nginx镜像"></a>获取nginx镜像</h2><ol>
+<li><p>拉取镜像:</p>
+<p>docker search nginx</p>
+</li>
+</ol>
+<p>pull第一个nginx官方的镜像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull nginx</span><br></pre></td></tr></table></figure>
+<p>查看获取到的镜像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜　docker image ls</span><br><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED   SIZE</span><br><span class="line">nginx               latest              06144b287844        2 weeks ago         109MB</span><br></pre></td></tr></table></figure>
+<p>可以看到镜像已经pull下来了</p>
+<h2 id="上传静态文件"><a href="#上传静态文件" class="headerlink" title="上传静态文件"></a>上传静态文件</h2><p>在本地hexo的博客目录下<br> 运行<code>hexo g</code>生成静态文件<br> 他会在该目录下生成一个public的一个文件，里面是关于你博客的所有静态文件，然后这个文件scp到服务器的/home/blog/www/下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">➜　scp /home/kevin/blog/public root@119.23.241.xxxx:/home/blog/www</span><br><span class="line"><span class="meta">#</span><span class="bash"> /home/kevin/blog/public是你本地的public目录地址</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 119.23.24.xxxx表示你远程服务器的地址</span></span><br><span class="line">＃ /home/blog/www/public表示上传到远程服务器的位置</span><br></pre></td></tr></table></figure>
+<p>然后进入服务器端</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜　cd /home/blog</span><br><span class="line">➜　docker-compose up -d</span><br><span class="line"><span class="meta">#</span><span class="bash"> -d表示后台运行的意思</span></span><br></pre></td></tr></table></figure>
+<p>然后在浏览器输入你服务器的ip<br> 发现博客已经挂在成功了，<br> 因为我的服务器是阿里云的，所以还有加一步，去阿里的控制台配置防火墙入口规则，添加80端口和443端口。</p>
+<h2 id="解决-error-creating-overlay-mount-to-var-lib-docker-overlay2"><a href="#解决-error-creating-overlay-mount-to-var-lib-docker-overlay2" class="headerlink" title="解决 error creating overlay mount to /var/lib/docker/overlay2"></a>解决 error creating overlay mount to /var/lib/docker/overlay2</h2><p>重新开启服务器运行<code>docker-compose up -d</code>指令时可能出现下面的错误：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/docker-current: Error response from daemon: error creating overlay mount to /var/lib/docker/overlay2/65f3c109fb903539820f84856d2725af784f2f03f95b1f0214e34184e4d61ff7-init/merged: invalid argument.</span><br><span class="line">See '/usr/bin/docker-current run --help'.</span><br></pre></td></tr></table></figure>
+<p>一个可行的方案如下(改变storage driver类型， 禁用selinux):</p>
+<ul>
+<li>停止docker服务</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop docker</span><br></pre></td></tr></table></figure>
+<ul>
+<li>清理镜像</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -rf /var/lib/docker</span><br></pre></td></tr></table></figure>
+<ul>
+<li>修改存储类型</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/sysconfig/docker-storage</span><br></pre></td></tr></table></figure>
+<p>把空的DOCKER_STORAGE_OPTIONS参数改为overlay:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DOCKER_STORAGE_OPTIONS="--storage-driver overlay"</span><br></pre></td></tr></table></figure>
+<ul>
+<li>禁用selinux</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/sysconfig/docker</span><br></pre></td></tr></table></figure>
+<p>去掉option的<code>--selinux-enabled</code></p>
+<ul>
+<li>重新启动docker</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start docker</span><br></pre></td></tr></table></figure>
+<p>应该就能解决问题了</p>
+<blockquote>
+<p> 方案抄自 <a href="https://blog.csdn.net/Ysssssssssssssss/article/details/79596367" target="_blank" rel="noopener">Ysssssssssssssss的博客</a> 和 redis的讨论: <a href="https://github.com/coreos/bugs/issues/2340" target="_blank" rel="noopener">error creating overlay mount to …/merged: invalid argument.</a>, 基本可以确定是启用selinux导致的。</p>
+</blockquote>
 
     </article>
     <!-- 前后页  -->
     <ul class="post-paginator">
         <li class="next">
             
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2018/04/11/blogs/linux_user_password/" title= linux修改密码和添加用户 >
+                    <div class="nextTitle">linux修改密码和添加用户</div>
+                </a>
+            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2019/03/05/blogs/Google_Cloud _SSR_BBR/" title=  >
-                    <div class="prevTitle">[Untitled Post]</div>
+                <a href= "/2018/04/11/blogs/Docker_Hexo_Nginx_blog/" title= Mac下使用Docker+Hexo搭建博客 >
+                    <div class="prevTitle">Mac下使用Docker+Hexo搭建博客</div>
                 </a>
             
         </li>
@@ -373,7 +457,7 @@ height:50vh;
 <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
     var gitment = new Gitment({
-        id: "Tue Mar 05 2019 00:46:33 GMT+0800", // 可选。默认为 location.href
+        id: "Wed Apr 11 2018 11:11:11 GMT+0800", // 可选。默认为 location.href
         owner: 'heroinlin',
         repo: 'heroinlin.github.io',
         oauth: {
@@ -479,7 +563,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#linux修改密码和添加用户"><span class="toc-number">1.</span> <span class="toc-text">linux修改密码和添加用户</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#使用Docker搭建Nginx环境挂载Hexo博客"><span class="toc-number">1.</span> <span class="toc-text">使用Docker搭建Nginx环境挂载Hexo博客</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#介绍"><span class="toc-number">1.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#环境"><span class="toc-number">1.2.</span> <span class="toc-text">环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现"><span class="toc-number">1.3.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装docker"><span class="toc-number">1.4.</span> <span class="toc-text">安装docker</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装docker-compose"><span class="toc-number">1.4.0.1.</span> <span class="toc-text">安装docker-compose</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#获取nginx镜像"><span class="toc-number">1.5.</span> <span class="toc-text">获取nginx镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#上传静态文件"><span class="toc-number">1.6.</span> <span class="toc-text">上传静态文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决-error-creating-overlay-mount-to-var-lib-docker-overlay2"><span class="toc-number">1.7.</span> <span class="toc-text">解决 error creating overlay mount to /var/lib/docker/overlay2</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -1002,36 +1086,20 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-archive"> Total : 34 </div>
     
     <div class="post-archive">
     
     
     
-    
-    <div class="archive-year"> 2019 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/05</span><a class="archive-post-title" href= "/2019/03/05/blogs/linux_user_password/" >[Untitled Post]</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/05</span><a class="archive-post-title" href= "/2019/03/05/blogs/Docker_Nginx_Hexo_blog/" >[Untitled Post]</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/05</span><a class="archive-post-title" href= "/2019/03/05/blogs/Google_Cloud _SSR_BBR/" >[Untitled Post]</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
@@ -1063,7 +1131,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/yolo/" >目标检测网络之 YOLOv3</a>
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/metric/" >目标检测网络之评价指标</a>
         </li>
     
     
@@ -1073,17 +1141,32 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/yolo/" >目标检测网络之 YOLOv3</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/R-CNN/" >目标检测网络之 R-CNN系列</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/metric/" >目标检测网络之评价指标</a>
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/SSD/" >目标检测网络之 SSD</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/SSD/" >目标检测网络之 SSD</a>
+            <span class="archive-post-date">04/11</span><a class="archive-post-title" href= "/2018/04/11/blogs/linux_user_password/" >linux修改密码和添加用户</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/11</span><a class="archive-post-title" href= "/2018/04/11/blogs/Google_Cloud _SSR_BBR/" >科学上网：Google Cloud 安装SSR与BBR加速</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/11</span><a class="archive-post-title" href= "/2018/04/11/blogs/Docker_Nginx_Hexo_blog/" >使用Docker搭建Nginx环境挂载Hexo博客</a>
         </li>
     
     
@@ -1113,22 +1196,22 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_webbrowser/" >python之webbrowser</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_shutil/" >python之Shutil</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_selenium/" >python之Selenium</a>
         </li>
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_webbrowser/" >python之webbrowser</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_File/" >python中对文件、文件夹操作</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_shutil/" >python之Shutil</a>
         </li>
     
     
@@ -1168,12 +1251,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Python_Numpy/" >CS231n课程笔记翻译：Python Numpy教程</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Neural_Network2/" >CS231n课程笔记翻译：神经网络笔记2</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Neural_Network2/" >CS231n课程笔记翻译：神经网络笔记2</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Python_Numpy/" >CS231n课程笔记翻译：Python Numpy教程</a>
         </li>
     
     
@@ -1235,6 +1318,18 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="Docker"><span class="iconfont-archer">&#xe606;</span>Docker</span>
     
         <span class="sidebar-tag-name" data-tags="Hexo"><span class="iconfont-archer">&#xe606;</span>Hexo</span>
+    
+        <span class="sidebar-tag-name" data-tags="Nginx"><span class="iconfont-archer">&#xe606;</span>Nginx</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSR"><span class="iconfont-archer">&#xe606;</span>SSR</span>
+    
+        <span class="sidebar-tag-name" data-tags="BBR"><span class="iconfont-archer">&#xe606;</span>BBR</span>
+    
+        <span class="sidebar-tag-name" data-tags="shadowsocks"><span class="iconfont-archer">&#xe606;</span>shadowsocks</span>
+    
+        <span class="sidebar-tag-name" data-tags="linux"><span class="iconfont-archer">&#xe606;</span>linux</span>
+    
+        <span class="sidebar-tag-name" data-tags="passwd"><span class="iconfont-archer">&#xe606;</span>passwd</span>
     
         <span class="sidebar-tag-name" data-tags="caffe"><span class="iconfont-archer">&#xe606;</span>caffe</span>
     

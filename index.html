@@ -314,86 +314,6 @@ height:50vh;
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2019/03/05/blogs/linux_user_password/" >
-                
-                    <span>[Untitled Post]</span>
-            </a>
-            <div class="abstract-content">
-                linux修改密码和添加用户默认root账户是没有密码的，使用sudo su进入root账户，输入passwd进行密码的设置，输入passwd -d heroin， 可以删除heroin账户原先设置的密码，切换到heroin账户后，输入passwd可以重新设置heroin账户的密码
-切换到root账户后，输入gpasswd -a heroin root 可以将heroin账户加入root组
-
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/05</span>
-                </div>
-                <!-- tags  -->
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2019/03/05/blogs/Google_Cloud _SSR_BBR/" >
-                
-                    <span>[Untitled Post]</span>
-            </a>
-            <div class="abstract-content">
-                科学上网：Google Cloud 安装SSR与BBR加速基础准备
-可以访问谷歌云官网的网络环境 （不科学上网就访问不了，可先其他地方借用/购买/试用SSR
-申请一张全币信用卡用于申请免费试用 （国内几家全币信用卡基本免年费）
-
-创建和配置Google云实例创建实例
-在计算引擎-VM实例中点击创建
-地区选择:根据需要 一般选择台湾
-机器类型：小型 / 微型 (我选择微型 费用较低，相对可以用更多免费流量 不过一般用不完，好像后面也可以增加配额等操作
-启动磁盘：根据自己熟悉的选， linux走命令行大部分也没差
-防火墙：允许HTTP流量，允许HTTPS流量
-
-配置
-防火墙配置
-新建一个防火...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/05</span>
-                </div>
-                <!-- tags  -->
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2019/03/05/blogs/Docker_Nginx_Hexo_blog/" >
-                
-                    <span>[Untitled Post]</span>
-            </a>
-            <div class="abstract-content">
-                使用Docker搭建Nginx环境挂载Hexo博客介绍原先我的博客是挂载在github pages上面的，但是因为github pages的服务器在国外，国内访问速度就会有点感人，于是就想把我的博客挂载在自己阿里云的服务器上面。
-环境
-一台有独立ip的服务器（centos 7)
-在本地搭建好了hexo框架
-
-实现因为我的博客是hexo写的，众所周知这是一个快速生成静态博客的框架，既然是静态网页，web服务器方面当然是选择nginx了，为什么选择nginx不选择apache呢，因为nginx轻量级，同样起web服务，比apache 占用更少的内存及资源、抗并发，nginx 处理请求是异步非...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/05</span>
-                </div>
-                <!-- tags  -->
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
             <a class="abstract-title" href = "/2018/10/10/Python/Python_Struct/" >
                 
                     <span>python之Struct解析二进制数据</span>
@@ -576,6 +496,37 @@ Anaconda3
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/12/math/merge_mean_vart/" >
+                
+                    <span>均值方差合并</span>
+            </a>
+            <div class="abstract-content">
+                #均值方差合并
+均值$$\mathrm{mean}=\sum_i^n{\frac{x_i}{n}}=\frac{x_1+x_2+…+x_n}{n}=\frac{\mathrm{sum_1}}{n}$$
+其中$\mathrm{sum_1}=(x_1+x_2+…+x_n)$
+方差$$\begin{alignat}{2} \mathrm{Var} &amp; = \frac{\sum_i^n{(x_i-\mathrm{mean})^2}}{n} \&amp; = \frac{\sum_i^n{(x_i^2-2\mathrm{mean}x_i+\mathrm{mean}^2)}}{n} \&am...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/12</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = Python>Python</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = 数学公式>数学公式</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2018/04/12/deep_learning/object_detection/yolo/" >
                 
                     <span>目标检测网络之 YOLOv3</span>
@@ -610,15 +561,23 @@ YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/12/math/merge_mean_vart/" >
+            <a class="abstract-title" href = "/2018/04/12/deep_learning/object_detection/R-CNN/" >
                 
-                    <span>均值方差合并</span>
+                    <span>目标检测网络之 R-CNN系列</span>
             </a>
             <div class="abstract-content">
-                #均值方差合并
-均值$$\mathrm{mean}=\sum_i^n{\frac{x_i}{n}}=\frac{x_1+x_2+…+x_n}{n}=\frac{\mathrm{sum_1}}{n}$$
-其中$\mathrm{sum_1}=(x_1+x_2+…+x_n)$
-方差$$\begin{alignat}{2} \mathrm{Var} &amp; = \frac{\sum_i^n{(x_i-\mathrm{mean})^2}}{n} \&amp; = \frac{\sum_i^n{(x_i^2-2\mathrm{mean}x_i+\mathrm{mean}^2)}}{n} \&am...
+                R-CNN前言目标检测(object detection)就是在给定的图片中精确找到物体所在位置，并标注出物体的类别。object detection要解决的问题就是物体在哪里，是什么这整个流程的问题。一般需要经过两个步骤：
+
+图像识别(classification)输入：图片输出：物体的类别评估方法：准确率
+
+
+定位(localization)
+输入：图片输出：方框在图片中的位置（x,y,w,h）评估方法：检测评价函数 intersection-over-union ( IOU ) 
+
+
+
+
+思路思路一：看做回归问题看做回归问题，我们需要预测出（x,y,w,h）四个参数的值，从而得出方...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
@@ -629,9 +588,85 @@ YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = Python>Python</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = object detection>object detection</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = 数学公式>数学公式</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = R-CNN>R-CNN</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = Fast R-CNN>Fast R-CNN</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = Faster R-CNN>Faster R-CNN</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/12/deep_learning/object_detection/metric/" >
+                
+                    <span>目标检测网络之评价指标</span>
+            </a>
+            <div class="abstract-content">
+                目标检测中的评价指标主要包括召回率( Recall )，精确率(Precision)，平均正确率(Average_precision(AP) )，交除并(Intersection-over-Union(IoU))
+大雁与飞机假设现在有这样一个测试集，测试集中的图片只由大雁和飞机两种图片组成，如下图所示： 
+ 
+
+假设你的分类系统最终的目的是：能取出测试集中所有飞机的图片，而不是大雁的图片。
+现在做如下的定义： True positives :   飞机的图片被正确的识别成了飞机。 True negatives:  大雁的图片没有被识别出来，系统正确地认为它们是大雁。 False posi...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/12</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = object detection>object detection</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = 评价指标>评价指标</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = map>map</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = iou>iou</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/12/deep_learning/object_detection/SSD/" >
+                
+                    <span>目标检测网络之 SSD</span>
+            </a>
+            <div class="abstract-content">
+                Single Shot MultiBox Detector论文地址: https://arxiv.org/pdf/1512.02325.pdf
+前言目标检测近年来已经取得了很重要的进展，主流的算法主要分为两个类型（参考RefineDet）:
+
+Two stages
+以Faster RCNN为代表，即RPN网络先生成proposals目标定位，再对proposals进行classification+bounding box regression完成目标分类, two-stage方法的优势是准确度高
+
+Single shot
+以YOLO/SSD为代表，均匀地在图片的不同位置进行密集抽样，抽样...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/12</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = SSD>SSD</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = object detection>object detection</a>
     
 </div>
                 
@@ -1324,36 +1359,20 @@ YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-archive"> Total : 34 </div>
     
     <div class="post-archive">
     
     
     
-    
-    <div class="archive-year"> 2019 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/05</span><a class="archive-post-title" href= "/2019/03/05/blogs/linux_user_password/" >[Untitled Post]</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/05</span><a class="archive-post-title" href= "/2019/03/05/blogs/Docker_Nginx_Hexo_blog/" >[Untitled Post]</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/05</span><a class="archive-post-title" href= "/2019/03/05/blogs/Google_Cloud _SSR_BBR/" >[Untitled Post]</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
@@ -1385,7 +1404,7 @@ YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/yolo/" >目标检测网络之 YOLOv3</a>
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/metric/" >目标检测网络之评价指标</a>
         </li>
     
     
@@ -1395,17 +1414,32 @@ YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/yolo/" >目标检测网络之 YOLOv3</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/R-CNN/" >目标检测网络之 R-CNN系列</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/metric/" >目标检测网络之评价指标</a>
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/SSD/" >目标检测网络之 SSD</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/SSD/" >目标检测网络之 SSD</a>
+            <span class="archive-post-date">04/11</span><a class="archive-post-title" href= "/2018/04/11/blogs/linux_user_password/" >linux修改密码和添加用户</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/11</span><a class="archive-post-title" href= "/2018/04/11/blogs/Google_Cloud _SSR_BBR/" >科学上网：Google Cloud 安装SSR与BBR加速</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/11</span><a class="archive-post-title" href= "/2018/04/11/blogs/Docker_Nginx_Hexo_blog/" >使用Docker搭建Nginx环境挂载Hexo博客</a>
         </li>
     
     
@@ -1435,22 +1469,22 @@ YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_webbrowser/" >python之webbrowser</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_shutil/" >python之Shutil</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_selenium/" >python之Selenium</a>
         </li>
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_webbrowser/" >python之webbrowser</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_File/" >python中对文件、文件夹操作</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_shutil/" >python之Shutil</a>
         </li>
     
     
@@ -1490,12 +1524,12 @@ YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Python_Numpy/" >CS231n课程笔记翻译：Python Numpy教程</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Neural_Network2/" >CS231n课程笔记翻译：神经网络笔记2</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Neural_Network2/" >CS231n课程笔记翻译：神经网络笔记2</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Python_Numpy/" >CS231n课程笔记翻译：Python Numpy教程</a>
         </li>
     
     
@@ -1557,6 +1591,18 @@ YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground
         <span class="sidebar-tag-name" data-tags="Docker"><span class="iconfont-archer">&#xe606;</span>Docker</span>
     
         <span class="sidebar-tag-name" data-tags="Hexo"><span class="iconfont-archer">&#xe606;</span>Hexo</span>
+    
+        <span class="sidebar-tag-name" data-tags="Nginx"><span class="iconfont-archer">&#xe606;</span>Nginx</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSR"><span class="iconfont-archer">&#xe606;</span>SSR</span>
+    
+        <span class="sidebar-tag-name" data-tags="BBR"><span class="iconfont-archer">&#xe606;</span>BBR</span>
+    
+        <span class="sidebar-tag-name" data-tags="shadowsocks"><span class="iconfont-archer">&#xe606;</span>shadowsocks</span>
+    
+        <span class="sidebar-tag-name" data-tags="linux"><span class="iconfont-archer">&#xe606;</span>linux</span>
+    
+        <span class="sidebar-tag-name" data-tags="passwd"><span class="iconfont-archer">&#xe606;</span>passwd</span>
     
         <span class="sidebar-tag-name" data-tags="caffe"><span class="iconfont-archer">&#xe606;</span>caffe</span>
     

@@ -364,40 +364,6 @@ Anaconda3
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/12/deep_learning/object_detection/yolo/" >
-                
-                    <span>目标检测网络之 YOLOv3</span>
-            </a>
-            <div class="abstract-content">
-                目标检测网络之 YOLOv3
-本文逐步介绍YOLO v1~v3的设计历程。
-YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground truth 的中心位置的坐标落入到某个格子，那么这个格子就负责检测出这个物体。
-
-网络结构YOLOv1网络借鉴了GoogLeNet分类网络结构。不同的是，YOLO未使用inception module，而是使用1x1卷积层（此处1x1卷积层的存在是为了跨通道信息整合）+3x3卷积层简单替代。YOLOv1网络在最后使用全连接层进行类别输出，因此全连接层的输出维度是 $S×S×(B×5+C)$。YOLOv1网络比VGG16快(浮点数少于...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/12</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = object detection>object detection</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = yolo>yolo</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = darknet>darknet</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
             <a class="abstract-title" href = "/2018/04/12/math/merge_mean_vart/" >
                 
                     <span>均值方差合并</span>
@@ -429,52 +395,16 @@ YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/12/deep_learning/object_detection/SSD/" >
+            <a class="abstract-title" href = "/2018/04/12/deep_learning/object_detection/yolo/" >
                 
-                    <span>目标检测网络之 SSD</span>
+                    <span>目标检测网络之 YOLOv3</span>
             </a>
             <div class="abstract-content">
-                Single Shot MultiBox Detector论文地址: https://arxiv.org/pdf/1512.02325.pdf
-前言目标检测近年来已经取得了很重要的进展，主流的算法主要分为两个类型（参考RefineDet）:
+                目标检测网络之 YOLOv3
+本文逐步介绍YOLO v1~v3的设计历程。
+YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground truth 的中心位置的坐标落入到某个格子，那么这个格子就负责检测出这个物体。
 
-Two stages
-以Faster RCNN为代表，即RPN网络先生成proposals目标定位，再对proposals进行classification+bounding box regression完成目标分类, two-stage方法的优势是准确度高
-
-Single shot
-以YOLO/SSD为代表，均匀地在图片的不同位置进行密集抽样，抽样...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/12</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = SSD>SSD</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = object detection>object detection</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/12/deep_learning/object_detection/metric/" >
-                
-                    <span>目标检测网络之评价指标</span>
-            </a>
-            <div class="abstract-content">
-                目标检测中的评价指标主要包括召回率( Recall )，精确率(Precision)，平均正确率(Average_precision(AP) )，交除并(Intersection-over-Union(IoU))
-大雁与飞机假设现在有这样一个测试集，测试集中的图片只由大雁和飞机两种图片组成，如下图所示： 
- 
-
-假设你的分类系统最终的目的是：能取出测试集中所有飞机的图片，而不是大雁的图片。
-现在做如下的定义： True positives :   飞机的图片被正确的识别成了飞机。 True negatives:  大雁的图片没有被识别出来，系统正确地认为它们是大雁。 False posi...
+网络结构YOLOv1网络借鉴了GoogLeNet分类网络结构。不同的是，YOLO未使用inception module，而是使用1x1卷积层（此处1x1卷积层的存在是为了跨通道信息整合）+3x3卷积层简单替代。YOLOv1网络在最后使用全连接层进行类别输出，因此全连接层的输出维度是 $S×S×(B×5+C)$。YOLOv1网络比VGG16快(浮点数少于...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
@@ -487,11 +417,9 @@ Single shot
     
         <a class="post-tag" href="javascript:void(0);" data-tags = object detection>object detection</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = 评价指标>评价指标</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = yolo>yolo</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = map>map</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = iou>iou</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = darknet>darknet</a>
     
 </div>
                 
@@ -544,21 +472,162 @@ Single shot
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/11/blogs/Docker_Hexo_Nginx_blog/" >
+            <a class="abstract-title" href = "/2018/04/12/deep_learning/object_detection/metric/" >
                 
-                    <span>Mac下使用Docker+Hexo搭建博客</span>
+                    <span>目标检测网络之评价指标</span>
             </a>
             <div class="abstract-content">
-                Mac下使用Docker+Hexo搭建博客Docker的安装下载Docker.dmg文件，双击进行安装。之后安装Kitematic。
+                目标检测中的评价指标主要包括召回率( Recall )，精确率(Precision)，平均正确率(Average_precision(AP) )，交除并(Intersection-over-Union(IoU))
+大雁与飞机假设现在有这样一个测试集，测试集中的图片只由大雁和飞机两种图片组成，如下图所示： 
+ 
 
-Hexo配置安装完后打开Kitematic，搜索Hexo创建hexo-with-hexo-hey，将Settings中的Volumes路径更改为之前搭建的Hexo博客所在文件夹路径
+假设你的分类系统最终的目的是：能取出测试集中所有飞机的图片，而不是大雁的图片。
+现在做如下的定义： True positives :   飞机的图片被正确的识别成了飞机。 True negatives:  大雁的图片没有被识别出来，系统正确地认为它们是大雁。 False posi...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/12</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = object detection>object detection</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = 评价指标>评价指标</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = map>map</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = iou>iou</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/12/deep_learning/object_detection/SSD/" >
+                
+                    <span>目标检测网络之 SSD</span>
+            </a>
+            <div class="abstract-content">
+                Single Shot MultiBox Detector论文地址: https://arxiv.org/pdf/1512.02325.pdf
+前言目标检测近年来已经取得了很重要的进展，主流的算法主要分为两个类型（参考RefineDet）:
 
-点击START，之后点击EXEC进入命令行模式，复制.ssh文件夹到Docker中的/home文件夹下，执行hexo的发布命令
-1hexo clean
-1hexo g
-1hexo d
-即可进行博客的发布，此时发布的内容可登入对应的github.io.git网址查看
+Two stages
+以Faster RCNN为代表，即RPN网络先生成proposals目标定位，再对proposals进行classification+bounding box regression完成目标分类, two-stage方法的优势是准确度高
 
+Single shot
+以YOLO/SSD为代表，均匀地在图片的不同位置进行密集抽样，抽样...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/12</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = SSD>SSD</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = object detection>object detection</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/11/blogs/Google_Cloud _SSR_BBR/" >
+                
+                    <span>科学上网：Google Cloud 安装SSR与BBR加速</span>
+            </a>
+            <div class="abstract-content">
+                科学上网：Google Cloud 安装SSR与BBR加速基础准备
+可以访问谷歌云官网的网络环境 （不科学上网就访问不了，可先其他地方借用/购买/试用SSR
+申请一张全币信用卡用于申请免费试用 （国内几家全币信用卡基本免年费）
+
+创建和配置Google云实例创建实例
+在计算引擎-VM实例中点击创建
+地区选择:根据需要 一般选择台湾
+机器类型：小型 / 微型 (我选择微型 费用较低，相对可以用更多免费流量 不过一般用不完，好像后面也可以增加配额等操作
+启动磁盘：根据自己熟悉的选， linux走命令行大部分也没差
+防火墙：允许HTTP流量，允许HTTPS流量
+
+配置
+防火墙配置
+新建一个防火...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/11</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = SSR>SSR</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = BBR>BBR</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = shadowsocks>shadowsocks</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/11/blogs/linux_user_password/" >
+                
+                    <span>linux修改密码和添加用户</span>
+            </a>
+            <div class="abstract-content">
+                linux修改密码和添加用户默认root账户是没有密码的，使用sudo su进入root账户，输入passwd进行密码的设置，输入passwd -d heroin， 可以删除heroin账户原先设置的密码，切换到heroin账户后，输入passwd可以重新设置heroin账户的密码
+切换到root账户后，输入gpasswd -a heroin root 可以将heroin账户加入root组
+
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/11</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = linux>linux</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = passwd>passwd</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/11/blogs/Docker_Nginx_Hexo_blog/" >
+                
+                    <span>使用Docker搭建Nginx环境挂载Hexo博客</span>
+            </a>
+            <div class="abstract-content">
+                使用Docker搭建Nginx环境挂载Hexo博客介绍原先我的博客是挂载在github pages上面的，但是因为github pages的服务器在国外，国内访问速度就会有点感人，于是就想把我的博客挂载在自己阿里云的服务器上面。
+环境
+一台有独立ip的服务器（centos 7)
+在本地搭建好了hexo框架
+
+实现因为我的博客是hexo写的，众所周知这是一个快速生成静态博客的框架，既然是静态网页，web服务器方面当然是选择nginx了，为什么选择nginx不选择apache呢，因为nginx轻量级，同样起web服务，比apache 占用更少的内存及资源、抗并发，nginx 处理请求是异步非...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
@@ -575,38 +644,7 @@ Hexo配置安装完后打开Kitematic，搜索Hexo创建hexo-with-hexo-hey，将
     
         <a class="post-tag" href="javascript:void(0);" data-tags = Hexo>Hexo</a>
     
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/04/10/opencv/ffmpeg_and_opencv_build_by_source_code/" >
-                
-                    <span>FFmpeg与OpenCV的源码编译</span>
-            </a>
-            <div class="abstract-content">
-                FFmpeg与OpenCV的源码编译本示例在centos7下编译ffmpeg2.8.0及opencv3.2.0+opencv_contrib
-FFmpeg的源码编译安装依赖包1yum install autoconf automake bzip2 cmake freetype-devel gcc gcc-c++ git libtool make mercurial pkgconfig zlib-devel
-安装可选扩展库将可选扩展库下载于如下文件夹
-1mkdir ~/ffmpeg_sources
-####NASM
-An assembler used by some libraries. ...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/10</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = OpenCV>OpenCV</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = FFmpeg>FFmpeg</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = Nginx>Nginx</a>
     
 </div>
                 
@@ -614,6 +652,10 @@ An assembler used by some libraries. ...
         </article>
     
     <!-- paginator  -->
+    
+    <nav class="page-nav">
+        <span class="page-number current">1</span><a class="page-number" href="/archives/2018/04/page/2/">2</a><a class="extend next" rel="next" href="/archives/2018/04/page/2/">NEXT &#62;</a>
+    </nav>
     
 </main>
             <!-- profile -->
@@ -1208,36 +1250,20 @@ An assembler used by some libraries. ...
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-archive"> Total : 34 </div>
     
     <div class="post-archive">
     
     
     
-    
-    <div class="archive-year"> 2019 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/05</span><a class="archive-post-title" href= "/2019/03/05/blogs/linux_user_password/" >[Untitled Post]</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/05</span><a class="archive-post-title" href= "/2019/03/05/blogs/Docker_Nginx_Hexo_blog/" >[Untitled Post]</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/05</span><a class="archive-post-title" href= "/2019/03/05/blogs/Google_Cloud _SSR_BBR/" >[Untitled Post]</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
@@ -1269,7 +1295,7 @@ An assembler used by some libraries. ...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/yolo/" >目标检测网络之 YOLOv3</a>
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/metric/" >目标检测网络之评价指标</a>
         </li>
     
     
@@ -1279,17 +1305,32 @@ An assembler used by some libraries. ...
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/yolo/" >目标检测网络之 YOLOv3</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/R-CNN/" >目标检测网络之 R-CNN系列</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/metric/" >目标检测网络之评价指标</a>
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/SSD/" >目标检测网络之 SSD</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/SSD/" >目标检测网络之 SSD</a>
+            <span class="archive-post-date">04/11</span><a class="archive-post-title" href= "/2018/04/11/blogs/linux_user_password/" >linux修改密码和添加用户</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/11</span><a class="archive-post-title" href= "/2018/04/11/blogs/Google_Cloud _SSR_BBR/" >科学上网：Google Cloud 安装SSR与BBR加速</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/11</span><a class="archive-post-title" href= "/2018/04/11/blogs/Docker_Nginx_Hexo_blog/" >使用Docker搭建Nginx环境挂载Hexo博客</a>
         </li>
     
     
@@ -1319,22 +1360,22 @@ An assembler used by some libraries. ...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_webbrowser/" >python之webbrowser</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_shutil/" >python之Shutil</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_selenium/" >python之Selenium</a>
         </li>
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_webbrowser/" >python之webbrowser</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_File/" >python中对文件、文件夹操作</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_shutil/" >python之Shutil</a>
         </li>
     
     
@@ -1374,12 +1415,12 @@ An assembler used by some libraries. ...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Python_Numpy/" >CS231n课程笔记翻译：Python Numpy教程</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Neural_Network2/" >CS231n课程笔记翻译：神经网络笔记2</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Neural_Network2/" >CS231n课程笔记翻译：神经网络笔记2</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Python_Numpy/" >CS231n课程笔记翻译：Python Numpy教程</a>
         </li>
     
     
@@ -1441,6 +1482,18 @@ An assembler used by some libraries. ...
         <span class="sidebar-tag-name" data-tags="Docker"><span class="iconfont-archer">&#xe606;</span>Docker</span>
     
         <span class="sidebar-tag-name" data-tags="Hexo"><span class="iconfont-archer">&#xe606;</span>Hexo</span>
+    
+        <span class="sidebar-tag-name" data-tags="Nginx"><span class="iconfont-archer">&#xe606;</span>Nginx</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSR"><span class="iconfont-archer">&#xe606;</span>SSR</span>
+    
+        <span class="sidebar-tag-name" data-tags="BBR"><span class="iconfont-archer">&#xe606;</span>BBR</span>
+    
+        <span class="sidebar-tag-name" data-tags="shadowsocks"><span class="iconfont-archer">&#xe606;</span>shadowsocks</span>
+    
+        <span class="sidebar-tag-name" data-tags="linux"><span class="iconfont-archer">&#xe606;</span>linux</span>
+    
+        <span class="sidebar-tag-name" data-tags="passwd"><span class="iconfont-archer">&#xe606;</span>passwd</span>
     
         <span class="sidebar-tag-name" data-tags="caffe"><span class="iconfont-archer">&#xe606;</span>caffe</span>
     
