@@ -299,7 +299,193 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/15/Python/Python_pip和conda安装错误解决/" >
+            <a class="abstract-title" href = "/2018/04/12/deep_learning/object_detection/yolo/" >
+                
+                    <span>目标检测网络之 YOLOv3</span>
+            </a>
+            <div class="abstract-content">
+                目标检测网络之 YOLOv3
+本文逐步介绍YOLO v1~v3的设计历程。
+YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground truth 的中心位置的坐标落入到某个格子，那么这个格子就负责检测出这个物体。
+
+网络结构YOLOv1网络借鉴了GoogLeNet分类网络结构。不同的是，YOLO未使用inception module，而是使用1x1卷积层（此处1x1卷积层的存在是为了跨通道信息整合）+3x3卷积层简单替代。YOLOv1网络在最后使用全连接层进行类别输出，因此全连接层的输出维度是 $S×S×(B×5+C)$。YOLOv1网络比VGG16快(浮点数少于...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/12</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = object detection>object detection</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = yolo>yolo</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = darknet>darknet</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/12/deep_learning/object_detection/metric/" >
+                
+                    <span>目标检测网络之评价指标</span>
+            </a>
+            <div class="abstract-content">
+                目标检测中的评价指标主要包括召回率( Recall )，精确率(Precision)，平均正确率(Average_precision(AP) )，交除并(Intersection-over-Union(IoU))
+大雁与飞机假设现在有这样一个测试集，测试集中的图片只由大雁和飞机两种图片组成，如下图所示： 
+ 
+
+假设你的分类系统最终的目的是：能取出测试集中所有飞机的图片，而不是大雁的图片。
+现在做如下的定义： True positives :   飞机的图片被正确的识别成了飞机。 True negatives:  大雁的图片没有被识别出来，系统正确地认为它们是大雁。 False posi...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/12</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = object detection>object detection</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = 评价指标>评价指标</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = map>map</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = iou>iou</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/12/deep_learning/object_detection/R-CNN/" >
+                
+                    <span>目标检测网络之 R-CNN系列</span>
+            </a>
+            <div class="abstract-content">
+                R-CNN前言目标检测(object detection)就是在给定的图片中精确找到物体所在位置，并标注出物体的类别。object detection要解决的问题就是物体在哪里，是什么这整个流程的问题。一般需要经过两个步骤：
+
+图像识别(classification)输入：图片输出：物体的类别评估方法：准确率
+
+
+定位(localization)
+输入：图片输出：方框在图片中的位置（x,y,w,h）评估方法：检测评价函数 intersection-over-union ( IOU ) 
+
+
+
+
+思路思路一：看做回归问题看做回归问题，我们需要预测出（x,y,w,h）四个参数的值，从而得出方...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/12</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = object detection>object detection</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = R-CNN>R-CNN</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = Fast R-CNN>Fast R-CNN</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = Faster R-CNN>Faster R-CNN</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/11/blogs/Docker_Hexo_Nginx_blog/" >
+                
+                    <span>Mac下使用Docker+Hexo搭建博客</span>
+            </a>
+            <div class="abstract-content">
+                Mac下使用Docker+Hexo搭建博客Docker的安装下载Docker.dmg文件，双击进行安装。之后安装Kitematic。
+
+Hexo配置安装完后打开Kitematic，搜索Hexo创建hexo-with-hexo-hey，将Settings中的Volumes路径更改为之前搭建的Hexo博客所在文件夹路径
+
+点击START，之后点击EXEC进入命令行模式，复制.ssh文件夹到Docker中的/home文件夹下，执行hexo的发布命令
+1hexo clean
+1hexo g
+1hexo d
+即可进行博客的发布，此时发布的内容可登入对应的github.io.git网址查看
+
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/11</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = blog>blog</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = Docker>Docker</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = Hexo>Hexo</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/04/10/opencv/ffmpeg_and_opencv_build_by_source_code/" >
+                
+                    <span>FFmpeg与OpenCV的源码编译</span>
+            </a>
+            <div class="abstract-content">
+                FFmpeg与OpenCV的源码编译本示例在centos7下编译ffmpeg2.8.0及opencv3.2.0+opencv_contrib
+FFmpeg的源码编译安装依赖包1yum install autoconf automake bzip2 cmake freetype-devel gcc gcc-c++ git libtool make mercurial pkgconfig zlib-devel
+安装可选扩展库将可选扩展库下载于如下文件夹
+1mkdir ~/ffmpeg_sources
+####NASM
+An assembler used by some libraries. ...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/10</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = OpenCV>OpenCV</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = FFmpeg>FFmpeg</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2018/03/15/Python/Python_pip_and_conda_install_error_solution/" >
                 
                     <span>python_pip和conda安装错误解决</span>
             </a>
@@ -336,7 +522,7 @@ conda install 环境变量报错错误为Solving environment: failed
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/13/linux/CentOS7添加应用到菜单栏/" >
+            <a class="abstract-title" href = "/2018/03/13/linux/CentOS7_add_app_to_menu/" >
                 
                     <span>CentOS7添加应用到菜单栏</span>
             </a>
@@ -375,52 +561,17 @@ CentOS桌面的所有菜单项都存储在如下的位置中：
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/12/Pytorch/pytorch常用Tensor运算/" >
+            <a class="abstract-title" href = "/2018/03/12/Python/Python_webbrowser/" >
                 
-                    <span>Tensor的数学运算</span>
+                    <span>python之webbrowser</span>
             </a>
             <div class="abstract-content">
-                #Tensor的数学运算
-总结的方法包括：
-Tensor求和以及按索引求和：torch.sum()         torch.Tensor.indexadd()
-Tensor元素乘积：torch.prod(input)
-对Tensor求均值、方差、极值：
-torch.mean()      torch.var()
-torch.max()         torch.min()
-最后还有在NLP领域经常用到的：
-求Tensor的平方根倒数、线性插值、双曲正切
-torch.rsqrt(input)     torch.lerp(star,end,weight)
-torch.tanh(inp...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/12</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = Pytorch>Pytorch</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = Tensor>Tensor</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/12/Python/Python_String模块/" >
-                
-                    <span>Python之String模块</span>
-            </a>
-            <div class="abstract-content">
-                #Python之String模块
-本部分是对python中的string模块进行解析，添加函数中文说明与实例说明
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116...
+                python之webbrowser打开浏览器使用默认浏览器显示网址1webbrowser.open(url, new=0, autoraise=True)
+在默认浏览器的新窗口中打开URL1webbrowser.open_new(url)
+在默认浏览器的新页面（“标签”）中打开网址1webbrowser.open_new_tab(url)
+指定浏览器打开1webbrowser.get('chrome')
+如果name为空，则返回适用于调用者环境的默认浏览器的constructor
+注册浏览器类型名称。1webbrowser.register(name, constructor[, ins...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
@@ -432,44 +583,10 @@ torch.tanh(inp...
                 <div class= abstract-tags >
     
         <a class="post-tag" href="javascript:void(0);" data-tags = Python>Python</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = String>String</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/12/Python/Python_selenium浏览器使用/" >
-                
-                    <span>python之Selenium</span>
-            </a>
-            <div class="abstract-content">
-                python之Selenium打开浏览器函数及属性driver = webdriver.Chrome(chromeDriver)
-返回当前会话中的cookies1driver.get_cookies()
-根据cookies name查找1driver.get_cookie(cookiename)
-截取当前页面1get_screenshot_as_file(filename)
-如：get_screenshot_as_file(“D:\nm.bmp”)
-获取当前窗口的坐标1driver.get_window_position()
-获取当前窗口的长和宽1driver.get_window_si...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/12</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = Python>Python</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = Selenium>Selenium</a>
     
         <a class="post-tag" href="javascript:void(0);" data-tags = 浏览器>浏览器</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = webbrowsers>webbrowsers</a>
     
 </div>
                 
@@ -515,17 +632,22 @@ copy文件内容到另一个文件，可以copy指定大小的内容。这个方
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/12/Python/Python_webbrowser浏览器使用/" >
+            <a class="abstract-title" href = "/2018/03/12/Pytorch/pytorch_Tensor/" >
                 
-                    <span>python之webbrowser</span>
+                    <span>Tensor的数学运算</span>
             </a>
             <div class="abstract-content">
-                python之webbrowser打开浏览器使用默认浏览器显示网址1webbrowser.open(url, new=0, autoraise=True)
-在默认浏览器的新窗口中打开URL1webbrowser.open_new(url)
-在默认浏览器的新页面（“标签”）中打开网址1webbrowser.open_new_tab(url)
-指定浏览器打开1webbrowser.get('chrome')
-如果name为空，则返回适用于调用者环境的默认浏览器的constructor
-注册浏览器类型名称。1webbrowser.register(name, constructor[, ins...
+                #Tensor的数学运算
+总结的方法包括：
+Tensor求和以及按索引求和：torch.sum()         torch.Tensor.indexadd()
+Tensor元素乘积：torch.prod(input)
+对Tensor求均值、方差、极值：
+torch.mean()      torch.var()
+torch.max()         torch.min()
+最后还有在NLP领域经常用到的：
+求Tensor的平方根倒数、线性插值、双曲正切
+torch.rsqrt(input)     torch.lerp(star,end,weight)
+torch.tanh(inp...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
@@ -536,111 +658,11 @@ copy文件内容到另一个文件，可以copy指定大小的内容。这个方
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = Python>Python</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = Pytorch>Pytorch</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = 浏览器>浏览器</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = webbrowsers>webbrowsers</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = Tensor>Tensor</a>
     
 </div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/12/Python/Python_文件操作/" >
-                
-                    <span>python中对文件、文件夹操作</span>
-            </a>
-            <div class="abstract-content">
-                #python中对文件、文件夹操作
-python中对文件、文件夹（文件操作函数）的操作需要涉及到os模块和shutil模块。
-##os模块
-得到当前工作目录，即当前Python脚本工作的目录路径: os.getcwd()
-返回指定目录下的所有文件和目录名:os.listdir()
-函数用来删除一个文件:os.remove()
-删除多个目录：os.removedirs（r“c：\python”）
-检验给出的路径是否是一个文件：os.path.isfile()
-检验给出的路径是否是一个目录：os.path.isdir()
-判断是否是绝对路径：os.path.isabs()
-检验给出的路径是否...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/12</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = Python>Python</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = shutil>shutil</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = 文件操作>文件操作</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = os>os</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/03/07/C&C++/调试报错问题解决方法/" >
-                
-                    <span>C及C++编译时候出现的一些问题与解决方案</span>
-            </a>
-            <div class="abstract-content">
-                C及C++编译时候出现的一些问题与解决方案字符串问题
-[no matching function for call to ‘std::basic_ofstream &gt;::basic_ofstream(std::string&amp;)’]编译时候报错为no matching function for call to std::basic_ofstream&lt;char, std::char_traits &gt;::basic_ofstream(std::string&amp;)
-原因是C++的string类与C的字符串存在不同，一些函数无法将string类作为参数使用。
-
-st...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/07</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = C&C++>C&C++</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = Debug>Debug</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2018/02/11/hello-world/" >
-                
-                    <span>Hello World</span>
-            </a>
-            <div class="abstract-content">
-                Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick StartCreate a new post1$ hexo new "My New Post"
-More info: Writing
-Run server1$ hexo server
-More...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/02/11</span>
-                </div>
-                <!-- tags  -->
                 
             </div>
         </article>
@@ -648,7 +670,7 @@ More...
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/">&#60; PREV</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/3/">NEXT &#62;</a>
+        <a class="extend prev" rel="prev" href="/archives/">&#60; PREV</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/3/">NEXT &#62;</a>
     </nav>
     
 </main>
@@ -1181,19 +1203,104 @@ More...
     
     
     
-    <div class="total-archive"> Total : 29 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 34 </div>
     
     <div class="post-archive">
     
     
     
     
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/05</span><a class="archive-post-title" href= "/2019/03/05/blogs/linux修改密码和添加用户/" >[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/05</span><a class="archive-post-title" href= "/2019/03/05/blogs/Docker_Nginx_Hexo_blog/" >[Untitled Post]</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/05</span><a class="archive-post-title" href= "/2019/03/05/blogs/科学上网：Google Cloud 安装SSR与BBR加速/" >[Untitled Post]</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2018/10/10/Python/Python_使用Struct解析二进制数据/" >python之Struct解析二进制数据</a>
+            <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2018/10/10/Python/Python_Struct/" >python之Struct解析二进制数据</a>
         </li>
     
     
@@ -1203,27 +1310,17 @@ More...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2018/10/10/Python/Python_数据持久化——JSON与Pickle/" >python之JSON与Pickle</a>
+            <span class="archive-post-date">10/10</span><a class="archive-post-title" href= "/2018/10/10/Python/Python_JSON_and_Pickle/" >python之JSON与Pickle</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/18</span><a class="archive-post-title" href= "/2018/04/18/opencv/编译opencv精简库/" >编译opencv精简静态库</a>
+            <span class="archive-post-date">04/18</span><a class="archive-post-title" href= "/2018/04/18/opencv/build_opencv_simple_lib/" >编译opencv精简静态库</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/13</span><a class="archive-post-title" href= "/2018/04/13/caffe/windows10_caffe安装/" >windows10编译caffe的python接口</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/yolo/" >目标检测网络之 YOLOv3</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/R-CNN/" >目标检测网络之 R-CNN系列</a>
+            <span class="archive-post-date">04/13</span><a class="archive-post-title" href= "/2018/04/13/caffe/windows10_caffe_install/" >windows10编译caffe的python接口</a>
         </li>
     
     
@@ -1233,42 +1330,47 @@ More...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/目标检测评价指标/" >目标检测网络之评价指标</a>
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/R-CNN/" >目标检测网络之 R-CNN系列</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/opencv/ffmpeg及opencv源码编译/" >FFmpeg与OpenCV的源码编译</a>
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/yolo/" >目标检测网络之 YOLOv3</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/15</span><a class="archive-post-title" href= "/2018/03/15/Python/Python_pip和conda安装错误解决/" >python_pip和conda安装错误解决</a>
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/deep_learning/object_detection/metric/" >目标检测网络之评价指标</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/13</span><a class="archive-post-title" href= "/2018/03/13/linux/CentOS7添加应用到菜单栏/" >CentOS7添加应用到菜单栏</a>
+            <span class="archive-post-date">04/12</span><a class="archive-post-title" href= "/2018/04/12/math/merge_mean_vart/" >均值方差合并</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_selenium浏览器使用/" >python之Selenium</a>
+            <span class="archive-post-date">04/11</span><a class="archive-post-title" href= "/2018/04/11/blogs/Docker_Hexo_Nginx_blog/" >Mac下使用Docker+Hexo搭建博客</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_文件操作/" >python中对文件、文件夹操作</a>
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/opencv/ffmpeg_and_opencv_build_by_source_code/" >FFmpeg与OpenCV的源码编译</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Pytorch/pytorch常用Tensor运算/" >Tensor的数学运算</a>
+            <span class="archive-post-date">03/15</span><a class="archive-post-title" href= "/2018/03/15/Python/Python_pip_and_conda_install_error_solution/" >python_pip和conda安装错误解决</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_webbrowser浏览器使用/" >python之webbrowser</a>
+            <span class="archive-post-date">03/13</span><a class="archive-post-title" href= "/2018/03/13/linux/CentOS7_add_app_to_menu/" >CentOS7添加应用到菜单栏</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_File/" >python中对文件、文件夹操作</a>
         </li>
     
     
@@ -1278,17 +1380,32 @@ More...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_String模块/" >Python之String模块</a>
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_String/" >Python之String模块</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/07</span><a class="archive-post-title" href= "/2018/03/07/C&C++/调试报错问题解决方法/" >C及C++编译时候出现的一些问题与解决方案</a>
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_selenium/" >python之Selenium</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记2/" >CS231n课程笔记翻译：神经网络笔记2</a>
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Python/Python_webbrowser/" >python之webbrowser</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/12</span><a class="archive-post-title" href= "/2018/03/12/Pytorch/pytorch_Tensor/" >Tensor的数学运算</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/07</span><a class="archive-post-title" href= "/2018/03/07/C&C++/Debug_error_solution/" >C及C++编译时候出现的一些问题与解决方案</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Convolution_Network/" >CS231n课程笔记翻译：卷积神经网络笔记</a>
         </li>
     
     
@@ -1298,42 +1415,42 @@ More...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：Python Numpy教程/" >CS231n课程笔记翻译：Python Numpy教程</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Neural_Network3/" >CS231n课程笔记翻译：神经网络笔记3</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：反向传播笔记/" >CS231n课程笔记翻译：反向传播笔记</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_BP/" >CS231n课程笔记翻译：反向传播笔记</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：卷积神经网络笔记/" >CS231n课程笔记翻译：卷积神经网络笔记</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Image_Classify/" >CS231n课程笔记翻译：图像分类笔记</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：最优化笔记/" >CS231n课程笔记翻译：最优化笔记</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Neural_Network2/" >CS231n课程笔记翻译：神经网络笔记2</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：图像分类笔记/" >CS231n课程笔记翻译：图像分类笔记</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Python_Numpy/" >CS231n课程笔记翻译：Python Numpy教程</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记1/" >CS231n课程笔记翻译：神经网络笔记1</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Linear_Classify/" >CS231n课程笔记翻译：线性分类笔记</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：线性分类笔记/" >CS231n课程笔记翻译：线性分类笔记</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Neural_Network1/" >CS231n课程笔记翻译：神经网络笔记1</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n课程笔记翻译/CS231n课程笔记翻译：神经网络笔记3/" >CS231n课程笔记翻译：神经网络笔记3</a>
+            <span class="archive-post-date">02/11</span><a class="archive-post-title" href= "/2018/02/11/CS231n/CS231n_Optimizer/" >CS231n课程笔记翻译：最优化笔记</a>
         </li>
     
     </div>
@@ -1341,35 +1458,21 @@ More...
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
+    
+        <span class="sidebar-tag-name" data-tags="JSON"><span class="iconfont-archer">&#xe606;</span>JSON</span>
+    
+        <span class="sidebar-tag-name" data-tags="Pickle"><span class="iconfont-archer">&#xe606;</span>Pickle</span>
+    
         <span class="sidebar-tag-name" data-tags="C&C++"><span class="iconfont-archer">&#xe606;</span>C&C++</span>
     
         <span class="sidebar-tag-name" data-tags="Debug"><span class="iconfont-archer">&#xe606;</span>Debug</span>
     
-        <span class="sidebar-tag-name" data-tags="CS231n"><span class="iconfont-archer">&#xe606;</span>CS231n</span>
+        <span class="sidebar-tag-name" data-tags="os"><span class="iconfont-archer">&#xe606;</span>os</span>
     
-        <span class="sidebar-tag-name" data-tags="Numpy"><span class="iconfont-archer">&#xe606;</span>Numpy</span>
+        <span class="sidebar-tag-name" data-tags="shutil"><span class="iconfont-archer">&#xe606;</span>shutil</span>
     
-        <span class="sidebar-tag-name" data-tags="反向传播"><span class="iconfont-archer">&#xe606;</span>反向传播</span>
-    
-        <span class="sidebar-tag-name" data-tags="卷积神经网络"><span class="iconfont-archer">&#xe606;</span>卷积神经网络</span>
-    
-        <span class="sidebar-tag-name" data-tags="Convolution"><span class="iconfont-archer">&#xe606;</span>Convolution</span>
-    
-        <span class="sidebar-tag-name" data-tags="最优化"><span class="iconfont-archer">&#xe606;</span>最优化</span>
-    
-        <span class="sidebar-tag-name" data-tags="Optimization"><span class="iconfont-archer">&#xe606;</span>Optimization</span>
-    
-        <span class="sidebar-tag-name" data-tags="图像分类"><span class="iconfont-archer">&#xe606;</span>图像分类</span>
-    
-        <span class="sidebar-tag-name" data-tags="神经网络"><span class="iconfont-archer">&#xe606;</span>神经网络</span>
-    
-        <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
-    
-        <span class="sidebar-tag-name" data-tags="argparse"><span class="iconfont-archer">&#xe606;</span>argparse</span>
-    
-        <span class="sidebar-tag-name" data-tags="参数"><span class="iconfont-archer">&#xe606;</span>参数</span>
-    
-        <span class="sidebar-tag-name" data-tags="线性分类"><span class="iconfont-archer">&#xe606;</span>线性分类</span>
+        <span class="sidebar-tag-name" data-tags="文件操作"><span class="iconfont-archer">&#xe606;</span>文件操作</span>
     
         <span class="sidebar-tag-name" data-tags="pip"><span class="iconfont-archer">&#xe606;</span>pip</span>
     
@@ -1377,35 +1480,37 @@ More...
     
         <span class="sidebar-tag-name" data-tags="ProxyError"><span class="iconfont-archer">&#xe606;</span>ProxyError</span>
     
-        <span class="sidebar-tag-name" data-tags="String"><span class="iconfont-archer">&#xe606;</span>String</span>
+        <span class="sidebar-tag-name" data-tags="argparse"><span class="iconfont-archer">&#xe606;</span>argparse</span>
+    
+        <span class="sidebar-tag-name" data-tags="参数"><span class="iconfont-archer">&#xe606;</span>参数</span>
     
         <span class="sidebar-tag-name" data-tags="Selenium"><span class="iconfont-archer">&#xe606;</span>Selenium</span>
     
         <span class="sidebar-tag-name" data-tags="浏览器"><span class="iconfont-archer">&#xe606;</span>浏览器</span>
     
-        <span class="sidebar-tag-name" data-tags="shutil"><span class="iconfont-archer">&#xe606;</span>shutil</span>
-    
-        <span class="sidebar-tag-name" data-tags="文件操作"><span class="iconfont-archer">&#xe606;</span>文件操作</span>
-    
         <span class="sidebar-tag-name" data-tags="解压缩"><span class="iconfont-archer">&#xe606;</span>解压缩</span>
     
         <span class="sidebar-tag-name" data-tags="webbrowsers"><span class="iconfont-archer">&#xe606;</span>webbrowsers</span>
+    
+        <span class="sidebar-tag-name" data-tags="caffe"><span class="iconfont-archer">&#xe606;</span>caffe</span>
+    
+        <span class="sidebar-tag-name" data-tags="blog"><span class="iconfont-archer">&#xe606;</span>blog</span>
+    
+        <span class="sidebar-tag-name" data-tags="Docker"><span class="iconfont-archer">&#xe606;</span>Docker</span>
+    
+        <span class="sidebar-tag-name" data-tags="Hexo"><span class="iconfont-archer">&#xe606;</span>Hexo</span>
     
         <span class="sidebar-tag-name" data-tags="struct"><span class="iconfont-archer">&#xe606;</span>struct</span>
     
         <span class="sidebar-tag-name" data-tags="二进制文件"><span class="iconfont-archer">&#xe606;</span>二进制文件</span>
     
-        <span class="sidebar-tag-name" data-tags="JSON"><span class="iconfont-archer">&#xe606;</span>JSON</span>
-    
-        <span class="sidebar-tag-name" data-tags="Pickle"><span class="iconfont-archer">&#xe606;</span>Pickle</span>
-    
-        <span class="sidebar-tag-name" data-tags="os"><span class="iconfont-archer">&#xe606;</span>os</span>
-    
         <span class="sidebar-tag-name" data-tags="Pytorch"><span class="iconfont-archer">&#xe606;</span>Pytorch</span>
     
         <span class="sidebar-tag-name" data-tags="Tensor"><span class="iconfont-archer">&#xe606;</span>Tensor</span>
     
-        <span class="sidebar-tag-name" data-tags="caffe"><span class="iconfont-archer">&#xe606;</span>caffe</span>
+        <span class="sidebar-tag-name" data-tags="OpenCV，静态库，cmake"><span class="iconfont-archer">&#xe606;</span>OpenCV，静态库，cmake</span>
+    
+        <span class="sidebar-tag-name" data-tags="数学公式"><span class="iconfont-archer">&#xe606;</span>数学公式</span>
     
         <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
     
@@ -1413,11 +1518,41 @@ More...
     
         <span class="sidebar-tag-name" data-tags="快捷方式"><span class="iconfont-archer">&#xe606;</span>快捷方式</span>
     
+        <span class="sidebar-tag-name" data-tags="CS231n"><span class="iconfont-archer">&#xe606;</span>CS231n</span>
+    
+        <span class="sidebar-tag-name" data-tags="反向传播"><span class="iconfont-archer">&#xe606;</span>反向传播</span>
+    
         <span class="sidebar-tag-name" data-tags="OpenCV"><span class="iconfont-archer">&#xe606;</span>OpenCV</span>
     
         <span class="sidebar-tag-name" data-tags="FFmpeg"><span class="iconfont-archer">&#xe606;</span>FFmpeg</span>
     
-        <span class="sidebar-tag-name" data-tags="OpenCV，静态库，cmake"><span class="iconfont-archer">&#xe606;</span>OpenCV，静态库，cmake</span>
+        <span class="sidebar-tag-name" data-tags="String"><span class="iconfont-archer">&#xe606;</span>String</span>
+    
+        <span class="sidebar-tag-name" data-tags="图像分类"><span class="iconfont-archer">&#xe606;</span>图像分类</span>
+    
+        <span class="sidebar-tag-name" data-tags="神经网络"><span class="iconfont-archer">&#xe606;</span>神经网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="最优化"><span class="iconfont-archer">&#xe606;</span>最优化</span>
+    
+        <span class="sidebar-tag-name" data-tags="Optimization"><span class="iconfont-archer">&#xe606;</span>Optimization</span>
+    
+        <span class="sidebar-tag-name" data-tags="SSD"><span class="iconfont-archer">&#xe606;</span>SSD</span>
+    
+        <span class="sidebar-tag-name" data-tags="object detection"><span class="iconfont-archer">&#xe606;</span>object detection</span>
+    
+        <span class="sidebar-tag-name" data-tags="评价指标"><span class="iconfont-archer">&#xe606;</span>评价指标</span>
+    
+        <span class="sidebar-tag-name" data-tags="map"><span class="iconfont-archer">&#xe606;</span>map</span>
+    
+        <span class="sidebar-tag-name" data-tags="iou"><span class="iconfont-archer">&#xe606;</span>iou</span>
+    
+        <span class="sidebar-tag-name" data-tags="线性分类"><span class="iconfont-archer">&#xe606;</span>线性分类</span>
+    
+        <span class="sidebar-tag-name" data-tags="Numpy"><span class="iconfont-archer">&#xe606;</span>Numpy</span>
+    
+        <span class="sidebar-tag-name" data-tags="yolo"><span class="iconfont-archer">&#xe606;</span>yolo</span>
+    
+        <span class="sidebar-tag-name" data-tags="darknet"><span class="iconfont-archer">&#xe606;</span>darknet</span>
     
         <span class="sidebar-tag-name" data-tags="R-CNN"><span class="iconfont-archer">&#xe606;</span>R-CNN</span>
     
@@ -1425,19 +1560,9 @@ More...
     
         <span class="sidebar-tag-name" data-tags="Faster R-CNN"><span class="iconfont-archer">&#xe606;</span>Faster R-CNN</span>
     
-        <span class="sidebar-tag-name" data-tags="object detection"><span class="iconfont-archer">&#xe606;</span>object detection</span>
+        <span class="sidebar-tag-name" data-tags="卷积神经网络"><span class="iconfont-archer">&#xe606;</span>卷积神经网络</span>
     
-        <span class="sidebar-tag-name" data-tags="SSD"><span class="iconfont-archer">&#xe606;</span>SSD</span>
-    
-        <span class="sidebar-tag-name" data-tags="yolo"><span class="iconfont-archer">&#xe606;</span>yolo</span>
-    
-        <span class="sidebar-tag-name" data-tags="darknet"><span class="iconfont-archer">&#xe606;</span>darknet</span>
-    
-        <span class="sidebar-tag-name" data-tags="评价指标"><span class="iconfont-archer">&#xe606;</span>评价指标</span>
-    
-        <span class="sidebar-tag-name" data-tags="map"><span class="iconfont-archer">&#xe606;</span>map</span>
-    
-        <span class="sidebar-tag-name" data-tags="iou"><span class="iconfont-archer">&#xe606;</span>iou</span>
+        <span class="sidebar-tag-name" data-tags="Convolution"><span class="iconfont-archer">&#xe606;</span>Convolution</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -1472,19 +1597,23 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="C-C"><span class="iconfont-archer">&#xe60a;</span>C-C</span>
-    
-        <span class="sidebar-category-name" data-categories="CS231n课程笔记翻译"><span class="iconfont-archer">&#xe60a;</span>CS231n课程笔记翻译</span>
-    
         <span class="sidebar-category-name" data-categories="Python"><span class="iconfont-archer">&#xe60a;</span>Python</span>
     
-        <span class="sidebar-category-name" data-categories="Pytorch"><span class="iconfont-archer">&#xe60a;</span>Pytorch</span>
+        <span class="sidebar-category-name" data-categories="C-C"><span class="iconfont-archer">&#xe60a;</span>C-C</span>
     
         <span class="sidebar-category-name" data-categories="caffe"><span class="iconfont-archer">&#xe60a;</span>caffe</span>
     
-        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+        <span class="sidebar-category-name" data-categories="blog"><span class="iconfont-archer">&#xe60a;</span>blog</span>
+    
+        <span class="sidebar-category-name" data-categories="Pytorch"><span class="iconfont-archer">&#xe60a;</span>Pytorch</span>
     
         <span class="sidebar-category-name" data-categories="OpenCV"><span class="iconfont-archer">&#xe60a;</span>OpenCV</span>
+    
+        <span class="sidebar-category-name" data-categories="Math"><span class="iconfont-archer">&#xe60a;</span>Math</span>
+    
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
+        <span class="sidebar-category-name" data-categories="CS231n课程笔记翻译"><span class="iconfont-archer">&#xe60a;</span>CS231n课程笔记翻译</span>
     
         <span class="sidebar-category-name" data-categories="object-detection"><span class="iconfont-archer">&#xe60a;</span>object-detection</span>
     
