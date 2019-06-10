@@ -38,6 +38,10 @@
 
 
 
+  
+  
+  <link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css"/>
+
 
 
 
@@ -75,7 +79,7 @@
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
     back2top: true,
     back2top_sidebar: false,
-    fancybox: false,
+    fancybox: true,
     fastclick: false,
     lazyload: false,
     tabs: true,
@@ -97,7 +101,7 @@
 
 
   <meta name="description" content="目标检测中的评价指标主要包括召回率( Recall )，精确率(Precision)，平均正确率(Average_precision(AP) )，交除并(Intersection-over-Union(IoU)) 大雁与飞机假设现在有这样一个测试集，测试集中的图片只由大雁和飞机两种图片组成，如下图所示：     假设你的分类系统最终的目的是：能取出测试集中所有飞机的图片，而不是大雁的图片。 现在做">
-<meta name="keywords" content="评价指标,map,iou,object detection">
+<meta name="keywords" content="object detection,评价指标,map,iou">
 <meta property="og:type" content="article">
 <meta property="og:title" content="目标检测网络之评价指标">
 <meta property="og:url" content="http://yoursite.com/2018/04/12/deep_learning/object_detection/metric/index.html">
@@ -353,7 +357,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Heroinlin"/>
       <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="/images/avatar.gif"/>
+      <meta itemprop="image" content="/images/leaf.jpg"/>
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -600,13 +604,13 @@
         
         <div class="post-tags">
           
+            <a href="/tags/object-detection/" rel="tag"># object detection</a>
+          
             <a href="/tags/评价指标/" rel="tag"># 评价指标</a>
           
             <a href="/tags/map/" rel="tag"># map</a>
           
             <a href="/tags/iou/" rel="tag"># iou</a>
-          
-            <a href="/tags/object-detection/" rel="tag"># object detection</a>
           
         </div>
       
@@ -619,8 +623,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/12/deep_learning/object_detection/R-CNN/" rel="next" title="目标检测网络之 R-CNN系列">
-                <i class="fa fa-chevron-left"></i> 目标检测网络之 R-CNN系列
+              <a href="/2018/04/12/deep_learning/object_detection/SSD/" rel="next" title="目标检测网络之 SSD">
+                <i class="fa fa-chevron-left"></i> 目标检测网络之 SSD
               </a>
             
           </div>
@@ -629,8 +633,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/04/13/caffe/windows10_caffe_install/" rel="prev" title="windows10编译caffe的python接口">
-                windows10编译caffe的python接口 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/04/12/deep_learning/object_detection/yolo/" rel="prev" title="目标检测网络之 YOLOv3">
+                目标检测网络之 YOLOv3 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -695,6 +699,10 @@
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/leaf.jpg"
+                alt="Heroinlin"/>
             
               <p class="site-author-name" itemprop="name">Heroinlin</p>
               <div class="site-description motion-element" itemprop="description"></div>
@@ -1048,6 +1056,8 @@
 
 
 
+  
+
 
 
 
@@ -1070,6 +1080,9 @@
 
   
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
 
 
   
