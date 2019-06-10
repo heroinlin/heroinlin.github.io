@@ -38,10 +38,6 @@
 
 
 
-  
-  
-  <link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css"/>
-
 
 
 
@@ -79,7 +75,7 @@
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
     back2top: true,
     back2top_sidebar: false,
-    fancybox: true,
+    fancybox: false,
     fastclick: false,
     lazyload: false,
     tabs: true,
@@ -325,6 +321,400 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/10/Python/Python_Struct/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heroinlin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/leaf.jpg"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Heroinlin's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/10/10/Python/Python_Struct/" class="post-title-link" itemprop="url">python之Struct解析二进制数据</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-10 10:48:11" itemprop="dateCreated datePublished" datetime="2018-10-10T10:48:11+08:00">2018-10-10</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-10-11 17:10:28" itemprop="dateModified" datetime="2018-10-11T17:10:28+08:00">2018-10-11</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>#python之解析二进制数据</p>
+<p>struct模块中最重要的三个函数是pack(), unpack(), calcsize()</p>
+<h2 id="struct模块中的函数"><a href="#struct模块中的函数" class="headerlink" title="struct模块中的函数"></a>struct模块中的函数</h2><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>return</th>
+<th>explain</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pack(fmt,v1,v2…)</td>
+<td>string</td>
+<td>按照给定的格式(fmt),把数据封装成字符串(实际上是类似于c结构体的字节流),并将该字符串返回.</td>
+</tr>
+<tr>
+<td>pack_into(fmt,buffer,offset,v1,v2…)</td>
+<td>None</td>
+<td>按照给定的格式(fmt),将数据转换成字符串(字节流),并将字节流写入以offset开始的buffer中.(buffer为可写的缓冲区,可用array模块)</td>
+</tr>
+<tr>
+<td>unpack(fmt,v1,v2…..)</td>
+<td>tuple</td>
+<td>按照给定的格式(fmt)解析字节流,并返回解析出来的tuple</td>
+</tr>
+<tr>
+<td>pack_from(fmt,buffer,offset)</td>
+<td>tuple</td>
+<td>按照给定的格式(fmt)解析以offset开始的缓冲区,并返回解析结果</td>
+</tr>
+<tr>
+<td>calcsize(fmt)</td>
+<td>size of fmt</td>
+<td>计算给定的格式(fmt)占用多少字节的内存，注意对齐方式</td>
+</tr>
+</tbody>
+</table>
+<h2 id="格式化字符串"><a href="#格式化字符串" class="headerlink" title="格式化字符串"></a>格式化字符串</h2><p>当打包或者解包的时,需要按照特定的方式来打包或者解包.该方式就是格式化字符串,它指定了数据类型,除此之外,还有用于控制字节顺序、大小和对齐方式的特殊字符.</p>
+<h3 id="对齐方式"><a href="#对齐方式" class="headerlink" title="对齐方式"></a>对齐方式</h3><p>为了同c中的结构体交换数据，还要考虑c或c++编译器使用了字节对齐，通常是以4个字节为单位的32位系统，故而struct根据本地机器字节顺序转换.可以用格式中的第一个字符来改变对齐方式.定义如下</p>
+<table>
+<thead>
+<tr>
+<th>Character</th>
+<th>Byte order</th>
+<th>Size</th>
+<th>Alignment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@(默认)</td>
+<td>本机(native)</td>
+<td>本机(native)</td>
+<td>本机,凑够4字节</td>
+</tr>
+<tr>
+<td>=</td>
+<td>本机(native)</td>
+<td>标准(standard)</td>
+<td>none,按原字节数</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>小端(little-endian)</td>
+<td>标准(standard)</td>
+<td>none,按原字节数</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>大端(big-endian)</td>
+<td>标准(standard)</td>
+<td>none,按原字节数</td>
+</tr>
+<tr>
+<td>!</td>
+<td>network(=big-endian)</td>
+<td>标准(standard)</td>
+<td>none,按原字节数</td>
+</tr>
+</tbody>
+</table>
+<h3 id="格式符"><a href="#格式符" class="headerlink" title="格式符"></a>格式符</h3><table>
+<thead>
+<tr>
+<th>格式符</th>
+<th>C语言类型</th>
+<th>Python类型</th>
+<th>Standard size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>x</td>
+<td>pad byte(填充字节)</td>
+<td>no value</td>
+<td></td>
+</tr>
+<tr>
+<td>c</td>
+<td>char</td>
+<td>string of length 1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>b</td>
+<td>signed char</td>
+<td>integer</td>
+<td>1</td>
+</tr>
+<tr>
+<td>B</td>
+<td>unsigned char</td>
+<td>integer</td>
+<td>1</td>
+</tr>
+<tr>
+<td>?</td>
+<td>_Bool</td>
+<td>bool</td>
+<td>1</td>
+</tr>
+<tr>
+<td>h</td>
+<td>short</td>
+<td>integer</td>
+<td>2</td>
+</tr>
+<tr>
+<td>H</td>
+<td>unsigned short</td>
+<td>integer</td>
+<td>2</td>
+</tr>
+<tr>
+<td>i</td>
+<td>int</td>
+<td>integer</td>
+<td>4</td>
+</tr>
+<tr>
+<td>I(大写的i)</td>
+<td>unsigned int</td>
+<td>integer</td>
+<td>4</td>
+</tr>
+<tr>
+<td>l(小写的L)</td>
+<td>long</td>
+<td>integer</td>
+<td>4</td>
+</tr>
+<tr>
+<td>L</td>
+<td>unsigned long</td>
+<td>long</td>
+<td>4</td>
+</tr>
+<tr>
+<td>q</td>
+<td>long long</td>
+<td>long</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Q</td>
+<td>unsigned long long</td>
+<td>long</td>
+<td>8</td>
+</tr>
+<tr>
+<td>f</td>
+<td>float</td>
+<td>float</td>
+<td>4</td>
+</tr>
+<tr>
+<td>d</td>
+<td>double</td>
+<td>float</td>
+<td>8</td>
+</tr>
+<tr>
+<td>s</td>
+<td>char[]</td>
+<td>string</td>
+<td>1</td>
+</tr>
+<tr>
+<td>p</td>
+<td>char[]</td>
+<td>string</td>
+<td>1</td>
+</tr>
+<tr>
+<td>P</td>
+<td>void *</td>
+<td>long</td>
+</tr>
+</tbody>
+</table>
+<p>注- -!</p>
+<ol>
+<li>_Bool在C99中定义,如果没有这个类型,则将这个类型视为char,一个字节;</li>
+<li>q和Q只适用于64位机器;</li>
+<li>每个格式前可以有一个数字,表示这个类型的个数,如s格式表示一定长度的字符串,4s表示长度为4的字符串;4i表示四个int; 但是p表示的是pascal字符串</li>
+<li>P用来转换一个指针,其长度和机器字长相关;</li>
+<li>f和d的长度和机器字长相关;</li>
+</ol>
+<h2 id="实例代码"><a href="#实例代码" class="headerlink" title="实例代码"></a>实例代码</h2><p>以下代码以person的属性进行二进制文件的写入和读取，person包含姓名，年龄，性别，身高，体重，并赋予力量，智力，体力，敏捷，精神五个特征值，代码如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> OrderedDict</span><br><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">二进制文件的写入和读取</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">read_file</span><span class="params">(file_path)</span>:</span></span><br><span class="line">    person = []</span><br><span class="line">    file = open(file_path, <span class="string">"rb"</span>)</span><br><span class="line">    name = file.read(<span class="number">8</span>)</span><br><span class="line">    name = struct.unpack(<span class="string">'&lt;8s'</span>, name)[<span class="number">0</span>]</span><br><span class="line">    male = file.read(<span class="number">1</span>)</span><br><span class="line">    male = struct.unpack(<span class="string">'&lt;b'</span>, male)[<span class="number">0</span>]</span><br><span class="line">    age = file.read(<span class="number">2</span>)</span><br><span class="line">    age = struct.unpack(<span class="string">'&lt;H'</span>, age)[<span class="number">0</span>]</span><br><span class="line">    height = file.read(<span class="number">4</span>)</span><br><span class="line">    height = int.from_bytes(height, byteorder=<span class="string">'little'</span>)</span><br><span class="line">    <span class="comment"># height = struct.unpack('&lt;I', height)[0]</span></span><br><span class="line">    weight = file.read(<span class="number">4</span>)</span><br><span class="line">    weight = struct.unpack(<span class="string">'&lt;f'</span>, weight)[<span class="number">0</span>]</span><br><span class="line">    feature_size = file.read(<span class="number">4</span>)</span><br><span class="line">    feature_size = int.from_bytes(feature_size, byteorder=<span class="string">'little'</span>)</span><br><span class="line">    features = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(feature_size//<span class="number">4</span>):</span><br><span class="line">        feature_value = file.read(<span class="number">4</span>)</span><br><span class="line">        feature_value = struct.unpack(<span class="string">'&lt;f'</span>, feature_value)[<span class="number">0</span>]</span><br><span class="line">        features.append(feature_value)</span><br><span class="line">    person.append(&#123;</span><br><span class="line">        <span class="string">"name"</span>: name,</span><br><span class="line">        <span class="string">"male"</span>: male,</span><br><span class="line">        <span class="string">"age"</span>: age,</span><br><span class="line">        <span class="string">"height"</span>: height,</span><br><span class="line">        <span class="string">"weight"</span>: weight,</span><br><span class="line">        <span class="string">"feature_size"</span>: feature_size,</span><br><span class="line">        <span class="string">"features"</span>: features,</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> person</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">write_file</span><span class="params">(file_path, person, features)</span>:</span></span><br><span class="line">    file = open(file_path, <span class="string">"wb"</span>)</span><br><span class="line">    <span class="comment"># file.seek(0, 2)</span></span><br><span class="line">    <span class="comment"># 把字符串的地方转为字节类型,还要先转成utf-8的编码(否则报错string argument without an encoding)</span></span><br><span class="line">    name = struct.pack(<span class="string">'&lt;8s'</span>, person[<span class="string">'name'</span>].encode(<span class="string">'utf-8'</span>))</span><br><span class="line">    file.write(name)</span><br><span class="line">    male = struct.pack(<span class="string">'&lt;B'</span>, person[<span class="string">'male'</span>])</span><br><span class="line">    file.write(male)</span><br><span class="line">    age = struct.pack(<span class="string">'&lt;H'</span>, person[<span class="string">'age'</span>])</span><br><span class="line">    file.write(age)</span><br><span class="line">    height = struct.pack(<span class="string">'&lt;I'</span>, person[<span class="string">'height'</span>])</span><br><span class="line">    file.write(height)</span><br><span class="line">    weight = struct.pack(<span class="string">'&lt;f'</span>, person[<span class="string">'weight'</span>])</span><br><span class="line">    file.write(weight)</span><br><span class="line">    features_size = struct.pack(<span class="string">'&lt;I'</span>, <span class="number">5</span>*<span class="number">4</span>)</span><br><span class="line">    file.write(features_size)</span><br><span class="line">    <span class="keyword">for</span> key, value <span class="keyword">in</span> features.items():</span><br><span class="line">        feature_value = struct.pack(<span class="string">'&lt;f'</span>, value)</span><br><span class="line">        file.write(feature_value)</span><br><span class="line">    file.close()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    person = OrderedDict()</span><br><span class="line">    person.update(&#123;<span class="string">'name'</span>: <span class="string">'Jame'</span>&#125;)</span><br><span class="line">    person.update(&#123;<span class="string">'male'</span>: <span class="keyword">True</span>&#125;)</span><br><span class="line">    person.update(&#123;<span class="string">'age'</span>: <span class="number">25</span>&#125;)</span><br><span class="line">    person.update(&#123;<span class="string">'height'</span>: <span class="number">178</span>&#125;)</span><br><span class="line">    person.update(&#123;<span class="string">'weight'</span>: <span class="number">64.0</span>&#125;)</span><br><span class="line">    features = &#123;<span class="string">'Strength'</span>: <span class="number">54.0</span>,  <span class="comment"># 力量</span></span><br><span class="line">                <span class="string">'Intelligence'</span>: <span class="number">78.0</span>,  <span class="comment"># 智力</span></span><br><span class="line">                <span class="string">'Constitution'</span>: <span class="number">32.0</span>,  <span class="comment"># 体力</span></span><br><span class="line">                <span class="string">'Dexterity'</span>: <span class="number">78.0</span>,  <span class="comment"># 敏捷</span></span><br><span class="line">                <span class="string">'Mentality'</span>: <span class="number">53.0</span>  <span class="comment"># 精神</span></span><br><span class="line">                &#125;</span><br><span class="line">    file_path = <span class="string">"./person_info.pkg"</span></span><br><span class="line">    write_file(file_path, person, features)</span><br><span class="line">    person_info = read_file(file_path)</span><br><span class="line">    print(person_info)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p>注意：二进制文件处理时会碰到的问题</p>
+<p>我们使用处理二进制文件时，需要用如下方法</p>
+<p>binfile=open(filepath,’rb’)    读二进制文件</p>
+<p>binfile=open(filepath,’wb’)    写二进制文件</p>
+<p>那么和binfile=open(filepath,’r’)的结果到底有何不同呢？</p>
+<p>不同之处有两个地方：</p>
+<p>第一，使用’r’的时候如果碰到’0x1A’，就会视为文件结束，这就是EOF。使用’rb’则不存在这个问题。即，如果你用二进制写入再用文本读出的话，如果其中存在’0X1A’，就只会读出文件的一部分。使用’rb’的时候会一直读到文件末尾。</p>
+<p>第二，对于字符串x=’abc\ndef’，我们可用len(x)得到它的长度为7，\n我们称之为换行符，实际上是’0X0A’。当我们用’w’即文本方式写的时候，在windows平台上会自动将’0X0A’变成两个字符’0X0D’，’0X0A’，即文件长度实际上变成8.。当用’r’文本方式读取时，又自动的转换成原来的换行符。如果换成’wb’二进制方式来写的话，则会保持一个字符不变，读取时也是原样读取。所以如果用文本方式写入，用二进制方式读取的话，就要考虑这多出的一个字节了。’0X0D’又称回车符。Linux下不会变。因为linux只使用’0X0A’来表示换行。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://kaiyuan.me/2015/12/25/python-struct/" target="_blank" rel="noopener">Python 中 struct 模块的用法</a></p>
+<p><a href="https://www.jianshu.com/p/d03310004668" target="_blank" rel="noopener">Python学习笔记 –struct模板</a></p>
+<p><a href="https://sanyuesha.com/2018/03/10/why-pack-unpack/" target="_blank" rel="noopener">Python 中的 pack 和 unpack</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -724,400 +1114,6 @@
 <p><a href="http://blog.xiayf.cn/2013/03/30/argparse/" target="_blank" rel="noopener">argparse - 命令行选项与参数解析</a></p>
 <p><a href="https://zhuanlan.zhihu.com/p/34395749" target="_blank" rel="noopener">Python-argparse-命令行与参数解析</a></p>
 <p><a href="https://medium.com/@dboyliao/python-%E8%B6%85%E5%A5%BD%E7%94%A8%E6%A8%99%E6%BA%96%E5%87%BD%E5%BC%8F%E5%BA%AB-argparse-4eab2e9dcc69" target="_blank" rel="noopener">Python 超好用標準函式庫 argparse</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/10/Python/Python_Struct/"/>
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Heroinlin"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="/images/leaf.jpg"/>
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Heroinlin's Blog"/>
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/10/10/Python/Python_Struct/" class="post-title-link" itemprop="url">python之Struct解析二进制数据</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-10-10 10:48:11" itemprop="dateCreated datePublished" datetime="2018-10-10T10:48:11+08:00">2018-10-10</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-10-11 17:10:28" itemprop="dateModified" datetime="2018-10-11T17:10:28+08:00">2018-10-11</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>#python之解析二进制数据</p>
-<p>struct模块中最重要的三个函数是pack(), unpack(), calcsize()</p>
-<h2 id="struct模块中的函数"><a href="#struct模块中的函数" class="headerlink" title="struct模块中的函数"></a>struct模块中的函数</h2><table>
-<thead>
-<tr>
-<th>函数</th>
-<th>return</th>
-<th>explain</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>pack(fmt,v1,v2…)</td>
-<td>string</td>
-<td>按照给定的格式(fmt),把数据封装成字符串(实际上是类似于c结构体的字节流),并将该字符串返回.</td>
-</tr>
-<tr>
-<td>pack_into(fmt,buffer,offset,v1,v2…)</td>
-<td>None</td>
-<td>按照给定的格式(fmt),将数据转换成字符串(字节流),并将字节流写入以offset开始的buffer中.(buffer为可写的缓冲区,可用array模块)</td>
-</tr>
-<tr>
-<td>unpack(fmt,v1,v2…..)</td>
-<td>tuple</td>
-<td>按照给定的格式(fmt)解析字节流,并返回解析出来的tuple</td>
-</tr>
-<tr>
-<td>pack_from(fmt,buffer,offset)</td>
-<td>tuple</td>
-<td>按照给定的格式(fmt)解析以offset开始的缓冲区,并返回解析结果</td>
-</tr>
-<tr>
-<td>calcsize(fmt)</td>
-<td>size of fmt</td>
-<td>计算给定的格式(fmt)占用多少字节的内存，注意对齐方式</td>
-</tr>
-</tbody>
-</table>
-<h2 id="格式化字符串"><a href="#格式化字符串" class="headerlink" title="格式化字符串"></a>格式化字符串</h2><p>当打包或者解包的时,需要按照特定的方式来打包或者解包.该方式就是格式化字符串,它指定了数据类型,除此之外,还有用于控制字节顺序、大小和对齐方式的特殊字符.</p>
-<h3 id="对齐方式"><a href="#对齐方式" class="headerlink" title="对齐方式"></a>对齐方式</h3><p>为了同c中的结构体交换数据，还要考虑c或c++编译器使用了字节对齐，通常是以4个字节为单位的32位系统，故而struct根据本地机器字节顺序转换.可以用格式中的第一个字符来改变对齐方式.定义如下</p>
-<table>
-<thead>
-<tr>
-<th>Character</th>
-<th>Byte order</th>
-<th>Size</th>
-<th>Alignment</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>@(默认)</td>
-<td>本机(native)</td>
-<td>本机(native)</td>
-<td>本机,凑够4字节</td>
-</tr>
-<tr>
-<td>=</td>
-<td>本机(native)</td>
-<td>标准(standard)</td>
-<td>none,按原字节数</td>
-</tr>
-<tr>
-<td>&lt;</td>
-<td>小端(little-endian)</td>
-<td>标准(standard)</td>
-<td>none,按原字节数</td>
-</tr>
-<tr>
-<td>&gt;</td>
-<td>大端(big-endian)</td>
-<td>标准(standard)</td>
-<td>none,按原字节数</td>
-</tr>
-<tr>
-<td>!</td>
-<td>network(=big-endian)</td>
-<td>标准(standard)</td>
-<td>none,按原字节数</td>
-</tr>
-</tbody>
-</table>
-<h3 id="格式符"><a href="#格式符" class="headerlink" title="格式符"></a>格式符</h3><table>
-<thead>
-<tr>
-<th>格式符</th>
-<th>C语言类型</th>
-<th>Python类型</th>
-<th>Standard size</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>x</td>
-<td>pad byte(填充字节)</td>
-<td>no value</td>
-<td></td>
-</tr>
-<tr>
-<td>c</td>
-<td>char</td>
-<td>string of length 1</td>
-<td>1</td>
-</tr>
-<tr>
-<td>b</td>
-<td>signed char</td>
-<td>integer</td>
-<td>1</td>
-</tr>
-<tr>
-<td>B</td>
-<td>unsigned char</td>
-<td>integer</td>
-<td>1</td>
-</tr>
-<tr>
-<td>?</td>
-<td>_Bool</td>
-<td>bool</td>
-<td>1</td>
-</tr>
-<tr>
-<td>h</td>
-<td>short</td>
-<td>integer</td>
-<td>2</td>
-</tr>
-<tr>
-<td>H</td>
-<td>unsigned short</td>
-<td>integer</td>
-<td>2</td>
-</tr>
-<tr>
-<td>i</td>
-<td>int</td>
-<td>integer</td>
-<td>4</td>
-</tr>
-<tr>
-<td>I(大写的i)</td>
-<td>unsigned int</td>
-<td>integer</td>
-<td>4</td>
-</tr>
-<tr>
-<td>l(小写的L)</td>
-<td>long</td>
-<td>integer</td>
-<td>4</td>
-</tr>
-<tr>
-<td>L</td>
-<td>unsigned long</td>
-<td>long</td>
-<td>4</td>
-</tr>
-<tr>
-<td>q</td>
-<td>long long</td>
-<td>long</td>
-<td>8</td>
-</tr>
-<tr>
-<td>Q</td>
-<td>unsigned long long</td>
-<td>long</td>
-<td>8</td>
-</tr>
-<tr>
-<td>f</td>
-<td>float</td>
-<td>float</td>
-<td>4</td>
-</tr>
-<tr>
-<td>d</td>
-<td>double</td>
-<td>float</td>
-<td>8</td>
-</tr>
-<tr>
-<td>s</td>
-<td>char[]</td>
-<td>string</td>
-<td>1</td>
-</tr>
-<tr>
-<td>p</td>
-<td>char[]</td>
-<td>string</td>
-<td>1</td>
-</tr>
-<tr>
-<td>P</td>
-<td>void *</td>
-<td>long</td>
-</tr>
-</tbody>
-</table>
-<p>注- -!</p>
-<ol>
-<li>_Bool在C99中定义,如果没有这个类型,则将这个类型视为char,一个字节;</li>
-<li>q和Q只适用于64位机器;</li>
-<li>每个格式前可以有一个数字,表示这个类型的个数,如s格式表示一定长度的字符串,4s表示长度为4的字符串;4i表示四个int; 但是p表示的是pascal字符串</li>
-<li>P用来转换一个指针,其长度和机器字长相关;</li>
-<li>f和d的长度和机器字长相关;</li>
-</ol>
-<h2 id="实例代码"><a href="#实例代码" class="headerlink" title="实例代码"></a>实例代码</h2><p>以下代码以person的属性进行二进制文件的写入和读取，person包含姓名，年龄，性别，身高，体重，并赋予力量，智力，体力，敏捷，精神五个特征值，代码如下</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> OrderedDict</span><br><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">二进制文件的写入和读取</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">read_file</span><span class="params">(file_path)</span>:</span></span><br><span class="line">    person = []</span><br><span class="line">    file = open(file_path, <span class="string">"rb"</span>)</span><br><span class="line">    name = file.read(<span class="number">8</span>)</span><br><span class="line">    name = struct.unpack(<span class="string">'&lt;8s'</span>, name)[<span class="number">0</span>]</span><br><span class="line">    male = file.read(<span class="number">1</span>)</span><br><span class="line">    male = struct.unpack(<span class="string">'&lt;b'</span>, male)[<span class="number">0</span>]</span><br><span class="line">    age = file.read(<span class="number">2</span>)</span><br><span class="line">    age = struct.unpack(<span class="string">'&lt;H'</span>, age)[<span class="number">0</span>]</span><br><span class="line">    height = file.read(<span class="number">4</span>)</span><br><span class="line">    height = int.from_bytes(height, byteorder=<span class="string">'little'</span>)</span><br><span class="line">    <span class="comment"># height = struct.unpack('&lt;I', height)[0]</span></span><br><span class="line">    weight = file.read(<span class="number">4</span>)</span><br><span class="line">    weight = struct.unpack(<span class="string">'&lt;f'</span>, weight)[<span class="number">0</span>]</span><br><span class="line">    feature_size = file.read(<span class="number">4</span>)</span><br><span class="line">    feature_size = int.from_bytes(feature_size, byteorder=<span class="string">'little'</span>)</span><br><span class="line">    features = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(feature_size//<span class="number">4</span>):</span><br><span class="line">        feature_value = file.read(<span class="number">4</span>)</span><br><span class="line">        feature_value = struct.unpack(<span class="string">'&lt;f'</span>, feature_value)[<span class="number">0</span>]</span><br><span class="line">        features.append(feature_value)</span><br><span class="line">    person.append(&#123;</span><br><span class="line">        <span class="string">"name"</span>: name,</span><br><span class="line">        <span class="string">"male"</span>: male,</span><br><span class="line">        <span class="string">"age"</span>: age,</span><br><span class="line">        <span class="string">"height"</span>: height,</span><br><span class="line">        <span class="string">"weight"</span>: weight,</span><br><span class="line">        <span class="string">"feature_size"</span>: feature_size,</span><br><span class="line">        <span class="string">"features"</span>: features,</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> person</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">write_file</span><span class="params">(file_path, person, features)</span>:</span></span><br><span class="line">    file = open(file_path, <span class="string">"wb"</span>)</span><br><span class="line">    <span class="comment"># file.seek(0, 2)</span></span><br><span class="line">    <span class="comment"># 把字符串的地方转为字节类型,还要先转成utf-8的编码(否则报错string argument without an encoding)</span></span><br><span class="line">    name = struct.pack(<span class="string">'&lt;8s'</span>, person[<span class="string">'name'</span>].encode(<span class="string">'utf-8'</span>))</span><br><span class="line">    file.write(name)</span><br><span class="line">    male = struct.pack(<span class="string">'&lt;B'</span>, person[<span class="string">'male'</span>])</span><br><span class="line">    file.write(male)</span><br><span class="line">    age = struct.pack(<span class="string">'&lt;H'</span>, person[<span class="string">'age'</span>])</span><br><span class="line">    file.write(age)</span><br><span class="line">    height = struct.pack(<span class="string">'&lt;I'</span>, person[<span class="string">'height'</span>])</span><br><span class="line">    file.write(height)</span><br><span class="line">    weight = struct.pack(<span class="string">'&lt;f'</span>, person[<span class="string">'weight'</span>])</span><br><span class="line">    file.write(weight)</span><br><span class="line">    features_size = struct.pack(<span class="string">'&lt;I'</span>, <span class="number">5</span>*<span class="number">4</span>)</span><br><span class="line">    file.write(features_size)</span><br><span class="line">    <span class="keyword">for</span> key, value <span class="keyword">in</span> features.items():</span><br><span class="line">        feature_value = struct.pack(<span class="string">'&lt;f'</span>, value)</span><br><span class="line">        file.write(feature_value)</span><br><span class="line">    file.close()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    person = OrderedDict()</span><br><span class="line">    person.update(&#123;<span class="string">'name'</span>: <span class="string">'Jame'</span>&#125;)</span><br><span class="line">    person.update(&#123;<span class="string">'male'</span>: <span class="keyword">True</span>&#125;)</span><br><span class="line">    person.update(&#123;<span class="string">'age'</span>: <span class="number">25</span>&#125;)</span><br><span class="line">    person.update(&#123;<span class="string">'height'</span>: <span class="number">178</span>&#125;)</span><br><span class="line">    person.update(&#123;<span class="string">'weight'</span>: <span class="number">64.0</span>&#125;)</span><br><span class="line">    features = &#123;<span class="string">'Strength'</span>: <span class="number">54.0</span>,  <span class="comment"># 力量</span></span><br><span class="line">                <span class="string">'Intelligence'</span>: <span class="number">78.0</span>,  <span class="comment"># 智力</span></span><br><span class="line">                <span class="string">'Constitution'</span>: <span class="number">32.0</span>,  <span class="comment"># 体力</span></span><br><span class="line">                <span class="string">'Dexterity'</span>: <span class="number">78.0</span>,  <span class="comment"># 敏捷</span></span><br><span class="line">                <span class="string">'Mentality'</span>: <span class="number">53.0</span>  <span class="comment"># 精神</span></span><br><span class="line">                &#125;</span><br><span class="line">    file_path = <span class="string">"./person_info.pkg"</span></span><br><span class="line">    write_file(file_path, person, features)</span><br><span class="line">    person_info = read_file(file_path)</span><br><span class="line">    print(person_info)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
-<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p>注意：二进制文件处理时会碰到的问题</p>
-<p>我们使用处理二进制文件时，需要用如下方法</p>
-<p>binfile=open(filepath,’rb’)    读二进制文件</p>
-<p>binfile=open(filepath,’wb’)    写二进制文件</p>
-<p>那么和binfile=open(filepath,’r’)的结果到底有何不同呢？</p>
-<p>不同之处有两个地方：</p>
-<p>第一，使用’r’的时候如果碰到’0x1A’，就会视为文件结束，这就是EOF。使用’rb’则不存在这个问题。即，如果你用二进制写入再用文本读出的话，如果其中存在’0X1A’，就只会读出文件的一部分。使用’rb’的时候会一直读到文件末尾。</p>
-<p>第二，对于字符串x=’abc\ndef’，我们可用len(x)得到它的长度为7，\n我们称之为换行符，实际上是’0X0A’。当我们用’w’即文本方式写的时候，在windows平台上会自动将’0X0A’变成两个字符’0X0D’，’0X0A’，即文件长度实际上变成8.。当用’r’文本方式读取时，又自动的转换成原来的换行符。如果换成’wb’二进制方式来写的话，则会保持一个字符不变，读取时也是原样读取。所以如果用文本方式写入，用二进制方式读取的话，就要考虑这多出的一个字节了。’0X0D’又称回车符。Linux下不会变。因为linux只使用’0X0A’来表示换行。</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://kaiyuan.me/2015/12/25/python-struct/" target="_blank" rel="noopener">Python 中 struct 模块的用法</a></p>
-<p><a href="https://www.jianshu.com/p/d03310004668" target="_blank" rel="noopener">Python学习笔记 –struct模板</a></p>
-<p><a href="https://sanyuesha.com/2018/03/10/why-pack-unpack/" target="_blank" rel="noopener">Python 中的 pack 和 unpack</a></p>
 
           
         
@@ -1638,317 +1634,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/deep_learning/object_detection/R-CNN/"/>
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Heroinlin"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="/images/leaf.jpg"/>
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Heroinlin's Blog"/>
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/04/12/deep_learning/object_detection/R-CNN/" class="post-title-link" itemprop="url">目标检测网络之 R-CNN系列</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-04-12 10:48:11" itemprop="dateCreated datePublished" datetime="2018-04-12T10:48:11+08:00">2018-04-12</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-10-11 10:41:28" itemprop="dateModified" datetime="2018-10-11T10:41:28+08:00">2018-10-11</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/object-detection/" itemprop="url" rel="index"><span itemprop="name">object detection</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="R-CNN"><a href="#R-CNN" class="headerlink" title="R-CNN"></a>R-CNN</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><pre><code>目标检测(object detection)就是在给定的图片中精确找到物体所在位置，并标注出物体的类别。object detection要解决的问题就是物体在哪里，是什么这整个流程的问题。一般需要经过两个步骤：
-</code></pre><ul>
-<li><p>图像识别(classification)<br>输入：图片<br>输出：物体的类别<br>评估方法：准确率</p>
-<center><img src="./images/rcnn_classfy.png" width="600"></center>
-</li>
-<li><p>定位(localization)</p>
-<p>输入：图片<br>输出：方框在图片中的位置（x,y,w,h）<br>评估方法：检测评价函数 intersection-over-union ( IOU ) </p>
-<center><img src="./images/rcnn_localization.png" width="600"></center>
-
-</li>
-</ul>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一：看做回归问题"><a href="#思路一：看做回归问题" class="headerlink" title="思路一：看做回归问题"></a><strong>思路一：看做回归问题</strong></h3><pre><code>看做回归问题，我们需要预测出（x,y,w,h）四个参数的值，从而得出方框的位置。
-</code></pre><p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504112638429-1953242676.png" alt="img">步骤1:</p>
-<ul>
-<li><p>先解决简单问题， 搭一个识别图像的神经网络</p>
-</li>
-<li><p>在AlexNet VGG GoogleLenet上fine-tuning一下</p>
-</li>
-</ul>
-<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504112659914-1900232742.jpg" alt="img"></p>
-<p>步骤2:</p>
-<ul>
-<li>在上述神经网络的尾部展开（也就说CNN前面保持不变，我们对CNN的结尾处作出改进：加了两个头：“分类头”和“回归头”）</li>
-<li>成为classification + regression模式</li>
-</ul>
-<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504112723757-880743532.png" alt="img"></p>
-<p>步骤3:</p>
-<ul>
-<li>Regression那个部分用欧氏距离损失</li>
-<li>使用SGD训练</li>
-</ul>
-<p>步骤4:</p>
-<ul>
-<li>预测阶段把2个头部拼上    </li>
-<li>完成不同的功能</li>
-</ul>
-<p>这里需要进行两次fine-tuning<br>第一次在ALexNet上做，第二次将头部改成regression head，前面不变，做一次fine-tuning</p>
-<p>Regression的部分加在哪？</p>
-<p>有两种处理方法：</p>
-<ul>
-<li>加在最后一个卷积层后面（如VGG）</li>
-<li>加在最后一个全连接层后面（如R-CNN）</li>
-</ul>
-<p>regression太难做了，应想方设法转换为classification问题。<br>regression的训练参数收敛的时间要长得多，所以上面的网络采取了用classification的网络来计算出网络共同部分的连接权值。</p>
-<h3 id="思路二：取图像窗口"><a href="#思路二：取图像窗口" class="headerlink" title="思路二：取图像窗口"></a><strong>思路二：取图像窗口</strong></h3><ul>
-<li>还是刚才的classification + regression思路</li>
-<li>咱们取不同的大小的“框”　</li>
-<li>让框出现在不同的位置，得出这个框的判定得分</li>
-<li>取得分最高的那个框</li>
-</ul>
-<p>左上角的黑框：得分0.5<br><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504112903273-1900432759.jpg" alt="img"><br>右上角的黑框：得分0.75</p>
-<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504112919320-1728574836.jpg" alt="img"></p>
-<p>左下角的黑框：得分0.6<br><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504112933164-1200242604.jpg" alt="img"><br>右下角的黑框：得分0.8</p>
-<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504112949320-428298146.jpg" alt="img"></p>
-<p>根据得分的高低，我们选择了右下角的黑框作为目标位置的预测。<br>注：有的时候也会选择得分最高的两个框，然后取两框的交集作为最终的位置预测。</p>
-<p>疑惑：框要取多大？<br>取不同的框，依次从左上角扫到右下角。非常粗暴啊。</p>
-<p>总结一下思路：<br>对一张图片，用各种大小的框（遍历整张图片）将图片截取出来，输入到CNN，然后CNN会输出这个框的得分（classification）以及这个框图片对应的x,y,h,w（regression）。</p>
-<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113014179-105680354.jpg" alt="img"></p>
-<p>这方法实在太耗时间了，做个优化。<br>原来网络是这样的：</p>
-<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113030523-41422116.jpg" alt="img"></p>
-<p>优化成这样：把全连接层改为卷积层，这样可以提提速。</p>
-<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113039304-1103823779.jpg" alt="img"></p>
-<h2 id="候选框生成"><a href="#候选框生成" class="headerlink" title="候选框生成"></a>候选框生成</h2><p>当图像有很多物体怎么办的？难度可是一下暴增啊。</p>
-<p>那任务就变成了：多物体识别+定位多个物体<br>那把这个任务看做分类问题？<br><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113057601-300431852.jpg" alt="img"></p>
-<p>看成分类问题有何不妥？</p>
-<ul>
-<li>你需要找很多位置， 给很多个不同大小的框</li>
-<li>你还需要对框内的图像分类　</li>
-<li>当然， 如果你的GPU很强大， 恩， 那加油做吧…</li>
-</ul>
-<p>看做classification， 有没有办法优化下？我可不想试那么多框那么多位置啊！<br>有人想到一个好方法：<br>找出可能含有物体的框（也就是候选框，比如选1000个候选框），这些框之间是可以互相重叠互相包含的，这样我们就可以避免暴力枚举的所有框了。</p>
-<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113129211-135695982.jpg" alt="img"></p>
-<p>大牛们发明好多选定候选框的方法，比如EdgeBoxes和Selective Search。<br>以下是各种选定候选框的方法的性能对比。</p>
-<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113209164-1717059035.jpg" alt="img"></p>
-<p>有一个很大的疑惑，提取候选框用到的算法“选择性搜索”到底怎么选出这些候选框的呢？那个就得好好看看它的论文了，这里就不介绍了。</p>
-<h2 id="R-CNN-1"><a href="#R-CNN-1" class="headerlink" title="R-CNN"></a>R-CNN</h2><p>基于以上的思路，RCNN的出现了。</p>
-<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113229570-69371857.png" alt="img"></p>
-<p>步骤一：训练（或者下载）一个分类模型（比如AlexNet）<br><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113247742-406451407.jpg" alt="img"><br>步骤二：对该模型做fine-tuning</p>
-<ul>
-<li>将分类数从1000改为20</li>
-<li>掉最后一个全连接层</li>
-</ul>
-<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113302195-1032285194.png" alt="img"><br>步骤三：特征提取<br>　　-    提取图像的所有候选框（选择性搜索）<br>　　-    对于每一个区域：修正区域大小以适合CNN的输入，做一次前向运算，将第五个池化层的输出（就是对候选框提取到的特征）存到硬盘</p>
-<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113326195-1862868537.png" alt="img"></p>
-<p>步骤四：训练一个SVM分类器（二分类）来判断这个候选框里物体的类别<br>每个类别对应一个SVM，判断是不是属于这个类别，是就是positive，反之nagative<br>比如下图，就是狗分类的SVM</p>
-<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113349351-169304797.png" alt="img"></p>
-<p>步骤五：使用回归器精细修正候选框位置：对于每一个类，训练一个线性回归模型去判定这个框是否框得完美。</p>
-<p> <img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113412351-143526289.png" alt="img"></p>
-<h3 id="回归器"><a href="#回归器" class="headerlink" title="回归器"></a>回归器</h3><p>回归器：对每一类目标，使用一个线性脊回归器进行精修。正则项λ=1000。 输入为深度网络pool5层的4096维特征，输出为xy方向的缩放和平移。 训练样本：判定为本类的候选框中和真值重叠面积大于0.6的候选框。</p>
-<pre><code>首先要明确目标检测不仅是要对目标进行识别，还要完成定位任务，所以最终获得的bounding-box也决定了目标检测的精度。 
-</code></pre><p>这里先解释一下什么叫定位精度：定位精度可以用算法得出的物体检测框与实际标注的物体边界框的IoU值来近似表示。</p>
-<p>如下图所示，绿色框为实际标准的卡宴车辆框，即Ground Truth；黄色框为selective search算法得出的建议框，即Region Proposal。即使黄色框中物体被分类器识别为卡宴车辆，但是由于绿色框和黄色框IoU值并不大，所以最后的目标检测精度并不高。采用回归器是为了对建议框进行校正，使得校正后的Region Proposal与selective search更接近， 以提高最终的检测精度。论文中采用bounding-box回归使mAP提高了3~4%。 </p>
-<center><img src="images/rcnn_box_regression_1.jpg"></center>
-
-<p>那么问题来了，回归器如何设计呢？ </p>
-<center><img src="images/rcnn_box_regression_2.jpg"></center>
-
-<p>如上图，黄色框口$P$表示建议框Region Proposal，绿色窗口$G$表示实际框Ground Truth，红色窗口$\widehat{G}$表示Region Proposal进行回归后的预测窗口，现在的目标是找到$P$到$\widehat{G}$的线性变换【当Region Proposal与Ground Truth的IoU&gt;0.6时可以认为是线性变换】，使得$\widehat{G}$与$G$越相近，这就相当于一个简单的可以用最小二乘法解决的线性回归问题，具体往下看。<br>让我们先来定义P窗口的数学表达式：$Pi=(P^i_x，P^i_y，P^i_w，P^i_h)$，其中$(P^i_x，P^i_y)$表示第一个i窗口的中心点坐标，$P_iw$,$P_ih$分别为第i个窗口的宽和高；$G$窗口的数学表达式为：$G^i=(G^i_x，G^i_y，G^i_w，G^i_h)$；$\widehat{G}$窗口的数学表达式为：$\widehat{G}_i=(\widehat{G}^i_x，\widehat{G}^i_y，\widehat{G}^i_w，\widehat{G}^i_h)$。以下省去$i$上标。<br>这里定义了四种变换函数，$d_x(P)$，$d_y(P)$，$d_w(P)$，$d_h(P)$。$d_x(P)$和$d_y(P)$通过平移对x和y进行变化，$d_w(P)$和$d_h(P)$通过缩放对w和h进行变化，即下面四个式子所示： </p>
-<center><br><br>$$\widehat{G}_x=P_wd_x(P)+P_x$$<br><br>$$\widehat{G}_y=P_hd_y(P)+P_y$$<br><br>$$\widehat{G}_w=P_w\text{exp}(d_w(P))$$<br><br>$$\widehat{G}_h=P_h\text{exp}(d_h(P))​$$<br></center>
-
-<p>每一个$d_∗(P)$【*表示x，y，w，h】都是一个AlexNet CNN网络Pool5层特征$\phi_5(P)$的线性函数，即$d_∗(P)=w^T_∗\phi_5(P)$ ，这里$w^T_∗$就是所需要学习的回归参数。损失函数即为：</p>
-<p>$$Loss=argmin\Sigma_{i=0}^N(t^i_∗−w^T_∗ϕ<em>5(P^i))^2+λ||\widehat{w}</em>∗||^2$$</p>
-<p>损失函数中加入正则项$λ||\widehat{w}<em>∗||^2$$ 是为了避免归回参数\widehat{w}</em>∗过大。其中，回归目标$$t_*$由训练输入对$(P，G)$按下式计算得来：</p>
-<center><br><br>$$ t_x=(G_x−P_x)/P_w$$<br><br>$$t_y=(G_y−P_y)/P_h$$<br><br>$$t_w=log(G_w/P_w)$$<br><br>$$t_h=log(G_h/P_h)$$<br><br></center>
-
-<p>①构造样本对。为了提高每类样本框回归的有效性，对每类样本都仅仅采集与Ground Truth相交IoU最大的Region Proposal，并且IoU&gt;0.6的Region Proposal作为样本对$(P^i，G^i)$，一共产生20对样本对【20个类别】；<br>②每种类型的回归器单独训练，输入该类型样本对N个：${(P^i,G^i)}<em>{i=1⋯N}$以及$P^i</em>{i=1⋯N}$所对应的AlexNet CNN网络Pool5层特征$\phi_5(P^i)<em>{i=1⋯N}$；<br>③利用输入样本对${(P^i,G^i)}</em>(i=1⋯N)$计算$t^i_{∗i=1⋯N}$；<br>④利用$\phi_5(P^i)<em>{i=1⋯N}$和$t^i</em>{∗i=1⋯N}$，根据损失函数进行回归，得到使损失函数最小的参数$w^T_∗$。</p>
-<p>RCNN的进化中SPP Net的思想对其贡献很大，这里也简单介绍一下SPP Net。</p>
-<h2 id="SPP-Net"><a href="#SPP-Net" class="headerlink" title="SPP Net"></a><strong>SPP Net</strong></h2><p>SPP：Spatial Pyramid Pooling（空间金字塔池化）<br>它的特点有两个:</p>
-<p>1.结合空间金字塔方法实现CNNs的对尺度输入。<br>一般CNN后接全连接层或者分类器，他们都需要固定的输入尺寸，因此不得不对输入数据进行crop或者warp，这些预处理会造成数据的丢失或几何的失真。SPP Net的第一个贡献就是将金字塔思想加入到CNN，实现了数据的多尺度输入。</p>
-<p>如下图所示，在卷积层和全连接层之间加入了SPP layer。此时网络的输入可以是任意尺度的，在SPP layer中每一个pooling的filter会根据输入调整大小，而SPP的输出尺度始终是固定的。</p>
-<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113433539-94801265.jpg" alt="img"></p>
-<p>　</p>
-<p>2.只对原图提取一次卷积特征<br>在R-CNN中，每个候选框先resize到统一大小，然后分别作为CNN的输入，这样是很低效的。<br>所以SPP Net根据这个缺点做了优化：只对原图进行一次卷积得到整张图的feature map，然后找到每个候选框zaifeature map上的映射patch，将此patch作为每个候选框的卷积特征输入到SPP layer和之后的层。节省了大量的计算时间，比R-CNN有一百倍左右的提速。</p>
-<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113450414-709458906.jpg" alt="img"></p>
-<h2 id="Fast-R-CNN"><a href="#Fast-R-CNN" class="headerlink" title="Fast R-CNN"></a><strong>Fast R-CNN</strong></h2><p>SPP Net真是个好方法，R-CNN的进阶版Fast R-CNN就是在RCNN的基础上采纳了SPP Net方法，对RCNN作了改进，使得性能进一步提高。</p>
-<p>R-CNN与Fast RCNN的区别有哪些呢？<br>先说RCNN的缺点：即使使用了selective search等预处理步骤来提取潜在的bounding box作为输入，但是RCNN仍会有严重的速度瓶颈，原因也很明显，就是计算机对所有region进行特征提取时会有重复计算，Fast-RCNN正是为了解决这个问题诞生的。</p>
-<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113527898-1753606875.png" alt="img"></p>
-<p>大牛提出了一个可以看做单层sppnet的网络层，叫做ROI Pooling，这个网络层可以把不同大小的输入映射到一个固定尺度的特征向量，而我们知道，conv、pooling、relu等操作都不需要固定size的输入，因此，在原始图片上执行这些操作后，虽然输入图片size不同导致得到的feature map尺寸也不同，不能直接接到一个全连接层进行分类，但是可以加入这个神奇的ROI Pooling层，对每个region都提取一个固定维度的特征表示，再通过正常的softmax进行类型识别。另外，之前RCNN的处理流程是先提proposal，然后CNN提取特征，之后用SVM分类器，最后再做bbox regression，而在Fast-RCNN中，作者巧妙的把bbox regression放进了神经网络内部，与region分类和并成为了一个multi-task模型，实际实验也证明，这两个任务能够共享卷积特征，并相互促进。Fast-RCNN很重要的一个贡献是成功的让人们看到了Region Proposal+CNN这一框架实时检测的希望，原来多类检测真的可以在保证准确率的同时提升处理速度，也为后来的Faster-RCNN做下了铺垫。</p>
-<p>画一画重点：<br>R-CNN有一些相当大的缺点（把这些缺点都改掉了，就成了Fast R-CNN）。<br>大缺点：由于每一个候选框都要独自经过CNN，这使得花费的时间非常多。<br>解决：共享卷积层，现在不是每一个候选框都当做输入进入CNN了，而是输入一张完整的图片，在第五个卷积层再得到每个候选框的特征</p>
-<p>原来的方法：许多候选框（比如两千个）–&gt;CNN–&gt;得到每个候选框的特征–&gt;分类+回归<br>现在的方法：一张完整图片–&gt;CNN–&gt;得到每张候选框的特征–&gt;分类+回归</p>
-<p>所以容易看见，Fast RCNN相对于RCNN的提速原因就在于：不过不像RCNN把每个候选区域给深度网络提特征，而是整张图提一次特征，再把候选框映射到conv5上，而SPP只需要计算一次特征，剩下的只需要在conv5层上操作就可以了。</p>
-<p>在性能上提升也是相当明显的：</p>
-<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113546570-1486555910.png" alt="img"></p>
-<h2 id="Faster-R-CNN"><a href="#Faster-R-CNN" class="headerlink" title="Faster R-CNN"></a><strong>Faster R-CNN</strong></h2><p>Fast R-CNN存在的问题：存在瓶颈：选择性搜索，找出所有的候选框，这个也非常耗时。那我们能不能找出一个更加高效的方法来求出这些候选框呢？<br>解决：加入一个提取边缘的神经网络，也就说找到候选框的工作也交给神经网络来做了。<br>做这样的任务的神经网络叫做Region Proposal Network(RPN)。</p>
-<p>具体做法：<br>　　-    将RPN放在最后一个卷积层的后面<br>　　-    RPN直接训练得到候选区域</p>
-<p> <img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113604070-1781708405.png" alt="img"></p>
-<p>RPN简介：<br>　　-    在feature map上滑动窗口<br>　　-    建一个神经网络用于物体分类+框位置的回归<br>　　-    滑动窗口的位置提供了物体的大体位置信息<br>　　-    框的回归提供了框更精确的位置</p>
- <center><img src="images/rpn.jpg"></center>
-
-<p>一种网络，四个损失函数;<br>　　-    RPN calssification(anchor good.bad)<br>　　-    RPN regression(anchor-&gt;propoasal)<br>　　-    Fast R-CNN classification(over classes)<br>　　-    Fast R-CNN regression(proposal -&gt;box)</p>
-<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113908179-1745309228.png" alt="img"></p>
-<p>速度对比</p>
-<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113649195-2098206818.png" alt="img"></p>
-<p>Faster R-CNN的主要贡献是设计了提取候选区域的网络RPN，代替了费时的选择性搜索，使得检测速度大幅提高。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>最后总结一下各大算法的步骤：<br>RCNN</p>
-<p>　　1.    在图像中确定约1000-2000个候选框 (使用选择性搜索)<br>　　2. 每个候选框内图像块缩放至相同大小，并输入到CNN内进行特征提取<br>　　3.    对候选框中提取出的特征，使用分类器判别是否属于一个特定类<br>　　4.    对于属于某一特征的候选框，用回归器进一步调整其位置</p>
-<p>Fast RCNN<br>　　1.    在图像中确定约1000-2000个候选框 (使用选择性搜索)<br>　　2.    对整张图片输进CNN，得到feature map<br>　　3.    找到每个候选框在feature map上的映射patch，将此patch作为每个候选框的卷积特征输入到SPP layer和之后的层<br>　　4.    对候选框中提取出的特征，使用分类器判别是否属于一个特定类<br>　　5.    对于属于某一特征的候选框，用回归器进一步调整其位置</p>
-<p>Faster RCNN<br>　　1.    对整张图片输进CNN，得到feature map<br>　　2.    卷积特征输入到RPN，得到候选框的特征信息<br>　　3.    对候选框中提取出的特征，使用分类器判别是否属于一个特定类<br>　　4.    对于属于某一特征的候选框，用回归器进一步调整其位置</p>
-<p>总的来说，从R-CNN, SPP-NET, Fast R-CNN, Faster R-CNN一路走来，基于深度学习目标检测的流程变得越来越精简，精度越来越高，速度也越来越快。可以说基于region proposal的R-CNN系列目标检测方法是当前目标检测技术领域最主要的一个分支。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/deep_learning/object_detection/yolo/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2241,7 +1926,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/deep_learning/object_detection/SSD/"/>
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/deep_learning/object_detection/R-CNN/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Heroinlin"/>
@@ -2261,7 +1946,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2018/04/12/deep_learning/object_detection/SSD/" class="post-title-link" itemprop="url">目标检测网络之 SSD</a>
+                <a href="/2018/04/12/deep_learning/object_detection/R-CNN/" class="post-title-link" itemprop="url">目标检测网络之 R-CNN系列</a>
               
             
           </h1>
@@ -2303,7 +1988,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-10-11 10:42:26" itemprop="dateModified" datetime="2018-10-11T10:42:26+08:00">2018-10-11</time>
+                <time title="修改时间：2018-10-11 10:41:28" itemprop="dateModified" datetime="2018-10-11T10:41:28+08:00">2018-10-11</time>
               
             
           </span>
@@ -2357,162 +2042,145 @@
       
         
           
-            <h1 id="Single-Shot-MultiBox-Detector"><a href="#Single-Shot-MultiBox-Detector" class="headerlink" title="Single Shot MultiBox Detector"></a>Single Shot MultiBox Detector</h1><p>论文地址: <a href="https://arxiv.org/pdf/1512.02325.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1512.02325.pdf</a></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>目标检测近年来已经取得了很重要的进展，主流的算法主要分为两个类型（参考<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/pdf/1711.06897.pdf" target="_blank" rel="noopener">RefineDet</a>）:</p>
-<ul>
-<li><p><strong>Two stages</strong></p>
-<p>以Faster RCNN为代表，即RPN网络先生成proposals目标定位，再对proposals进行classification+bounding box regression完成目标分类, two-stage方法的优势是准确度高</p>
+            <h1 id="R-CNN"><a href="#R-CNN" class="headerlink" title="R-CNN"></a>R-CNN</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><pre><code>目标检测(object detection)就是在给定的图片中精确找到物体所在位置，并标注出物体的类别。object detection要解决的问题就是物体在哪里，是什么这整个流程的问题。一般需要经过两个步骤：
+</code></pre><ul>
+<li><p>图像识别(classification)<br>输入：图片<br>输出：物体的类别<br>评估方法：准确率</p>
+<center><img src="./images/rcnn_classfy.png" width="600"></center>
 </li>
-<li><p><strong>Single shot</strong></p>
-<p>以YOLO/SSD为代表，均匀地在图片的不同位置进行密集抽样，抽样时可以采用不同尺度和长宽比，然后利用CNN提取特征后直接进行分类与回归, 一次性完成classification+bounding box regression, 所以其优势是速度快，但是均匀的密集采样的一个重要缺点是训练比较困难，这主要是因为正样本与负样本（背景）极其不均衡（参见<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1708.02002" target="_blank" rel="noopener">Focal Loss</a>），导致模型准确度稍低。</p>
+<li><p>定位(localization)</p>
+<p>输入：图片<br>输出：方框在图片中的位置（x,y,w,h）<br>评估方法：检测评价函数 intersection-over-union ( IOU ) </p>
+<center><img src="./images/rcnn_localization.png" width="600"></center>
+
 </li>
 </ul>
-<h2 id="1-SSD300网络结构"><a href="#1-SSD300网络结构" class="headerlink" title="1 SSD300网络结构"></a>1 SSD300网络结构</h2><center><img src="./images/ssd_yolo_对比.jpg"></center>
-
-<center><em>图 2 SSD300/YOLO网络结构对比</em> </center>
-
-<p>同为Single shot方式的SSD/YOLO区别：</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一：看做回归问题"><a href="#思路一：看做回归问题" class="headerlink" title="思路一：看做回归问题"></a><strong>思路一：看做回归问题</strong></h3><pre><code>看做回归问题，我们需要预测出（x,y,w,h）四个参数的值，从而得出方框的位置。
+</code></pre><p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504112638429-1953242676.png" alt="img">步骤1:</p>
 <ul>
-<li>YOLO在卷积层后接全连接层，即检测时只利用了最高层Feature maps（包括Faster RCNN也是如此）</li>
-<li>SSD采用金字塔结构，即利用了conv4-3/conv-7/conv6-2/conv7-2/conv8_2/conv9_2这些大小不同的feature maps，在多个feature maps上同时进行softmax分类和位置回归</li>
-<li>SSD还加入了Prior box</li>
+<li><p>先解决简单问题， 搭一个识别图像的神经网络</p>
+</li>
+<li><p>在AlexNet VGG GoogleLenet上fine-tuning一下</p>
+</li>
 </ul>
-<center><img src="./images/single_feature_map_and_pyramidal_feature_hierarchy.jpg"></center>
-
-<center> <em>图 3 单层 feature map预测和特征金字塔预测对比</em> </center>
-
-<h2 id="2-Prior-Box"><a href="#2-Prior-Box" class="headerlink" title="2 Prior Box"></a>2 Prior Box</h2><p>在SSD300中引入了Prior Box，实际上与Faster RCNN Anchor非常类似，就是一些目标的预选框，后续通过classification+bounding box regression获得真实目标的位置。</p>
-<p>SSD按照如下规则生成prior box：</p>
+<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504112659914-1900232742.jpg" alt="img"></p>
+<p>步骤2:</p>
 <ul>
-<li>以feature map上每个点的中点为中心，生成一些列同心的prior box</li>
-<li>正方形prior box最小边长为和最大边长为：</li>
+<li>在上述神经网络的尾部展开（也就说CNN前面保持不变，我们对CNN的结尾处作出改进：加了两个头：“分类头”和“回归头”）</li>
+<li>成为classification + regression模式</li>
 </ul>
-<p>$$<br>\color {MidnightBlue}\mathit {\text{min_size}}<br>$$</p>
-<p>$$<br>\color {MidnightBlue}\mathit {\sqrt{\text{min_size}*\text{max_size}}}<br>$$</p>
+<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504112723757-880743532.png" alt="img"></p>
+<p>步骤3:</p>
 <ul>
-<li>每在prototxt设置一个aspect ratio，会生成2个长方形，长宽为：</li>
+<li>Regression那个部分用欧氏距离损失</li>
+<li>使用SGD训练</li>
 </ul>
-<p>$$<br>\color {MidnightBlue}\mathit {\sqrt{\text{aspect_ratio}}*\text{min_size}}<br>$$</p>
-<p>$$<br>\color {MidnightBlue}\mathit {1/{\sqrt{\text{aspect_ratio}}*\text{min_size}}}<br>$$</p>
-<center><img src="./images/prior box.jpg"></center>
-
-<p>图4 prior box</p>
+<p>步骤4:</p>
 <ul>
-<li>而每个feature map对应prior box的min_size和max_size由以下公式决定：</li>
+<li>预测阶段把2个头部拼上    </li>
+<li>完成不同的功能</li>
 </ul>
-<center>$$s_k = s_{min} + \frac{s_{max}-s_{min}}{m-1}(k-1), \ \ k\in[1, m]$$ </center>
-
-<p>公式中的 $m$是指进行预测时使用feature map的数量，如SSD300使用conv4-3等6个feature maps进行预测，所以 $m=6$。同时原文设定$s_{min}=0.2$ ，$s_{max}=0.9$</p>
-<p>那么：</p>
+<p>这里需要进行两次fine-tuning<br>第一次在ALexNet上做，第二次将头部改成regression head，前面不变，做一次fine-tuning</p>
+<p>Regression的部分加在哪？</p>
+<p>有两种处理方法：</p>
 <ul>
-<li>对于conv4-3： $k=1$ , $min_size=s_1 <em>300$, $max_size=s_2</em>300$</li>
-<li>对于conv-7：$k=2$, $min_size=s_2 <em>300$, $max_size=s_3</em>300$</li>
-<li>….</li>
+<li>加在最后一个卷积层后面（如VGG）</li>
+<li>加在最后一个全连接层后面（如R-CNN）</li>
 </ul>
-<p>显然可以用上述公式推导出每个feature maps使用的Prior Box size。但是在SSD300中prior box设置并不能完全和上述公式对应：</p>
-<center><table> <tr> <th width="10%,bgcolor=#eeeeee"></th> <th width="10%,bgcolor=#eeeeee">min_size</th> &lt;th width=10%,bgcolor=#eeeeee”&gt;max_size </tr> <tr> <td bgcolor="#eeeeee"> conv4_3</td> <td> 30  </td> <td> 60</td> </tr>  <tr> <td bgcolor="#eeeeee"> fc7</td> <td> 60  </td> <td> 111</td> </tr><tr> <td bgcolor="#eeeeee"> conv6_2</td> <td> 111</td> <td> 162</td> </tr><tr> <td bgcolor="#eeeeee"> conv7_2</td> <td> 162</td> <td> 213</td> </tr><tr> <td bgcolor="#eeeeee"> conv8_2</td> <td> 213</td> <td> 264</td> </tr><tr> <td bgcolor="#eeeeee"> conv9_2</td> <td> 264  </td> <td> 315</td> </tr></table> </center>
-
-<p>不过依然可以看出：<strong>SSD使用感受野小的feature map检测小目标，使用感受野大的feature map检测更大目标</strong>。</p>
-<p>更具体一点，来看SSD300在conv4_3层的Prior Box设置conv4_3生成prior box的conv4_3_norm_priorbox层prototxt定义如下，可以清晰的看到 $min_size$ 和 $max_size$以及 $aspect_ratio$等值。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">layer &#123;</span><br><span class="line">  name: &quot;conv4_3_norm_mbox_priorbox&quot;</span><br><span class="line">  type: &quot;PriorBox&quot;</span><br><span class="line">  bottom: &quot;conv4_3_norm&quot;</span><br><span class="line">  bottom: &quot;data&quot;</span><br><span class="line">  top: &quot;conv4_3_norm_mbox_priorbox&quot;</span><br><span class="line">  prior_box_param &#123;</span><br><span class="line">    min_size: 30.0</span><br><span class="line">    max_size: 60.0</span><br><span class="line">    aspect_ratio: 2</span><br><span class="line">    flip: true</span><br><span class="line">    clip: false</span><br><span class="line">    variance: 0.1</span><br><span class="line">    variance: 0.1</span><br><span class="line">    variance: 0.2</span><br><span class="line">    variance: 0.2</span><br><span class="line">    step: 8</span><br><span class="line">    offset: 0.5</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>知道了priorbox如何产生，接下来分析prior box如何使用。这里还是以conv4_3分析。</p>
-<center><img src="/images/图5.jpg"></center>
-
-<p>图5</p>
-<p>从图5可以看到，在conv4_3网络分为了3条线路：</p>
-<ol>
-<li>经过一次batch norm+一次卷积后，生成了<strong>[1, num_class*num_priorbox, layer_height, layer_width]</strong>大小的feature用于softmax分类目标和非目标（其中num_class是目标类别，SSD300中num_class = 21，即20个类别+1个背景)</li>
-<li>经过一次batch norm+一次卷积后，生成了<strong>[1, 4*num_priorbox, layer_height, layer_width]</strong>大小的feature用于bounding box regression（即每个点一组[dxmin，dymin，dxmax，dymax]，参考<a href="https://zhuanlan.zhihu.com/p/31426458" target="_blank" rel="noopener">Faster R-CNN</a> 2.5节）</li>
-<li>生成了<strong>[1, 2, 4*num_priorbox<em>layer_height</em>layer_width]</strong>大小的prior box blob，其中2个channel分别存储prior box的4个点坐标(x1, y1, x2, y2)和对应的4个参数variance</li>
-</ol>
-<p>后续通过softmax分类判定Prior box是否包含目标，然后再通过bounding box regression即可可获取目标的精确位置，熟悉Faster RCNN的读者应该对上述过程应该并不陌生。其实pribox box的与Faster RCNN中的anchor非常类似，都是目标的预设框，没有本质的差异。区别是每个位置的prior box一般是4~6个，少于Faster RCNN默认的9个anchor；同时prior box是设置在不同尺度的feature maps上的，而且大小不同。</p>
-<p>还有一个细节就是上面prototxt中的4个variance，这实际上是一种bounding regression中的权重。在图4线路(2)中，网络输出[dxmin，dymin，dxmax，dymax]，即对应下面代码中bbox；然后利用如下方法进行针对prior box的位置回归：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">decode_bbox-&gt;set_xmin(</span><br><span class="line">     prior_bbox.xmin() + prior_variance[<span class="number">0</span>] * bbox.xmin() * prior_width);</span><br><span class="line"> decode_bbox-&gt;set_ymin(</span><br><span class="line">     prior_bbox.ymin() + prior_variance[<span class="number">1</span>] * bbox.ymin() * prior_height);</span><br><span class="line"> decode_bbox-&gt;set_xmax(</span><br><span class="line">     prior_bbox.xmax() + prior_variance[<span class="number">2</span>] * bbox.xmax() * prior_width);</span><br><span class="line"> decode_bbox-&gt;set_ymax(</span><br><span class="line">     prior_bbox.ymax() + prior_variance[<span class="number">3</span>] * bbox.ymax() * prior_height);</span><br></pre></td></tr></table></figure>
-<p>上述代码可以在SSD box_utils.cpp的void DecodeBBox()函数见到。</p>
-<h2 id="3-SSD的数据流"><a href="#3-SSD的数据流" class="headerlink" title="3 SSD的数据流"></a>3 SSD的数据流</h2><p>对于新学习SSD的人，肯定有一个很大的困惑，就是这么多feature maps和Prior Box，如何组合在一起进行forwards/backwards。本节专门介绍SSD的数据流动方式，也许有点难。但是只有了解SSD的数据流动方式才能真的理解。</p>
-<center><img src="/images/原理图.jpg"></center>
-
-<center><em>图6</em></center>
-
-<p>上一节以conv4_3 feature map分析了如何检测到目标的真实位置，但是SSD 300是使用包括conv4_3在内的共计6个feature maps一同检测出最终目标的。在网络运行的时候显然不能像图6一样：一个feature map单独计算一次multiclass softmax socre+box regression（虽然原理如此，但是不能如此实现）。</p>
-<p>那么多个feature maps如何协同工作？这时候就要用到Permute，Flatten和Concat这3种层了。其中conv4_3_norm_conf_perm的prototxt定义如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">layer &#123;</span><br><span class="line">  name: &quot;conv4_3_norm_mbox_conf_perm&quot;</span><br><span class="line">  type: &quot;Permute&quot;</span><br><span class="line">  bottom: &quot;conv4_3_norm_mbox_conf&quot;</span><br><span class="line">  top: &quot;conv4_3_norm_mbox_conf_perm&quot;</span><br><span class="line">  permute_param &#123;</span><br><span class="line">    order: 0</span><br><span class="line">    order: 2</span><br><span class="line">    order: 3</span><br><span class="line">    order: 1</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Permute是SSD中自带的层，上面conv4_3_norm_mbox_conf_perm的的定义。Permute相当于交换caffe blob中的数据维度。在正常情况下caffe blob的顺序为：</p>
-<p><strong>bottom blob = [batch_num, channel, height, width]</strong></p>
-<p>经过conv4_3_norm_mbox_conf_perm后的caffe blob为：</p>
-<p><strong>top blob = [batch_num, height, width, channel]</strong></p>
-<p>而Flattlen和Concat层都是caffe自带层，请参照<a href="https://link.zhihu.com/?target=http%3A//caffe.berkeleyvision.org/tutorial/layers.html" target="_blank" rel="noopener">caffe official documentation</a>理解。</p>
-<center><img src="/images/caffe blob shape变化.jpg "></center>
-
-<center><em>图7 SSD中部分层caffe blob shape变化</em></center>
-
-<p>那么接下来以conv4_3和fc7为例分析SSD是如何将不同size的feature map组合在一起进行prediction。图7展示了conv4_3和fc7合并在一起的过程中caffe blob shape变化（其他层类似，考虑到图片大小没有画出来，请脑补）。</p>
+<p>regression太难做了，应想方设法转换为classification问题。<br>regression的训练参数收敛的时间要长得多，所以上面的网络采取了用classification的网络来计算出网络共同部分的连接权值。</p>
+<h3 id="思路二：取图像窗口"><a href="#思路二：取图像窗口" class="headerlink" title="思路二：取图像窗口"></a><strong>思路二：取图像窗口</strong></h3><ul>
+<li>还是刚才的classification + regression思路</li>
+<li>咱们取不同的大小的“框”　</li>
+<li>让框出现在不同的位置，得出这个框的判定得分</li>
+<li>取得分最高的那个框</li>
+</ul>
+<p>左上角的黑框：得分0.5<br><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504112903273-1900432759.jpg" alt="img"><br>右上角的黑框：得分0.75</p>
+<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504112919320-1728574836.jpg" alt="img"></p>
+<p>左下角的黑框：得分0.6<br><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504112933164-1200242604.jpg" alt="img"><br>右下角的黑框：得分0.8</p>
+<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504112949320-428298146.jpg" alt="img"></p>
+<p>根据得分的高低，我们选择了右下角的黑框作为目标位置的预测。<br>注：有的时候也会选择得分最高的两个框，然后取两框的交集作为最终的位置预测。</p>
+<p>疑惑：框要取多大？<br>取不同的框，依次从左上角扫到右下角。非常粗暴啊。</p>
+<p>总结一下思路：<br>对一张图片，用各种大小的框（遍历整张图片）将图片截取出来，输入到CNN，然后CNN会输出这个框的得分（classification）以及这个框图片对应的x,y,h,w（regression）。</p>
+<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113014179-105680354.jpg" alt="img"></p>
+<p>这方法实在太耗时间了，做个优化。<br>原来网络是这样的：</p>
+<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113030523-41422116.jpg" alt="img"></p>
+<p>优化成这样：把全连接层改为卷积层，这样可以提提速。</p>
+<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113039304-1103823779.jpg" alt="img"></p>
+<h2 id="候选框生成"><a href="#候选框生成" class="headerlink" title="候选框生成"></a>候选框生成</h2><p>当图像有很多物体怎么办的？难度可是一下暴增啊。</p>
+<p>那任务就变成了：多物体识别+定位多个物体<br>那把这个任务看做分类问题？<br><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113057601-300431852.jpg" alt="img"></p>
+<p>看成分类问题有何不妥？</p>
 <ul>
-<li>对于conv4_3 feature map，conv4_3_norm_priorbox（priorbox层）设置了每个点共有4个prior box。由于SSD 300共有21个分类，所以conv4_3_norm_mbox_conf的channel值为num_priorbox <em> num_class = 4 </em> 21 = 84；而每个prior box都要回归出4个位置变换量，所以conv4_3_norm_mbox_loc的caffe blob channel值为4 * 4 = 16。</li>
-<li>fc7每个点有6个prior box，其他feature map同理。</li>
-<li>经过一系列图7展示的caffe blob shape变化后，最后拼接成mbox_conf和mbox_loc。而mbox_conf后接reshape，再进行softmax（为何在softmax前进行reshape，Faster RCNN有提及）。</li>
-<li>最后这些值输出detection_out_layer，获得检测结果</li>
+<li>你需要找很多位置， 给很多个不同大小的框</li>
+<li>你还需要对框内的图像分类　</li>
+<li>当然， 如果你的GPU很强大， 恩， 那加油做吧…</li>
 </ul>
-<p>可以看到，SSD一次判断priorbox到底是背景 or 是20种目标类别之一，相当于将Faster R-CNN的RPN与后续proposal再分类进行了整合。</p>
-<center><img src="/images/SSD300.jpg"></center>
-
-<center><em>图8 SSD300</em></center>
-
-<h2 id="4-SSD网络结构优劣分析"><a href="#4-SSD网络结构优劣分析" class="headerlink" title="4 SSD网络结构优劣分析"></a>4 SSD网络结构优劣分析</h2><p>SSD算法的优点应该很明显：运行速度可以和YOLO媲美，检测精度可以和Faster RCNN媲美。除此之外，还有一些鸡毛蒜皮的优点，不解释了。这里谈谈缺点：</p>
-<ol>
-<li>需要人工设置prior box的min_size，max_size和aspect_ratio值。网络中prior box的基础大小和形状不能直接通过学习获得，而是需要手工设置。而网络中每一层feature使用的prior box大小和形状恰好都不一样，导致调试过程非常依赖经验。</li>
-<li>虽然采用了pyramdial feature hierarchy的思路，但是对小目标的recall依然一般，并没有达到碾压Faster RCNN的级别。作者认为，这是由于SSD使用conv4_3低级feature去检测小目标，而低级特征卷积层数少，存在特征提取不充分的问题。</li>
-</ol>
-<h2 id="5-SSD训练过程"><a href="#5-SSD训练过程" class="headerlink" title="5 SSD训练过程"></a>5 SSD训练过程</h2><p><img src="https://pic2.zhimg.com/v2-79dccc5fbc3d31a24e4d0e42511cb653_b.jpg" alt="img"></p>
-<p>对于SSD，虽然paper中指出采用了所谓的“multibox loss”，但是依然可以清晰看到SSD loss分为了confidence loss和location loss(bouding box regression loss)两部分，其中N是match到GT（Ground Truth）的prior box数量；而α参数用于调整confidence loss和location loss之间的比例，默认α=1。SSD中的confidence loss是典型的softmax loss：</p>
-<p><img src="https://pic1.zhimg.com/v2-42c6a269bbfbae035b0f74c0602b14ba_b.jpg" alt="img"></p>
-<p>其中</p>
-<p><img src="https://pic2.zhimg.com/v2-46a8eb39bab8396443cc3a8bcedd777d_b.jpg" alt="img"></p>
-<p>代表第i个prior box匹配到了第j个class为p类别的GT box；而location loss是典型的smooth L1 loss：</p>
-<p><img src="https://pic1.zhimg.com/v2-e7b5c31560d34fdd309b05c1e23a9dab_b.jpg" alt="img"></p>
-<p><strong>Matching strategy：</strong></p>
-<p>在训练时，groundtruth boxes 与 default boxes（就是prior boxes） 按照如下方式进行配对：</p>
+<p>看做classification， 有没有办法优化下？我可不想试那么多框那么多位置啊！<br>有人想到一个好方法：<br>找出可能含有物体的框（也就是候选框，比如选1000个候选框），这些框之间是可以互相重叠互相包含的，这样我们就可以避免暴力枚举的所有框了。</p>
+<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113129211-135695982.jpg" alt="img"></p>
+<p>大牛们发明好多选定候选框的方法，比如EdgeBoxes和Selective Search。<br>以下是各种选定候选框的方法的性能对比。</p>
+<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113209164-1717059035.jpg" alt="img"></p>
+<p>有一个很大的疑惑，提取候选框用到的算法“选择性搜索”到底怎么选出这些候选框的呢？那个就得好好看看它的论文了，这里就不介绍了。</p>
+<h2 id="R-CNN-1"><a href="#R-CNN-1" class="headerlink" title="R-CNN"></a>R-CNN</h2><p>基于以上的思路，RCNN的出现了。</p>
+<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113229570-69371857.png" alt="img"></p>
+<p>步骤一：训练（或者下载）一个分类模型（比如AlexNet）<br><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113247742-406451407.jpg" alt="img"><br>步骤二：对该模型做fine-tuning</p>
 <ul>
-<li>首先，寻找与每一个ground truth box有最大的jaccard overlap的default box，这样就能保证每一个groundtruth box与唯一的一个default box对应起来（所谓的jaccard overlap就是IoU，如图9）。</li>
-<li>SSD之后又将剩余还没有配对的default box与任意一个groundtruth box尝试配对，只要两者之间的jaccard overlap大于阈值，就认为match（SSD 300 阈值为0.5）。</li>
-<li>显然配对到GT的default box就是positive，没有配对到GT的default box就是negative。</li>
+<li>将分类数从1000改为20</li>
+<li>掉最后一个全连接层</li>
 </ul>
-<center><img src="/images/A交B.jpg"></center>
+<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113302195-1032285194.png" alt="img"><br>步骤三：特征提取<br>　　-    提取图像的所有候选框（选择性搜索）<br>　　-    对于每一个区域：修正区域大小以适合CNN的输入，做一次前向运算，将第五个池化层的输出（就是对候选框提取到的特征）存到硬盘</p>
+<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113326195-1862868537.png" alt="img"></p>
+<p>步骤四：训练一个SVM分类器（二分类）来判断这个候选框里物体的类别<br>每个类别对应一个SVM，判断是不是属于这个类别，是就是positive，反之nagative<br>比如下图，就是狗分类的SVM</p>
+<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113349351-169304797.png" alt="img"></p>
+<p>步骤五：使用回归器精细修正候选框位置：对于每一个类，训练一个线性回归模型去判定这个框是否框得完美。</p>
+<p> <img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113412351-143526289.png" alt="img"></p>
+<h3 id="回归器"><a href="#回归器" class="headerlink" title="回归器"></a>回归器</h3><p>回归器：对每一类目标，使用一个线性脊回归器进行精修。正则项λ=1000。 输入为深度网络pool5层的4096维特征，输出为xy方向的缩放和平移。 训练样本：判定为本类的候选框中和真值重叠面积大于0.6的候选框。</p>
+<pre><code>首先要明确目标检测不仅是要对目标进行识别，还要完成定位任务，所以最终获得的bounding-box也决定了目标检测的精度。 
+</code></pre><p>这里先解释一下什么叫定位精度：定位精度可以用算法得出的物体检测框与实际标注的物体边界框的IoU值来近似表示。</p>
+<p>如下图所示，绿色框为实际标准的卡宴车辆框，即Ground Truth；黄色框为selective search算法得出的建议框，即Region Proposal。即使黄色框中物体被分类器识别为卡宴车辆，但是由于绿色框和黄色框IoU值并不大，所以最后的目标检测精度并不高。采用回归器是为了对建议框进行校正，使得校正后的Region Proposal与selective search更接近， 以提高最终的检测精度。论文中采用bounding-box回归使mAP提高了3~4%。 </p>
+<center><img src="images/rcnn_box_regression_1.jpg"></center>
 
-<center><img src="/images/A并B.jpg"></center>
+<p>那么问题来了，回归器如何设计呢？ </p>
+<center><img src="images/rcnn_box_regression_2.jpg"></center>
 
-<p><img src="https://pic4.zhimg.com/v2-8f2601b4c788246bd6138cf99c15f1bf_b.jpg" alt="img"></p>
-<center><em>图9 jaccard overlap</em></center>
+<p>如上图，黄色框口$P$表示建议框Region Proposal，绿色窗口$G$表示实际框Ground Truth，红色窗口$\widehat{G}$表示Region Proposal进行回归后的预测窗口，现在的目标是找到$P$到$\widehat{G}$的线性变换【当Region Proposal与Ground Truth的IoU&gt;0.6时可以认为是线性变换】，使得$\widehat{G}$与$G$越相近，这就相当于一个简单的可以用最小二乘法解决的线性回归问题，具体往下看。<br>让我们先来定义P窗口的数学表达式：$Pi=(P^i_x，P^i_y，P^i_w，P^i_h)$，其中$(P^i_x，P^i_y)$表示第一个i窗口的中心点坐标，$P_iw$,$P_ih$分别为第i个窗口的宽和高；$G$窗口的数学表达式为：$G^i=(G^i_x，G^i_y，G^i_w，G^i_h)$；$\widehat{G}$窗口的数学表达式为：$\widehat{G}_i=(\widehat{G}^i_x，\widehat{G}^i_y，\widehat{G}^i_w，\widehat{G}^i_h)$。以下省去$i$上标。<br>这里定义了四种变换函数，$d_x(P)$，$d_y(P)$，$d_w(P)$，$d_h(P)$。$d_x(P)$和$d_y(P)$通过平移对x和y进行变化，$d_w(P)$和$d_h(P)$通过缩放对w和h进行变化，即下面四个式子所示： </p>
+<center><br><br>$$\widehat{G}_x=P_wd_x(P)+P_x$$<br><br>$$\widehat{G}_y=P_hd_y(P)+P_y$$<br><br>$$\widehat{G}_w=P_w\text{exp}(d_w(P))$$<br><br>$$\widehat{G}_h=P_h\text{exp}(d_h(P))​$$<br></center>
 
-<p><strong>Hard negative mining：</strong></p>
-<p>值得注意的是，一般情况下negative default boxes数量&gt;&gt;positive default boxes数量，直接训练会导致网络过于重视负样本，从而loss不稳定。所以需要采取：</p>
-<ul>
-<li>所以SSD在训练时会依据confidience score排序default box，挑选其中confidence高的box进行训练，控制 $positive:negative=1:3$</li>
-</ul>
-<p><strong>Data augmentation：</strong></p>
-<p>数据增广。即对每一张image进行如下之一变换获取一个patch进行训练：</p>
-<ul>
-<li>直接使用原始的图像（即不进行变换）</li>
-<li>采样一个patch，保证与GT之间最小的IoU为：0.1，0.3，0.5，0.7 或 0.9</li>
-<li>完全随机的采样一个patch</li>
-</ul>
-<center><img src="/images/Random crop.jpg"></center>
+<p>每一个$d_∗(P)$【*表示x，y，w，h】都是一个AlexNet CNN网络Pool5层特征$\phi_5(P)$的线性函数，即$d_∗(P)=w^T_∗\phi_5(P)$ ，这里$w^T_∗$就是所需要学习的回归参数。损失函数即为：</p>
+<p>$$Loss=argmin\Sigma_{i=0}^N(t^i_∗−w^T_∗ϕ<em>5(P^i))^2+λ||\widehat{w}</em>∗||^2$$</p>
+<p>损失函数中加入正则项$λ||\widehat{w}<em>∗||^2$$ 是为了避免归回参数\widehat{w}</em>∗过大。其中，回归目标$$t_*$由训练输入对$(P，G)$按下式计算得来：</p>
+<center><br><br>$$ t_x=(G_x−P_x)/P_w$$<br><br>$$t_y=(G_y−P_y)/P_h$$<br><br>$$t_w=log(G_w/P_w)$$<br><br>$$t_h=log(G_h/P_h)$$<br><br></center>
 
-<center><em>图10 Random crop</em></center>
+<p>①构造样本对。为了提高每类样本框回归的有效性，对每类样本都仅仅采集与Ground Truth相交IoU最大的Region Proposal，并且IoU&gt;0.6的Region Proposal作为样本对$(P^i，G^i)$，一共产生20对样本对【20个类别】；<br>②每种类型的回归器单独训练，输入该类型样本对N个：${(P^i,G^i)}<em>{i=1⋯N}$以及$P^i</em>{i=1⋯N}$所对应的AlexNet CNN网络Pool5层特征$\phi_5(P^i)<em>{i=1⋯N}$；<br>③利用输入样本对${(P^i,G^i)}</em>(i=1⋯N)$计算$t^i_{∗i=1⋯N}$；<br>④利用$\phi_5(P^i)<em>{i=1⋯N}$和$t^i</em>{∗i=1⋯N}$，根据损失函数进行回归，得到使损失函数最小的参数$w^T_∗$。</p>
+<p>RCNN的进化中SPP Net的思想对其贡献很大，这里也简单介绍一下SPP Net。</p>
+<h2 id="SPP-Net"><a href="#SPP-Net" class="headerlink" title="SPP Net"></a><strong>SPP Net</strong></h2><p>SPP：Spatial Pyramid Pooling（空间金字塔池化）<br>它的特点有两个:</p>
+<p>1.结合空间金字塔方法实现CNNs的对尺度输入。<br>一般CNN后接全连接层或者分类器，他们都需要固定的输入尺寸，因此不得不对输入数据进行crop或者warp，这些预处理会造成数据的丢失或几何的失真。SPP Net的第一个贡献就是将金字塔思想加入到CNN，实现了数据的多尺度输入。</p>
+<p>如下图所示，在卷积层和全连接层之间加入了SPP layer。此时网络的输入可以是任意尺度的，在SPP layer中每一个pooling的filter会根据输入调整大小，而SPP的输出尺度始终是固定的。</p>
+<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113433539-94801265.jpg" alt="img"></p>
+<p>　</p>
+<p>2.只对原图提取一次卷积特征<br>在R-CNN中，每个候选框先resize到统一大小，然后分别作为CNN的输入，这样是很低效的。<br>所以SPP Net根据这个缺点做了优化：只对原图进行一次卷积得到整张图的feature map，然后找到每个候选框zaifeature map上的映射patch，将此patch作为每个候选框的卷积特征输入到SPP layer和之后的层。节省了大量的计算时间，比R-CNN有一百倍左右的提速。</p>
+<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113450414-709458906.jpg" alt="img"></p>
+<h2 id="Fast-R-CNN"><a href="#Fast-R-CNN" class="headerlink" title="Fast R-CNN"></a><strong>Fast R-CNN</strong></h2><p>SPP Net真是个好方法，R-CNN的进阶版Fast R-CNN就是在RCNN的基础上采纳了SPP Net方法，对RCNN作了改进，使得性能进一步提高。</p>
+<p>R-CNN与Fast RCNN的区别有哪些呢？<br>先说RCNN的缺点：即使使用了selective search等预处理步骤来提取潜在的bounding box作为输入，但是RCNN仍会有严重的速度瓶颈，原因也很明显，就是计算机对所有region进行特征提取时会有重复计算，Fast-RCNN正是为了解决这个问题诞生的。</p>
+<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113527898-1753606875.png" alt="img"></p>
+<p>大牛提出了一个可以看做单层sppnet的网络层，叫做ROI Pooling，这个网络层可以把不同大小的输入映射到一个固定尺度的特征向量，而我们知道，conv、pooling、relu等操作都不需要固定size的输入，因此，在原始图片上执行这些操作后，虽然输入图片size不同导致得到的feature map尺寸也不同，不能直接接到一个全连接层进行分类，但是可以加入这个神奇的ROI Pooling层，对每个region都提取一个固定维度的特征表示，再通过正常的softmax进行类型识别。另外，之前RCNN的处理流程是先提proposal，然后CNN提取特征，之后用SVM分类器，最后再做bbox regression，而在Fast-RCNN中，作者巧妙的把bbox regression放进了神经网络内部，与region分类和并成为了一个multi-task模型，实际实验也证明，这两个任务能够共享卷积特征，并相互促进。Fast-RCNN很重要的一个贡献是成功的让人们看到了Region Proposal+CNN这一框架实时检测的希望，原来多类检测真的可以在保证准确率的同时提升处理速度，也为后来的Faster-RCNN做下了铺垫。</p>
+<p>画一画重点：<br>R-CNN有一些相当大的缺点（把这些缺点都改掉了，就成了Fast R-CNN）。<br>大缺点：由于每一个候选框都要独自经过CNN，这使得花费的时间非常多。<br>解决：共享卷积层，现在不是每一个候选框都当做输入进入CNN了，而是输入一张完整的图片，在第五个卷积层再得到每个候选框的特征</p>
+<p>原来的方法：许多候选框（比如两千个）–&gt;CNN–&gt;得到每个候选框的特征–&gt;分类+回归<br>现在的方法：一张完整图片–&gt;CNN–&gt;得到每张候选框的特征–&gt;分类+回归</p>
+<p>所以容易看见，Fast RCNN相对于RCNN的提速原因就在于：不过不像RCNN把每个候选区域给深度网络提特征，而是整张图提一次特征，再把候选框映射到conv5上，而SPP只需要计算一次特征，剩下的只需要在conv5层上操作就可以了。</p>
+<p>在性能上提升也是相当明显的：</p>
+<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113546570-1486555910.png" alt="img"></p>
+<h2 id="Faster-R-CNN"><a href="#Faster-R-CNN" class="headerlink" title="Faster R-CNN"></a><strong>Faster R-CNN</strong></h2><p>Fast R-CNN存在的问题：存在瓶颈：选择性搜索，找出所有的候选框，这个也非常耗时。那我们能不能找出一个更加高效的方法来求出这些候选框呢？<br>解决：加入一个提取边缘的神经网络，也就说找到候选框的工作也交给神经网络来做了。<br>做这样的任务的神经网络叫做Region Proposal Network(RPN)。</p>
+<p>具体做法：<br>　　-    将RPN放在最后一个卷积层的后面<br>　　-    RPN直接训练得到候选区域</p>
+<p> <img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113604070-1781708405.png" alt="img"></p>
+<p>RPN简介：<br>　　-    在feature map上滑动窗口<br>　　-    建一个神经网络用于物体分类+框位置的回归<br>　　-    滑动窗口的位置提供了物体的大体位置信息<br>　　-    框的回归提供了框更精确的位置</p>
+ <center><img src="images/rpn.jpg"></center>
 
-<p>同时在原文中还提到：</p>
-<ul>
-<li>采样的patch占原始图像大小比例在 $[0.1,1]$ 之间</li>
-<li>采样的patch的长宽比在 $[0.5,2]$之间</li>
-<li>当 Ground truth box中心恰好在采样的patch中时，保留整个GT box</li>
-<li>最后每个patch被resize到固定大小，并且以0.5的概率随机的水平翻转</li>
-</ul>
-<p>最终以这些处理好的patches进行训练。</p>
-<p>其实Matching strategy，Hard negative mining，Data augmentation，都是为了加快网络收敛而设计的。尤其是Data augmentation，翻来覆去的randomly crop，保证每一个prior box都获得充分训练而已。后续有Focal loss解决这个问题。</p>
-<p>SSD github : <a href="https://link.zhihu.com/?target=https%3A//github.com/weiliu89/caffe/tree/ssd" target="_blank" rel="noopener">https://github.com/weiliu89/caffe/tree/ssd</a></p>
-<p>SSD paper : <a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1512.02325" target="_blank" rel="noopener">https://arxiv.org/abs/1512.02325</a></p>
-<p>SSD eccv2016 slide pdf : <a href="https://link.zhihu.com/?target=http%3A//www.cs.unc.edu/%7Ewliu/papers/ssd_eccv2016_slide.pdf" target="_blank" rel="noopener">http://www.cs.unc.edu/~wliu/papers/ssd_eccv2016_slide.pdf</a></p>
-<p>Focal Loss for Dense Object Detection ：<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1708.02002" target="_blank" rel="noopener">https://arxiv.org/abs/1708.02002</a></p>
+<p>一种网络，四个损失函数;<br>　　-    RPN calssification(anchor good.bad)<br>　　-    RPN regression(anchor-&gt;propoasal)<br>　　-    Fast R-CNN classification(over classes)<br>　　-    Fast R-CNN regression(proposal -&gt;box)</p>
+<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113908179-1745309228.png" alt="img"></p>
+<p>速度对比</p>
+<p><img src="https://images2015.cnblogs.com/blog/1093303/201705/1093303-20170504113649195-2098206818.png" alt="img"></p>
+<p>Faster R-CNN的主要贡献是设计了提取候选区域的网络RPN，代替了费时的选择性搜索，使得检测速度大幅提高。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>最后总结一下各大算法的步骤：<br>RCNN</p>
+<p>　　1.    在图像中确定约1000-2000个候选框 (使用选择性搜索)<br>　　2. 每个候选框内图像块缩放至相同大小，并输入到CNN内进行特征提取<br>　　3.    对候选框中提取出的特征，使用分类器判别是否属于一个特定类<br>　　4.    对于属于某一特征的候选框，用回归器进一步调整其位置</p>
+<p>Fast RCNN<br>　　1.    在图像中确定约1000-2000个候选框 (使用选择性搜索)<br>　　2.    对整张图片输进CNN，得到feature map<br>　　3.    找到每个候选框在feature map上的映射patch，将此patch作为每个候选框的卷积特征输入到SPP layer和之后的层<br>　　4.    对候选框中提取出的特征，使用分类器判别是否属于一个特定类<br>　　5.    对于属于某一特征的候选框，用回归器进一步调整其位置</p>
+<p>Faster RCNN<br>　　1.    对整张图片输进CNN，得到feature map<br>　　2.    卷积特征输入到RPN，得到候选框的特征信息<br>　　3.    对候选框中提取出的特征，使用分类器判别是否属于一个特定类<br>　　4.    对于属于某一特征的候选框，用回归器进一步调整其位置</p>
+<p>总的来说，从R-CNN, SPP-NET, Fast R-CNN, Faster R-CNN一路走来，基于深度学习目标检测的流程变得越来越精简，精度越来越高，速度也越来越快。可以说基于region proposal的R-CNN系列目标检测方法是当前目标检测技术领域最主要的一个分支。</p>
 
           
         
@@ -3010,6 +2678,334 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/deep_learning/object_detection/SSD/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heroinlin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/leaf.jpg"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Heroinlin's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/04/12/deep_learning/object_detection/SSD/" class="post-title-link" itemprop="url">目标检测网络之 SSD</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-04-12 10:48:11" itemprop="dateCreated datePublished" datetime="2018-04-12T10:48:11+08:00">2018-04-12</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-10-11 10:42:26" itemprop="dateModified" datetime="2018-10-11T10:42:26+08:00">2018-10-11</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/object-detection/" itemprop="url" rel="index"><span itemprop="name">object detection</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Single-Shot-MultiBox-Detector"><a href="#Single-Shot-MultiBox-Detector" class="headerlink" title="Single Shot MultiBox Detector"></a>Single Shot MultiBox Detector</h1><p>论文地址: <a href="https://arxiv.org/pdf/1512.02325.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1512.02325.pdf</a></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>目标检测近年来已经取得了很重要的进展，主流的算法主要分为两个类型（参考<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/pdf/1711.06897.pdf" target="_blank" rel="noopener">RefineDet</a>）:</p>
+<ul>
+<li><p><strong>Two stages</strong></p>
+<p>以Faster RCNN为代表，即RPN网络先生成proposals目标定位，再对proposals进行classification+bounding box regression完成目标分类, two-stage方法的优势是准确度高</p>
+</li>
+<li><p><strong>Single shot</strong></p>
+<p>以YOLO/SSD为代表，均匀地在图片的不同位置进行密集抽样，抽样时可以采用不同尺度和长宽比，然后利用CNN提取特征后直接进行分类与回归, 一次性完成classification+bounding box regression, 所以其优势是速度快，但是均匀的密集采样的一个重要缺点是训练比较困难，这主要是因为正样本与负样本（背景）极其不均衡（参见<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1708.02002" target="_blank" rel="noopener">Focal Loss</a>），导致模型准确度稍低。</p>
+</li>
+</ul>
+<h2 id="1-SSD300网络结构"><a href="#1-SSD300网络结构" class="headerlink" title="1 SSD300网络结构"></a>1 SSD300网络结构</h2><center><img src="./images/ssd_yolo_对比.jpg"></center>
+
+<center><em>图 2 SSD300/YOLO网络结构对比</em> </center>
+
+<p>同为Single shot方式的SSD/YOLO区别：</p>
+<ul>
+<li>YOLO在卷积层后接全连接层，即检测时只利用了最高层Feature maps（包括Faster RCNN也是如此）</li>
+<li>SSD采用金字塔结构，即利用了conv4-3/conv-7/conv6-2/conv7-2/conv8_2/conv9_2这些大小不同的feature maps，在多个feature maps上同时进行softmax分类和位置回归</li>
+<li>SSD还加入了Prior box</li>
+</ul>
+<center><img src="./images/single_feature_map_and_pyramidal_feature_hierarchy.jpg"></center>
+
+<center> <em>图 3 单层 feature map预测和特征金字塔预测对比</em> </center>
+
+<h2 id="2-Prior-Box"><a href="#2-Prior-Box" class="headerlink" title="2 Prior Box"></a>2 Prior Box</h2><p>在SSD300中引入了Prior Box，实际上与Faster RCNN Anchor非常类似，就是一些目标的预选框，后续通过classification+bounding box regression获得真实目标的位置。</p>
+<p>SSD按照如下规则生成prior box：</p>
+<ul>
+<li>以feature map上每个点的中点为中心，生成一些列同心的prior box</li>
+<li>正方形prior box最小边长为和最大边长为：</li>
+</ul>
+<p>$$<br>\color {MidnightBlue}\mathit {\text{min_size}}<br>$$</p>
+<p>$$<br>\color {MidnightBlue}\mathit {\sqrt{\text{min_size}*\text{max_size}}}<br>$$</p>
+<ul>
+<li>每在prototxt设置一个aspect ratio，会生成2个长方形，长宽为：</li>
+</ul>
+<p>$$<br>\color {MidnightBlue}\mathit {\sqrt{\text{aspect_ratio}}*\text{min_size}}<br>$$</p>
+<p>$$<br>\color {MidnightBlue}\mathit {1/{\sqrt{\text{aspect_ratio}}*\text{min_size}}}<br>$$</p>
+<center><img src="./images/prior box.jpg"></center>
+
+<p>图4 prior box</p>
+<ul>
+<li>而每个feature map对应prior box的min_size和max_size由以下公式决定：</li>
+</ul>
+<center>$$s_k = s_{min} + \frac{s_{max}-s_{min}}{m-1}(k-1), \ \ k\in[1, m]$$ </center>
+
+<p>公式中的 $m$是指进行预测时使用feature map的数量，如SSD300使用conv4-3等6个feature maps进行预测，所以 $m=6$。同时原文设定$s_{min}=0.2$ ，$s_{max}=0.9$</p>
+<p>那么：</p>
+<ul>
+<li>对于conv4-3： $k=1$ , $min_size=s_1 <em>300$, $max_size=s_2</em>300$</li>
+<li>对于conv-7：$k=2$, $min_size=s_2 <em>300$, $max_size=s_3</em>300$</li>
+<li>….</li>
+</ul>
+<p>显然可以用上述公式推导出每个feature maps使用的Prior Box size。但是在SSD300中prior box设置并不能完全和上述公式对应：</p>
+<center><table> <tr> <th width="10%,bgcolor=#eeeeee"></th> <th width="10%,bgcolor=#eeeeee">min_size</th> &lt;th width=10%,bgcolor=#eeeeee”&gt;max_size </tr> <tr> <td bgcolor="#eeeeee"> conv4_3</td> <td> 30  </td> <td> 60</td> </tr>  <tr> <td bgcolor="#eeeeee"> fc7</td> <td> 60  </td> <td> 111</td> </tr><tr> <td bgcolor="#eeeeee"> conv6_2</td> <td> 111</td> <td> 162</td> </tr><tr> <td bgcolor="#eeeeee"> conv7_2</td> <td> 162</td> <td> 213</td> </tr><tr> <td bgcolor="#eeeeee"> conv8_2</td> <td> 213</td> <td> 264</td> </tr><tr> <td bgcolor="#eeeeee"> conv9_2</td> <td> 264  </td> <td> 315</td> </tr></table> </center>
+
+<p>不过依然可以看出：<strong>SSD使用感受野小的feature map检测小目标，使用感受野大的feature map检测更大目标</strong>。</p>
+<p>更具体一点，来看SSD300在conv4_3层的Prior Box设置conv4_3生成prior box的conv4_3_norm_priorbox层prototxt定义如下，可以清晰的看到 $min_size$ 和 $max_size$以及 $aspect_ratio$等值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">layer &#123;</span><br><span class="line">  name: &quot;conv4_3_norm_mbox_priorbox&quot;</span><br><span class="line">  type: &quot;PriorBox&quot;</span><br><span class="line">  bottom: &quot;conv4_3_norm&quot;</span><br><span class="line">  bottom: &quot;data&quot;</span><br><span class="line">  top: &quot;conv4_3_norm_mbox_priorbox&quot;</span><br><span class="line">  prior_box_param &#123;</span><br><span class="line">    min_size: 30.0</span><br><span class="line">    max_size: 60.0</span><br><span class="line">    aspect_ratio: 2</span><br><span class="line">    flip: true</span><br><span class="line">    clip: false</span><br><span class="line">    variance: 0.1</span><br><span class="line">    variance: 0.1</span><br><span class="line">    variance: 0.2</span><br><span class="line">    variance: 0.2</span><br><span class="line">    step: 8</span><br><span class="line">    offset: 0.5</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>知道了priorbox如何产生，接下来分析prior box如何使用。这里还是以conv4_3分析。</p>
+<center><img src="/images/图5.jpg"></center>
+
+<p>图5</p>
+<p>从图5可以看到，在conv4_3网络分为了3条线路：</p>
+<ol>
+<li>经过一次batch norm+一次卷积后，生成了<strong>[1, num_class*num_priorbox, layer_height, layer_width]</strong>大小的feature用于softmax分类目标和非目标（其中num_class是目标类别，SSD300中num_class = 21，即20个类别+1个背景)</li>
+<li>经过一次batch norm+一次卷积后，生成了<strong>[1, 4*num_priorbox, layer_height, layer_width]</strong>大小的feature用于bounding box regression（即每个点一组[dxmin，dymin，dxmax，dymax]，参考<a href="https://zhuanlan.zhihu.com/p/31426458" target="_blank" rel="noopener">Faster R-CNN</a> 2.5节）</li>
+<li>生成了<strong>[1, 2, 4*num_priorbox<em>layer_height</em>layer_width]</strong>大小的prior box blob，其中2个channel分别存储prior box的4个点坐标(x1, y1, x2, y2)和对应的4个参数variance</li>
+</ol>
+<p>后续通过softmax分类判定Prior box是否包含目标，然后再通过bounding box regression即可可获取目标的精确位置，熟悉Faster RCNN的读者应该对上述过程应该并不陌生。其实pribox box的与Faster RCNN中的anchor非常类似，都是目标的预设框，没有本质的差异。区别是每个位置的prior box一般是4~6个，少于Faster RCNN默认的9个anchor；同时prior box是设置在不同尺度的feature maps上的，而且大小不同。</p>
+<p>还有一个细节就是上面prototxt中的4个variance，这实际上是一种bounding regression中的权重。在图4线路(2)中，网络输出[dxmin，dymin，dxmax，dymax]，即对应下面代码中bbox；然后利用如下方法进行针对prior box的位置回归：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">decode_bbox-&gt;set_xmin(</span><br><span class="line">     prior_bbox.xmin() + prior_variance[<span class="number">0</span>] * bbox.xmin() * prior_width);</span><br><span class="line"> decode_bbox-&gt;set_ymin(</span><br><span class="line">     prior_bbox.ymin() + prior_variance[<span class="number">1</span>] * bbox.ymin() * prior_height);</span><br><span class="line"> decode_bbox-&gt;set_xmax(</span><br><span class="line">     prior_bbox.xmax() + prior_variance[<span class="number">2</span>] * bbox.xmax() * prior_width);</span><br><span class="line"> decode_bbox-&gt;set_ymax(</span><br><span class="line">     prior_bbox.ymax() + prior_variance[<span class="number">3</span>] * bbox.ymax() * prior_height);</span><br></pre></td></tr></table></figure>
+<p>上述代码可以在SSD box_utils.cpp的void DecodeBBox()函数见到。</p>
+<h2 id="3-SSD的数据流"><a href="#3-SSD的数据流" class="headerlink" title="3 SSD的数据流"></a>3 SSD的数据流</h2><p>对于新学习SSD的人，肯定有一个很大的困惑，就是这么多feature maps和Prior Box，如何组合在一起进行forwards/backwards。本节专门介绍SSD的数据流动方式，也许有点难。但是只有了解SSD的数据流动方式才能真的理解。</p>
+<center><img src="/images/原理图.jpg"></center>
+
+<center><em>图6</em></center>
+
+<p>上一节以conv4_3 feature map分析了如何检测到目标的真实位置，但是SSD 300是使用包括conv4_3在内的共计6个feature maps一同检测出最终目标的。在网络运行的时候显然不能像图6一样：一个feature map单独计算一次multiclass softmax socre+box regression（虽然原理如此，但是不能如此实现）。</p>
+<p>那么多个feature maps如何协同工作？这时候就要用到Permute，Flatten和Concat这3种层了。其中conv4_3_norm_conf_perm的prototxt定义如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">layer &#123;</span><br><span class="line">  name: &quot;conv4_3_norm_mbox_conf_perm&quot;</span><br><span class="line">  type: &quot;Permute&quot;</span><br><span class="line">  bottom: &quot;conv4_3_norm_mbox_conf&quot;</span><br><span class="line">  top: &quot;conv4_3_norm_mbox_conf_perm&quot;</span><br><span class="line">  permute_param &#123;</span><br><span class="line">    order: 0</span><br><span class="line">    order: 2</span><br><span class="line">    order: 3</span><br><span class="line">    order: 1</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Permute是SSD中自带的层，上面conv4_3_norm_mbox_conf_perm的的定义。Permute相当于交换caffe blob中的数据维度。在正常情况下caffe blob的顺序为：</p>
+<p><strong>bottom blob = [batch_num, channel, height, width]</strong></p>
+<p>经过conv4_3_norm_mbox_conf_perm后的caffe blob为：</p>
+<p><strong>top blob = [batch_num, height, width, channel]</strong></p>
+<p>而Flattlen和Concat层都是caffe自带层，请参照<a href="https://link.zhihu.com/?target=http%3A//caffe.berkeleyvision.org/tutorial/layers.html" target="_blank" rel="noopener">caffe official documentation</a>理解。</p>
+<center><img src="/images/caffe blob shape变化.jpg "></center>
+
+<center><em>图7 SSD中部分层caffe blob shape变化</em></center>
+
+<p>那么接下来以conv4_3和fc7为例分析SSD是如何将不同size的feature map组合在一起进行prediction。图7展示了conv4_3和fc7合并在一起的过程中caffe blob shape变化（其他层类似，考虑到图片大小没有画出来，请脑补）。</p>
+<ul>
+<li>对于conv4_3 feature map，conv4_3_norm_priorbox（priorbox层）设置了每个点共有4个prior box。由于SSD 300共有21个分类，所以conv4_3_norm_mbox_conf的channel值为num_priorbox <em> num_class = 4 </em> 21 = 84；而每个prior box都要回归出4个位置变换量，所以conv4_3_norm_mbox_loc的caffe blob channel值为4 * 4 = 16。</li>
+<li>fc7每个点有6个prior box，其他feature map同理。</li>
+<li>经过一系列图7展示的caffe blob shape变化后，最后拼接成mbox_conf和mbox_loc。而mbox_conf后接reshape，再进行softmax（为何在softmax前进行reshape，Faster RCNN有提及）。</li>
+<li>最后这些值输出detection_out_layer，获得检测结果</li>
+</ul>
+<p>可以看到，SSD一次判断priorbox到底是背景 or 是20种目标类别之一，相当于将Faster R-CNN的RPN与后续proposal再分类进行了整合。</p>
+<center><img src="/images/SSD300.jpg"></center>
+
+<center><em>图8 SSD300</em></center>
+
+<h2 id="4-SSD网络结构优劣分析"><a href="#4-SSD网络结构优劣分析" class="headerlink" title="4 SSD网络结构优劣分析"></a>4 SSD网络结构优劣分析</h2><p>SSD算法的优点应该很明显：运行速度可以和YOLO媲美，检测精度可以和Faster RCNN媲美。除此之外，还有一些鸡毛蒜皮的优点，不解释了。这里谈谈缺点：</p>
+<ol>
+<li>需要人工设置prior box的min_size，max_size和aspect_ratio值。网络中prior box的基础大小和形状不能直接通过学习获得，而是需要手工设置。而网络中每一层feature使用的prior box大小和形状恰好都不一样，导致调试过程非常依赖经验。</li>
+<li>虽然采用了pyramdial feature hierarchy的思路，但是对小目标的recall依然一般，并没有达到碾压Faster RCNN的级别。作者认为，这是由于SSD使用conv4_3低级feature去检测小目标，而低级特征卷积层数少，存在特征提取不充分的问题。</li>
+</ol>
+<h2 id="5-SSD训练过程"><a href="#5-SSD训练过程" class="headerlink" title="5 SSD训练过程"></a>5 SSD训练过程</h2><p><img src="https://pic2.zhimg.com/v2-79dccc5fbc3d31a24e4d0e42511cb653_b.jpg" alt="img"></p>
+<p>对于SSD，虽然paper中指出采用了所谓的“multibox loss”，但是依然可以清晰看到SSD loss分为了confidence loss和location loss(bouding box regression loss)两部分，其中N是match到GT（Ground Truth）的prior box数量；而α参数用于调整confidence loss和location loss之间的比例，默认α=1。SSD中的confidence loss是典型的softmax loss：</p>
+<p><img src="https://pic1.zhimg.com/v2-42c6a269bbfbae035b0f74c0602b14ba_b.jpg" alt="img"></p>
+<p>其中</p>
+<p><img src="https://pic2.zhimg.com/v2-46a8eb39bab8396443cc3a8bcedd777d_b.jpg" alt="img"></p>
+<p>代表第i个prior box匹配到了第j个class为p类别的GT box；而location loss是典型的smooth L1 loss：</p>
+<p><img src="https://pic1.zhimg.com/v2-e7b5c31560d34fdd309b05c1e23a9dab_b.jpg" alt="img"></p>
+<p><strong>Matching strategy：</strong></p>
+<p>在训练时，groundtruth boxes 与 default boxes（就是prior boxes） 按照如下方式进行配对：</p>
+<ul>
+<li>首先，寻找与每一个ground truth box有最大的jaccard overlap的default box，这样就能保证每一个groundtruth box与唯一的一个default box对应起来（所谓的jaccard overlap就是IoU，如图9）。</li>
+<li>SSD之后又将剩余还没有配对的default box与任意一个groundtruth box尝试配对，只要两者之间的jaccard overlap大于阈值，就认为match（SSD 300 阈值为0.5）。</li>
+<li>显然配对到GT的default box就是positive，没有配对到GT的default box就是negative。</li>
+</ul>
+<center><img src="/images/A交B.jpg"></center>
+
+<center><img src="/images/A并B.jpg"></center>
+
+<p><img src="https://pic4.zhimg.com/v2-8f2601b4c788246bd6138cf99c15f1bf_b.jpg" alt="img"></p>
+<center><em>图9 jaccard overlap</em></center>
+
+<p><strong>Hard negative mining：</strong></p>
+<p>值得注意的是，一般情况下negative default boxes数量&gt;&gt;positive default boxes数量，直接训练会导致网络过于重视负样本，从而loss不稳定。所以需要采取：</p>
+<ul>
+<li>所以SSD在训练时会依据confidience score排序default box，挑选其中confidence高的box进行训练，控制 $positive:negative=1:3$</li>
+</ul>
+<p><strong>Data augmentation：</strong></p>
+<p>数据增广。即对每一张image进行如下之一变换获取一个patch进行训练：</p>
+<ul>
+<li>直接使用原始的图像（即不进行变换）</li>
+<li>采样一个patch，保证与GT之间最小的IoU为：0.1，0.3，0.5，0.7 或 0.9</li>
+<li>完全随机的采样一个patch</li>
+</ul>
+<center><img src="/images/Random crop.jpg"></center>
+
+<center><em>图10 Random crop</em></center>
+
+<p>同时在原文中还提到：</p>
+<ul>
+<li>采样的patch占原始图像大小比例在 $[0.1,1]$ 之间</li>
+<li>采样的patch的长宽比在 $[0.5,2]$之间</li>
+<li>当 Ground truth box中心恰好在采样的patch中时，保留整个GT box</li>
+<li>最后每个patch被resize到固定大小，并且以0.5的概率随机的水平翻转</li>
+</ul>
+<p>最终以这些处理好的patches进行训练。</p>
+<p>其实Matching strategy，Hard negative mining，Data augmentation，都是为了加快网络收敛而设计的。尤其是Data augmentation，翻来覆去的randomly crop，保证每一个prior box都获得充分训练而已。后续有Focal loss解决这个问题。</p>
+<p>SSD github : <a href="https://link.zhihu.com/?target=https%3A//github.com/weiliu89/caffe/tree/ssd" target="_blank" rel="noopener">https://github.com/weiliu89/caffe/tree/ssd</a></p>
+<p>SSD paper : <a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1512.02325" target="_blank" rel="noopener">https://arxiv.org/abs/1512.02325</a></p>
+<p>SSD eccv2016 slide pdf : <a href="https://link.zhihu.com/?target=http%3A//www.cs.unc.edu/%7Ewliu/papers/ssd_eccv2016_slide.pdf" target="_blank" rel="noopener">http://www.cs.unc.edu/~wliu/papers/ssd_eccv2016_slide.pdf</a></p>
+<p>Focal Loss for Dense Object Detection ：<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1708.02002" target="_blank" rel="noopener">https://arxiv.org/abs/1708.02002</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -3384,8 +3380,6 @@
 
 
 
-  
-
 
 
 
@@ -3408,9 +3402,6 @@
 
   
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
 
 
   
