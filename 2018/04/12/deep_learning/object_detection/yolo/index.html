@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0"/>
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2"/>
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/leaf.jpg?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/leaf.ico?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/leaf1.ico?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/leaf.jpg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="目标检测网络之 YOLOv3 本文逐步介绍YOLO v1~v3的设计历程。 YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground truth 的中心位置的坐标落入到某个格子，那么这个格子就负责检测出这个物体。  网络结构YOLOv1网络借鉴了GoogLeNet分类网络结构。不同的是，YOLO未使用inception module，而是使用1x1卷积层（此处1x1卷积层的">
+<meta name="keywords" content="object detection,yolo,darknet">
+<meta property="og:type" content="article">
+<meta property="og:title" content="目标检测网络之 YOLOv3">
+<meta property="og:url" content="http://yoursite.com/2018/04/12/deep_learning/object_detection/yolo/index.html">
+<meta property="og:site_name" content="Heroinlin&#39;s Blog">
+<meta property="og:description" content="目标检测网络之 YOLOv3 本文逐步介绍YOLO v1~v3的设计历程。 YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground truth 的中心位置的坐标落入到某个格子，那么这个格子就负责检测出这个物体。  网络结构YOLOv1网络借鉴了GoogLeNet分类网络结构。不同的是，YOLO未使用inception module，而是使用1x1卷积层（此处1x1卷积层的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://images2018.cnblogs.com/blog/606386/201803/606386-20180324181215936-1251293440.png">
+<meta property="og:image" content="https://images2018.cnblogs.com/blog/606386/201803/606386-20180324181242586-322645739.png">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-1098c1152f55d73a859f20bae3d9bb1e_hd.jpg">
+<meta property="og:image" content="https://images2018.cnblogs.com/blog/606386/201803/606386-20180324181317188-1434000633.png">
+<meta property="og:image" content="https://images2018.cnblogs.com/blog/606386/201803/606386-20180324181344634-594145493.png">
+<meta property="og:image" content="https://images2018.cnblogs.com/blog/606386/201803/606386-20180324181407843-936091130.png">
+<meta property="og:image" content="https://images2018.cnblogs.com/blog/606386/201803/606386-20180327003315889-714719589.png">
+<meta property="og:image" content="https://images2018.cnblogs.com/blog/606386/201803/606386-20180327003709767-1829778920.png">
+<meta property="og:image" content="https://images2018.cnblogs.com/blog/606386/201803/606386-20180327004340505-1572852891.png">
+<meta property="og:image" content="https://images2018.cnblogs.com/blog/606386/201803/606386-20180324181429804-1383715883.png">
+<meta property="og:updated_time" content="2018-10-11T02:52:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="目标检测网络之 YOLOv3">
+<meta name="twitter:description" content="目标检测网络之 YOLOv3 本文逐步介绍YOLO v1~v3的设计历程。 YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground truth 的中心位置的坐标落入到某个格子，那么这个格子就负责检测出这个物体。  网络结构YOLOv1网络借鉴了GoogLeNet分类网络结构。不同的是，YOLO未使用inception module，而是使用1x1卷积层（此处1x1卷积层的">
+<meta name="twitter:image" content="https://images2018.cnblogs.com/blog/606386/201803/606386-20180324181215936-1251293440.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2018/04/12/deep_learning/object_detection/yolo/"/>
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>目标检测网络之 YOLOv3 | Heroinlin's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Heroinlin's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Navigationsleiste an/ausschalten">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>Startseite</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br/>Schlagwörter</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br/>Kategorien</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>Archiv</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br/>Zeitplan</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/deep_learning/object_detection/yolo/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heroinlin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Heroinlin's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">目标检测网络之 YOLOv3
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2018-04-12 10:48:11" itemprop="dateCreated datePublished" datetime="2018-04-12T10:48:11+08:00">2018-04-12</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Bearbeitet am</span>
+                
+                <time title="Geändert am: 2018-10-11 10:52:44" itemprop="dateModified" datetime="2018-10-11T10:52:44+08:00">2018-10-11</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/object-detection/" itemprop="url" rel="index"><span itemprop="name">object detection</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Kommentare: </span>
+                <a href="/2018/04/12/deep_learning/object_detection/yolo/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2018/04/12/deep_learning/object_detection/yolo/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="目标检测网络之-YOLOv3"><a href="#目标检测网络之-YOLOv3" class="headerlink" title="目标检测网络之 YOLOv3"></a><a href="http://www.cnblogs.com/makefile/p/YOLOv3.html" target="_blank" rel="noopener">目标检测网络之 YOLOv3</a></h1><p><img src="https://images2018.cnblogs.com/blog/606386/201803/606386-20180324181215936-1251293440.png" alt="yolo-idea"></p>
+<p>本文逐步介绍YOLO v1~v3的设计历程。</p>
+<h2 id="YOLOv1基本思想"><a href="#YOLOv1基本思想" class="headerlink" title="YOLOv1基本思想"></a>YOLOv1基本思想</h2><p>YOLO将输入图像分成SxS个格子，若某个物体 Ground truth 的中心位置的坐标落入到某个格子，那么这个格子就负责检测出这个物体。</p>
+<p><img src="https://images2018.cnblogs.com/blog/606386/201803/606386-20180324181242586-322645739.png" alt="yolo-grid-predict"></p>
+<h3 id="网络结构"><a href="#网络结构" class="headerlink" title="网络结构"></a><strong>网络结构</strong></h3><p>YOLOv1网络借鉴了GoogLeNet分类网络结构。不同的是，YOLO未使用inception module，而是使用1x1卷积层（此处1x1卷积层的存在是为了跨通道信息整合）+3x3卷积层简单替代。<br>YOLOv1网络在最后使用全连接层进行类别输出，因此全连接层的输出维度是 $S×S×(B×5+C)$。<br>YOLOv1网络比VGG16快(浮点数少于VGG的1/3),准确率稍差。</p>
+<p>每个格子输出B个bounding box（包含物体的矩形区域）信息，以及C个物体属于某种类别的概率信息。</p>
+<p>Bounding box信息包含5个数据值，分别是x,y,w,h,和confidence。其中x,y是指当前格子预测得到的物体的bounding box的中心位置的坐标。w,h是bounding box的宽度和高度。注意：实际训练过程中，w和h的值使用图像的宽度和高度进行归一化到[0,1]区间内；x，y是bounding box中心位置相对于当前格子位置的偏移值，并且被归一化到[0,1]。</p>
+<p>confidence反映当前bounding box是否包含物体以及物体位置的准确性，计算方式如下：</p>
+<p>$confidence = P_{(object)}<em> IOU$, 其中，若bounding box包含物体，则$P_{(object)} = 1$；否则$P_{(object)} = 0$. IOU(</em>intersection over union*)为预测bounding box与物体真实区域的交集面积（以像素为单位，用真实区域的像素面积归一化到[0,1]区间）。</p>
+<p>因此，YOLO网络最终的全连接层的输出维度是 $S<em>S</em>(B<em>5 + C)$。YOLO论文中，作者训练采用的输入图像分辨率是448x448，S=7，B=2；采用VOC 20类标注物体作为训练数据，C=20。因此输出向量为$7</em>7<em>(20 + 2</em>5)=1470$维。作者开源出的YOLO代码中，全连接层输出特征向量各维度对应内容如下：</p>
+<p><img src="https://pic3.zhimg.com/80/v2-1098c1152f55d73a859f20bae3d9bb1e_hd.jpg" alt="img"></p>
+<p>缺馅:</p>
+<ul>
+<li>输入尺寸固定：由于输出层为全连接层，因此在检测时，YOLO训练模型只支持与训练图像相同的输入分辨率。其它分辨率需要缩放成改分辨率.</li>
+<li>占比较小的目标检测效果不好.虽然每个格子可以预测B个bounding box，但是最终只选择只选择IOU最高的bounding box作为物体检测输出，即每个格子最多只预测出一个物体。当物体占画面比例较小，如图像中包含畜群或鸟群时，每个格子包含多个物体，但却只能检测出其中一个。</li>
+</ul>
+<h3 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a><strong>损失函数</strong></h3><p>YOLO全部使用了均方和误差作为loss函数.由三部分组成:坐标误差、IOU误差和分类误差。</p>
+<p>$$\text{loss}=\sum_{i=0}^{s^2}coordErr+iouErr+clsErr$$</p>
+<p>简单相加时还要考虑每种loss的贡献率,YOLO给coordErr设置权重$λ_{\text{coord}}=5$.在计算IOU误差时，包含物体的格子与不包含物体的格子，二者的IOU误差对网络loss的贡献值是不同的。若采用相同的权值，那么不包含物体的格子的confidence值近似为0，变相放大了包含物体的格子的confidence误差在计算网络参数梯度时的影响。为解决这个问题，YOLO 使用</p>
+<p>λnoobj=0.5</p>
+<p>修正iouErr。（此处的‘包含’是指存在一个物体，它的中心坐标落入到格子内）。对于相等的误差值，大物体误差对检测的影响应小于小物体误差对检测的影响。这是因为，相同的位置偏差占大物体的比例远小于同等偏差占小物体的比例。YOLO将物体大小的信息项（w和h）进行求平方根来改进这个问题，但并不能完全解决这个问题。</p>
+<p>综上，YOLO在训练过程中Loss计算如下式所示：</p>
+<p><img src="https://images2018.cnblogs.com/blog/606386/201803/606386-20180324181317188-1434000633.png" alt="yolo-loss"></p>
+<p>yolo-loss</p>
+<p>其中有宝盖帽子符号(x^,y^,w^,h^,C^,p^x^,y^,w^,h^,C^,p^)为预测值,无帽子的为训练标记值。1objij1ijobj表示物体落入格子i的第j个bbox内.如果某个单元格中没有目标,则不对分类误差进行反向传播;B个bbox中与GT具有最高IoU的一个进行坐标误差的反向传播,其余不进行.</p>
+<h3 id="训练过程"><a href="#训练过程" class="headerlink" title="训练过程"></a>训练过程</h3><p>1）预训练。使用 ImageNet 1000 类数据训练YOLO网络的前20个卷积层+1个average池化层+1个全连接层。训练图像分辨率resize到224x224。</p>
+<p>2）用步骤1）得到的前20个卷积层网络参数来初始化YOLO模型前20个卷积层的网络参数，然后用 VOC 20 类标注数据进行YOLO模型训练。检测通常需要有细密纹理的视觉信息,所以为提高图像精度，在训练检测模型时，将输入图像分辨率从224 × 224 resize到448x448。</p>
+<p>训练时B个bbox的ground truth设置成一样的.</p>
+<h2 id="升级版-YOLO-v2"><a href="#升级版-YOLO-v2" class="headerlink" title="升级版 YOLO v2"></a>升级版 YOLO v2</h2><p>为提高物体定位精准性和召回率，YOLO作者提出了 《<a href="https://www.cnblogs.com/makefile/p/https//arxiv.org/abs/1612.08242" target="_blank" rel="noopener">YOLO9000: Better, Faster, Stronger</a>》 (<a href="https://pjreddie.com/publications/" target="_blank" rel="noopener">Joseph Redmon</a>, Ali Farhadi, CVPR 2017, Best Paper Honorable Mention)，相比v1提高了训练图像的分辨率；引入了faster rcnn中anchor box的思想，对网络结构的设计进行了改进，输出层使用卷积层替代YOLO的全连接层，联合使用coco物体检测标注数据和imagenet物体分类标注数据训练物体检测模型。相比YOLO，YOLO9000在识别种类、精度、速度、和定位准确性等方面都有大大提升。</p>
+<h3 id="YOLOv2-改进之处"><a href="#YOLOv2-改进之处" class="headerlink" title="YOLOv2 改进之处"></a>YOLOv2 改进之处</h3><p>YOLO与Fast R-CNN相比有较大的定位误差，与基于region proposal的方法相比具有较低的召回率。因此YOLO v2主要改进是提高召回率和定位能力。下面是改进之处：</p>
+<p><strong>Batch Normalization</strong>： v1中也大量用了Batch Normalization，同时在定位层后边用了dropout，v2中取消了dropout，在卷积层全部使用Batch Normalization。</p>
+<p><strong>高分辨率分类器</strong>：v1中使用224 × 224训练分类器网络，扩大到448用于检测网络。v2将ImageNet以448×448 的分辨率微调最初的分类网络，迭代10 epochs。</p>
+<p><strong>Anchor Boxes</strong>：v1中直接在卷积层之后使用全连接层预测bbox的坐标。v2借鉴Faster R-CNN的思想预测bbox的偏移.移除了全连接层,并且删掉了一个pooling层使特征的分辨率更大一些.另外调整了网络的输入(448-&gt;416)以使得位置坐标是奇数只有一个中心点(yolo使用pooling来下采样,有5个size=2,stride=2的max pooling,而卷积层没有降低大小,因此最后的特征是416/(2^5)=13).v1中每张图片预测7x7x2=98个box,而v2加上Anchor Boxes能预测超过1000个.检测结果从69.5mAP,81% recall变为69.2 mAP,88% recall.</p>
+<p>YOLO v2对Faster R-CNN的手选先验框方法做了改进,采样k-means在训练集bbox上进行聚类产生合适的先验框.由于使用欧氏距离会使较大的bbox比小的bbox产生更大的误差，而IOU与bbox尺寸无关,因此使用IOU参与距离计算,使得通过这些anchor boxes获得好的IOU分值。距离公式：</p>
+<p>D(box,centroid)=1−IOU(box,centroid)D(box,centroid)=1−IOU(box,centroid)</p>
+<p>使用聚类进行选择的优势是达到相同的IOU结果时所需的anchor box数量更少,使得模型的表示能力更强,任务更容易学习.k-means算法代码实现参考:<a href="https://github.com/PaulChongPeng/darknet/blob/master/tools/k_means_yolo.py" target="_blank" rel="noopener">k_means_yolo.py</a>.算法过程是:将每个bbox的宽和高相对整张图片的比例(wr,hr)进行聚类,得到k个anchor box,由于darknet代码需要配置文件中region层的anchors参数是绝对值大小,因此需要将这个比例值乘上卷积层的输出特征的大小.如输入是416x416,那么最后卷积层的特征是13x13.</p>
+<p><strong>细粒度特征</strong>(fine grain features):在Faster R-CNN 和 SSD 均使用了不同的feature map以适应不同尺度大小的目标.YOLOv2使用了一种不同的方法，简单添加一个 pass through layer，把浅层特征图（26x26）连接到深层特征图(连接到新加入的三个卷积核尺寸为3 * 3的卷积层最后一层的输入)。 通过叠加浅层特征图相邻特征到不同通道（而非空间位置），类似于Resnet中的identity mapping。这个方法把26x26x512的特征图叠加成13x13x2048的特征图，与原生的深层特征图相连接，使模型有了细粒度特征。此方法使得模型的性能获得了1%的提升。</p>
+<p><strong>Multi-Scale Training</strong>: 和YOLOv1训练时网络输入的图像尺寸固定不变不同，YOLOv2（在cfg文件中random=1时）每隔几次迭代后就会微调网络的输入尺寸。训练时每迭代10次，就会随机选择新的输入图像尺寸。因为YOLOv2的网络使用的downsamples倍率为32，所以使用32的倍数调整输入图像尺寸{320,352，…，608}。训练使用的最小的图像尺寸为320 x 320，最大的图像尺寸为608 x 608。 这使得网络可以适应多种不同尺度的输入.</p>
+<h3 id="YOLOv2网络结构"><a href="#YOLOv2网络结构" class="headerlink" title="YOLOv2网络结构"></a>YOLOv2网络结构</h3><p>YOLOv2对v1的基础网络做了更改.</p>
+<p><strong>分类网络</strong></p>
+<p>YOLOv2提出了一种新的分类模型Darknet-19.借鉴了很多其它网络的设计概念.主要使用3x3卷积并在pooling之后channel数加倍(VGG);global average pooling替代全连接做预测分类,并在3x3卷积之间使用1x1卷积压缩特征表示(Network in Network);使用 batch normalization 来提高稳定性,加速收敛,对模型正则化.<br>Darknet-19的结构如下表:</p>
+<p><img src="https://images2018.cnblogs.com/blog/606386/201803/606386-20180324181344634-594145493.png" alt="Darknet-19-arch"></p>
+<p>Darknet-19-arch</p>
+<p>包含 19 conv + 5 maxpooling.</p>
+<p>训练:使用Darknet框架在ImageNet 1000类上训练160 epochs,学习率初始为0.1,以4级多项式衰减.weight decay=0.0005 , momentum=0.9.使用标准的数据增广方法:random crops, rotations, (hue, saturation), exposure shifts.</p>
+<p>之后将输入从224放大至448,学习率调整为0.001,迭代10 epochs.结果达到top-1 accuracy 76.5% , top-5 accuracy 93.3%.</p>
+<p><strong>检测网络</strong></p>
+<p>在分类网络中移除最后一个1x1的层,在最后添加3个3x3x1024的卷积层,再接上输出是类别个数的1x1卷积.<br>对于输入图像尺寸为<code>Si x Si</code>,最终3x3卷积层输出的feature map是<code>Oi x Oi</code>(Oi=Si/(2^5)),对应输入图像的Oi x Oi个栅格，每个栅格预测<code>#anchors</code>种boxes大小，每个box包含4个坐标值,1个置信度和<code>#classes</code>个条件类别概率，所以输出维度是<code>Oi x Oi x #anchors x (5 + #classes)</code>。</p>
+<p>添加<strong>跨层跳跃连接</strong>（借鉴ResNet等思想）,融合粗细粒度的特征:将前面最后一个3x3x512卷积的特征图,对于416x416的输入,该层输出26x26x512,直接连接到最后新加的三个3x3卷积层的最后一个的前边.将26x26x512变形为13x13x2048与后边的13x13x1024特征按channel堆起来得到13x13x3072.从yolo-voc.cfg文件可以看到，第25层为route层，逆向9层拿到第16层26 <em> 26 </em> 512的输出，并由第26层的reorg层把26 <em> 26 </em> 512 变形为13 <em> 13 </em> 2048，再有第27层的route层连接24层和26层的输出，堆叠为13 <em> 13 </em> 3072，由最后一个卷积核为3 * 3的卷积层进行跨通道的信息融合并把通道降维为1024。</p>
+<p><strong>训练</strong>:作者在VOC07+12以及COCO2014数据集上迭代了160 epochs,初始学习率0.001,在60和90 epochs分别减小为0.1倍.<br>Darknet训练VOC的参数如下:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">learning_rate=0.0001</span><br><span class="line">batch=64</span><br><span class="line">max_batches = 45000 # 最大迭代batch数</span><br><span class="line">policy=steps # 学习率衰减策略</span><br><span class="line">steps=100,25000,35000 # 训练到这些batch次数时learning_rate按scale缩放</span><br><span class="line">scales=10,.1,.1 # 与steps对应</span><br></pre></td></tr></table></figure>
+<p>网络结构如下(输入416,5个类别,5个anchor box; 此结构信息由Darknet框架启动时输出):</p>
+<p><img src="https://images2018.cnblogs.com/blog/606386/201803/606386-20180324181407843-936091130.png" alt="YOLO v2-network"></p>
+<p>YOLO v2-network</p>
+<h3 id="YOLO9000"><a href="#YOLO9000" class="headerlink" title="YOLO9000"></a>YOLO9000</h3><p>提出了一种联合训练方法，能够容许同时使用目标检测数据集和分类数据集。使用有标记的检测数据集精确定位，使用分类数据增加类别和鲁棒性。</p>
+<h2 id="YOLOv3"><a href="#YOLOv3" class="headerlink" title="YOLOv3"></a>YOLOv3</h2><p>YOLOv3在Pascal Titan X上处理608x608图像速度达到20FPS，在 COCO test-dev 上 <a href="mailto:mAP@0.5" target="_blank" rel="noopener">mAP@0.5</a> 达到 57.9%，与RetinaNet（FocalLoss论文所提出的单阶段网络）的结果相近，并且速度快4倍.</p>
+<p>YOLO v3的模型比之前的模型复杂了不少，可以通过改变模型结构的大小来权衡速度与精度。</p>
+<p>速度对比如下：</p>
+<p><img src="https://images2018.cnblogs.com/blog/606386/201803/606386-20180327003315889-714719589.png" alt="YOLOv3 compare"></p>
+<p>YOLOv3 compare</p>
+<p><strong>改进之处</strong>：</p>
+<ul>
+<li>多尺度预测 （类FPN）</li>
+<li>更好的基础分类网络（类ResNet）和分类器</li>
+</ul>
+<p><strong>分类器-类别预测</strong>：<br>YOLOv3不使用Softmax对每个框进行分类，主要考虑因素有两个：</p>
+<ol>
+<li>Softmax使得每个框分配一个类别（score最大的一个），而对于<code>Open Images</code>这种数据集，目标可能有重叠的类别标签，因此Softmax不适用于多标签分类。</li>
+<li>Softmax可被独立的多个logistic分类器替代，且准确率不会下降。<br>分类损失采用binary cross-entropy loss.</li>
+</ol>
+<p><strong>多尺度预测</strong><br>每种尺度预测3个box, anchor的设计方式仍然使用聚类,得到9个聚类中心,将其按照大小均分给3中尺度.</p>
+<ul>
+<li>尺度1: 在基础网络之后添加一些卷积层再输出box信息.</li>
+<li>尺度2: 从尺度1中的倒数第二层的卷积层上采样(x2)再与最后一个16x16大小的特征图相加,再次通过多个卷积后输出box信息.相比尺度1变大两倍.</li>
+<li>尺度3: 与尺度2类似,使用了32x32大小的特征图.</li>
+</ul>
+<p>参见网络结构定义文件<a href="https://github.com/pjreddie/darknet/blob/master/cfg/yolov3.cfg" target="_blank" rel="noopener">yolov3.cfg</a></p>
+<p><strong>基础网络 Darknet-53</strong><br>仿ResNet, 与ResNet-101或ResNet-152准确率接近,但速度更快.对比如下:</p>
+<p><img src="https://images2018.cnblogs.com/blog/606386/201803/606386-20180327003709767-1829778920.png" alt="darknet-53 compare"></p>
+<p>darknet-53 compare</p>
+<p>网络结构如下：</p>
+<p><img src="https://images2018.cnblogs.com/blog/606386/201803/606386-20180327004340505-1572852891.png" alt="YOLOv3-arch"></p>
+<p>YOLOv3-arch</p>
+<p>YOLOv3在<a href="mailto:mAP@0.5mAP" target="_blank" rel="noopener">mAP@0.5mAP</a>@0.5及小目标APSAPS上具有不错的结果,但随着IOU的增大,性能下降,说明YOLOv3不能很好地与ground truth切合.</p>
+<p>.</p>
+<h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><p>优点</p>
+<ul>
+<li>快速,pipline简单.</li>
+<li>背景误检率低。</li>
+<li>通用性强。YOLO对于艺术类作品中的物体检测同样适用。它对非自然图像物体的检测率远远高于DPM和RCNN系列检测方法。</li>
+</ul>
+<p>但相比RCNN系列物体检测方法，YOLO具有以下缺点：</p>
+<ul>
+<li>识别物体位置精准性差。</li>
+<li>召回率低。在每个网格中预测两个bbox这种约束方式减少了对同一目标的多次检测(R-CNN使用的region proposal方式重叠较多),相比R-CNN使用Selective Search产生2000个proposal（RCNN测试时每张超过40秒）,yolo仅使用7x7x2个.</li>
+</ul>
+<h3 id="YOLO-v-s-Faster-R-CNN"><a href="#YOLO-v-s-Faster-R-CNN" class="headerlink" title="YOLO v.s. Faster R-CNN"></a>YOLO v.s. Faster R-CNN</h3><ol>
+<li>统一网络:<br>YOLO没有显示求取region proposal的过程。Faster R-CNN中尽管RPN与fast rcnn共享卷积层，但是在模型训练过程中，需要反复训练RPN网络和fast rcnn网络.<br>相对于R-CNN系列的”看两眼”(候选框提取与分类，图示如下),YOLO只需要Look Once.</li>
+<li>YOLO统一为一个回归问题<br>而R-CNN将检测结果分为两部分求解：物体类别（分类问题），物体位置即bounding box（回归问题）。</li>
+</ol>
+<p><img src="https://images2018.cnblogs.com/blog/606386/201803/606386-20180324181429804-1383715883.png" alt="R-CNN pipline"></p>
+<p>R-CNN pipline</p>
+<hr>
+<h2 id="Darknet-框架"><a href="#Darknet-框架" class="headerlink" title="Darknet 框架"></a>Darknet 框架</h2><p>Darknet 由 C 语言和 CUDA 实现, 对GPU显存利用效率较高(CPU速度差一些, 通过与SSD的Caffe程序对比发现存在CPU较慢,GPU较快的情况). Darknet 对第三方库的依赖较少,且仅使用了少量GNU linux平台C接口,因此很容易移植到其它平台,如Windows或嵌入式设备.<br>参考<a href="http://www.cnblogs.com/makefile/p/darknet-win-port.html" target="_blank" rel="noopener">Windows 版 Darknet (YOLOv2) 移植</a>, <a href="https://github.com/makefile/darknet" target="_blank" rel="noopener">代码在此</a>.</p>
+<p><strong>region层</strong>:参数anchors指定kmeans计算出来的anchor box的长宽的绝对值(与网络输入大小相关),num参数为anchor box的数量,<br>另外还有bias_match,classes,coords等参数.在parser.c代码中的parse_region函数中解析这些参数,并保存在region_layer.num参数保存在l.n变量中;anchors保存在l.biases数组中.region_layer的前向传播中使用for(n = 0; n &lt; l.n; ++n)这样的语句,因此,如果在配置文件中anchors的数量大于num时,仅使用前num个,小于时内存越界.</p>
+<p>region层的输入和输出大小与前一层(1x1 conv)的输出大小和网络的输入大小相关.</p>
+<p><strong>Detection层</strong>: 坐标及类别结果输出层.</p>
+<hr>
+<p><strong>参考</strong></p>
+<ul>
+<li>YOLO主页 <a href="https://pjreddie.com/darknet/yolo/" target="_blank" rel="noopener">https://pjreddie.com/darknet/yolo/</a></li>
+<li><a href="https://pjreddie.com/media/files/papers/YOLOv3.pdf" target="_blank" rel="noopener">YOLOv3: An Incremental Improvement</a></li>
+<li><a href="https://arxiv.org/abs/1612.08242" target="_blank" rel="noopener">YOLO9000: Better, Faster, Stronger</a></li>
+<li><a href="http://arxiv.org/abs/1506.02640" target="_blank" rel="noopener">You Only Look Once: Unified, Real-Time Object Detection</a></li>
+</ul>
+<p>著作权归作者所有。商业转载请联系作者获得授权,非商业转载请注明出处。</p>
+<p>原文: </p>
+<p><a href="https://www.cnblogs.com/makefile/p/YOLOv3.html" target="_blank" rel="noopener">https://www.cnblogs.com/makefile/p/YOLOv3.html</a></p>
+<p> © </p>
+<p>康行天下</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/object-detection/" rel="tag"># object detection</a>
+          
+            <a href="/tags/yolo/" rel="tag"># yolo</a>
+          
+            <a href="/tags/darknet/" rel="tag"># darknet</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/12/deep_learning/object_detection/metric/" rel="next" title="目标检测网络之评价指标">
+                <i class="fa fa-chevron-left"></i> 目标检测网络之评价指标
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/12/math/merge_mean_vart/" rel="prev" title="均值方差合并">
+                均值方差合并 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Heroinlin</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">Kategorien</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">59</span>
+                    <span class="site-state-item-name">schlagwörter</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/heroinlin" title="GitHub &rarr; https://github.com/heroinlin" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/heroinlj@gmail.com" title="E-Mail &rarr; heroinlj@gmail.com"><i class="fa fa-fw fa-gmail"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/Heroin" title="Twitter &rarr; https://twitter.com/Heroin" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#目标检测网络之-YOLOv3"><span class="nav-number">1.</span> <span class="nav-text">目标检测网络之 YOLOv3</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#YOLOv1基本思想"><span class="nav-number">1.1.</span> <span class="nav-text">YOLOv1基本思想</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络结构"><span class="nav-number">1.1.1.</span> <span class="nav-text">网络结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#损失函数"><span class="nav-number">1.1.2.</span> <span class="nav-text">损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#训练过程"><span class="nav-number">1.1.3.</span> <span class="nav-text">训练过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#升级版-YOLO-v2"><span class="nav-number">1.2.</span> <span class="nav-text">升级版 YOLO v2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLOv2-改进之处"><span class="nav-number">1.2.1.</span> <span class="nav-text">YOLOv2 改进之处</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLOv2网络结构"><span class="nav-number">1.2.2.</span> <span class="nav-text">YOLOv2网络结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLO9000"><span class="nav-number">1.2.3.</span> <span class="nav-text">YOLO9000</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#YOLOv3"><span class="nav-number">1.3.</span> <span class="nav-text">YOLOv3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优缺点"><span class="nav-number">1.4.</span> <span class="nav-text">优缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLO-v-s-Faster-R-CNN"><span class="nav-number">1.4.1.</span> <span class="nav-text">YOLO v.s. Faster R-CNN</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Darknet-框架"><span class="nav-number">1.5.</span> <span class="nav-text">Darknet 框架</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Heroinlin</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.6.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Design – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+    <!-- LOCAL: You can save these files to your site and update links -->
+
+  
+  <script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitmint.browser.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.css"/>
+<!-- END LOCAL -->
+
+<script>
+  function renderGitment() {
+    var gitment = new Gitmint({
+      id: window.location.pathname,
+      owner: 'heroinlin',
+      repo: 'heroinlin.github.io',
+      
+        lang: '' || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+      
+      oauth: {
+      
+      
+        client_secret: '264679785d383afbc726145178abea84ff750743',
+      
+        client_id: '33b4a51ea87942e922ca'
+      }
+    });
+    gitment.render('gitment-container');
+  }
+
+  
+    renderGitment();
+  
+</script>
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

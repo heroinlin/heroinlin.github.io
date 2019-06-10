@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0"/>
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2"/>
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/leaf.jpg?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/leaf.ico?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/leaf1.ico?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/leaf.jpg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="#python之数据持久化 Python的数据持久化方式有很多种，JSON与Pickle是其中两种比较好用又相对轻量级的。两者的使用方式非常相近。 JSONpython中处理JSON的库就是json模块，需要用到的方法大致就是以下4个，其实它们的参数有很多这里暂且省略。 12345678import jsonperson = &amp;#123;&apos;姓名&apos;: &apos;Jame&apos;, &apos;年龄&apos; : 27&amp;#125;f">
+<meta name="keywords" content="Python,JSON,Pickle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python之JSON与Pickle">
+<meta property="og:url" content="http://yoursite.com/2018/10/10/Python/Python_JSON_and_Pickle/index.html">
+<meta property="og:site_name" content="Heroinlin&#39;s Blog">
+<meta property="og:description" content="#python之数据持久化 Python的数据持久化方式有很多种，JSON与Pickle是其中两种比较好用又相对轻量级的。两者的使用方式非常相近。 JSONpython中处理JSON的库就是json模块，需要用到的方法大致就是以下4个，其实它们的参数有很多这里暂且省略。 12345678import jsonperson = &amp;#123;&apos;姓名&apos;: &apos;Jame&apos;, &apos;年龄&apos; : 27&amp;#125;f">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-10-12T06:28:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python之JSON与Pickle">
+<meta name="twitter:description" content="#python之数据持久化 Python的数据持久化方式有很多种，JSON与Pickle是其中两种比较好用又相对轻量级的。两者的使用方式非常相近。 JSONpython中处理JSON的库就是json模块，需要用到的方法大致就是以下4个，其实它们的参数有很多这里暂且省略。 12345678import jsonperson = &amp;#123;&apos;姓名&apos;: &apos;Jame&apos;, &apos;年龄&apos; : 27&amp;#125;f">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2018/10/10/Python/Python_JSON_and_Pickle/"/>
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>python之JSON与Pickle | Heroinlin's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Heroinlin's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Navigationsleiste an/ausschalten">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>Startseite</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br/>Schlagwörter</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br/>Kategorien</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>Archiv</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br/>Zeitplan</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/10/Python/Python_JSON_and_Pickle/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heroinlin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Heroinlin's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">python之JSON与Pickle
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2018-10-10 10:48:11" itemprop="dateCreated datePublished" datetime="2018-10-10T10:48:11+08:00">2018-10-10</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Bearbeitet am</span>
+                
+                <time title="Geändert am: 2018-10-12 14:28:18" itemprop="dateModified" datetime="2018-10-12T14:28:18+08:00">2018-10-12</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Kommentare: </span>
+                <a href="/2018/10/10/Python/Python_JSON_and_Pickle/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2018/10/10/Python/Python_JSON_and_Pickle/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>#python之数据持久化</p>
+<p>Python的数据持久化方式有很多种，JSON与Pickle是其中两种比较好用又相对轻量级的。两者的使用方式非常相近。</p>
+<h2 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h2><p>python中处理JSON的库就是json模块，需要用到的方法大致就是以下4个，其实它们的参数有很多这里暂且省略。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line">person = &#123;<span class="string">'姓名'</span>: <span class="string">'Jame'</span>, <span class="string">'年龄'</span> : <span class="number">27</span>&#125;</span><br><span class="line">fp = open(<span class="string">'person.json'</span>, <span class="string">'w'</span>)</span><br><span class="line">json.dump(person, fp)</span><br><span class="line">fp.close()</span><br><span class="line">person_info = json.dumps(person)</span><br><span class="line">x = json.load(open(<span class="string">'person.json'</span>, <span class="string">'r'</span>))</span><br><span class="line">y = json.loads(person_info)</span><br></pre></td></tr></table></figure>
+<p>可以看到，结尾带s就是在字符串层面上操作，如果不带s就是在文件层级操作。person是需要转化的对象，可以是一个字典或者列表。</p>
+<p>dumps返回的是一个字符串，load和loads则会返回python的对象。</p>
+<p>以上是最简单的一些使用方式，这里还有一些实用的参数可以选择。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import json</span><br><span class="line">obj = &#123;u&apos;姓名&apos; : u&apos;无名氏&apos;, u&apos;国籍&apos; : u&apos;中国&apos;&#125;</span><br><span class="line">s = json.dumps(obj, ensure_ascii=False, indent=4)</span><br><span class="line">obj2 = json.loads(s, encoding=&apos;utf8&apos;)</span><br></pre></td></tr></table></figure>
+<p>ensure_ascii参数，是在有中文的情况下，设置为False可以防止将其解码而得到乱码，在loads的时候可以指定encoding来保持编码。</p>
+<p>indent参数如果不指定的话，输出的字符串就是紧凑的形式，indent指定为4就可以输出缩进为4的pretty形式，在需要给人看的时候用这个不错。</p>
+<h3 id="JSON序列化datetime问题"><a href="#JSON序列化datetime问题" class="headerlink" title="JSON序列化datetime问题"></a>JSON序列化datetime问题</h3><p>python自己的json.dumps不能序列化datetime对象，如果需要dump这类对象时可以自己定义JSONEncoder</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> date, datetime</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AdvEncoder</span><span class="params">(json.JSONEncoder)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">default</span><span class="params">(self, obj)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> isinstance(obj, datetime):</span><br><span class="line">            <span class="keyword">return</span> obj.strftime(<span class="string">'%Y-%m-%d %H:%M:%S'</span>)</span><br><span class="line">        <span class="keyword">elif</span> isinstance(obj, date):</span><br><span class="line">            <span class="keyword">return</span> obj.strftime(<span class="string">'%Y-%m-%d'</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> super().default(self, obj)</span><br><span class="line"></span><br><span class="line">obj = &#123;&#125;</span><br><span class="line">json.dumps(obj, cls=MyEncoder)</span><br></pre></td></tr></table></figure>
+<p>这样在dump时指定cls参数就可以完成序列化datetime的任务了，如果觉得麻烦的话，可以使用偏函数的方法自己封装一下。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> functools</span><br><span class="line">adumps = functools.partial(json.dumps, cls=AdvEncoder)</span><br><span class="line">d = datetime.now()</span><br><span class="line">adumps(d)</span><br></pre></td></tr></table></figure>
+<h2 id="Pickle"><a href="#Pickle" class="headerlink" title="Pickle"></a>Pickle</h2><p>常用的函数和JSON的相同，这里只介绍一下dump与load。</p>
+<h3 id="函数说明"><a href="#函数说明" class="headerlink" title="函数说明"></a>函数说明</h3><p>Python中可以使用 pickle 模块将对象转化为文件保存在磁盘上，在需要的时候再读取并还原。具体用法如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`pickle.dump(obj, ``file``[, protocol])`</span><br></pre></td></tr></table></figure>
+<p>这是将对象持久化的方法，参数的含义分别为：<br><strong>obj</strong>: 要持久化保存的对象；<br><strong>file</strong>: 一个拥有 <em>write()</em> 方法的对象，并且这个 <em>write()</em> 方法能接收一个字符串作为参数。这个对象可以是一个以写模式打开的文件对象或者一个 StringIO 对象，或者其他自定义的满足条件的对象。<br><strong>protocol</strong>: 这是一个可选的参数，默认为 0 ，如果设置为 1 或 True，则以高压缩的二进制格式保存持久化后的对象，否则以ASCII格式保存，设置为负数与0相同。</p>
+<p>对象被持久化后怎么还原呢？pickle 模块也提供了相应的方法，如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`pickle.load(``file``)`</span><br></pre></td></tr></table></figure>
+<p>只有一个参数 file ，对应于上面 dump 方法中的 file 参数。这个 file 必须是一个拥有一个能接收一个整数为参数的 <em>read()</em> 方法以及一个不接收任何参数的 <em>readline()</em> 方法，并且这两个方法的返回值都应该是字符串。这可以是一个打开为读的文件对象、StringIO 对象或其他任何满足条件的对象。</p>
+<h3 id="实例代码"><a href="#实例代码" class="headerlink" title="实例代码"></a>实例代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line">person = &#123;<span class="string">'姓名'</span>: <span class="string">'Jame'</span>, <span class="string">'年龄'</span> : <span class="number">27</span>&#125;</span><br><span class="line">list_obj = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>]</span><br><span class="line">f = open(<span class="string">'person.pkl'</span>, <span class="string">'wb'</span>)</span><br><span class="line">pickle.dump(person, f, protocol=<span class="number">-1</span>)</span><br><span class="line">pickle.dump(list_obj, f, protocol=<span class="number">-1</span>)</span><br><span class="line">f.close()</span><br><span class="line"></span><br><span class="line">f = open(<span class="string">'person.pkl'</span>, <span class="string">'rb'</span>)</span><br><span class="line">person_info = pickle.load(f)</span><br><span class="line">list_obj_info = pickle.load(f)</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+<p>可以看出上面的程序在文件里存储了2个对象，load的时候可以执行2次，person_info得到的是之前person的对象，list_obj_info的是之前list_obj的对象。不要写成这样：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">person_info = pickle.load(open(<span class="string">'person.pkl'</span>, <span class="string">'rb'</span>))</span><br><span class="line">list_obj_info = pickle.load(open(<span class="string">'person.pkl'</span>, <span class="string">'rb'</span>))</span><br></pre></td></tr></table></figure>
+<p>这样得到的person_info,list_obj_info都是person_info的对象，原因嘛，可以想一想文件操作的方式，很好理解。</p>
+<p>但存储了几个对象就只能load几次，如果load超过了存储的对象，会抛出EOFError异常。</p>
+<p>可以用下面这种方式进行修改</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line">person = &#123;<span class="string">'姓名'</span>: <span class="string">'Jame'</span>, <span class="string">'年龄'</span> : <span class="number">27</span>&#125;</span><br><span class="line">list_obj = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>]</span><br><span class="line">f = open(<span class="string">'person.pkl'</span>, <span class="string">'wb'</span>)</span><br><span class="line">pickle.dump([person, list_obj], f, protocol=<span class="number">-1</span>)</span><br><span class="line">f.close()</span><br><span class="line"><span class="comment"># all_infos = pickle.load(open('person.pkl', 'rb'))</span></span><br><span class="line"><span class="comment"># person_info = all_infos[0]</span></span><br><span class="line"><span class="comment"># list_obj_info = all_infos[1]</span></span><br><span class="line">person_info = pickle.load(open(<span class="string">'person.pkl'</span>, <span class="string">'rb'</span>))[<span class="number">0</span>]</span><br><span class="line">list_obj_info = pickle.load(open(<span class="string">'person.pkl'</span>, <span class="string">'rb'</span>))[<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<p>这里能够存储的对象可以是任意对象，字典、列表、元组、numpy数组、SocketServer…..</p>
+<p>另外，pickle 模块还提供 dumps 和 loads 两个方法，用法与上面的 dump 和 load 方法类似，只是不需要输入 file 参数，输入及输出都是字符串对象，有些场景中使用这两个方法可能更为方便。</p>
+<h2 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h2><p>官方文档中对于这2者也有一段比较的话，我就直接拿来用了</p>
+<ul>
+<li>JSON是文本形式的存储，Pickle则是二进制形式（至少常用二进制）</li>
+<li>JSON是人可读的，Pickle不可读</li>
+<li>JSON广泛应用于除Python外的其他领域，Pickle是Python独有的。</li>
+<li>JSON只能dump一些python的内置对象，Pickle可以存储几乎所有对象。</li>
+</ul>
+<p>在我看来，如果偏向应用特别是web应用方面，可以常用JSON格式。如果偏向算法方面，尤其是机器学习，则应该使用cPickle，pylearn2库中保存model就是使用这项技术的。</p>
+<p>至于重量级的那就很多了，基本都跟数据库有关。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://brieflyx.me/2015/python-module/python-data-persistence/" target="_blank" rel="noopener">Python 数据持久化方式——JSON与Pickle</a></p>
+<p><a href="https://blog.oldj.net/2010/05/26/python-pickle/" target="_blank" rel="noopener">Python中使用pickle持久化对象</a></p>
+<p><a href="http://www.isware.cn/python-modules/01-data-persistence-and-exchange/pickle/" target="_blank" rel="noopener">[Python常用库]pickle</a></p>
+<p><a href="https://python-cookbook.readthedocs.io/zh_CN/stable/c05/p21_serializing_python_objects.html" target="_blank" rel="noopener">序列化Python对象</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/JSON/" rel="tag"># JSON</a>
+          
+            <a href="/tags/Pickle/" rel="tag"># Pickle</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/18/opencv/build_opencv_simple_lib/" rel="next" title="编译opencv精简静态库">
+                <i class="fa fa-chevron-left"></i> 编译opencv精简静态库
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/10/Python/Python_argparse/" rel="prev" title="python之argparse命令行选项与参数解析">
+                python之argparse命令行选项与参数解析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Heroinlin</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">Kategorien</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">59</span>
+                    <span class="site-state-item-name">schlagwörter</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/heroinlin" title="GitHub &rarr; https://github.com/heroinlin" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/heroinlj@gmail.com" title="E-Mail &rarr; heroinlj@gmail.com"><i class="fa fa-fw fa-gmail"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/Heroin" title="Twitter &rarr; https://twitter.com/Heroin" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JSON"><span class="nav-number">1.</span> <span class="nav-text">JSON</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JSON序列化datetime问题"><span class="nav-number">1.1.</span> <span class="nav-text">JSON序列化datetime问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pickle"><span class="nav-number">2.</span> <span class="nav-text">Pickle</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数说明"><span class="nav-number">2.1.</span> <span class="nav-text">函数说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例代码"><span class="nav-number">2.2.</span> <span class="nav-text">实例代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#比较"><span class="nav-number">3.</span> <span class="nav-text">比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Heroinlin</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.6.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Design – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+    <!-- LOCAL: You can save these files to your site and update links -->
+
+  
+  <script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitmint.browser.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.css"/>
+<!-- END LOCAL -->
+
+<script>
+  function renderGitment() {
+    var gitment = new Gitmint({
+      id: window.location.pathname,
+      owner: 'heroinlin',
+      repo: 'heroinlin.github.io',
+      
+        lang: '' || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+      
+      oauth: {
+      
+      
+        client_secret: '264679785d383afbc726145178abea84ff750743',
+      
+        client_id: '33b4a51ea87942e922ca'
+      }
+    });
+    gitment.render('gitment-container');
+  }
+
+  
+    renderGitment();
+  
+</script>
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0"/>
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2"/>
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/leaf.jpg?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/leaf.ico?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/leaf1.ico?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/leaf.jpg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="编译opencv精简静态库本示例在centos6.5上编译opencv2.4.9 安装依赖包1yum install cmake gcc gcc-c++ make cmake命令直接编译opencv_highgui库在读写jpeg,png,tiff,jpeg2000图像格式时用到了第三方编解码库，可以根据图像的格式，精简选择需要开启的编译选项 在opencv根目录下创建release文件夹，打开r">
+<meta name="keywords" content="OpenCV，静态库，cmake">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编译opencv精简静态库">
+<meta property="og:url" content="http://yoursite.com/2018/04/18/opencv/build_opencv_simple_lib/index.html">
+<meta property="og:site_name" content="Heroinlin&#39;s Blog">
+<meta property="og:description" content="编译opencv精简静态库本示例在centos6.5上编译opencv2.4.9 安装依赖包1yum install cmake gcc gcc-c++ make cmake命令直接编译opencv_highgui库在读写jpeg,png,tiff,jpeg2000图像格式时用到了第三方编解码库，可以根据图像的格式，精简选择需要开启的编译选项 在opencv根目录下创建release文件夹，打开r">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/04/18/opencv/build_opencv_simple_lib/pic/cmake_1.jpg">
+<meta property="og:updated_time" content="2018-04-18T10:37:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="编译opencv精简静态库">
+<meta name="twitter:description" content="编译opencv精简静态库本示例在centos6.5上编译opencv2.4.9 安装依赖包1yum install cmake gcc gcc-c++ make cmake命令直接编译opencv_highgui库在读写jpeg,png,tiff,jpeg2000图像格式时用到了第三方编解码库，可以根据图像的格式，精简选择需要开启的编译选项 在opencv根目录下创建release文件夹，打开r">
+<meta name="twitter:image" content="http://yoursite.com/2018/04/18/opencv/build_opencv_simple_lib/pic/cmake_1.jpg">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2018/04/18/opencv/build_opencv_simple_lib/"/>
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>编译opencv精简静态库 | Heroinlin's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Heroinlin's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Navigationsleiste an/ausschalten">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>Startseite</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br/>Schlagwörter</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br/>Kategorien</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>Archiv</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br/>Zeitplan</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/18/opencv/build_opencv_simple_lib/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heroinlin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Heroinlin's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">编译opencv精简静态库
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2018-04-18 13:48:11 / Geändert am: 18:37:02" itemprop="dateCreated datePublished" datetime="2018-04-18T13:48:11+08:00">2018-04-18</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Kommentare: </span>
+                <a href="/2018/04/18/opencv/build_opencv_simple_lib/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2018/04/18/opencv/build_opencv_simple_lib/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="编译opencv精简静态库"><a href="#编译opencv精简静态库" class="headerlink" title="编译opencv精简静态库"></a>编译opencv精简静态库</h1><p>本示例在centos6.5上编译opencv2.4.9</p>
+<h2 id="安装依赖包"><a href="#安装依赖包" class="headerlink" title="安装依赖包"></a>安装依赖包</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install cmake gcc gcc-c++ make</span><br></pre></td></tr></table></figure>
+<h2 id="cmake命令直接编译"><a href="#cmake命令直接编译" class="headerlink" title="cmake命令直接编译"></a>cmake命令直接编译</h2><p>opencv_highgui库在读写jpeg,png,tiff,jpeg2000图像格式时用到了第三方编解码库，可以根据图像的格式，精简选择需要开启的编译选项</p>
+<p>在opencv根目录下创建release文件夹，打开release文件夹，之后编译产生的中文文件和最后编译结果都将存放在该目录下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">cmake -DBUILD_DOCS=off \</span><br><span class="line">	-DBUILD_SHARED_LIBS=off \</span><br><span class="line">    -DBUILD_FAT_JAVA_LIB=off \</span><br><span class="line">    -DBUILD_TESTS=off \</span><br><span class="line">    -DBUILD_TIFF=on \         </span><br><span class="line">    -DBUILD_JASPER=on \        </span><br><span class="line">    -DBUILD_JPEG=on \      </span><br><span class="line">    -DBUILD_PNG=on \          </span><br><span class="line">    -DBUILD_ZLIB=on \</span><br><span class="line">    -DBUILD_OPENEXR=off \</span><br><span class="line">    -DBUILD_opencv_apps=off \</span><br><span class="line">    -DBUILD_opencv_calib3d=off \</span><br><span class="line">    -DBUILD_opencv_contrib=off \</span><br><span class="line">    -DBUILD_opencv_features2d=off \</span><br><span class="line">    -DBUILD_opencv_flann=off \</span><br><span class="line">    -DBUILD_opencv_gpu=off \</span><br><span class="line">    -DBUILD_opencv_java=off \</span><br><span class="line">    -DBUILD_opencv_legacy=off \</span><br><span class="line">    -DBUILD_opencv_ml=off \</span><br><span class="line">    -DBUILD_opencv_nonfree=off \</span><br><span class="line">    -DBUILD_opencv_objdetect=off \</span><br><span class="line">    -DBUILD_opencv_ocl=off \</span><br><span class="line">    -DBUILD_opencv_photo=off \</span><br><span class="line">    -DBUILD_opencv_python=off \</span><br><span class="line">    -DBUILD_opencv_stitching=off \</span><br><span class="line">    -DBUILD_opencv_superres=off \</span><br><span class="line">    -DBUILD_opencv_ts=off \</span><br><span class="line">    -DBUILD_opencv_video=off \</span><br><span class="line">    -DBUILD_opencv_videostab=off \</span><br><span class="line">    -DBUILD_opencv_world=off \</span><br><span class="line">    -DBUILD_opencv_lengcy=off \</span><br><span class="line">    -DBUILD_opencv_lengcy=off \</span><br><span class="line">    -DWITH_1394=off \</span><br><span class="line">    -DWITH_EIGEN=off \</span><br><span class="line">    -DWITH_FFMPEG=off \</span><br><span class="line">    -DWITH_GIGEAPI=off \</span><br><span class="line">    -DWITH_GSTREAMER=off \</span><br><span class="line">    -DWITH_GTK=off \</span><br><span class="line">    -DWITH_PVAPI=off \</span><br><span class="line">    -DWITH_V4L=off \</span><br><span class="line">    -DWITH_LIBV4L=off \</span><br><span class="line">    -DWITH_CUDA=off \</span><br><span class="line">    -DWITH_CUFFT=off \</span><br><span class="line">    -DWITH_OPENCL=off \</span><br><span class="line">    -DWITH_OPENCLAMDBLAS=off \</span><br><span class="line">    -DWITH_OPENCLAMDFFT=off ..</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>-DBUILD_SHARED_LIBS=off \    # 指定编译静态库，默认编译动态库(.so,.dll)</li>
+<li>-DBUILD_JASPER=on \          # 编译3rdparty/libjasper项目用于jpeg2000图像编解码</li>
+<li>-DBUILD_JPEG=on \            # 编译3rdparty/libjpeg项目用于jpeg图像编解码</li>
+<li>-DBUILD_PNG=on \             # 编译3rdparty/libpng项目用于png图像编解码</li>
+<li>-DBUILD_TIFF=on \            # 编译3rdparty/libtiff项目用于tiff图像编解码</li>
+<li>-DBUILD_ZLIB=on \            # 编译3rdparty/zlib项目</li>
+</ul>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<p>这样编译出来的opencv只含有opencv_core,opencv_imgproc,opencv_highgui</p>
+<blockquote>
+<p>OPENMP支持需要gcc版本大于4.6以上，否则需要将WITH_OPENMP选项关闭</p>
+</blockquote>
+<h2 id="使用cmake-gui进行编译"><a href="#使用cmake-gui进行编译" class="headerlink" title="使用cmake-gui进行编译"></a>使用cmake-gui进行编译</h2><p>设置源代码路径和生成文件存放文件夹路径，按Configure</p>
+<center><img src="./pic/cmake_1.jpg" width="400"></center>
+
+<p>勾选对应的选项，多余的关闭即可</p>
+<p>设置好后Configure ,Generate</p>
+<p>然后到生成文件存放文件夹下，make，make install即可</p>
+<h2 id="提取生成的静态库和头文件"><a href="#提取生成的静态库和头文件" class="headerlink" title="提取生成的静态库和头文件"></a>提取生成的静态库和头文件</h2><ul>
+<li><p>静态库路径</p>
+<p>生成的静态库可以在/usr/local/lib和/usr/local/share/OpenCV/3rdparty/lib下找到(release文件夹下的lib以及3rdparty/lib中存在对应得库文件)</p>
+<p>头文件可以在/usr/local/include下找到（opencv根目录的include和modules下也有对应的头文件）</p>
+</li>
+<li><p>头文件修改</p>
+<p>修改<code>opencv2/opencv.hpp</code>, opencv.hpp中仍包含其他模块的头文件，将多余的头文件代码删除</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"opencv2/core/core_c.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"opencv2/core/core.hpp"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"opencv2/flann/miniflann.hpp"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"opencv2/imgproc/imgproc_c.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"opencv2/imgproc/imgproc.hpp"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"opencv2/photo/photo.hpp"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"opencv2/video/video.hpp"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"opencv2/features2d/features2d.hpp"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"opencv2/objdetect/objdetect.hpp"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"opencv2/calib3d/calib3d.hpp"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"opencv2/ml/ml.hpp"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"opencv2/highgui/highgui_c.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"opencv2/highgui/highgui.hpp"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"opencv2/contrib/contrib.hpp"</span></span></span><br></pre></td></tr></table></figure>
+<p>改为</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"opencv2/core/core_c.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"opencv2/core/core.hpp"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"opencv2/imgproc/imgproc_c.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"opencv2/imgproc/imgproc.hpp"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"opencv2/highgui/highgui_c.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"opencv2/highgui/highgui.hpp"</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>移动到自定义文件下</p>
+<p>新建了一个3rdparty文件夹存放自定义编译的一些库文件</p>
+<ul>
+<li>将/usr/local/lib和/usr/local/share/OpenCV/3rdparty/lib下的 *.a 静态库放到\<path-to-3rdparty>/3rdparty/opencv/lib下</path-to-3rdparty></li>
+<li>将/usr/local/include下的 opencv和opencv2文件夹放到\<path-to-3rdparty>/3rdparty/opencv/include下</path-to-3rdparty></li>
+</ul>
+</li>
+</ul>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>本测试是在centos6.5上进行的，图像读取只对jpeg和png进行了编译，centos6.5的默认gcc版本为4.4.7，所以取消了对OPENMP的编译</p>
+<ul>
+<li><p>DisplayImage.cpp</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ( argc != <span class="number">2</span> )&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"usage: DisplayImage.out &lt;Image_Path&gt;\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    Mat image;</span><br><span class="line">    image = imread( argv[<span class="number">1</span>], <span class="number">1</span> );</span><br><span class="line">    <span class="keyword">if</span> ( !image.data )&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"No image data \n"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Load image successful!\n"</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"image size is: &lt; %d x %d&gt;\n"</span>,image.cols,image.rows);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> row = <span class="number">0</span>; row &lt; <span class="number">1</span>; row++) &#123;</span><br><span class="line">         uchar* data = image.ptr&lt;uchar&gt;(row);</span><br><span class="line">         <span class="keyword">for</span> (<span class="keyword">int</span> col = <span class="number">0</span>; col &lt; <span class="number">5</span>; col++) &#123;</span><br><span class="line">              <span class="built_in">printf</span>(<span class="string">"%d \t"</span>, data[col]);</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>CMakeLists.txt</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">2.8</span>)</span><br><span class="line"><span class="keyword">project</span>( DisplayImage )</span><br><span class="line"><span class="keyword">set</span>(OPENCV_PATH /home/heroin/<span class="number">3</span>rdparty/opencv)</span><br><span class="line"><span class="keyword">add_executable</span>( DisplayImage DisplayImage.cpp )</span><br><span class="line"><span class="keyword">include_directories</span>(<span class="variable">$&#123;OPENCV_PATH&#125;</span>/<span class="keyword">include</span>)</span><br><span class="line"><span class="comment"># set(OPENCV_LIBS $&#123;OPENCV_PATH&#125;/lib/libopencv_imgproc.a $&#123;OPENCV_PATH&#125;/lib/libopencv_highgui.a $&#123;OPENCV_PATH&#125;/lib/libopencv_core.a $&#123;OPENCV_PATH&#125;/lib/liblibjpeg.a  $&#123;OPENCV_PATH&#125;/lib/liblibpng.a $&#123;OPENCV_PATH&#125;/lib/libzlib.a)</span></span><br><span class="line"><span class="comment">#target_link_libraries( DisplayImage $&#123;OPENCV_LIBS&#125; dl m pthread rt)</span></span><br><span class="line"><span class="keyword">target_link_libraries</span>( DisplayImage <span class="variable">$&#123;OPENCV_PATH&#125;</span>/lib/libopencv_imgproc.a  <span class="variable">$&#123;OPENCV_PATH&#125;</span>/lib/libopencv_highgui.a <span class="variable">$&#123;OPENCV_PATH&#125;</span>/lib/libopencv_core.a  <span class="variable">$&#123;OPENCV_PATH&#125;</span>/lib/liblibjpeg.a  <span class="variable">$&#123;OPENCV_PATH&#125;</span>/lib/liblibpng.a <span class="variable">$&#123;OPENCV_PATH&#125;</span>/lib/libzlib.a dl m pthread rt)</span><br></pre></td></tr></table></figure>
+<p>cmake ,make即可</p>
+</li>
+</ul>
+<p>###cmake注意事项</p>
+<ul>
+<li><p>链接库顺序</p>
+<p>​    cmake中要注意链接的顺序，libopencv_imgproc.a，libopencv_core.a对libzlib.a存在依赖，应该把libzlib.a放在后面，libopencv_highgui.a读写图片还需要liblibjpeg.a等图像解码库的支持，liblibjpeg.a也要放在后面。</p>
+<blockquote>
+<p>在项目开发过层中尽量让lib是垂直关系，避免循环依赖；越是底层的库，越是往后面写！例如:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; g++ ...  obj($?) -l(上层逻辑lib) -l(中间封装lib) -l(基础lib) -l(系统lib)  -o $@</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+<li><p>源文件和链接库顺序</p>
+<p>*.cpp文件应该放在链接库前面</p>
+<p> 所以 以下方式是编译不通过的</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="keyword">link_libraries</span>(<span class="variable">$&#123;OPENCV_LIBS&#125;</span> dl m pthread rt)</span><br><span class="line"><span class="keyword">target_link_libraries</span>( DisplayImage)</span><br></pre></td></tr></table></figure>
+<p>应该改为如下方式</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">target_link_libraries</span>( DisplayImage <span class="variable">$&#123;OPENCV_LIBS&#125;</span> dl m pthread rt)</span><br></pre></td></tr></table></figure>
+<p>或者直接不设OPENCV_LIBS变量，直接将链接写在后方</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/OpenCV，静态库，cmake/" rel="tag"># OpenCV，静态库，cmake</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/13/caffe/windows10_caffe_install/" rel="next" title="windows10编译caffe的python接口">
+                <i class="fa fa-chevron-left"></i> windows10编译caffe的python接口
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/10/Python/Python_JSON_and_Pickle/" rel="prev" title="python之JSON与Pickle">
+                python之JSON与Pickle <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Heroinlin</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">Kategorien</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">59</span>
+                    <span class="site-state-item-name">schlagwörter</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/heroinlin" title="GitHub &rarr; https://github.com/heroinlin" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/heroinlj@gmail.com" title="E-Mail &rarr; heroinlj@gmail.com"><i class="fa fa-fw fa-gmail"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/Heroin" title="Twitter &rarr; https://twitter.com/Heroin" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#编译opencv精简静态库"><span class="nav-number">1.</span> <span class="nav-text">编译opencv精简静态库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装依赖包"><span class="nav-number">1.1.</span> <span class="nav-text">安装依赖包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cmake命令直接编译"><span class="nav-number">1.2.</span> <span class="nav-text">cmake命令直接编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用cmake-gui进行编译"><span class="nav-number">1.3.</span> <span class="nav-text">使用cmake-gui进行编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提取生成的静态库和头文件"><span class="nav-number">1.4.</span> <span class="nav-text">提取生成的静态库和头文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-number">1.5.</span> <span class="nav-text">测试</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Heroinlin</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.6.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Design – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+    <!-- LOCAL: You can save these files to your site and update links -->
+
+  
+  <script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitmint.browser.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.css"/>
+<!-- END LOCAL -->
+
+<script>
+  function renderGitment() {
+    var gitment = new Gitmint({
+      id: window.location.pathname,
+      owner: 'heroinlin',
+      repo: 'heroinlin.github.io',
+      
+        lang: '' || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+      
+      oauth: {
+      
+      
+        client_secret: '264679785d383afbc726145178abea84ff750743',
+      
+        client_id: '33b4a51ea87942e922ca'
+      }
+    });
+    gitment.render('gitment-container');
+  }
+
+  
+    renderGitment();
+  
+</script>
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
