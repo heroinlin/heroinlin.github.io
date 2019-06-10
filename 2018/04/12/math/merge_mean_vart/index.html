@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="Heroinlin&#39;s Blog">
 <meta property="og:description" content="#均值方差合并 均值$$\mathrm{mean}=\sum_i^n{\frac{x_i}{n}}=\frac{x_1+x_2+…+x_n}{n}=\frac{\mathrm{sum_1}}{n}$$ 其中$\mathrm{sum_1}=(x_1+x_2+…+x_n)$ 方差$$\begin{alignat}{2} \mathrm{Var} &amp;amp; = \frac{\sum_i^n{(x_i-">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-27T08:22:52.000Z">
+<meta property="og:updated_time" content="2019-06-10T09:03:30.432Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="均值方差合并">
 <meta name="twitter:description" content="#均值方差合并 均值$$\mathrm{mean}=\sum_i^n{\frac{x_i}{n}}=\frac{x_1+x_2+…+x_n}{n}=\frac{\mathrm{sum_1}}{n}$$ 其中$\mathrm{sum_1}=(x_1+x_2+…+x_n)$ 方差$$\begin{alignat}{2} \mathrm{Var} &amp;amp; = \frac{\sum_i^n{(x_i-">
@@ -384,7 +384,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-02-27 16:22:52" itemprop="dateModified" datetime="2019-02-27T16:22:52+08:00">2019-02-27</time>
+                <time title="修改时间：2019-06-10 17:03:30" itemprop="dateModified" datetime="2019-06-10T17:03:30+08:00">2019-06-10</time>
               
             
           </span>
@@ -511,8 +511,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/04/12/deep_learning/object_detection/SSD/" rel="prev" title="目标检测网络之 SSD">
-                目标检测网络之 SSD <i class="fa fa-chevron-right"></i>
+              <a href="/2018/04/12/deep_learning/object_detection/R-CNN/" rel="prev" title="目标检测网络之 R-CNN系列">
+                目标检测网络之 R-CNN系列 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -1045,6 +1045,53 @@
   
 
   
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
 
   
 
