@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0"/>
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2"/>
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/leaf.jpg?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/leaf.ico?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/leaf1.ico?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/leaf.jpg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Single Shot MultiBox Detector论文地址: https://arxiv.org/pdf/1512.02325.pdf 前言目标检测近年来已经取得了很重要的进展，主流的算法主要分为两个类型（参考RefineDet）:  Two stages 以Faster RCNN为代表，即RPN网络先生成proposals目标定位，再对proposals进行classification+">
+<meta name="keywords" content="SSD,object detection">
+<meta property="og:type" content="article">
+<meta property="og:title" content="目标检测网络之 SSD">
+<meta property="og:url" content="http://yoursite.com/2018/04/12/deep_learning/object_detection/SSD/index.html">
+<meta property="og:site_name" content="Heroinlin&#39;s Blog">
+<meta property="og:description" content="Single Shot MultiBox Detector论文地址: https://arxiv.org/pdf/1512.02325.pdf 前言目标检测近年来已经取得了很重要的进展，主流的算法主要分为两个类型（参考RefineDet）:  Two stages 以Faster RCNN为代表，即RPN网络先生成proposals目标定位，再对proposals进行classification+">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/04/12/deep_learning/object_detection/SSD/images/ssd_yolo_对比.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/04/12/deep_learning/object_detection/SSD/images/single_feature_map_and_pyramidal_feature_hierarchy.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/04/12/deep_learning/object_detection/SSD/images/prior%20box.jpg">
+<meta property="og:image" content="http://yoursite.com/images/图5.jpg">
+<meta property="og:image" content="http://yoursite.com/images/原理图.jpg">
+<meta property="og:image" content="http://yoursite.com/images/caffe%20blob%20shape变化.jpg">
+<meta property="og:image" content="http://yoursite.com/images/SSD300.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/v2-79dccc5fbc3d31a24e4d0e42511cb653_b.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/v2-42c6a269bbfbae035b0f74c0602b14ba_b.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/v2-46a8eb39bab8396443cc3a8bcedd777d_b.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/v2-e7b5c31560d34fdd309b05c1e23a9dab_b.jpg">
+<meta property="og:image" content="http://yoursite.com/images/A交B.jpg">
+<meta property="og:image" content="http://yoursite.com/images/A并B.jpg">
+<meta property="og:image" content="https://pic4.zhimg.com/v2-8f2601b4c788246bd6138cf99c15f1bf_b.jpg">
+<meta property="og:image" content="http://yoursite.com/images/Random%20crop.jpg">
+<meta property="og:updated_time" content="2018-10-11T02:42:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="目标检测网络之 SSD">
+<meta name="twitter:description" content="Single Shot MultiBox Detector论文地址: https://arxiv.org/pdf/1512.02325.pdf 前言目标检测近年来已经取得了很重要的进展，主流的算法主要分为两个类型（参考RefineDet）:  Two stages 以Faster RCNN为代表，即RPN网络先生成proposals目标定位，再对proposals进行classification+">
+<meta name="twitter:image" content="http://yoursite.com/2018/04/12/deep_learning/object_detection/SSD/images/ssd_yolo_对比.jpg">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2018/04/12/deep_learning/object_detection/SSD/"/>
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>目标检测网络之 SSD | Heroinlin's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Heroinlin's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br/>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br/>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/deep_learning/object_detection/SSD/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heroinlin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/leaf.jpg"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Heroinlin's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">目标检测网络之 SSD
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-04-12 10:48:11" itemprop="dateCreated datePublished" datetime="2018-04-12T10:48:11+08:00">2018-04-12</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-10-11 10:42:26" itemprop="dateModified" datetime="2018-10-11T10:42:26+08:00">2018-10-11</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/object-detection/" itemprop="url" rel="index"><span itemprop="name">object detection</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2018/04/12/deep_learning/object_detection/SSD/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2018/04/12/deep_learning/object_detection/SSD/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Single-Shot-MultiBox-Detector"><a href="#Single-Shot-MultiBox-Detector" class="headerlink" title="Single Shot MultiBox Detector"></a>Single Shot MultiBox Detector</h1><p>论文地址: <a href="https://arxiv.org/pdf/1512.02325.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1512.02325.pdf</a></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>目标检测近年来已经取得了很重要的进展，主流的算法主要分为两个类型（参考<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/pdf/1711.06897.pdf" target="_blank" rel="noopener">RefineDet</a>）:</p>
+<ul>
+<li><p><strong>Two stages</strong></p>
+<p>以Faster RCNN为代表，即RPN网络先生成proposals目标定位，再对proposals进行classification+bounding box regression完成目标分类, two-stage方法的优势是准确度高</p>
+</li>
+<li><p><strong>Single shot</strong></p>
+<p>以YOLO/SSD为代表，均匀地在图片的不同位置进行密集抽样，抽样时可以采用不同尺度和长宽比，然后利用CNN提取特征后直接进行分类与回归, 一次性完成classification+bounding box regression, 所以其优势是速度快，但是均匀的密集采样的一个重要缺点是训练比较困难，这主要是因为正样本与负样本（背景）极其不均衡（参见<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1708.02002" target="_blank" rel="noopener">Focal Loss</a>），导致模型准确度稍低。</p>
+</li>
+</ul>
+<h2 id="1-SSD300网络结构"><a href="#1-SSD300网络结构" class="headerlink" title="1 SSD300网络结构"></a>1 SSD300网络结构</h2><center><img src="./images/ssd_yolo_对比.jpg"></center>
+
+<center><em>图 2 SSD300/YOLO网络结构对比</em> </center>
+
+<p>同为Single shot方式的SSD/YOLO区别：</p>
+<ul>
+<li>YOLO在卷积层后接全连接层，即检测时只利用了最高层Feature maps（包括Faster RCNN也是如此）</li>
+<li>SSD采用金字塔结构，即利用了conv4-3/conv-7/conv6-2/conv7-2/conv8_2/conv9_2这些大小不同的feature maps，在多个feature maps上同时进行softmax分类和位置回归</li>
+<li>SSD还加入了Prior box</li>
+</ul>
+<center><img src="./images/single_feature_map_and_pyramidal_feature_hierarchy.jpg"></center>
+
+<center> <em>图 3 单层 feature map预测和特征金字塔预测对比</em> </center>
+
+<h2 id="2-Prior-Box"><a href="#2-Prior-Box" class="headerlink" title="2 Prior Box"></a>2 Prior Box</h2><p>在SSD300中引入了Prior Box，实际上与Faster RCNN Anchor非常类似，就是一些目标的预选框，后续通过classification+bounding box regression获得真实目标的位置。</p>
+<p>SSD按照如下规则生成prior box：</p>
+<ul>
+<li>以feature map上每个点的中点为中心，生成一些列同心的prior box</li>
+<li>正方形prior box最小边长为和最大边长为：</li>
+</ul>
+<p>$$<br>\color {MidnightBlue}\mathit {\text{min_size}}<br>$$</p>
+<p>$$<br>\color {MidnightBlue}\mathit {\sqrt{\text{min_size}*\text{max_size}}}<br>$$</p>
+<ul>
+<li>每在prototxt设置一个aspect ratio，会生成2个长方形，长宽为：</li>
+</ul>
+<p>$$<br>\color {MidnightBlue}\mathit {\sqrt{\text{aspect_ratio}}*\text{min_size}}<br>$$</p>
+<p>$$<br>\color {MidnightBlue}\mathit {1/{\sqrt{\text{aspect_ratio}}*\text{min_size}}}<br>$$</p>
+<center><img src="./images/prior box.jpg"></center>
+
+<p>图4 prior box</p>
+<ul>
+<li>而每个feature map对应prior box的min_size和max_size由以下公式决定：</li>
+</ul>
+<center>$$s_k = s_{min} + \frac{s_{max}-s_{min}}{m-1}(k-1), \ \ k\in[1, m]$$ </center>
+
+<p>公式中的 $m$是指进行预测时使用feature map的数量，如SSD300使用conv4-3等6个feature maps进行预测，所以 $m=6$。同时原文设定$s_{min}=0.2$ ，$s_{max}=0.9$</p>
+<p>那么：</p>
+<ul>
+<li>对于conv4-3： $k=1$ , $min_size=s_1 <em>300$, $max_size=s_2</em>300$</li>
+<li>对于conv-7：$k=2$, $min_size=s_2 <em>300$, $max_size=s_3</em>300$</li>
+<li>….</li>
+</ul>
+<p>显然可以用上述公式推导出每个feature maps使用的Prior Box size。但是在SSD300中prior box设置并不能完全和上述公式对应：</p>
+<center><table> <tr> <th width="10%,bgcolor=#eeeeee"></th> <th width="10%,bgcolor=#eeeeee">min_size</th> &lt;th width=10%,bgcolor=#eeeeee”&gt;max_size </tr> <tr> <td bgcolor="#eeeeee"> conv4_3</td> <td> 30  </td> <td> 60</td> </tr>  <tr> <td bgcolor="#eeeeee"> fc7</td> <td> 60  </td> <td> 111</td> </tr><tr> <td bgcolor="#eeeeee"> conv6_2</td> <td> 111</td> <td> 162</td> </tr><tr> <td bgcolor="#eeeeee"> conv7_2</td> <td> 162</td> <td> 213</td> </tr><tr> <td bgcolor="#eeeeee"> conv8_2</td> <td> 213</td> <td> 264</td> </tr><tr> <td bgcolor="#eeeeee"> conv9_2</td> <td> 264  </td> <td> 315</td> </tr></table> </center>
+
+<p>不过依然可以看出：<strong>SSD使用感受野小的feature map检测小目标，使用感受野大的feature map检测更大目标</strong>。</p>
+<p>更具体一点，来看SSD300在conv4_3层的Prior Box设置conv4_3生成prior box的conv4_3_norm_priorbox层prototxt定义如下，可以清晰的看到 $min_size$ 和 $max_size$以及 $aspect_ratio$等值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">layer &#123;</span><br><span class="line">  name: &quot;conv4_3_norm_mbox_priorbox&quot;</span><br><span class="line">  type: &quot;PriorBox&quot;</span><br><span class="line">  bottom: &quot;conv4_3_norm&quot;</span><br><span class="line">  bottom: &quot;data&quot;</span><br><span class="line">  top: &quot;conv4_3_norm_mbox_priorbox&quot;</span><br><span class="line">  prior_box_param &#123;</span><br><span class="line">    min_size: 30.0</span><br><span class="line">    max_size: 60.0</span><br><span class="line">    aspect_ratio: 2</span><br><span class="line">    flip: true</span><br><span class="line">    clip: false</span><br><span class="line">    variance: 0.1</span><br><span class="line">    variance: 0.1</span><br><span class="line">    variance: 0.2</span><br><span class="line">    variance: 0.2</span><br><span class="line">    step: 8</span><br><span class="line">    offset: 0.5</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>知道了priorbox如何产生，接下来分析prior box如何使用。这里还是以conv4_3分析。</p>
+<center><img src="/images/图5.jpg"></center>
+
+<p>图5</p>
+<p>从图5可以看到，在conv4_3网络分为了3条线路：</p>
+<ol>
+<li>经过一次batch norm+一次卷积后，生成了<strong>[1, num_class*num_priorbox, layer_height, layer_width]</strong>大小的feature用于softmax分类目标和非目标（其中num_class是目标类别，SSD300中num_class = 21，即20个类别+1个背景)</li>
+<li>经过一次batch norm+一次卷积后，生成了<strong>[1, 4*num_priorbox, layer_height, layer_width]</strong>大小的feature用于bounding box regression（即每个点一组[dxmin，dymin，dxmax，dymax]，参考<a href="https://zhuanlan.zhihu.com/p/31426458" target="_blank" rel="noopener">Faster R-CNN</a> 2.5节）</li>
+<li>生成了<strong>[1, 2, 4*num_priorbox<em>layer_height</em>layer_width]</strong>大小的prior box blob，其中2个channel分别存储prior box的4个点坐标(x1, y1, x2, y2)和对应的4个参数variance</li>
+</ol>
+<p>后续通过softmax分类判定Prior box是否包含目标，然后再通过bounding box regression即可可获取目标的精确位置，熟悉Faster RCNN的读者应该对上述过程应该并不陌生。其实pribox box的与Faster RCNN中的anchor非常类似，都是目标的预设框，没有本质的差异。区别是每个位置的prior box一般是4~6个，少于Faster RCNN默认的9个anchor；同时prior box是设置在不同尺度的feature maps上的，而且大小不同。</p>
+<p>还有一个细节就是上面prototxt中的4个variance，这实际上是一种bounding regression中的权重。在图4线路(2)中，网络输出[dxmin，dymin，dxmax，dymax]，即对应下面代码中bbox；然后利用如下方法进行针对prior box的位置回归：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">decode_bbox-&gt;set_xmin(</span><br><span class="line">     prior_bbox.xmin() + prior_variance[<span class="number">0</span>] * bbox.xmin() * prior_width);</span><br><span class="line"> decode_bbox-&gt;set_ymin(</span><br><span class="line">     prior_bbox.ymin() + prior_variance[<span class="number">1</span>] * bbox.ymin() * prior_height);</span><br><span class="line"> decode_bbox-&gt;set_xmax(</span><br><span class="line">     prior_bbox.xmax() + prior_variance[<span class="number">2</span>] * bbox.xmax() * prior_width);</span><br><span class="line"> decode_bbox-&gt;set_ymax(</span><br><span class="line">     prior_bbox.ymax() + prior_variance[<span class="number">3</span>] * bbox.ymax() * prior_height);</span><br></pre></td></tr></table></figure>
+<p>上述代码可以在SSD box_utils.cpp的void DecodeBBox()函数见到。</p>
+<h2 id="3-SSD的数据流"><a href="#3-SSD的数据流" class="headerlink" title="3 SSD的数据流"></a>3 SSD的数据流</h2><p>对于新学习SSD的人，肯定有一个很大的困惑，就是这么多feature maps和Prior Box，如何组合在一起进行forwards/backwards。本节专门介绍SSD的数据流动方式，也许有点难。但是只有了解SSD的数据流动方式才能真的理解。</p>
+<center><img src="/images/原理图.jpg"></center>
+
+<center><em>图6</em></center>
+
+<p>上一节以conv4_3 feature map分析了如何检测到目标的真实位置，但是SSD 300是使用包括conv4_3在内的共计6个feature maps一同检测出最终目标的。在网络运行的时候显然不能像图6一样：一个feature map单独计算一次multiclass softmax socre+box regression（虽然原理如此，但是不能如此实现）。</p>
+<p>那么多个feature maps如何协同工作？这时候就要用到Permute，Flatten和Concat这3种层了。其中conv4_3_norm_conf_perm的prototxt定义如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">layer &#123;</span><br><span class="line">  name: &quot;conv4_3_norm_mbox_conf_perm&quot;</span><br><span class="line">  type: &quot;Permute&quot;</span><br><span class="line">  bottom: &quot;conv4_3_norm_mbox_conf&quot;</span><br><span class="line">  top: &quot;conv4_3_norm_mbox_conf_perm&quot;</span><br><span class="line">  permute_param &#123;</span><br><span class="line">    order: 0</span><br><span class="line">    order: 2</span><br><span class="line">    order: 3</span><br><span class="line">    order: 1</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Permute是SSD中自带的层，上面conv4_3_norm_mbox_conf_perm的的定义。Permute相当于交换caffe blob中的数据维度。在正常情况下caffe blob的顺序为：</p>
+<p><strong>bottom blob = [batch_num, channel, height, width]</strong></p>
+<p>经过conv4_3_norm_mbox_conf_perm后的caffe blob为：</p>
+<p><strong>top blob = [batch_num, height, width, channel]</strong></p>
+<p>而Flattlen和Concat层都是caffe自带层，请参照<a href="https://link.zhihu.com/?target=http%3A//caffe.berkeleyvision.org/tutorial/layers.html" target="_blank" rel="noopener">caffe official documentation</a>理解。</p>
+<center><img src="/images/caffe blob shape变化.jpg "></center>
+
+<center><em>图7 SSD中部分层caffe blob shape变化</em></center>
+
+<p>那么接下来以conv4_3和fc7为例分析SSD是如何将不同size的feature map组合在一起进行prediction。图7展示了conv4_3和fc7合并在一起的过程中caffe blob shape变化（其他层类似，考虑到图片大小没有画出来，请脑补）。</p>
+<ul>
+<li>对于conv4_3 feature map，conv4_3_norm_priorbox（priorbox层）设置了每个点共有4个prior box。由于SSD 300共有21个分类，所以conv4_3_norm_mbox_conf的channel值为num_priorbox <em> num_class = 4 </em> 21 = 84；而每个prior box都要回归出4个位置变换量，所以conv4_3_norm_mbox_loc的caffe blob channel值为4 * 4 = 16。</li>
+<li>fc7每个点有6个prior box，其他feature map同理。</li>
+<li>经过一系列图7展示的caffe blob shape变化后，最后拼接成mbox_conf和mbox_loc。而mbox_conf后接reshape，再进行softmax（为何在softmax前进行reshape，Faster RCNN有提及）。</li>
+<li>最后这些值输出detection_out_layer，获得检测结果</li>
+</ul>
+<p>可以看到，SSD一次判断priorbox到底是背景 or 是20种目标类别之一，相当于将Faster R-CNN的RPN与后续proposal再分类进行了整合。</p>
+<center><img src="/images/SSD300.jpg"></center>
+
+<center><em>图8 SSD300</em></center>
+
+<h2 id="4-SSD网络结构优劣分析"><a href="#4-SSD网络结构优劣分析" class="headerlink" title="4 SSD网络结构优劣分析"></a>4 SSD网络结构优劣分析</h2><p>SSD算法的优点应该很明显：运行速度可以和YOLO媲美，检测精度可以和Faster RCNN媲美。除此之外，还有一些鸡毛蒜皮的优点，不解释了。这里谈谈缺点：</p>
+<ol>
+<li>需要人工设置prior box的min_size，max_size和aspect_ratio值。网络中prior box的基础大小和形状不能直接通过学习获得，而是需要手工设置。而网络中每一层feature使用的prior box大小和形状恰好都不一样，导致调试过程非常依赖经验。</li>
+<li>虽然采用了pyramdial feature hierarchy的思路，但是对小目标的recall依然一般，并没有达到碾压Faster RCNN的级别。作者认为，这是由于SSD使用conv4_3低级feature去检测小目标，而低级特征卷积层数少，存在特征提取不充分的问题。</li>
+</ol>
+<h2 id="5-SSD训练过程"><a href="#5-SSD训练过程" class="headerlink" title="5 SSD训练过程"></a>5 SSD训练过程</h2><p><img src="https://pic2.zhimg.com/v2-79dccc5fbc3d31a24e4d0e42511cb653_b.jpg" alt="img"></p>
+<p>对于SSD，虽然paper中指出采用了所谓的“multibox loss”，但是依然可以清晰看到SSD loss分为了confidence loss和location loss(bouding box regression loss)两部分，其中N是match到GT（Ground Truth）的prior box数量；而α参数用于调整confidence loss和location loss之间的比例，默认α=1。SSD中的confidence loss是典型的softmax loss：</p>
+<p><img src="https://pic1.zhimg.com/v2-42c6a269bbfbae035b0f74c0602b14ba_b.jpg" alt="img"></p>
+<p>其中</p>
+<p><img src="https://pic2.zhimg.com/v2-46a8eb39bab8396443cc3a8bcedd777d_b.jpg" alt="img"></p>
+<p>代表第i个prior box匹配到了第j个class为p类别的GT box；而location loss是典型的smooth L1 loss：</p>
+<p><img src="https://pic1.zhimg.com/v2-e7b5c31560d34fdd309b05c1e23a9dab_b.jpg" alt="img"></p>
+<p><strong>Matching strategy：</strong></p>
+<p>在训练时，groundtruth boxes 与 default boxes（就是prior boxes） 按照如下方式进行配对：</p>
+<ul>
+<li>首先，寻找与每一个ground truth box有最大的jaccard overlap的default box，这样就能保证每一个groundtruth box与唯一的一个default box对应起来（所谓的jaccard overlap就是IoU，如图9）。</li>
+<li>SSD之后又将剩余还没有配对的default box与任意一个groundtruth box尝试配对，只要两者之间的jaccard overlap大于阈值，就认为match（SSD 300 阈值为0.5）。</li>
+<li>显然配对到GT的default box就是positive，没有配对到GT的default box就是negative。</li>
+</ul>
+<center><img src="/images/A交B.jpg"></center>
+
+<center><img src="/images/A并B.jpg"></center>
+
+<p><img src="https://pic4.zhimg.com/v2-8f2601b4c788246bd6138cf99c15f1bf_b.jpg" alt="img"></p>
+<center><em>图9 jaccard overlap</em></center>
+
+<p><strong>Hard negative mining：</strong></p>
+<p>值得注意的是，一般情况下negative default boxes数量&gt;&gt;positive default boxes数量，直接训练会导致网络过于重视负样本，从而loss不稳定。所以需要采取：</p>
+<ul>
+<li>所以SSD在训练时会依据confidience score排序default box，挑选其中confidence高的box进行训练，控制 $positive:negative=1:3$</li>
+</ul>
+<p><strong>Data augmentation：</strong></p>
+<p>数据增广。即对每一张image进行如下之一变换获取一个patch进行训练：</p>
+<ul>
+<li>直接使用原始的图像（即不进行变换）</li>
+<li>采样一个patch，保证与GT之间最小的IoU为：0.1，0.3，0.5，0.7 或 0.9</li>
+<li>完全随机的采样一个patch</li>
+</ul>
+<center><img src="/images/Random crop.jpg"></center>
+
+<center><em>图10 Random crop</em></center>
+
+<p>同时在原文中还提到：</p>
+<ul>
+<li>采样的patch占原始图像大小比例在 $[0.1,1]$ 之间</li>
+<li>采样的patch的长宽比在 $[0.5,2]$之间</li>
+<li>当 Ground truth box中心恰好在采样的patch中时，保留整个GT box</li>
+<li>最后每个patch被resize到固定大小，并且以0.5的概率随机的水平翻转</li>
+</ul>
+<p>最终以这些处理好的patches进行训练。</p>
+<p>其实Matching strategy，Hard negative mining，Data augmentation，都是为了加快网络收敛而设计的。尤其是Data augmentation，翻来覆去的randomly crop，保证每一个prior box都获得充分训练而已。后续有Focal loss解决这个问题。</p>
+<p>SSD github : <a href="https://link.zhihu.com/?target=https%3A//github.com/weiliu89/caffe/tree/ssd" target="_blank" rel="noopener">https://github.com/weiliu89/caffe/tree/ssd</a></p>
+<p>SSD paper : <a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1512.02325" target="_blank" rel="noopener">https://arxiv.org/abs/1512.02325</a></p>
+<p>SSD eccv2016 slide pdf : <a href="https://link.zhihu.com/?target=http%3A//www.cs.unc.edu/%7Ewliu/papers/ssd_eccv2016_slide.pdf" target="_blank" rel="noopener">http://www.cs.unc.edu/~wliu/papers/ssd_eccv2016_slide.pdf</a></p>
+<p>Focal Loss for Dense Object Detection ：<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1708.02002" target="_blank" rel="noopener">https://arxiv.org/abs/1708.02002</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/SSD/" rel="tag"># SSD</a>
+          
+            <a href="/tags/object-detection/" rel="tag"># object detection</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/12/math/merge_mean_vart/" rel="next" title="均值方差合并">
+                <i class="fa fa-chevron-left"></i> 均值方差合并
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/12/deep_learning/object_detection/metric/" rel="prev" title="目标检测网络之评价指标">
+                目标检测网络之评价指标 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/leaf.jpg"
+                alt="Heroinlin"/>
+            
+              <p class="site-author-name" itemprop="name">Heroinlin</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">59</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/heroinlin" title="GitHub &rarr; https://github.com/heroinlin" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/heroinlj@gmail.com" title="E-Mail &rarr; heroinlj@gmail.com"><i class="fa fa-fw fa-gmail"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/Heroin" title="Twitter &rarr; https://twitter.com/Heroin" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Single-Shot-MultiBox-Detector"><span class="nav-number">1.</span> <span class="nav-text">Single Shot MultiBox Detector</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-SSD300网络结构"><span class="nav-number">1.2.</span> <span class="nav-text">1 SSD300网络结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Prior-Box"><span class="nav-number">1.3.</span> <span class="nav-text">2 Prior Box</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-SSD的数据流"><span class="nav-number">1.4.</span> <span class="nav-text">3 SSD的数据流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-SSD网络结构优劣分析"><span class="nav-number">1.5.</span> <span class="nav-text">4 SSD网络结构优劣分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-SSD训练过程"><span class="nav-number">1.6.</span> <span class="nav-text">5 SSD训练过程</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Heroinlin</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.6.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+    <!-- LOCAL: You can save these files to your site and update links -->
+
+  
+  <script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitmint.browser.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.css"/>
+<!-- END LOCAL -->
+
+<script>
+  function renderGitment() {
+    var gitment = new Gitmint({
+      id: window.location.pathname,
+      owner: 'heroinlin',
+      repo: 'heroinlin.github.io',
+      
+        lang: '' || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+      
+      oauth: {
+      
+      
+        client_secret: '264679785d383afbc726145178abea84ff750743',
+      
+        client_id: '33b4a51ea87942e922ca'
+      }
+    });
+    gitment.render('gitment-container');
+  }
+
+  
+    renderGitment();
+  
+</script>
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

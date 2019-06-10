@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0"/>
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2"/>
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/leaf.jpg?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/leaf.ico?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/leaf1.ico?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/leaf.jpg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="#python之解析二进制数据 struct模块中最重要的三个函数是pack(), unpack(), calcsize() struct模块中的函数   函数 return explain     pack(fmt,v1,v2…) string 按照给定的格式(fmt),把数据封装成字符串(实际上是类似于c结构体的字节流),并将该字符串返回.   pack_into(fmt,buffer,off">
+<meta name="keywords" content="Python,struct,二进制文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python之Struct解析二进制数据">
+<meta property="og:url" content="http://yoursite.com/2018/10/10/Python/Python_Struct/index.html">
+<meta property="og:site_name" content="Heroinlin&#39;s Blog">
+<meta property="og:description" content="#python之解析二进制数据 struct模块中最重要的三个函数是pack(), unpack(), calcsize() struct模块中的函数   函数 return explain     pack(fmt,v1,v2…) string 按照给定的格式(fmt),把数据封装成字符串(实际上是类似于c结构体的字节流),并将该字符串返回.   pack_into(fmt,buffer,off">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-06-10T08:36:55.464Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python之Struct解析二进制数据">
+<meta name="twitter:description" content="#python之解析二进制数据 struct模块中最重要的三个函数是pack(), unpack(), calcsize() struct模块中的函数   函数 return explain     pack(fmt,v1,v2…) string 按照给定的格式(fmt),把数据封装成字符串(实际上是类似于c结构体的字节流),并将该字符串返回.   pack_into(fmt,buffer,off">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2018/10/10/Python/Python_Struct/"/>
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>python之Struct解析二进制数据 | Heroinlin's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Heroinlin's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br/>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br/>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/10/Python/Python_Struct/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heroinlin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/leaf.jpg"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Heroinlin's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">python之Struct解析二进制数据
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-10 10:48:11" itemprop="dateCreated datePublished" datetime="2018-10-10T10:48:11+08:00">2018-10-10</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-10 16:36:55" itemprop="dateModified" datetime="2019-06-10T16:36:55+08:00">2019-06-10</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2018/10/10/Python/Python_Struct/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2018/10/10/Python/Python_Struct/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>#python之解析二进制数据</p>
+<p>struct模块中最重要的三个函数是pack(), unpack(), calcsize()</p>
+<h2 id="struct模块中的函数"><a href="#struct模块中的函数" class="headerlink" title="struct模块中的函数"></a>struct模块中的函数</h2><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>return</th>
+<th>explain</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pack(fmt,v1,v2…)</td>
+<td>string</td>
+<td>按照给定的格式(fmt),把数据封装成字符串(实际上是类似于c结构体的字节流),并将该字符串返回.</td>
+</tr>
+<tr>
+<td>pack_into(fmt,buffer,offset,v1,v2…)</td>
+<td>None</td>
+<td>按照给定的格式(fmt),将数据转换成字符串(字节流),并将字节流写入以offset开始的buffer中.(buffer为可写的缓冲区,可用array模块)</td>
+</tr>
+<tr>
+<td>unpack(fmt,v1,v2…..)</td>
+<td>tuple</td>
+<td>按照给定的格式(fmt)解析字节流,并返回解析出来的tuple</td>
+</tr>
+<tr>
+<td>pack_from(fmt,buffer,offset)</td>
+<td>tuple</td>
+<td>按照给定的格式(fmt)解析以offset开始的缓冲区,并返回解析结果</td>
+</tr>
+<tr>
+<td>calcsize(fmt)</td>
+<td>size of fmt</td>
+<td>计算给定的格式(fmt)占用多少字节的内存，注意对齐方式</td>
+</tr>
+</tbody>
+</table>
+<h2 id="格式化字符串"><a href="#格式化字符串" class="headerlink" title="格式化字符串"></a>格式化字符串</h2><p>当打包或者解包的时,需要按照特定的方式来打包或者解包.该方式就是格式化字符串,它指定了数据类型,除此之外,还有用于控制字节顺序、大小和对齐方式的特殊字符.</p>
+<h3 id="对齐方式"><a href="#对齐方式" class="headerlink" title="对齐方式"></a>对齐方式</h3><p>为了同c中的结构体交换数据，还要考虑c或c++编译器使用了字节对齐，通常是以4个字节为单位的32位系统，故而struct根据本地机器字节顺序转换.可以用格式中的第一个字符来改变对齐方式.定义如下</p>
+<table>
+<thead>
+<tr>
+<th>Character</th>
+<th>Byte order</th>
+<th>Size</th>
+<th>Alignment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@(默认)</td>
+<td>本机(native)</td>
+<td>本机(native)</td>
+<td>本机,凑够4字节</td>
+</tr>
+<tr>
+<td>=</td>
+<td>本机(native)</td>
+<td>标准(standard)</td>
+<td>none,按原字节数</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>小端(little-endian)</td>
+<td>标准(standard)</td>
+<td>none,按原字节数</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>大端(big-endian)</td>
+<td>标准(standard)</td>
+<td>none,按原字节数</td>
+</tr>
+<tr>
+<td>!</td>
+<td>network(=big-endian)</td>
+<td>标准(standard)</td>
+<td>none,按原字节数</td>
+</tr>
+</tbody>
+</table>
+<h3 id="格式符"><a href="#格式符" class="headerlink" title="格式符"></a>格式符</h3><table>
+<thead>
+<tr>
+<th>格式符</th>
+<th>C语言类型</th>
+<th>Python类型</th>
+<th>Standard size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>x</td>
+<td>pad byte(填充字节)</td>
+<td>no value</td>
+<td></td>
+</tr>
+<tr>
+<td>c</td>
+<td>char</td>
+<td>string of length 1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>b</td>
+<td>signed char</td>
+<td>integer</td>
+<td>1</td>
+</tr>
+<tr>
+<td>B</td>
+<td>unsigned char</td>
+<td>integer</td>
+<td>1</td>
+</tr>
+<tr>
+<td>?</td>
+<td>_Bool</td>
+<td>bool</td>
+<td>1</td>
+</tr>
+<tr>
+<td>h</td>
+<td>short</td>
+<td>integer</td>
+<td>2</td>
+</tr>
+<tr>
+<td>H</td>
+<td>unsigned short</td>
+<td>integer</td>
+<td>2</td>
+</tr>
+<tr>
+<td>i</td>
+<td>int</td>
+<td>integer</td>
+<td>4</td>
+</tr>
+<tr>
+<td>I(大写的i)</td>
+<td>unsigned int</td>
+<td>integer</td>
+<td>4</td>
+</tr>
+<tr>
+<td>l(小写的L)</td>
+<td>long</td>
+<td>integer</td>
+<td>4</td>
+</tr>
+<tr>
+<td>L</td>
+<td>unsigned long</td>
+<td>long</td>
+<td>4</td>
+</tr>
+<tr>
+<td>q</td>
+<td>long long</td>
+<td>long</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Q</td>
+<td>unsigned long long</td>
+<td>long</td>
+<td>8</td>
+</tr>
+<tr>
+<td>f</td>
+<td>float</td>
+<td>float</td>
+<td>4</td>
+</tr>
+<tr>
+<td>d</td>
+<td>double</td>
+<td>float</td>
+<td>8</td>
+</tr>
+<tr>
+<td>s</td>
+<td>char[]</td>
+<td>string</td>
+<td>1</td>
+</tr>
+<tr>
+<td>p</td>
+<td>char[]</td>
+<td>string</td>
+<td>1</td>
+</tr>
+<tr>
+<td>P</td>
+<td>void *</td>
+<td>long</td>
+</tr>
+</tbody>
+</table>
+<p>注- -!</p>
+<ol>
+<li>_Bool在C99中定义,如果没有这个类型,则将这个类型视为char,一个字节;</li>
+<li>q和Q只适用于64位机器;</li>
+<li>每个格式前可以有一个数字,表示这个类型的个数,如s格式表示一定长度的字符串,4s表示长度为4的字符串;4i表示四个int; 但是p表示的是pascal字符串</li>
+<li>P用来转换一个指针,其长度和机器字长相关;</li>
+<li>f和d的长度和机器字长相关;</li>
+</ol>
+<h2 id="实例代码"><a href="#实例代码" class="headerlink" title="实例代码"></a>实例代码</h2><p>以下代码以person的属性进行二进制文件的写入和读取，person包含姓名，年龄，性别，身高，体重，并赋予力量，智力，体力，敏捷，精神五个特征值，代码如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> OrderedDict</span><br><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">二进制文件的写入和读取</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">read_file</span><span class="params">(file_path)</span>:</span></span><br><span class="line">    person = []</span><br><span class="line">    file = open(file_path, <span class="string">"rb"</span>)</span><br><span class="line">    name = file.read(<span class="number">8</span>)</span><br><span class="line">    name = struct.unpack(<span class="string">'&lt;8s'</span>, name)[<span class="number">0</span>]</span><br><span class="line">    male = file.read(<span class="number">1</span>)</span><br><span class="line">    male = struct.unpack(<span class="string">'&lt;b'</span>, male)[<span class="number">0</span>]</span><br><span class="line">    age = file.read(<span class="number">2</span>)</span><br><span class="line">    age = struct.unpack(<span class="string">'&lt;H'</span>, age)[<span class="number">0</span>]</span><br><span class="line">    height = file.read(<span class="number">4</span>)</span><br><span class="line">    height = int.from_bytes(height, byteorder=<span class="string">'little'</span>)</span><br><span class="line">    <span class="comment"># height = struct.unpack('&lt;I', height)[0]</span></span><br><span class="line">    weight = file.read(<span class="number">4</span>)</span><br><span class="line">    weight = struct.unpack(<span class="string">'&lt;f'</span>, weight)[<span class="number">0</span>]</span><br><span class="line">    feature_size = file.read(<span class="number">4</span>)</span><br><span class="line">    feature_size = int.from_bytes(feature_size, byteorder=<span class="string">'little'</span>)</span><br><span class="line">    features = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(feature_size//<span class="number">4</span>):</span><br><span class="line">        feature_value = file.read(<span class="number">4</span>)</span><br><span class="line">        feature_value = struct.unpack(<span class="string">'&lt;f'</span>, feature_value)[<span class="number">0</span>]</span><br><span class="line">        features.append(feature_value)</span><br><span class="line">    person.append(&#123;</span><br><span class="line">        <span class="string">"name"</span>: name,</span><br><span class="line">        <span class="string">"male"</span>: male,</span><br><span class="line">        <span class="string">"age"</span>: age,</span><br><span class="line">        <span class="string">"height"</span>: height,</span><br><span class="line">        <span class="string">"weight"</span>: weight,</span><br><span class="line">        <span class="string">"feature_size"</span>: feature_size,</span><br><span class="line">        <span class="string">"features"</span>: features,</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> person</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">write_file</span><span class="params">(file_path, person, features)</span>:</span></span><br><span class="line">    file = open(file_path, <span class="string">"wb"</span>)</span><br><span class="line">    <span class="comment"># file.seek(0, 2)</span></span><br><span class="line">    <span class="comment"># 把字符串的地方转为字节类型,还要先转成utf-8的编码(否则报错string argument without an encoding)</span></span><br><span class="line">    name = struct.pack(<span class="string">'&lt;8s'</span>, person[<span class="string">'name'</span>].encode(<span class="string">'utf-8'</span>))</span><br><span class="line">    file.write(name)</span><br><span class="line">    male = struct.pack(<span class="string">'&lt;B'</span>, person[<span class="string">'male'</span>])</span><br><span class="line">    file.write(male)</span><br><span class="line">    age = struct.pack(<span class="string">'&lt;H'</span>, person[<span class="string">'age'</span>])</span><br><span class="line">    file.write(age)</span><br><span class="line">    height = struct.pack(<span class="string">'&lt;I'</span>, person[<span class="string">'height'</span>])</span><br><span class="line">    file.write(height)</span><br><span class="line">    weight = struct.pack(<span class="string">'&lt;f'</span>, person[<span class="string">'weight'</span>])</span><br><span class="line">    file.write(weight)</span><br><span class="line">    features_size = struct.pack(<span class="string">'&lt;I'</span>, <span class="number">5</span>*<span class="number">4</span>)</span><br><span class="line">    file.write(features_size)</span><br><span class="line">    <span class="keyword">for</span> key, value <span class="keyword">in</span> features.items():</span><br><span class="line">        feature_value = struct.pack(<span class="string">'&lt;f'</span>, value)</span><br><span class="line">        file.write(feature_value)</span><br><span class="line">    file.close()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    person = OrderedDict()</span><br><span class="line">    person.update(&#123;<span class="string">'name'</span>: <span class="string">'Jame'</span>&#125;)</span><br><span class="line">    person.update(&#123;<span class="string">'male'</span>: <span class="keyword">True</span>&#125;)</span><br><span class="line">    person.update(&#123;<span class="string">'age'</span>: <span class="number">25</span>&#125;)</span><br><span class="line">    person.update(&#123;<span class="string">'height'</span>: <span class="number">178</span>&#125;)</span><br><span class="line">    person.update(&#123;<span class="string">'weight'</span>: <span class="number">64.0</span>&#125;)</span><br><span class="line">    features = &#123;<span class="string">'Strength'</span>: <span class="number">54.0</span>,  <span class="comment"># 力量</span></span><br><span class="line">                <span class="string">'Intelligence'</span>: <span class="number">78.0</span>,  <span class="comment"># 智力</span></span><br><span class="line">                <span class="string">'Constitution'</span>: <span class="number">32.0</span>,  <span class="comment"># 体力</span></span><br><span class="line">                <span class="string">'Dexterity'</span>: <span class="number">78.0</span>,  <span class="comment"># 敏捷</span></span><br><span class="line">                <span class="string">'Mentality'</span>: <span class="number">53.0</span>  <span class="comment"># 精神</span></span><br><span class="line">                &#125;</span><br><span class="line">    file_path = <span class="string">"./person_info.pkg"</span></span><br><span class="line">    write_file(file_path, person, features)</span><br><span class="line">    person_info = read_file(file_path)</span><br><span class="line">    print(person_info)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p>注意：二进制文件处理时会碰到的问题</p>
+<p>我们使用处理二进制文件时，需要用如下方法</p>
+<p>binfile=open(filepath,’rb’)    读二进制文件</p>
+<p>binfile=open(filepath,’wb’)    写二进制文件</p>
+<p>那么和binfile=open(filepath,’r’)的结果到底有何不同呢？</p>
+<p>不同之处有两个地方：</p>
+<p>第一，使用’r’的时候如果碰到’0x1A’，就会视为文件结束，这就是EOF。使用’rb’则不存在这个问题。即，如果你用二进制写入再用文本读出的话，如果其中存在’0X1A’，就只会读出文件的一部分。使用’rb’的时候会一直读到文件末尾。</p>
+<p>第二，对于字符串x=’abc\ndef’，我们可用len(x)得到它的长度为7，\n我们称之为换行符，实际上是’0X0A’。当我们用’w’即文本方式写的时候，在windows平台上会自动将’0X0A’变成两个字符’0X0D’，’0X0A’，即文件长度实际上变成8.。当用’r’文本方式读取时，又自动的转换成原来的换行符。如果换成’wb’二进制方式来写的话，则会保持一个字符不变，读取时也是原样读取。所以如果用文本方式写入，用二进制方式读取的话，就要考虑这多出的一个字节了。’0X0D’又称回车符。Linux下不会变。因为linux只使用’0X0A’来表示换行。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://kaiyuan.me/2015/12/25/python-struct/" target="_blank" rel="noopener">Python 中 struct 模块的用法</a></p>
+<p><a href="https://www.jianshu.com/p/d03310004668" target="_blank" rel="noopener">Python学习笔记 –struct模板</a></p>
+<p><a href="https://sanyuesha.com/2018/03/10/why-pack-unpack/" target="_blank" rel="noopener">Python 中的 pack 和 unpack</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/struct/" rel="tag"># struct</a>
+          
+            <a href="/tags/二进制文件/" rel="tag"># 二进制文件</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/10/Python/Python_JSON_and_Pickle/" rel="next" title="python之JSON与Pickle">
+                <i class="fa fa-chevron-left"></i> python之JSON与Pickle
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/leaf.jpg"
+                alt="Heroinlin"/>
+            
+              <p class="site-author-name" itemprop="name">Heroinlin</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">59</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/heroinlin" title="GitHub &rarr; https://github.com/heroinlin" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/heroinlj@gmail.com" title="E-Mail &rarr; heroinlj@gmail.com"><i class="fa fa-fw fa-gmail"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/Heroin" title="Twitter &rarr; https://twitter.com/Heroin" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#struct模块中的函数"><span class="nav-number">1.</span> <span class="nav-text">struct模块中的函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#格式化字符串"><span class="nav-number">2.</span> <span class="nav-text">格式化字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对齐方式"><span class="nav-number">2.1.</span> <span class="nav-text">对齐方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#格式符"><span class="nav-number">2.2.</span> <span class="nav-text">格式符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例代码"><span class="nav-number">3.</span> <span class="nav-text">实例代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-number">4.</span> <span class="nav-text">附录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Heroinlin</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.6.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+    <!-- LOCAL: You can save these files to your site and update links -->
+
+  
+  <script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitmint.browser.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.css"/>
+<!-- END LOCAL -->
+
+<script>
+  function renderGitment() {
+    var gitment = new Gitmint({
+      id: window.location.pathname,
+      owner: 'heroinlin',
+      repo: 'heroinlin.github.io',
+      
+        lang: '' || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+      
+      oauth: {
+      
+      
+        client_secret: '264679785d383afbc726145178abea84ff750743',
+      
+        client_id: '33b4a51ea87942e922ca'
+      }
+    });
+    gitment.render('gitment-container');
+  }
+
+  
+    renderGitment();
+  
+</script>
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
