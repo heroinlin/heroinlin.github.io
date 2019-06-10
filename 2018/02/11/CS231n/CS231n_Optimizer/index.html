@@ -109,7 +109,7 @@
 <meta property="og:image" content="http://www.zhihu.com/equation?tex=f">
 <meta property="og:image" content="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/optimization/optimization_2.jpg?raw=true">
 <meta property="og:image" content="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/optimization/optimization_3.jpg?raw=true">
-<meta property="og:updated_time" content="2018-03-26T00:54:02.000Z">
+<meta property="og:updated_time" content="2019-06-10T09:20:18.947Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CS231n课程笔记翻译：最优化笔记">
 <meta name="twitter:description" content="CS231n课程笔记翻译：最优化笔记原文如下内容列表：  简介  损失函数可视化  最优化  策略#1：随机搜索     策略#2：随机局部搜索 策略#3：跟随梯度    梯度计算  使用有限差值进行数值计算     微分计算梯度   梯度下降  小结   简介在上一节中，我们介绍了图像分类任务中的两个关键部分：  基于参数的评分函数。该函数将原始图像像素映射为分类评分值（例如：一个线性函数）。">
@@ -390,7 +390,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-03-26 08:54:02" itemprop="dateModified" datetime="2018-03-26T08:54:02+08:00">2018-03-26</time>
+                <time title="修改时间：2019-06-10 17:20:18" itemprop="dateModified" datetime="2019-06-10T17:20:18+08:00">2019-06-10</time>
               
             
           </span>
@@ -645,8 +645,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/02/11/CS231n/CS231n_Python_Numpy/" rel="prev" title="CS231n课程笔记翻译：Python Numpy教程">
-                CS231n课程笔记翻译：Python Numpy教程 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/03/07/C&C++/Debug_error_solution/" rel="prev" title="C及C++编译时候出现的一些问题与解决方案">
+                C及C++编译时候出现的一些问题与解决方案 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -1184,6 +1184,46 @@
   
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
   
 
 

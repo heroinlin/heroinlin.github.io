@@ -109,7 +109,7 @@
 <meta property="og:image" content="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/neural_nets/neural_nets_12.jpg?raw=true">
 <meta property="og:image" content="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/neural_nets/neural_nets_13.jpg?raw=true">
 <meta property="og:image" content="http://www.zhihu.com/equation?tex=n">
-<meta property="og:updated_time" content="2018-03-26T00:53:34.000Z">
+<meta property="og:updated_time" content="2019-06-10T09:21:49.345Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CS231n课程笔记翻译：神经网络笔记2">
 <meta name="twitter:description" content="CS231n课程笔记翻译：神经网络笔记 2原文如下内容列表：  设置数据和模型 数据预处理 权重初始化 批量归一化（Batch Normalization） 正则化（L2/L1/Maxnorm/Dropout）   损失函数 小结  设置数据和模型在上一节中介绍了神经元的模型，它在计算内积后进行非线性激活函数计算，神经网络将这些神经元组织成各个层。这些做法共同定义了评分函数（score funct">
@@ -390,7 +390,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-03-26 08:53:34" itemprop="dateModified" datetime="2018-03-26T08:53:34+08:00">2018-03-26</time>
+                <time title="修改时间：2019-06-10 17:21:49" itemprop="dateModified" datetime="2019-06-10T17:21:49+08:00">2019-06-10</time>
               
             
           </span>
@@ -579,8 +579,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/02/11/CS231n/CS231n_Linear_Classify/" rel="prev" title="CS231n课程笔记翻译：线性分类笔记">
-                CS231n课程笔记翻译：线性分类笔记 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/02/11/CS231n/CS231n_Image_Classify/" rel="prev" title="CS231n课程笔记翻译：图像分类笔记">
+                CS231n课程笔记翻译：图像分类笔记 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -1118,6 +1118,46 @@
   
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
   
 
 

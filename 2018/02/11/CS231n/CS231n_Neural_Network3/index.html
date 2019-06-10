@@ -113,7 +113,7 @@
 <meta property="og:image" content="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/neural_nets/neural_nets_20.gif?raw=true">
 <meta property="og:image" content="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/neural_nets/neural_nets_21.gif?raw=true">
 <meta property="og:image" content="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/neural_nets/neural_nets_22.jpg?raw=true">
-<meta property="og:updated_time" content="2018-03-26T00:53:42.000Z">
+<meta property="og:updated_time" content="2019-06-10T09:21:59.808Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CS231n课程笔记翻译：神经网络笔记3">
 <meta name="twitter:description" content="CS231n课程笔记翻译：神经网络笔记3原文如下内容列表：  梯度检查 合理性（Sanity）检查 检查学习过程 损失函数 训练集与验证集准确率 权重：更新比例 每层的激活数据与梯度分布 可视化    参数更新 一阶（随机梯度下降）方法，动量方法，Nesterov动量方法 学习率退火 二阶方法 逐参数适应学习率方法（Adagrad，RMSProp）   超参数调优 评价 模型集成   总结 拓展引">
@@ -394,7 +394,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-03-26 08:53:42" itemprop="dateModified" datetime="2018-03-26T08:53:42+08:00">2018-03-26</time>
+                <time title="修改时间：2019-06-10 17:21:59" itemprop="dateModified" datetime="2019-06-10T17:21:59+08:00">2019-06-10</time>
               
             
           </span>
@@ -689,8 +689,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/02/11/hello-world/" rel="prev" title="Hello World">
-                Hello World <i class="fa fa-chevron-right"></i>
+              <a href="/2018/02/11/CS231n/CS231n_Linear_Classify/" rel="prev" title="CS231n课程笔记翻译：线性分类笔记">
+                CS231n课程笔记翻译：线性分类笔记 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -1228,6 +1228,46 @@
   
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
   
 
 
