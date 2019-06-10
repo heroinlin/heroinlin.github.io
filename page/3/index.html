@@ -193,7 +193,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -221,7 +221,7 @@
 
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>首页</a>
 
   </li>
         
@@ -238,7 +238,7 @@
 
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br/>Tags</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br/>标签</a>
 
   </li>
         
@@ -255,7 +255,7 @@
 
     
 
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br/>Categories</a>
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br/>分类</a>
 
   </li>
         
@@ -272,7 +272,7 @@
 
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>归档</a>
 
   </li>
         
@@ -289,7 +289,7 @@
 
     
 
-    <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br/>Schedule</a>
+    <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br/>日程表</a>
 
   </li>
 
@@ -379,14 +379,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
 
               
                 
               
 
-              <time title="Created: 2018-03-12 10:48:11 / Modified: 10:51:28" itemprop="dateCreated datePublished" datetime="2018-03-12T10:48:11+08:00">2018-03-12</time>
+              <time title="创建时间：2018-03-12 10:48:11 / 修改时间：10:51:28" itemprop="dateCreated datePublished" datetime="2018-03-12T10:48:11+08:00">2018-03-12</time>
             
 
             
@@ -405,7 +405,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">分类于</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
@@ -504,7 +504,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/Python/Python_shutil/"/>
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/Python/Python_selenium/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Heroinlin"/>
@@ -524,7 +524,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2018/03/12/Python/Python_shutil/" class="post-title-link" itemprop="url">python之Shutil</a>
+                <a href="/2018/03/12/Python/Python_selenium/" class="post-title-link" itemprop="url">python之Selenium</a>
               
             
           </h1>
@@ -542,14 +542,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
 
               
                 
               
 
-              <time title="Created: 2018-03-12 10:48:11" itemprop="dateCreated datePublished" datetime="2018-03-12T10:48:11+08:00">2018-03-12</time>
+              <time title="创建时间：2018-03-12 10:48:11" itemprop="dateCreated datePublished" datetime="2018-03-12T10:48:11+08:00">2018-03-12</time>
             
 
             
@@ -564,9 +564,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Edited on</span>
+                  <span class="post-meta-item-text">更新于</span>
                 
-                <time title="Modified: 2018-10-12 15:08:00" itemprop="dateModified" datetime="2018-10-12T15:08:00+08:00">2018-10-12</time>
+                <time title="修改时间：2018-10-12 17:13:10" itemprop="dateModified" datetime="2018-10-12T17:13:10+08:00">2018-10-12</time>
               
             
           </span>
@@ -580,7 +580,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">分类于</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
@@ -620,84 +620,60 @@
       
         
           
-            <p>#python之Shutil文件、文件夹高级操作</p>
-<h2 id="复制操作"><a href="#复制操作" class="headerlink" title="复制操作"></a>复制操作</h2><h3 id="copyfileobj"><a href="#copyfileobj" class="headerlink" title="copyfileobj"></a>copyfileobj</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutil.copyfileobj(fsrc, fdst[, length=<span class="number">16</span>\*<span class="number">1024</span>])</span><br></pre></td></tr></table></figure>
-<p>copy文件内容到另一个文件，可以copy指定大小的内容。这个方法是shutil模块中其它拷贝方法的基础，其它方法在本质上都是调用这个方法。</p>
-<p>让我们看一下它的源码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">copyfileobj</span><span class="params">(fsrc, fdst, length=<span class="number">16</span>*<span class="number">1024</span>)</span>:</span></span><br><span class="line">    <span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">        buf = fsrc.read(length)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> buf:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        fdst.write(buf)</span><br></pre></td></tr></table></figure>
-<p>代码很简单，一看就懂。但是要注意，其中的fsrc，fdst都是使用open()方法打开后的文件对象。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line">s =open(<span class="string">'fsrc.txt'</span>,<span class="string">'r'</span>)</span><br><span class="line">d=open(<span class="string">'fdst.txt'</span>,<span class="string">'w'</span>)</span><br><span class="line">shutil.copyfileobj(s,d,length=<span class="number">16</span>*<span class="number">1024</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="copyfile"><a href="#copyfile" class="headerlink" title="copyfile"></a>copyfile</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutil.copyfile(src, dst)</span><br></pre></td></tr></table></figure>
-<p>拷贝整个文件。同样看下它的源码，忽略前面一些检测用的代码，该方法的核心在最后几行，我们可以很清楚地看到<code>copyfile()</code>方法对<code>copyfileobj()</code>进行了调用。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">copyfile</span><span class="params">(src, dst, *, follow_symlinks=True)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> _samefile(src, dst):</span><br><span class="line">        <span class="keyword">raise</span> SameFileError(<span class="string">"&#123;!r&#125; and &#123;!r&#125; are the same file"</span>.format(src, dst))</span><br><span class="line">    <span class="keyword">for</span> fn <span class="keyword">in</span> [src, dst]:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            st = os.stat(fn)</span><br><span class="line">        <span class="keyword">except</span> OSError:      </span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> stat.S_ISFIFO(st.st_mode):</span><br><span class="line">                <span class="keyword">raise</span> SpecialFileError(<span class="string">"`%s` is a named pipe"</span> % fn)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> follow_symlinks <span class="keyword">and</span> os.path.islink(src):</span><br><span class="line">        os.symlink(os.readlink(src), dst)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">with</span> open(src, <span class="string">'rb'</span>) <span class="keyword">as</span> fsrc:</span><br><span class="line">            <span class="keyword">with</span> open(dst, <span class="string">'wb'</span>) <span class="keyword">as</span> fdst:</span><br><span class="line">                copyfileobj(fsrc, fdst)</span><br><span class="line">    <span class="keyword">return</span> dst</span><br></pre></td></tr></table></figure>
-<h3 id="copymode"><a href="#copymode" class="headerlink" title="copymode"></a>copymode</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutil.copymode(src, dst)</span><br></pre></td></tr></table></figure>
-<p>仅拷贝权限。内容、组、用户均不变。</p>
-<h3 id="copystat"><a href="#copystat" class="headerlink" title="copystat"></a>copystat</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutil.copystat(src, dst)</span><br></pre></td></tr></table></figure>
-<p>仅复制所有的状态信息，包括权限，组，用户，时间等。</p>
-<h3 id="copy"><a href="#copy" class="headerlink" title="copy"></a>copy</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutil.copy(src,dst)</span><br></pre></td></tr></table></figure>
-<p>同时复制文件的内容以及权限，也就是先copyfile()然后copymode()。</p>
-<h3 id="copy2"><a href="#copy2" class="headerlink" title="copy2"></a>copy2</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutil.copy2(src, dst)</span><br></pre></td></tr></table></figure>
-<p>同时复制文件的内容以及文件的所有状态信息。先copyfile()后copystat()。</p>
-<h3 id="ignore-patterns"><a href="#ignore-patterns" class="headerlink" title="ignore_patterns"></a>ignore_patterns</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutil.ignore_patterns(*patterns)</span><br></pre></td></tr></table></figure>
-<p>忽略指定的文件。通常配合下面的copytree()方法使用。</p>
-<h3 id="copytree"><a href="#copytree" class="headerlink" title="copytree"></a>copytree</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">shutil.copytree(src, dst, symlinks=<span class="keyword">False</span>,ignore=<span class="keyword">None</span>,copy_function=copy2,</span><br><span class="line">                ignore_dangling_symlinks=<span class="keyword">False</span>)</span><br></pre></td></tr></table></figure>
-<p>递归地复制目录及其子目录的文件和状态信息</p>
-<ul>
-<li>symlinks：指定是否复制软链接。小心陷入死循环。</li>
-<li>ignore：指定不参与复制的文件，其值应该是一个ignore_patterns()方法。</li>
-<li>copy_function：指定复制的模式</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 典型用法</span></span><br><span class="line"><span class="keyword">from</span> shutil <span class="keyword">import</span> copytree, ignore_patterns</span><br><span class="line">copytree(source, destination, ignore=ignore_patterns(<span class="string">'*.pyc'</span>, <span class="string">'tmp*'</span>))</span><br><span class="line">copytree(<span class="string">'folder1'</span>, <span class="string">'folder2'</span>, ignore=ignore_patterns(<span class="string">'*.pyc'</span>, <span class="string">'tmp*'</span>))</span><br><span class="line">copytree(<span class="string">'f1'</span>, <span class="string">'f2'</span>, symlinks=<span class="keyword">True</span>, ignore=ignore_patterns(<span class="string">'*.pyc'</span>, <span class="string">'tmp*'</span>))</span><br></pre></td></tr></table></figure>
-<h2 id="移动删除操作"><a href="#移动删除操作" class="headerlink" title="移动删除操作"></a>移动删除操作</h2><h3 id="rmtree"><a href="#rmtree" class="headerlink" title="rmtree"></a>rmtree</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutil.rmtree(path[, ignore_errors[, onerror]])</span><br></pre></td></tr></table></figure>
-<p>递归地删除目录及子目录内的文件。注意！<strong>该方法不会询问yes或no，被删除的文件也不会出现在回收站里，请务必小心！</strong>此函数与类似<code>os.removedirs</code> ，但是<code>os.removedirs</code> 不能删除非空文件夹</p>
-<p>下面的例子在碰到只读文件时，尝试清除只读属性，然后再删除。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os, stat</span><br><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">remove_readonly</span><span class="params">(func, path, _)</span>:</span></span><br><span class="line">    <span class="string">"去除文件的只读属性，尝试再次删除"</span></span><br><span class="line">    os.chmod(path, stat.S_IWRITE)</span><br><span class="line">    func(path)</span><br><span class="line">shutil.rmtree(directory, onerror=remove_readonly)</span><br></pre></td></tr></table></figure>
-<h3 id="move"><a href="#move" class="headerlink" title="move"></a>move</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutil.move(src, dst)</span><br></pre></td></tr></table></figure>
-<p>递归地移动文件，类似mv命令，其实就是重命名。</p>
-<h2 id="which"><a href="#which" class="headerlink" title="which"></a>which</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutil.which(cmd)</span><br></pre></td></tr></table></figure>
-<p>类似linux的<code>which</code>命令，返回执行该命令的程序路径。Python3.3新增</p>
-<h2 id="disk-usage"><a href="#disk-usage" class="headerlink" title="disk_usage"></a>disk_usage</h2><p>检测磁盘使用信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutil.disk_usage(&quot;d:/&quot;)</span><br></pre></td></tr></table></figure>
-<h2 id="解压缩"><a href="#解压缩" class="headerlink" title="解压缩"></a>解压缩</h2><h3 id="get-archive-formats"><a href="#get-archive-formats" class="headerlink" title="get_archive_formats"></a>get_archive_formats</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutil.get_archive_formats()</span><br></pre></td></tr></table></figure>
-<p>获取当前系统已注册的归档文件格式（后缀）</p>
-<blockquote>
-<p>[(‘bztar’, “bzip2’ed tar-file”), </p>
-<p>(‘gztar’, “gzip’ed tar-file”), </p>
-<p>(‘tar’, ‘uncompressed tar file’),</p>
-<p> (‘xztar’, “xz’ed tar-file”), </p>
-<p>(‘zip’, ‘ZIP file’)]</p>
-</blockquote>
-<h3 id="make-archive"><a href="#make-archive" class="headerlink" title="make_archive"></a>make_archive</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutil.make_archive(base_name, format[, root_dir[, base_dir[, verbose[, dry_run[, owner[, group[, logger]]]]]]])</span><br></pre></td></tr></table></figure>
-<p>创建归档或压缩文件。</p>
-<ul>
-<li><code>base_name</code>：压缩后的文件名。如果不指定绝对路径，则压缩文件保存在当前目录下。这个参数必须指定。</li>
-<li><code>format</code>：压缩格式，可以是“zip”, “tar”, “bztar” ，“gztar”，“xztar”中的一种。这个参数也必须指定。</li>
-<li><code>root_dir</code>：设置压缩包里的根目录，一般使用默认值，不特别指定。</li>
-<li><code>base_dir</code>：要进行压缩的源文件或目录。</li>
-<li><code>owner</code>：用户，默认当前用户。</li>
-<li><code>group</code>：组，默认当前组。</li>
-<li><code>logger</code>：用于记录日志，通常是<code>logging.Logger</code>对象。</li>
-</ul>
-<p>范例：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line">shutil.make_archive(<span class="string">"d:\\3"</span>, <span class="string">"zip"</span>,  base_dir=<span class="string">"d:\\1.txt"</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="get-unpack-formats"><a href="#get-unpack-formats" class="headerlink" title="get_unpack_formats"></a>get_unpack_formats</h3><p>获取当前系统已经注册的解包文件格式(后缀)</p>
-<blockquote>
-<p>[(‘bztar’, [‘.tar.bz2’, ‘.tbz2’], “bzip2’ed tar-file”), </p>
-<p>(‘gztar’, [‘.tar.gz’, ‘.tgz’], “gzip’ed tar-file”), </p>
-<p>(‘tar’, [‘.tar’], ‘uncompressed tar file’),</p>
-<p> (‘xztar’, [‘.tar.xz’, ‘.txz’], “xz’ed tar-file”),</p>
-<p> (‘zip’, [‘.zip’], ‘ZIP file’)]</p>
-</blockquote>
-<h3 id="unpack-archive"><a href="#unpack-archive" class="headerlink" title="unpack_archive"></a>unpack_archive</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutil.unpack_archive(filename[, extract_dir[, format]])</span><br></pre></td></tr></table></figure>
-<p>解压缩或解包源文件。</p>
-<ul>
-<li>filename是压缩文档的完整路径</li>
-<li>extract_dir是解压缩路径，默认为当前目录。</li>
-<li>format是压缩格式。默认使用文件后缀名代码的压缩格式。</li>
-</ul>
-<p>范例：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line">shutil.unpack_archive(<span class="string">"d:\\3.zip"</span>, <span class="string">"f:\\3"</span>, <span class="string">'zip'</span>)</span><br></pre></td></tr></table></figure>
-<p>shutil模块的压缩和解压功能，在后台是通过调用zipfile和tarfile两个模块来进行的。</p>
+            <h1 id="python之Selenium打开浏览器"><a href="#python之Selenium打开浏览器" class="headerlink" title="python之Selenium打开浏览器"></a>python之Selenium打开浏览器</h1><h2 id="函数及属性"><a href="#函数及属性" class="headerlink" title="函数及属性"></a>函数及属性</h2><p>driver = webdriver.Chrome(chromeDriver)</p>
+<h3 id="返回当前会话中的cookies"><a href="#返回当前会话中的cookies" class="headerlink" title="返回当前会话中的cookies"></a>返回当前会话中的cookies</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.get_cookies()</span><br></pre></td></tr></table></figure>
+<h3 id="根据cookies-name查找"><a href="#根据cookies-name查找" class="headerlink" title="根据cookies name查找"></a>根据cookies name查找</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.get_cookie(cookiename)</span><br></pre></td></tr></table></figure>
+<h3 id="截取当前页面"><a href="#截取当前页面" class="headerlink" title="截取当前页面"></a>截取当前页面</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">get_screenshot_as_file(filename)</span><br></pre></td></tr></table></figure>
+<p>如：get_screenshot_as_file(“D:\nm.bmp”)</p>
+<h3 id="获取当前窗口的坐标"><a href="#获取当前窗口的坐标" class="headerlink" title="获取当前窗口的坐标"></a>获取当前窗口的坐标</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.get_window_position()</span><br></pre></td></tr></table></figure>
+<h3 id="获取当前窗口的长和宽"><a href="#获取当前窗口的长和宽" class="headerlink" title="获取当前窗口的长和宽"></a>获取当前窗口的长和宽</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.get_window_size()</span><br></pre></td></tr></table></figure>
+<h3 id="获取当前页面的URL"><a href="#获取当前页面的URL" class="headerlink" title="获取当前页面的URL"></a>获取当前页面的URL</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.current_url</span><br></pre></td></tr></table></figure>
+<h3 id="获取当前页面的title"><a href="#获取当前页面的title" class="headerlink" title="获取当前页面的title"></a>获取当前页面的title</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.title</span><br></pre></td></tr></table></figure>
+<h3 id="获取元素的坐标"><a href="#获取元素的坐标" class="headerlink" title="获取元素的坐标"></a>获取元素的坐标</h3><p>先获取到该元素，然后调用location属性</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">　driver.find_element_by_xpath(<span class="string">"//*[@id='tablechart']/tbody/tr[14]/td[9]"</span>).location</span><br></pre></td></tr></table></figure>
+<h3 id="获取css的属性值"><a href="#获取css的属性值" class="headerlink" title="获取css的属性值"></a>获取css的属性值</h3><p>value_of_css_property(css_name)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.find_element_by_css_selector(<span class="string">"input.btn"</span>).value_of_css_property(<span class="string">"input.btn"</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="获取元素的属性值"><a href="#获取元素的属性值" class="headerlink" title="获取元素的属性值"></a>获取元素的属性值</h3><p>get_attribute(element_name)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.find_element_by_id(<span class="string">"sellaiyuan"</span>).get_attribute(<span class="string">"sellaiyuan"</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="判断元素是否被选中"><a href="#判断元素是否被选中" class="headerlink" title="判断元素是否被选中"></a>判断元素是否被选中</h3><p>is_selected()</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.find_element_by_id(<span class="string">"form1"</span>).is_selected()</span><br></pre></td></tr></table></figure>
+<h3 id="返回元素的大小"><a href="#返回元素的大小" class="headerlink" title="返回元素的大小"></a>返回元素的大小</h3><p>size</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">driver.find_element_by_id(<span class="string">"iptPassword"</span>).size</span><br><span class="line">size``返回值：&#123;<span class="string">'width'</span>: <span class="number">250</span>, <span class="string">'height'</span>: <span class="number">30</span>&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="判断元素是否显示："><a href="#判断元素是否显示：" class="headerlink" title="判断元素是否显示："></a>判断元素是否显示：</h3><p>is_displayed()</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.find_element_by_id(<span class="string">"iptPassword"</span>).is_displayed()</span><br></pre></td></tr></table></figure>
+<h3 id="判断元素是否被使用方法"><a href="#判断元素是否被使用方法" class="headerlink" title="判断元素是否被使用方法"></a>判断元素是否被使用方法</h3><p>is_enabled()</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.find_element_by_id(<span class="string">"iptPassword"</span>).is_enabled()</span><br></pre></td></tr></table></figure>
+<h3 id="获取元素的文本值方法"><a href="#获取元素的文本值方法" class="headerlink" title="获取元素的文本值方法"></a>获取元素的文本值方法</h3><p>text</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.find_element_by_id(<span class="string">"iptUsername"</span>).text</span><br></pre></td></tr></table></figure>
+<h3 id="元素赋值方法"><a href="#元素赋值方法" class="headerlink" title="元素赋值方法"></a>元素赋值方法</h3><p>send_keys(*values)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">driver.find_element_by_id(<span class="string">"iptUsername"</span>).send_keys(<span class="string">'admin'</span>)</span><br><span class="line">PS：``注意如果是中文需要增加转义符u，eg.``driver.find_element_by_id(<span class="string">"iptUsername"</span>).send_keys(<span class="string">u'青春'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="返回元素的标签名称"><a href="#返回元素的标签名称" class="headerlink" title="返回元素的标签名称"></a>返回元素的标签名称</h3><p>tag_name</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.find_element_by_id(<span class="string">"iptUsername"</span>).tag_name</span><br></pre></td></tr></table></figure>
+<h3 id="删除浏览器所有的cookies"><a href="#删除浏览器所有的cookies" class="headerlink" title="删除浏览器所有的cookies"></a>删除浏览器所有的cookies</h3><p>delete_all_cookies()</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.delete_all_cookies()</span><br></pre></td></tr></table></figure>
+<h3 id="删除指定的cookie"><a href="#删除指定的cookie" class="headerlink" title="删除指定的cookie"></a>删除指定的cookie</h3><p>delete_cookie(name)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.delete_cookie(<span class="string">"my_cookie_name"</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="关闭浏览器方法"><a href="#关闭浏览器方法" class="headerlink" title="关闭浏览器方法"></a>关闭浏览器方法</h3><p>close()</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.close()</span><br></pre></td></tr></table></figure>
+<h3 id="关闭浏览器并且退出驱动程序"><a href="#关闭浏览器并且退出驱动程序" class="headerlink" title="关闭浏览器并且退出驱动程序"></a>关闭浏览器并且退出驱动程序</h3><p>quit()</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.quit()</span><br></pre></td></tr></table></figure>
+<h3 id="返回上一页"><a href="#返回上一页" class="headerlink" title="返回上一页"></a>返回上一页</h3><p>back()</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.back()</span><br></pre></td></tr></table></figure>
+<h3 id="设置等待超时的方法"><a href="#设置等待超时的方法" class="headerlink" title="设置等待超时的方法"></a>设置等待超时的方法</h3><p>implicitly_wait(wait_time)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.implicitly_wait(<span class="number">30</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="浏览器窗口最大化"><a href="#浏览器窗口最大化" class="headerlink" title="浏览器窗口最大化"></a>浏览器窗口最大化</h3><p>maximize_window()</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.maximize_window()</span><br></pre></td></tr></table></figure>
+<h3 id="查看浏览器的名字"><a href="#查看浏览器的名字" class="headerlink" title="查看浏览器的名字"></a>查看浏览器的名字</h3><p>name</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drvier.name</span><br></pre></td></tr></table></figure>
+<h2 id="实例代码"><a href="#实例代码" class="headerlink" title="实例代码"></a>实例代码</h2><h3 id="打开网址"><a href="#打开网址" class="headerlink" title="打开网址"></a>打开网址</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"></span><br><span class="line"><span class="comment"># chromeDriver = r".\chromedriver_win32\chromedriver.exe"</span></span><br><span class="line"><span class="comment"># browser = webdriver.Chrome(chromeDriver)</span></span><br><span class="line">browser = webdriver.Chrome()</span><br><span class="line">browser.get(<span class="string">'http://www.baidu.com/'</span>)</span><br></pre></td></tr></table></figure>
+<p>如果程序执行错误，浏览器没有打开，那么应该是没有装 Chrome 浏览器或者 Chrome 驱动没有配置在环境变量里。下载驱动，然后将驱动文件路径配置在环境变量即可。</p>
+<p><a href="https://sites.google.com/a/chromium.org/chromedriver/downloads" target="_blank" rel="noopener">浏览器驱动下载</a></p>
+<p>比如Mac OS，就把下载好的文件放在 /usr/bin 目录下就可以了。</p>
+<h3 id="模拟提交"><a href="#模拟提交" class="headerlink" title="模拟提交"></a>模拟提交</h3><p>下面的代码实现了模拟提交提交搜索的功能，首先等页面加载完成，然后输入到搜索框文本，点击提交。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.common.keys <span class="keyword">import</span> Keys</span><br><span class="line"></span><br><span class="line">driver = webdriver.Firefox()</span><br><span class="line">driver.get(<span class="string">"http://www.python.org"</span>)</span><br><span class="line"><span class="keyword">assert</span> <span class="string">"Python"</span> <span class="keyword">in</span> driver.title</span><br><span class="line">elem = driver.find_element_by_name(<span class="string">"q"</span>)</span><br><span class="line">elem.clear()</span><br><span class="line">elem.send_keys(<span class="string">"pycon"</span>)</span><br><span class="line">elem.send_keys(Keys.RETURN)</span><br><span class="line">print(driver.page_source)</span><br><span class="line"><span class="keyword">assert</span> <span class="string">"No results found."</span> <span class="keyword">not</span> <span class="keyword">in</span> driver.page_source</span><br><span class="line">driver.close()</span><br></pre></td></tr></table></figure>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://cuiqingcai.com/2599.html" target="_blank" rel="noopener">Python爬虫利器五之Selenium的用法</a></p>
+<p><a href="https://www.cnblogs.com/qiezizi/p/5788783.html" target="_blank" rel="noopener">selenium2中关于Python的常用函数</a></p>
+<p><a href="https://selenium-python-zh.readthedocs.io/en/latest/index.html" target="_blank" rel="noopener">Selenium-Python中文文档</a></p>
 
           
         
@@ -792,14 +768,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
 
               
                 
               
 
-              <time title="Created: 2018-03-12 10:48:11" itemprop="dateCreated datePublished" datetime="2018-03-12T10:48:11+08:00">2018-03-12</time>
+              <time title="创建时间：2018-03-12 10:48:11" itemprop="dateCreated datePublished" datetime="2018-03-12T10:48:11+08:00">2018-03-12</time>
             
 
             
@@ -814,9 +790,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Edited on</span>
+                  <span class="post-meta-item-text">更新于</span>
                 
-                <time title="Modified: 2018-10-12 17:13:24" itemprop="dateModified" datetime="2018-10-12T17:13:24+08:00">2018-10-12</time>
+                <time title="修改时间：2018-10-12 17:13:24" itemprop="dateModified" datetime="2018-10-12T17:13:24+08:00">2018-10-12</time>
               
             
           </span>
@@ -830,7 +806,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">分类于</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
@@ -972,14 +948,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
 
               
                 
               
 
-              <time title="Created: 2018-03-12 10:48:11" itemprop="dateCreated datePublished" datetime="2018-03-12T10:48:11+08:00">2018-03-12</time>
+              <time title="创建时间：2018-03-12 10:48:11" itemprop="dateCreated datePublished" datetime="2018-03-12T10:48:11+08:00">2018-03-12</time>
             
 
             
@@ -994,9 +970,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Edited on</span>
+                  <span class="post-meta-item-text">更新于</span>
                 
-                <time title="Modified: 2018-08-06 09:25:00" itemprop="dateModified" datetime="2018-08-06T09:25:00+08:00">2018-08-06</time>
+                <time title="修改时间：2018-08-06 09:25:00" itemprop="dateModified" datetime="2018-08-06T09:25:00+08:00">2018-08-06</time>
               
             
           </span>
@@ -1010,7 +986,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">分类于</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Pytorch/" itemprop="url" rel="index"><span itemprop="name">Pytorch</span></a></span>
@@ -1449,14 +1425,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
 
               
                 
               
 
-              <time title="Created: 2018-03-07 15:54:11" itemprop="dateCreated datePublished" datetime="2018-03-07T15:54:11+08:00">2018-03-07</time>
+              <time title="创建时间：2018-03-07 15:54:11" itemprop="dateCreated datePublished" datetime="2018-03-07T15:54:11+08:00">2018-03-07</time>
             
 
             
@@ -1471,9 +1447,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Edited on</span>
+                  <span class="post-meta-item-text">更新于</span>
                 
-                <time title="Modified: 2018-03-12 10:54:18" itemprop="dateModified" datetime="2018-03-12T10:54:18+08:00">2018-03-12</time>
+                <time title="修改时间：2018-03-12 10:54:18" itemprop="dateModified" datetime="2018-03-12T10:54:18+08:00">2018-03-12</time>
               
             
           </span>
@@ -1487,7 +1463,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">分类于</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C-C/" itemprop="url" rel="index"><span itemprop="name">C&C++</span></a></span>
@@ -1633,14 +1609,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
 
               
                 
               
 
-              <time title="Created: 2018-02-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-02-11T11:11:11+08:00">2018-02-11</time>
+              <time title="创建时间：2018-02-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-02-11T11:11:11+08:00">2018-02-11</time>
             
 
             
@@ -1655,9 +1631,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Edited on</span>
+                  <span class="post-meta-item-text">更新于</span>
                 
-                <time title="Modified: 2018-03-26 08:54:02" itemprop="dateModified" datetime="2018-03-26T08:54:02+08:00">2018-03-26</time>
+                <time title="修改时间：2018-03-26 08:54:02" itemprop="dateModified" datetime="2018-03-26T08:54:02+08:00">2018-03-26</time>
               
             
           </span>
@@ -1671,7 +1647,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">分类于</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/CS231n课程笔记翻译/" itemprop="url" rel="index"><span itemprop="name">CS231n课程笔记翻译</span></a></span>
@@ -1904,272 +1880,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/11/CS231n/CS231n_BP/"/>
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Heroinlin"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="/images/leaf.jpg"/>
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Heroinlin's Blog"/>
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/02/11/CS231n/CS231n_BP/" class="post-title-link" itemprop="url">CS231n课程笔记翻译：反向传播笔记</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-02-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-02-11T11:11:11+08:00">2018-02-11</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-03-26 08:53:14" itemprop="dateModified" datetime="2018-03-26T08:53:14+08:00">2018-03-26</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/CS231n课程笔记翻译/" itemprop="url" rel="index"><span itemprop="name">CS231n课程笔记翻译</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="CS231n课程笔记翻译：反向传播笔记"><a href="#CS231n课程笔记翻译：反向传播笔记" class="headerlink" title="CS231n课程笔记翻译：反向传播笔记"></a>CS231n课程笔记翻译：反向传播笔记</h1><h2 id="原文如下："><a href="#原文如下：" class="headerlink" title="原文如下："></a>原文如下：</h2><p>内容列表：</p>
-<ul>
-<li>简介</li>
-<li>简单表达式和理解梯度</li>
-<li>复合表达式，链式法则，反向传播</li>
-<li>直观理解反向传播</li>
-<li>模块：Sigmoid例子</li>
-<li>反向传播实践：分段计算</li>
-<li>回传流中的模式</li>
-<li>用户向量化操作的梯度</li>
-<li>小结</li>
-</ul>
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><strong>目标</strong>：本节将帮助读者对<strong>反向传播</strong>形成直观而专业的理解。反向传播是利用<strong>链式法则</strong>递归计算表达式的梯度的方法。理解反向传播过程及其精妙之处，对于理解、实现、设计和调试神经网络非常<strong>关键</strong>。</p>
-<p><strong>问题陈述</strong>：这节的核心问题是：给定函数$f(x)$，其中$x$是输入数据的向量，需要计算函数$f$关于$x$的梯度，也就是$\nabla f(x)$。</p>
-<p><strong>目标</strong>：之所以关注上述问题，是因为在神经网络中$f(x)$对应的是损失函数（$L$），输入$x$里面包含训练数据和神经网络的权重。举个例子，损失函数可以是SVM的损失函数，输入则包含了训练数据$(x_i,y_i),i=1…N$、权重$W$和偏差$b$。注意训练集是给定的（在机器学习中通常都是这样），而权重是可以控制的变量。因此，即使能用反向传播计算输入数据$x_i$ 上的梯度，但在实践为了进行参数更新，通常也只计算参数（比如$W,b$）的梯度。然而$x_i$ 的梯度有时仍然是有用的：比如将神经网络所做的事情可视化便于直观理解的时候，就能用上。</p>
-<p>如果读者之前对于利用链式法则计算偏微分已经很熟练，仍然建议浏览本篇笔记。因为它呈现了一个相对成熟的反向传播视角，在该视角中能看见基于实数值回路的反向传播过程，而对其细节的理解和收获将帮助读者更好地通过本课程。</p>
-<h2 id="简单表达式和理解梯度"><a href="#简单表达式和理解梯度" class="headerlink" title="简单表达式和理解梯度"></a>简单表达式和理解梯度</h2><p>从简单表达式入手可以为复杂表达式打好符号和规则基础。先考虑一个简单的二元乘法函数$f(x,y)=xy$。对两个输入变量分别求偏导数还是很简单的：</p>
-<center>$$\displaystyle f(x,y)=xy \to \frac {df}{dx}=y \quad \frac {df}{dy}=x$$</center>
-
-<p><strong>解释</strong>：牢记这些导数的意义：函数变量在某个点周围的极小区域内变化，而导数就是变量变化导致的函数在该方向上的变化率。</p>
-<p>注意等号左边的分号和等号右边的分号不同，不是代表分数。相反，这个符号表示操作符$\frac{d}{dx}$被应用于函数$f$，并返回一个不同的函数（导数）。对于上述公式，可以认为$h$值非常小，函数可以被一条直线近似，而导数就是这条直线的斜率。换句话说，每个变量的导数指明了整个表达式对于该变量的值的敏感程度。比如，若$x=4,y=-3$，则$f(x,y)=-12$，$x$的导数$\frac{\partial f}{\partial x}=-3$。这就说明如果将变量$x$的值变大一点，整个表达式的值就会变小（原因在于负号），而且变小的量是$x$变大的量的三倍。通过重新排列公式可以看到这一点（$f(x+h)=f(x)+h \frac{df(x)}{dx}$）。同样，因为$\frac{\partial f}{\partial y}=4$，可以知道如果将$y$的值增加$h$，那么函数的输出也将增加（原因在于正号），且增加量是$4h$。</p>
-<blockquote>
-<p>函数关于每个变量的导数指明了整个表达式对于该变量的敏感程度。</p>
-</blockquote>
-<p>如上所述，梯度$\nabla f$是偏导数的向量，所以有$\nabla f(x)=[\frac{\partial f}{\partial x},\frac{\partial f}{\partial y}]=[y,x]$。即使是梯度实际上是一个向量，仍然通常使用类似“<em>x上的梯度</em>”的术语，而不是使用如“<em>x的偏导数</em>”的正确说法，原因是因为前者说起来简单。</p>
-<p>我们也可以对加法操作求导：</p>
-<center>$$\displaystyle f(x,y)=x+y \to \frac {df}{dx}=1\quad\frac {df}{dy}=1$$</center>
-
-<p>这就是说，无论其值如何，$x,y$的导数均为1。这是有道理的，因为无论增加$x,y$中任一个的值，函数$f$的值都会增加，并且增加的变化率独立于$x,y$的具体值（情况和乘法操作不同）。取最大值操作也是常常使用的：</p>
-<center>$$\displaystyle f(x,y)=max(x,y) \to \frac {df}{dx}=1 (x&gt;=y) \quad\frac {df}{dy}=1 (y&gt;=x)$$</center>
-
-<p>上式是说，如果该变量比另一个变量大，那么梯度是1，反之为0。例如，若$x=4,y=2$，那么max是4，所以函数对于$y$就不敏感。也就是说，在$y$上增加$h$，函数还是输出为4，所以梯度是0：因为对于函数输出是没有效果的。当然，如果给$y$增加一个很大的量，比如大于2，那么函数$f$的值就变化了，但是导数并没有指明输入量有巨大变化情况对于函数的效果，他们只适用于输入量变化极小时的情况，因为定义已经指明：$lim_{h\to 0}$。</p>
-<h2 id="使用链式法则计算复合表达式"><a href="#使用链式法则计算复合表达式" class="headerlink" title="使用链式法则计算复合表达式"></a>使用链式法则计算复合表达式</h2><p>现在考虑更复杂的包含多个函数的复合函数，比如$f(x,y,z)=(x+y)z$。虽然这个表达足够简单，可以直接微分，但是在此使用一种有助于读者直观理解反向传播的方法。将公式分成两部分：$q=x+y$和$f=qz$。在前面已经介绍过如何对这分开的两个公式进行计算，因为$f$是$q$和$z$相乘，所以$\displaystyle\frac{\partial f}{\partial q}=z,\frac{\partial f}{\partial z}=q$，又因为$q$是$x$加$y$，所以$\displaystyle\frac{\partial q}{\partial x}=1,\frac{\partial q}{\partial y}=1$。然而，并不需要关心中间量$q$的梯度，因为$\frac{\partial f}{\partial q}$没有用。相反，函数$f$关于$x,y,z$的梯度才是需要关注的。<strong>链式法则</strong>指出将这些梯度表达式链接起来的正确方式是相乘，比如$\displaystyle\frac{\partial f}{\partial x}=\frac{\partial f}{\partial q}\frac{\partial q}{\partial x}$。在实际操作中，这只是简单地将两个梯度数值相乘，示例代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置输入值</span></span><br><span class="line">x = <span class="number">-2</span>; y = <span class="number">5</span>; z = <span class="number">-4</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 进行前向传播</span></span><br><span class="line">q = x + y <span class="comment"># q becomes 3</span></span><br><span class="line">f = q * z <span class="comment"># f becomes -12</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 进行反向传播:</span></span><br><span class="line"><span class="comment"># 首先回传到 f = q * z</span></span><br><span class="line">dfdz = q <span class="comment"># df/dz = q, 所以关于z的梯度是3</span></span><br><span class="line">dfdq = z <span class="comment"># df/dq = z, 所以关于q的梯度是-4</span></span><br><span class="line"><span class="comment"># 现在回传到q = x + y</span></span><br><span class="line">dfdx = <span class="number">1.0</span> * dfdq <span class="comment"># dq/dx = 1. 这里的乘法是因为链式法则</span></span><br><span class="line">dfdy = <span class="number">1.0</span> * dfdq <span class="comment"># dq/dy = 1</span></span><br></pre></td></tr></table></figure>
-<p>最后得到变量的梯度<strong>[dfdx, dfdy, dfdz]</strong>，它们告诉我们函数<strong>f</strong>对于变量<strong>[x, y, z]</strong>的敏感程度。这是一个最简单的反向传播。一般会使用一个更简洁的表达符号，这样就不用写<strong>df</strong>了。这就是说，用<strong>dq</strong>来代替<strong>dfdq</strong>，且总是假设梯度是关于最终输出的。</p>
-<p>这次计算可以被可视化为如下计算线路图像：</p>
-<p>————————————————————————————————————————</p>
-<center><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/backprop/backprop_0.jpg?raw=true" width="350"></center><br>上图的真实值计算线路展示了计算的视觉化过程。<strong>前向传播</strong>从输入计算到输出（绿色），<strong>反向传播</strong>从尾部开始，根据链式法则递归地向前计算梯度（显示为红色），一直到网络的输入端。可以认为，梯度是从计算链路中回流。<br><br>————————————————————————————————————————<br><br>## 反向传播的直观理解<br><br>反向传播是一个优美的局部过程。在整个计算线路图中，每个门单元都会得到一些输入并立即计算两个东西：1. 这个门的输出值，和2.其输出值关于输入值的局部梯度。门单元完成这两件事是完全独立的，它不需要知道计算线路中的其他细节。然而，一旦前向传播完毕，在反向传播的过程中，门单元门将最终获得整个网络的最终输出值在自己的输出值上的梯度。链式法则指出，门单元应该将回传的梯度乘以它对其的输入的局部梯度，从而得到整个网络的输出对该门单元的每个输入值的梯度。<br><br>&gt; 这里对于每个输入的乘法操作是基于链式法则的。该操作让一个相对独立的门单元变成复杂计算线路中不可或缺的一部分，这个复杂计算线路可以是神经网络等。<br><br>下面通过例子来对这一过程进行理解。加法门收到了输入[-2, 5]，计算输出是3。既然这个门是加法操作，那么对于两个输入的局部梯度都是+1。网络的其余部分计算出最终值为-12。在反向传播时将递归地使用链式法则，算到加法门（是乘法门的输入）的时候，知道加法门的输出的梯度是-4。如果网络如果想要输出值更高，那么可以认为它会想要加法门的输出更小一点（因为负号），而且还有一个4的倍数。继续递归并对梯度使用链式法则，加法门拿到梯度，然后把这个梯度分别乘到每个输入值的局部梯度（就是让-4乘以<strong>x</strong>和<strong>y</strong>的局部梯度，x和y的局部梯度都是1，所以最终都是-4）。可以看到得到了想要的效果：如果<strong>x，y减小</strong>（它们的梯度为负），那么加法门的输出值减小，这会让乘法门的输出值增大。<br><br>因此，反向传播可以看做是门单元之间在通过梯度信号相互通信，只要让它们的输入沿着梯度方向变化，无论它们自己的输出值在何种程度上升或降低，都是为了让整个网络的输出值更高。<br><br>## 模块化：Sigmoid例子<br><br>上面介绍的门是相对随意的。任何可微分的函数都可以看做门。可以将多个门组合成一个门，也可以根据需要将一个函数分拆成多个门。现在看看一个表达式：<br><br><center>$$\displaystyle f(w,x)=\frac{1}{1+e^{-(w_0x_0+w_1x_1+w_2)}}$$</center>
-
-<p>在后面的课程中可以看到，这个表达式描述了一个含输入<strong>x</strong>和权重<strong>w</strong>的2维的神经元，该神经元使用了<em>sigmoid激活</em>函数。但是现在只是看做是一个简单的输入为x和w，输出为一个数字的函数。这个函数是由多个门组成的。除了上文介绍的加法门，乘法门，取最大值门，还有下面这4种：</p>
-<center>$$f(x) = \frac{1}{x} \hspace{1in} \rightarrow \hspace{1in} \frac{df}{dx} = -1/x^2 $$<br>$$f_c(x) = c + x\hspace{1in} \rightarrow \hspace{1in} \frac{df}{dx} = 1 $$<br>$$f(x) = e^x\hspace{1in} \rightarrow \hspace{1in} \frac{df}{dx} = e^x$$<br>$$f_a(x) = ax\hspace{1in} \rightarrow \hspace{1in} \frac{df}{dx} = a$$ </center>
-
-<p>其中，函数$f_c$使用对输入值进行了常量$c$将输入值扩大了常量$a$倍。它们是加法和乘法的特例，但是这里将其看做一元门单元，因为确实需要计算常量$c,a$的梯度。整个计算线路如下：</p>
-<p>———————————————————————————————————————</p>
-<center><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/backprop/backprop_1.jpg?raw=true" width="400"></center>
-
-<p>使用sigmoid激活函数的2维神经元的例子。输入是[x0, x1]，可学习的权重是[w0, w1, w2]。一会儿会看见，这个神经元对输入数据做点积运算，然后其激活数据被sigmoid函数挤压到0到1之间。</p>
-<p>————————————————————————————————————————</p>
-<p>在上面的例子中可以看见一个函数操作的长链条，链条上的门都对<strong>w</strong>和<strong>x</strong>的点积结果进行操作。该函数被称为sigmoid函数$\sigma (x)$。sigmoid函数关于其输入的求导是可以简化的(使用了在分子上先加后减1的技巧)：</p>
-<center>$$\sigma(x) = \frac{1}{1+e^{-x}} \\\rightarrow \hspace{0.3in} \frac{d\sigma(x)}{dx} = \frac{e^{-x}}{(1+e^{-x})^2} = \left( \frac{1 + e^{-x} - 1}{1 + e^{-x}} \right) \left( \frac{1}{1+e^{-x}} \right) = \left( 1 - \sigma(x) \right) \sigma(x)$$</center>
-
-<p>可以看到梯度计算简单了很多。举个例子，sigmoid表达式输入为1.0，则在前向传播中计算出输出为0.73。根据上面的公式，局部梯度为(1-0.73)*0.73~=0.2，和之前的计算流程比起来，现在的计算使用一个单独的简单表达式即可。因此，在实际的应用中将这些操作装进一个单独的门单元中将会非常有用。该神经元反向传播的代码实现如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">w = [<span class="number">2</span>,<span class="number">-3</span>,<span class="number">-3</span>] <span class="comment"># 假设一些随机数据和权重</span></span><br><span class="line">x = [<span class="number">-1</span>, <span class="number">-2</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 前向传播</span></span><br><span class="line">dot = w[<span class="number">0</span>]*x[<span class="number">0</span>] + w[<span class="number">1</span>]*x[<span class="number">1</span>] + w[<span class="number">2</span>]</span><br><span class="line">f = <span class="number">1.0</span> / (<span class="number">1</span> + math.exp(-dot)) <span class="comment"># sigmoid函数</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 对神经元反向传播</span></span><br><span class="line">ddot = (<span class="number">1</span> - f) * f <span class="comment"># 点积变量的梯度, 使用sigmoid函数求导</span></span><br><span class="line">dx = [w[<span class="number">0</span>] * ddot, w[<span class="number">1</span>] * ddot] <span class="comment"># 回传到x</span></span><br><span class="line">dw = [x[<span class="number">0</span>] * ddot, x[<span class="number">1</span>] * ddot, <span class="number">1.0</span> * ddot] <span class="comment"># 回传到w</span></span><br><span class="line"><span class="comment"># 完成！得到输入的梯度</span></span><br></pre></td></tr></table></figure>
-<p><strong>实现提示：分段反向传播</strong>。上面的代码展示了在实际操作中，为了使反向传播过程更加简洁，把向前传播分成不同的阶段将是很有帮助的。比如我们创建了一个中间变量<strong>dot</strong>，它装着<strong>w</strong>和<strong>x</strong>的点乘结果。在反向传播的时，就可以（反向地）计算出装着<strong>w</strong>和<strong>x</strong>等的梯度的对应的变量（比如<strong>ddot</strong>，<strong>dx</strong>和<strong>dw</strong>）。</p>
-<p>本节的要点就是展示反向传播的细节过程，以及前向传播过程中，哪些函数可以被组合成门，从而可以进行简化。知道表达式中哪部分的局部梯度计算比较简洁非常有用，这样他们可以“链”在一起，让代码量更少，效率更高。</p>
-<h2 id="反向传播实践：分段计算"><a href="#反向传播实践：分段计算" class="headerlink" title="反向传播实践：分段计算"></a>反向传播实践：分段计算</h2><p>看另一个例子。假设有如下函数：</p>
-<center>$$f(x,y) = \frac{x + \sigma(y)}{\sigma(x) + (x+y)^2}$$</center>
-
-<p>首先要说的是，这个函数完全没用，读者是不会用到它来进行梯度计算的，这里只是用来作为实践反向传播的一个例子，需要强调的是，如果对$x$或$y$进行微分运算，运算结束后会得到一个巨大而复杂的表达式。然而做如此复杂的运算实际上并无必要，因为我们不需要一个明确的函数来计算梯度，只需知道如何使用反向传播计算梯度即可。下面是构建前向传播的代码模式：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">3</span> <span class="comment"># 例子数值</span></span><br><span class="line">y = <span class="number">-4</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 前向传播</span></span><br><span class="line">sigy = <span class="number">1.0</span> / (<span class="number">1</span> + math.exp(-y)) <span class="comment"># 分子中的sigmoi          #(1)</span></span><br><span class="line">num = x + sigy <span class="comment"># 分子                                    #(2)</span></span><br><span class="line">sigx = <span class="number">1.0</span> / (<span class="number">1</span> + math.exp(-x)) <span class="comment"># 分母中的sigmoid         #(3)</span></span><br><span class="line">xpy = x + y                                              <span class="comment">#(4)</span></span><br><span class="line">xpysqr = xpy**<span class="number">2</span>                                          <span class="comment">#(5)</span></span><br><span class="line">den = sigx + xpysqr <span class="comment"># 分母                                #(6)</span></span><br><span class="line">invden = <span class="number">1.0</span> / den                                       <span class="comment">#(7)</span></span><br><span class="line">f = num * invden <span class="comment"># 搞定！                                 #(8)</span></span><br></pre></td></tr></table></figure>
-<p>┗|｀O′|┛ 嗷~~，到了表达式的最后，就完成了前向传播。注意在构建代码s时创建了多个中间变量，每个都是比较简单的表达式，它们计算局部梯度的方法是已知的。这样计算反向传播就简单了：我们对前向传播时产生每个变量(<strong>sigy, num, sigx, xpy, xpysqr, den, invden</strong>)进行回传。我们会有同样数量的变量，但是都以<strong>d</strong>开头，用来存储对应变量的梯度。注意在反向传播的每一小块中都将包含了表达式的局部梯度，然后根据使用链式法则乘以上游梯度。对于每行代码，我们将指明其对应的是前向传播的哪部分。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 回传 f = num * invden</span></span><br><span class="line">dnum = invden <span class="comment"># 分子的梯度                                         #(8)</span></span><br><span class="line">dinvden = num                                                     <span class="comment">#(8)</span></span><br><span class="line"><span class="comment"># 回传 invden = 1.0 / den </span></span><br><span class="line">dden = (<span class="number">-1.0</span> / (den**<span class="number">2</span>)) * dinvden                                <span class="comment">#(7)</span></span><br><span class="line"><span class="comment"># 回传 den = sigx + xpysqr</span></span><br><span class="line">dsigx = (<span class="number">1</span>) * dden                                                <span class="comment">#(6)</span></span><br><span class="line">dxpysqr = (<span class="number">1</span>) * dden                                              <span class="comment">#(6)</span></span><br><span class="line"><span class="comment"># 回传 xpysqr = xpy**2</span></span><br><span class="line">dxpy = (<span class="number">2</span> * xpy) * dxpysqr                                        <span class="comment">#(5)</span></span><br><span class="line"><span class="comment"># 回传 xpy = x + y</span></span><br><span class="line">dx = (<span class="number">1</span>) * dxpy                                                   <span class="comment">#(4)</span></span><br><span class="line">dy = (<span class="number">1</span>) * dxpy                                                   <span class="comment">#(4)</span></span><br><span class="line"><span class="comment"># 回传 sigx = 1.0 / (1 + math.exp(-x))</span></span><br><span class="line">dx += ((<span class="number">1</span> - sigx) * sigx) * dsigx <span class="comment"># Notice += !! See notes below  #(3)</span></span><br><span class="line"><span class="comment"># 回传 num = x + sigy</span></span><br><span class="line">dx += (<span class="number">1</span>) * dnum                                                  <span class="comment">#(2)</span></span><br><span class="line">dsigy = (<span class="number">1</span>) * dnum                                                <span class="comment">#(2)</span></span><br><span class="line"><span class="comment"># 回传 sigy = 1.0 / (1 + math.exp(-y))</span></span><br><span class="line">dy += ((<span class="number">1</span> - sigy) * sigy) * dsigy                                 <span class="comment">#(1)</span></span><br><span class="line"><span class="comment"># 完成! 嗷~~</span></span><br></pre></td></tr></table></figure>
-<p>需要注意的一些东西：</p>
-<p><strong>对前向传播变量进行缓存</strong>：在计算反向传播时，前向传播过程中得到的一些中间变量非常有用。在实际操作中，最好代码实现对于这些中间变量的缓存，这样在反向传播的时候也能用上它们。如果这样做过于困难，也可以（但是浪费计算资源）重新计算它们。</p>
-<p><strong>在不同分支的梯度要相加</strong>：如果变量x，y在前向传播的表达式中出现多次，那么进行反向传播的时候就要非常小心，使用<strong>+=</strong>而不是<strong>=</strong>来累计这些变量的梯度（不然就会造成覆写）。这是遵循了在微积分中的<em>多元链式法则</em>，该法则指出如果变量在线路中分支走向不同的部分，那么梯度在回传的时候，就应该进行累加。</p>
-<h2 id="回传流中的模式"><a href="#回传流中的模式" class="headerlink" title="回传流中的模式"></a>回传流中的模式</h2><p>一个有趣的现象是在多数情况下，反向传播中的梯度可以被很直观地解释。例如神经网络中最常用的加法、乘法和取最大值这三个门单元，它们在反向传播过程中的行为都有非常简单的解释。先看下面这个例子：</p>
-<p>——————————————————————————————————————————</p>
-<center><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/backprop/backprop_2.jpg?raw=true" width="350"></center>
-
-<p>一个展示反向传播的例子。加法操作将梯度相等地分发给它的输入。取最大操作将梯度路由给更大的输入。乘法门拿取输入激活数据，对它们进行交换，然后乘以梯度。</p>
-<p>——————————————————————————————————————————</p>
-<p>从上例可知：</p>
-<p><strong>加法门单元</strong>把输出的梯度相等地分发给它所有的输入，这一行为与输入值在前向传播时的值无关。这是因为加法操作的局部梯度都是简单的+1，所以所有输入的梯度实际上就等于输出的梯度，因为乘以1.0保持不变。上例中，加法门把梯度2.00不变且相等地路由给了两个输入。</p>
-<p><strong>取最大值门单元</strong>对梯度做路由。和加法门不同，取最大值门将梯度转给其中一个输入，这个输入是在前向传播中值最大的那个输入。这是因为在取最大值门中，最高值的局部梯度是1.0，其余的是0。上例中，取最大值门将梯度2.00转给了<strong>z</strong>变量，因为<strong>z</strong>的值比<strong>w</strong>高，于是<strong>w</strong>的梯度保持为0。</p>
-<p><strong>乘法门单元</strong>相对不容易解释。它的局部梯度就是输入值，但是是相互交换之后的，然后根据链式法则乘以输出值的梯度。上例中，<strong>x</strong>的梯度是-4.00x2.00=-8.00。</p>
-<p><em>非直观影响及其结果</em>。注意一种比较特殊的情况，如果乘法门单元的其中一个输入非常小，而另一个输入非常大，那么乘法门的操作将会不是那么直观：它将会把大的梯度分配给小的输入，把小的梯度分配给大的输入。在线性分类器中，权重和输入是进行点积$w^Tx_i$，这说明输入数据的大小对于权重梯度的大小有影响。例如，在计算过程中对所有输入数据样本$x_i$乘以1000，那么权重的梯度将会增大1000倍，这样就必须降低学习率来弥补。这就是为什么数据预处理关系重大，它即使只是有微小变化，也会产生巨大影响。对于梯度在计算线路中是如何流动的有一个直观的理解，可以帮助读者调试网络。</p>
-<h2 id="用向量化操作计算梯度"><a href="#用向量化操作计算梯度" class="headerlink" title="用向量化操作计算梯度"></a>用向量化操作计算梯度</h2><p>上述内容考虑的都是单个变量情况，但是所有概念都适用于矩阵和向量操作。然而，在操作的时候要注意关注维度和转置操作。</p>
-<p><strong>矩阵相乘的梯度</strong>：可能最有技巧的操作是矩阵相乘（也适用于矩阵和向量，向量和向量相乘）的乘法操作：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 前向传播</span></span><br><span class="line">W = np.random.randn(<span class="number">5</span>, <span class="number">10</span>)</span><br><span class="line">X = np.random.randn(<span class="number">10</span>, <span class="number">3</span>)</span><br><span class="line">D = W.dot(X)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 假设我们得到了D的梯度</span></span><br><span class="line">dD = np.random.randn(*D.shape) <span class="comment"># 和D一样的尺寸</span></span><br><span class="line">dW = dD.dot(X.T) <span class="comment">#.T就是对矩阵进行转置</span></span><br><span class="line">dX = W.T.dot(dD)</span><br></pre></td></tr></table></figure>
-<p><em>提示：要分析维度！</em>注意不需要去记忆<strong>dW</strong>和<strong>dX</strong>的表达，因为它们很容易通过维度推导出来。例如，权重的梯度dW的尺寸肯定和权重矩阵W的尺寸是一样的，而这又是由<strong>X</strong>和<strong>dD</strong>的矩阵乘法决定的（在上面的例子中<strong>X</strong>和<strong>W</strong>都是数字不是矩阵）。总有一个方式是能够让维度之间能够对的上的。例如，<strong>X</strong>的尺寸是[10x3]，<strong>dD</strong>的尺寸是[5x3]，如果你想要dW和W的尺寸是[5x10]，那就要<strong>dD.dot(X.T)</strong>。</p>
-<p><strong>使用小而具体的例子</strong>：有些读者可能觉得向量化操作的梯度计算比较困难，建议是写出一个很小很明确的向量化例子，在纸上演算梯度，然后对其一般化，得到一个高效的向量化操作形式。</p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ul>
-<li>对梯度的含义有了直观理解，知道了梯度是如何在网络中反向传播的，知道了它们是如何与网络的不同部分通信并控制其升高或者降低，并使得最终输出值更高的。</li>
-<li>讨论了<strong>分段计算</strong>在反向传播的实现中的重要性。应该将函数分成不同的模块，这样计算局部梯度相对容易，然后基于链式法则将其“链”起来。重要的是，不需要把这些表达式写在纸上然后演算它的完整求导公式，因为实际上并不需要关于输入变量的梯度的数学公式。只需要将表达式分成不同的可以求导的模块（模块可以是矩阵向量的乘法操作，或者取最大值操作，或者加法操作等），然后在反向传播中一步一步地计算梯度。</li>
-</ul>
-<p>在下节课中，将会开始定义神经网络，而反向传播使我们能高效计算神经网络各个节点关于损失函数的梯度。换句话说，我们现在已经准备好训练神经网络了，本课程最困难的部分已经过去了！ConvNets相比只是向前走了一小步。</p>
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
-<li><a href="http://link.zhihu.com/?target=http%3A//arxiv.org/abs/1502.05767" target="_blank" rel="noopener"><strong>Automatic differentiation in machine learning: a survey</strong></a></li>
-</ul>
-<p><strong>反向传播笔记全文翻译完</strong>。</p>
-<blockquote>
-<p>译自斯坦福CS231n课程笔记<a href="http://link.zhihu.com/?target=http%3A//cs231n.github.io/optimization-2/" target="_blank" rel="noopener"><strong>Backprop Note</strong></a>，课程教师<a href="http://link.zhihu.com/?target=http%3A//cs.stanford.edu/people/karpathy/" target="_blank" rel="noopener"><strong>Andrej Karpathy</strong></a>授权翻译。本篇教程由<a href="https://www.zhihu.com/people/du-ke" target="_blank" rel="noopener">杜客</a>翻译完成，<a href="https://www.zhihu.com/people/kun-kun-97-81" target="_blank" rel="noopener">堃堃</a>和<a href="https://www.zhihu.com/people/hmonkey" target="_blank" rel="noopener">巩子嘉</a>进行校对修改。</p>
-<p>知乎地址：<a href="https://zhuanlan.zhihu.com/p/21407711?refer=intelligentunit" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/21407711?refer=intelligentunit</a></p>
-</blockquote>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/11/hello-world/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2208,14 +1918,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
 
               
                 
               
 
-              <time title="Created: 2018-02-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-02-11T11:11:11+08:00">2018-02-11</time>
+              <time title="创建时间：2018-02-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-02-11T11:11:11+08:00">2018-02-11</time>
             
 
             
@@ -2230,9 +1940,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Edited on</span>
+                  <span class="post-meta-item-text">更新于</span>
                 
-                <time title="Modified: 2018-03-02 16:54:52" itemprop="dateModified" datetime="2018-03-02T16:54:52+08:00">2018-03-02</time>
+                <time title="修改时间：2018-03-02 16:54:52" itemprop="dateModified" datetime="2018-03-02T16:54:52+08:00">2018-03-02</time>
               
             
           </span>
@@ -2333,6 +2043,321 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/11/CS231n/CS231n_Image_Classify/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heroinlin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/leaf.jpg"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Heroinlin's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/02/11/CS231n/CS231n_Image_Classify/" class="post-title-link" itemprop="url">CS231n课程笔记翻译：图像分类笔记</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-02-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-02-11T11:11:11+08:00">2018-02-11</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-03-26 08:53:48" itemprop="dateModified" datetime="2018-03-26T08:53:48+08:00">2018-03-26</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/CS231n课程笔记翻译/" itemprop="url" rel="index"><span itemprop="name">CS231n课程笔记翻译</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="CS231n课程笔记翻译：图像分类笔记"><a href="#CS231n课程笔记翻译：图像分类笔记" class="headerlink" title="CS231n课程笔记翻译：图像分类笔记"></a>CS231n课程笔记翻译：图像分类笔记</h1><h2 id="原文如下"><a href="#原文如下" class="headerlink" title="原文如下"></a>原文如下</h2><p>这是一篇介绍性教程，面向非计算机视觉领域的同学。教程将向同学们介绍图像分类问题和数据驱动方法。下面是<strong>内容列表</strong>：</p>
+<ul>
+<li><p>图像分类、数据驱动方法和流程</p>
+</li>
+<li><p>Nearest Neighbor分类器</p>
+<ul>
+<li>k-Nearest Neighbor </li>
+</ul>
+</li>
+<li><p>验证集、交叉验证集和超参数调参</p>
+</li>
+<li><p>Nearest Neighbor的优劣</p>
+</li>
+<li><p>小结</p>
+</li>
+<li><p>小结：应用kNN实践</p>
+</li>
+<li><p>拓展阅读</p>
+</li>
+</ul>
+<h2 id="图像分类"><a href="#图像分类" class="headerlink" title="图像分类"></a>图像分类</h2><p><strong>目标</strong>：这一节我们将介绍图像分类问题。所谓图像分类问题，就是已有固定的分类标签集合，然后对于输入的图像，从分类标签集合中找出一个分类标签，最后把分类标签分配给该输入图像。虽然看起来挺简单的，但这可是计算机视觉领域的核心问题之一，并且有着各种各样的实际应用。在后面的课程中，我们可以看到计算机视觉领域中很多看似不同的问题（比如物体检测和分割），都可以被归结为图像分类问题。</p>
+<p><strong>例子</strong>：以下图为例，图像分类模型读取该图片，并生成该图片属于集合 {cat, dog, hat, mug}中各个标签的概率。需要注意的是，对于计算机来说，图像是一个由数字组成的巨大的3维数组。在这个例子中，猫的图像大小是宽248像素，高400像素，有3个颜色通道，分别是红、绿和蓝（简称RGB）。如此，该图像就包含了248X400X3=297600个数字，每个数字都是在范围0-255之间的整型，其中0表示全黑，255表示全白。我们的任务就是把这些上百万的数字变成一个简单的标签，比如“猫”。</p>
+<p>—————————————————————————————————————————</p>
+<center><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/image_classification/image_classification_0.png?raw=true" width="300"></center>
+
+<p>图像分类的任务，就是对于一个给定的图像，预测它属于的那个分类标签（或者给出属于一系列不同标签的可能性）。图像是3维数组，数组元素是取值范围从0到255的整数。数组的尺寸是宽度x高度x3，其中这个3代表的是红、绿和蓝3个颜色通道。</p>
+<p>—————————————————————————————————————————</p>
+<p><strong>困难和挑战</strong>：对于人来说，识别出一个像“猫”一样视觉概念是简单至极的，然而从计算机视觉算法的角度来看就值得深思了。我们在下面列举了计算机视觉算法在图像识别方面遇到的一些困难，要记住图像是以3维数组来表示的，数组中的元素是亮度值。</p>
+<ul>
+<li><strong>视角变化（Viewpoint variation）</strong>：同一个物体，摄像机可以从多个角度来展现。</li>
+<li><strong>大小变化（Scale variation）</strong>：物体可视的大小通常是会变化的（不仅是在图片中，在真实世界中大小也是变化的）。</li>
+<li><strong>形变（Deformation）</strong>：很多东西的形状并非一成不变，会有很大变化。</li>
+<li><strong>遮挡（Occlusion）</strong>：目标物体可能被挡住。有时候只有物体的一小部分（可以小到几个像素）是可见的。</li>
+<li><strong>光照条件（Illumination conditions）</strong>：在像素层面上，光照的影响非常大。</li>
+<li><strong>背景干扰（Background clutter）</strong>：物体可能混入背景之中，使之难以被辨认。</li>
+<li><strong>类内差异（Intra-class variation）</strong>：一类物体的个体之间的外形差异很大，比如椅子。这一类物体有许多不同的对象，每个都有自己的外形。</li>
+</ul>
+<p>面对以上所有变化及其组合，好的图像分类模型能够在维持分类结论稳定的同时，保持对类间差异足够敏感。</p>
+<p>—————————————————————————————————————————</p>
+<center><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/image_classification/image_classification_1.jpg?raw=true" width="400"></center>—————————————————————————————————————————<br><br><strong>数据驱动方法</strong>：如何写一个图像分类的算法呢？这和写个排序算法可是大不一样。怎么写一个从图像中认出猫的算法？搞不清楚。因此，与其在代码中直接写明各类物体到底看起来是什么样的，倒不如说我们采取的方法和教小孩儿看图识物类似：给计算机很多数据，然后实现学习算法，让计算机学习到每个类的外形。这种方法，就是<em>数据驱动方法</em>。既然该方法的第一步就是收集已经做好分类标注的图片来作为训练集，那么下面就看看数据库到底长什么样：<br><br>—————————————————————————————————————————<br><br><center><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/image_classification/image_classification_2.jpg?raw=true" width="400"></center>
+
+<p>一个有4个视觉分类的训练集。在实际中，我们可能有上千的分类，每个分类都有成千上万的图像。</p>
+<p>—————————————————————————————————————————</p>
+<p><strong>图像分类流程</strong>。在课程视频中已经学习过，<strong>图像分类</strong>就是输入一个元素为像素值的数组，然后给它分配一个分类标签。完整流程如下：</p>
+<ul>
+<li><strong>输入</strong>：输入是包含N个图像的集合，每个图像的标签是K种分类标签中的一种。这个集合称为<em>训练集。</em></li>
+<li><strong>学习</strong>：这一步的任务是使用训练集来学习每个类到底长什么样。一般该步骤叫做<em>训练分类器</em>或者<em>学习一个模型</em>。</li>
+<li><strong>评价</strong>：让分类器来预测它未曾见过的图像的分类标签，并以此来评价分类器的质量。我们会把分类器预测的标签和图像真正的分类标签对比。毫无疑问，分类器预测的分类标签和图像真正的分类标签如果一致，那就是好事，这样的情况越多越好。</li>
+</ul>
+<h2 id="Nearest-Neighbor分类器"><a href="#Nearest-Neighbor分类器" class="headerlink" title="Nearest Neighbor分类器"></a>Nearest Neighbor分类器</h2><p>作为课程介绍的第一个方法，我们来实现一个<strong>Nearest Neighbor分类器</strong>。虽然这个分类器和卷积神经网络没有任何关系，实际中也极少使用，但通过实现它，可以让读者对于解决图像分类问题的方法有个基本的认识。</p>
+<p><strong>图像分类数据集：CIFAR-10。</strong>一个非常流行的图像分类数据集是<a href="http://link.zhihu.com/?target=http%3A//www.cs.toronto.edu/%7Ekriz/cifar.html" target="_blank" rel="noopener"><strong>CIFAR-10</strong></a>。这个数据集包含了60000张32X32的小图像。每张图像都有10种分类标签中的一种。这60000张图像被分为包含50000张图像的训练集和包含10000张图像的测试集。在下图中你可以看见10个类的10张随机图片。</p>
+<p>—————————————————————————————————————————</p>
+<center><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/image_classification/image_classification_3.jpg?raw=true" width="400"></center>
+
+<p><strong>左边</strong>：从<a href="http://link.zhihu.com/?target=http%3A//www.cs.toronto.edu/%7Ekriz/cifar.html" target="_blank" rel="noopener"><strong>CIFAR-10</strong></a>数据库来的样本图像。<strong>右边</strong>：第一列是测试图像，然后第一列的每个测试图像右边是使用Nearest Neighbor算法，根据像素差异，从训练集中选出的10张最类似的图片。</p>
+<p>—————————————————————————————————————————</p>
+<p>假设现在我们有CIFAR-10的50000张图片（每种分类5000张）作为训练集，我们希望将余下的10000作为测试集并给他们打上标签。Nearest Neighbor算法将会拿着测试图片和训练集中每一张图片去比较，然后将它认为最相似的那个训练集图片的标签赋给这张测试图片。上面右边的图片就展示了这样的结果。请注意上面10个分类中，只有3个是准确的。比如第8行中，马头被分类为一个红色的跑车，原因在于红色跑车的黑色背景非常强烈，所以这匹马就被错误分类为跑车了。</p>
+<p>那么具体如何比较两张图片呢？在本例中，就是比较32x32x3的像素块。最简单的方法就是逐个像素比较，最后将差异值全部加起来。换句话说，就是将两张图片先转化为两个向量<img src="http://www.zhihu.com/equation?tex=I_1" alt="I_1">和<img src="http://www.zhihu.com/equation?tex=I_2" alt="I_2">，然后计算他们的<strong>L1距离：</strong></p>
+<p>这里的求和是针对所有的像素。下面是整个比较流程的图例：</p>
+<p>—————————————————————————————————————————</p>
+<center><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/image_classification/image_classification_4.jpg?raw=true" width="300"></center>
+
+<p>以图片中的一个颜色通道为例来进行说明。两张图片使用L1距离来进行比较。逐个像素求差值，然后将所有差值加起来得到一个数值。如果两张图片一模一样，那么L1距离为0，但是如果两张图片很是不同，那L1值将会非常大。</p>
+<p>—————————————————————————————————————————</p>
+<p>下面，让我们看看如何用代码来实现这个分类器。首先，我们将CIFAR-10的数据加载到内存中，并分成4个数组：训练数据和标签，测试数据和标签。在下面的代码中，<strong>Xtr</strong>（大小是50000x32x32x3）存有训练集中所有的图像，<strong>Ytr</strong>是对应的长度为50000的1维数组，存有图像对应的分类标签（从0到9）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Xtr, Ytr, Xte, Yte = load_CIFAR10(<span class="string">'data/cifar10/'</span>) <span class="comment"># a magic function we provide</span></span><br><span class="line"><span class="comment"># flatten out all images to be one-dimensional</span></span><br><span class="line">Xtr_rows = Xtr.reshape(Xtr.shape[<span class="number">0</span>], <span class="number">32</span> * <span class="number">32</span> * <span class="number">3</span>) <span class="comment"># Xtr_rows becomes 50000 x 3072</span></span><br><span class="line">Xte_rows = Xte.reshape(Xte.shape[<span class="number">0</span>], <span class="number">32</span> * <span class="number">32</span> * <span class="number">3</span>) <span class="comment"># Xte_rows becomes 10000 x 3072</span></span><br></pre></td></tr></table></figure>
+<p>现在我们得到所有的图像数据，并且把他们拉长成为行向量了。接下来展示如何训练并评价一个分类器：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">nn = NearestNeighbor() <span class="comment"># create a Nearest Neighbor classifier class</span></span><br><span class="line">nn.train(Xtr_rows, Ytr) <span class="comment"># train the classifier on the training images and labels</span></span><br><span class="line">Yte_predict = nn.predict(Xte_rows) <span class="comment"># predict labels on the test images</span></span><br><span class="line"><span class="comment"># and now print the classification accuracy, which is the average number</span></span><br><span class="line"><span class="comment"># of examples that are correctly predicted (i.e. label matches)</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">'accuracy: %f'</span> % ( np.mean(Yte_predict == Yte) )</span><br></pre></td></tr></table></figure>
+<p>作为评价标准，我们常常使用<strong>准确率</strong>，它描述了我们预测正确的得分。请注意以后我们实现的所有分类器都需要有这个API：<strong>train(X, y)</strong>函数。该函数使用训练集的数据和标签来进行训练。从其内部来看，类应该实现一些关于标签和标签如何被预测的模型。这里还有个<strong>predict(X)</strong>函数，它的作用是预测输入的新数据的分类标签。现在还没介绍分类器的实现，下面就是使用L1距离的Nearest Neighbor分类器的实现套路：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NearestNeighbor</span><span class="params">(object)</span>:</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(self, X, y)</span>:</span></span><br><span class="line">    <span class="string">""" X is N x D where each row is an example. Y is 1-dimension of size N """</span></span><br><span class="line">    <span class="comment"># the nearest neighbor classifier simply remembers all the training data</span></span><br><span class="line">    self.Xtr = X</span><br><span class="line">    self.ytr = y</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(self, X)</span>:</span></span><br><span class="line">    <span class="string">""" X is N x D where each row is an example we wish to predict label for """</span></span><br><span class="line">    num_test = X.shape[<span class="number">0</span>]</span><br><span class="line">    <span class="comment"># lets make sure that the output type matches the input type</span></span><br><span class="line">    Ypred = np.zeros(num_test, dtype = self.ytr.dtype)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># loop over all test rows</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(num_test):</span><br><span class="line">      <span class="comment"># find the nearest training image to the i'th test image</span></span><br><span class="line">      <span class="comment"># using the L1 distance (sum of absolute value differences)</span></span><br><span class="line">      distances = np.sum(np.abs(self.Xtr - X[i,:]), axis = <span class="number">1</span>)</span><br><span class="line">      min_index = np.argmin(distances) <span class="comment"># get the index with smallest distance</span></span><br><span class="line">      Ypred[i] = self.ytr[min_index] <span class="comment"># predict the label of the nearest example</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Ypred</span><br></pre></td></tr></table></figure>
+<p>如果你用这段代码跑CIFAR-10，你会发现准确率能达到<strong>38.6%</strong>。这比随机猜测的10%要好，但是比人类识别的水平（<a href="http://link.zhihu.com/?target=http%3A//karpathy.github.io/2011/04/27/manually-classifying-cifar10/" target="_blank" rel="noopener"><strong>据研究推测是94%</strong></a>）和卷积神经网络能达到的95%还是差多了。点击查看基于CIFAR-10数据的<a href="http://link.zhihu.com/?target=http%3A//www.kaggle.com/c/cifar-10/leaderboard" target="_blank" rel="noopener"><strong>Kaggle算法竞赛排行榜</strong></a>。</p>
+<p><strong>距离选择</strong>：计算向量间的距离有很多种方法，另一个常用的方法是<strong>L2距离</strong>，从几何学的角度，可以理解为它在计算两个向量间的欧式距离。L2距离的公式如下：</p>
+<p>换句话说，我们依旧是在计算像素间的差值，只是先求其平方，然后把这些平方全部加起来，最后对这个和开方。在Numpy中，我们只需要替换上面代码中的1行代码就行：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">distances = np.sqrt(np.sum(np.square(self.Xtr - X[i,:]), axis = <span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+<p>注意在这里使用了<strong>np.sqrt</strong>，但是在实际中可能不用。因为求平方根函数是一个<em>单调函数</em>，它对不同距离的绝对值求平方根虽然改变了数值大小，但依然保持了不同距离大小的顺序。所以用不用它，都能够对像素差异的大小进行正确比较。如果你在CIFAR-10上面跑这个模型，正确率是<strong>35.4%</strong>，比刚才低了一点。</p>
+<p><strong>L1和L2比较</strong>。比较这两个度量方式是挺有意思的。在面对两个向量之间的差异时，L2比L1更加不能容忍这些差异。也就是说，相对于1个巨大的差异，L2距离更倾向于接受多个中等程度的差异。L1和L2都是在<a href="http://link.zhihu.com/?target=http%3A//planetmath.org/vectorpnorm" target="_blank" rel="noopener"><strong>p-norm</strong></a>常用的特殊形式。</p>
+<h2 id="k-Nearest-Neighbor分类器"><a href="#k-Nearest-Neighbor分类器" class="headerlink" title="k-Nearest Neighbor分类器"></a>k-Nearest Neighbor分类器</h2><p>你可能注意到了，为什么只用最相似的1张图片的标签来作为测试图像的标签呢？这不是很奇怪吗！是的，使用<strong>k-Nearest Neighbor分类器</strong>就能做得更好。它的思想很简单：与其只找最相近的那1个图片的标签，我们找最相似的k个图片的标签，然后让他们针对测试图片进行投票，最后把票数最高的标签作为对测试图片的预测。所以当k=1的时候，k-Nearest Neighbor分类器就是Nearest Neighbor分类器。从直观感受上就可以看到，更高的k值可以让分类的效果更平滑，使得分类器对于异常值更有抵抗力。</p>
+<p>—————————————————————————————————————————</p>
+<center><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/image_classification/image_classification_5.jpg?raw=true" width="350"></center>
+
+<p>上面示例展示了Nearest Neighbor分类器和5-Nearest Neighbor分类器的区别。例子使用了2维的点来表示，分成3类（红、蓝和绿）。不同颜色区域代表的是使用L2距离的分类器的<strong>决策边界</strong>。白色的区域是分类模糊的例子（即图像与两个以上的分类标签绑定）。需要注意的是，在NN分类器中，异常的数据点（比如：在蓝色区域中的绿点）制造出一个不正确预测的孤岛。5-NN分类器将这些不规则都平滑了，使得它针对测试数据的<strong>泛化（generalization）</strong>能力更好（例子中未展示）。注意，5-NN中也存在一些灰色区域，这些区域是因为近邻标签的最高票数相同导致的（比如：2个邻居是红色，2个邻居是蓝色，还有1个是绿色）。</p>
+<p>—————————————————————————————————————————</p>
+<p>在实际中，大多使用k-NN分类器。但是k值如何确定呢？接下来就讨论这个问题。</p>
+<h2 id="用于超参数调优的验证集"><a href="#用于超参数调优的验证集" class="headerlink" title="用于超参数调优的验证集"></a>用于超参数调优的验证集</h2><p>k-NN分类器需要设定k值，那么选择哪个k值最合适的呢？我们可以选择不同的距离函数，比如L1范数和L2范数等，那么选哪个好？还有不少选择我们甚至连考虑都没有考虑到（比如：点积）。所有这些选择，被称为<strong>超参数（hyperparameter）</strong>。在基于数据进行学习的机器学习算法设计中，超参数是很常见的。一般说来，这些超参数具体怎么设置或取值并不是显而易见的。</p>
+<p>你可能会建议尝试不同的值，看哪个值表现最好就选哪个。好主意！我们就是这么做的，但这样做的时候要非常细心。特别注意：<strong>决不能使用测试集来进行调优</strong>。当你在设计机器学习算法的时候，应该把测试集看做非常珍贵的资源，不到最后一步，绝不使用它。如果你使用测试集来调优，而且算法看起来效果不错，那么真正的危险在于：算法实际部署后，性能可能会远低于预期。这种情况，称之为算法对测试集<strong>过拟合</strong>。从另一个角度来说，如果使用测试集来调优，实际上就是把测试集当做训练集，由测试集训练出来的算法再跑测试集，自然性能看起来会很好。这其实是过于乐观了，实际部署起来效果就会差很多。所以，最终测试的时候再使用测试集，可以很好地近似度量你所设计的分类器的泛化性能（在接下来的课程中会有很多关于泛化性能的讨论）。</p>
+<blockquote>
+<p>测试数据集只使用一次，即在训练完成后评价最终的模型时使用。</p>
+</blockquote>
+<p>好在我们有不用测试集调优的方法。其思路是：从训练集中取出一部分数据用来调优，我们称之为<strong>验证集(validation set)</strong>。以CIFAR-10为例，我们可以用49000个图像作为训练集，用1000个图像作为验证集。验证集其实就是作为假的测试集来调优。下面就是代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># assume we have Xtr_rows, Ytr, Xte_rows, Yte as before</span></span><br><span class="line"><span class="comment"># recall Xtr_rows is 50,000 x 3072 matrix</span></span><br><span class="line">Xval_rows = Xtr_rows[:<span class="number">1000</span>, :] <span class="comment"># take first 1000 for validation</span></span><br><span class="line">Yval = Ytr[:<span class="number">1000</span>]</span><br><span class="line">Xtr_rows = Xtr_rows[<span class="number">1000</span>:, :] <span class="comment"># keep last 49,000 for train</span></span><br><span class="line">Ytr = Ytr[<span class="number">1000</span>:]</span><br><span class="line"></span><br><span class="line"><span class="comment"># find hyperparameters that work best on the validation set</span></span><br><span class="line">validation_accuracies = []</span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">10</span>, <span class="number">20</span>, <span class="number">50</span>, <span class="number">100</span>]:</span><br><span class="line"></span><br><span class="line">  <span class="comment"># use a particular value of k and evaluation on validation data</span></span><br><span class="line">  nn = NearestNeighbor()</span><br><span class="line">  nn.train(Xtr_rows, Ytr)</span><br><span class="line">  <span class="comment"># here we assume a modified NearestNeighbor class that can take a k as input</span></span><br><span class="line">  Yval_predict = nn.predict(Xval_rows, k = k)</span><br><span class="line">  acc = np.mean(Yval_predict == Yval)</span><br><span class="line">  <span class="keyword">print</span> <span class="string">'accuracy: %f'</span> % (acc,)</span><br><span class="line"></span><br><span class="line">  <span class="comment"># keep track of what works on the validation set</span></span><br><span class="line">  validation_accuracies.append((k, acc))</span><br></pre></td></tr></table></figure>
+<p>程序结束后，我们会作图分析出哪个k值表现最好，然后用这个k值来跑真正的测试集，并作出对算法的评价。</p>
+<blockquote>
+<p>把训练集分成训练集和验证集。使用验证集来对所有超参数调优。最后只在测试集上跑一次并报告结果。</p>
+</blockquote>
+<p><strong>交叉验证</strong>。有时候，训练集数量较小（因此验证集的数量更小），人们会使用一种被称为<strong>交叉验证</strong>的方法，这种方法更加复杂些。还是用刚才的例子，如果是交叉验证集，我们就不是取1000个图像，而是将训练集平均分成5份，其中4份用来训练，1份用来验证。然后我们循环着取其中4份来训练，其中1份来验证，最后取所有5次验证结果的平均值作为算法验证结果。</p>
+<p>—————————————————————————————————————————</p>
+<p><center><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/image_classification/image_classification_6.png?raw=true" width="300"></center><br>这就是5份交叉验证对k值调优的例子。针对每个k值，得到5个准确率结果，取其平均值，然后对不同k值的平均表现画线连接。本例中，当k=7的时算法表现最好（对应图中的准确率峰值）。如果我们将训练集分成更多份数，直线一般会更加平滑（噪音更少）。</p>
+<p>—————————————————————————————————————————</p>
+<p><strong>实际应用</strong>。在实际情况下，人们不是很喜欢用交叉验证，主要是因为它会耗费较多的计算资源。一般直接把训练集按照50%-90%的比例分成训练集和验证集。但这也是根据具体情况来定的：如果超参数数量多，你可能就想用更大的验证集，而验证集的数量不够，那么最好还是用交叉验证吧。至于分成几份比较好，一般都是分成3、5和10份。</p>
+<p>—————————————————————————————————————————</p>
+<p><center><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/image_classification/image_classification_7.jpg?raw=true" width="300"></center><br>常用的数据分割模式。给出训练集和测试集后，训练集一般会被均分。这里是分成5份。前面4份用来训练，黄色那份用作验证集调优。如果采取交叉验证，那就各份轮流作为验证集。最后模型训练完毕，超参数都定好了，让模型跑一次（而且只跑一次）测试集，以此测试结果评价算法。</p>
+<p>—————————————————————————————————————————</p>
+<h2 id="Nearest-Neighbor分类器的优劣"><a href="#Nearest-Neighbor分类器的优劣" class="headerlink" title="Nearest Neighbor分类器的优劣"></a>Nearest Neighbor分类器的优劣</h2><p>现在对Nearest Neighbor分类器的优缺点进行思考。首先，Nearest Neighbor分类器易于理解，实现简单。其次，算法的训练不需要花时间，因为其训练过程只是将训练集数据存储起来。然而测试要花费大量时间计算，因为每个测试图像需要和所有存储的训练图像进行比较，这显然是一个缺点。在实际应用中，我们关注测试效率远远高于训练效率。其实，我们后续要学习的卷积神经网络在这个权衡上走到了另一个极端：虽然训练花费很多时间，但是一旦训练完成，对新的测试数据进行分类非常快。这样的模式就符合实际使用需求。</p>
+<p>Nearest Neighbor分类器的计算复杂度研究是一个活跃的研究领域，若干<strong>Approximate Nearest Neighbor </strong>(ANN)算法和库的使用可以提升Nearest Neighbor分类器在数据上的计算速度（比如：<a href="http://link.zhihu.com/?target=http%3A//www.cs.ubc.ca/research/flann/" target="_blank" rel="noopener"><strong>FLANN</strong></a>）。这些算法可以在准确率和时空复杂度之间进行权衡，并通常依赖一个预处理/索引过程，这个过程中一般包含kd树的创建和k-means算法的运用。</p>
+<p>Nearest Neighbor分类器在某些特定情况（比如数据维度较低）下，可能是不错的选择。但是在实际的图像分类工作中，很少使用。因为图像都是高维度数据（他们通常包含很多像素），而高维度向量之间的距离通常是反直觉的。下面的图片展示了基于像素的相似和基于感官的相似是有很大不同的：</p>
+<p>—————————————————————————————————————————</p>
+<p><center><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/image_classification/image_classification_8.png?raw=true" width="350"></center><br>在高维度数据上，基于像素的的距离和感官上的非常不同。上图中，右边3张图片和左边第1张原始图片的L2距离是一样的。很显然，基于像素比较的相似和感官上以及语义上的相似是不同的。</p>
+<p>—————————————————————————————————————————</p>
+<p>这里还有个视觉化证据，可以证明使用像素差异来比较图像是不够的。z这是一个叫做<a href="http://link.zhihu.com/?target=http%3A//lvdmaaten.github.io/tsne/" target="_blank" rel="noopener"><strong>t-SNE</strong></a>的可视化技术，它将CIFAR-10中的图片按照二维方式排布，这样能很好展示图片之间的像素差异值。在这张图片中，排列相邻的图片L2距离就小。</p>
+<p>—————————————————————————————————————————</p>
+<p><center><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/cs231n/image_classification/image_classification_9.jpg?raw=true" width="400"></center><br>上图使用t-SNE的可视化技术将CIFAR-10的图片进行了二维排列。排列相近的图片L2距离小。可以看出，图片的排列是被背景主导而不是图片语义内容本身主导。</p>
+<p>——————————————————————————————————————————</p>
+<p>具体说来，这些图片的排布更像是一种颜色分布函数，或者说是基于背景的，而不是图片的语义主体。比如，狗的图片可能和青蛙的图片非常接近，这是因为两张图片都是白色背景。从理想效果上来说，我们肯定是希望同类的图片能够聚集在一起，而不被背景或其他不相关因素干扰。为了达到这个目的，我们不能止步于原始像素比较，得继续前进。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>简要说来：</p>
+<ul>
+<li>介绍了<strong>图像分类</strong>问题。在该问题中，给出一个由被标注了分类标签的图像组成的集合，要求算法能预测没有标签的图像的分类标签，并根据算法预测准确率进行评价。</li>
+<li>介绍了一个简单的图像分类器：<strong>最近邻分类器(Nearest Neighbor classifier)</strong>。分类器中存在不同的超参数(比如k值或距离类型的选取)，要想选取好的超参数不是一件轻而易举的事。</li>
+<li>选取超参数的正确方法是：将原始训练集分为训练集和<strong>验证集</strong>，我们在验证集上尝试不同的超参数，最后保留表现最好那个。</li>
+<li>如果训练数据量不够，使用<strong>交叉验证</strong>方法，它能帮助我们在选取最优超参数的时候减少噪音。</li>
+<li>一旦找到最优的超参数，就让算法以该参数在测试集跑且只跑一次，并根据测试结果评价算法。</li>
+<li>最近邻分类器能够在CIFAR-10上得到将近40%的准确率。该算法简单易实现，但需要存储所有训练数据，并且在测试的时候过于耗费计算能力。</li>
+<li>最后，我们知道了仅仅使用L1和L2范数来进行像素比较是不够的，图像更多的是按照背景和颜色被分类，而不是语义主体分身。</li>
+</ul>
+<p>在接下来的课程中，我们将专注于解决这些问题和挑战，并最终能够得到超过90%准确率的解决方案。该方案能够在完成学习就丢掉训练集，并在一毫秒之内就完成一张图片的分类。</p>
+<h2 id="小结：实际应用k-NN"><a href="#小结：实际应用k-NN" class="headerlink" title="小结：实际应用k-NN"></a>小结：实际应用k-NN</h2><p>如果你希望将k-NN分类器用到实处（最好别用到图像上，若是仅仅作为练手还可以接受），那么可以按照以下流程：</p>
+<ol>
+<li>预处理你的数据：对你数据中的特征进行归一化（normalize），让其具有零平均值（zero mean）和单位方差（unit variance）。在后面的小节我们会讨论这些细节。本小节不讨论，是因为图像中的像素都是同质的，不会表现出较大的差异分布，也就不需要标准化处理了。</li>
+<li>如果数据是高维数据，考虑使用降维方法，比如PCA(<a href="http://link.zhihu.com/?target=http%3A//en.wikipedia.org/wiki/Principal_component_analysis" target="_blank" rel="noopener"><strong>wiki ref</strong></a>, <a href="http://link.zhihu.com/?target=http%3A//cs229.stanford.edu/notes/cs229-notes10.pdf" target="_blank" rel="noopener"><strong>CS229ref</strong></a>, <a href="http://link.zhihu.com/?target=http%3A//www.bigdataexaminer.com/understanding-dimensionality-reduction-principal-component-analysis-and-singular-value-decomposition/" target="_blank" rel="noopener"><strong>blog ref</strong></a>)或<a href="http://link.zhihu.com/?target=http%3A//scikit-learn.org/stable/modules/random_projection.html" target="_blank" rel="noopener"><strong>随机投影</strong></a>。</li>
+<li>将数据随机分入训练集和验证集。按照一般规律，70%-90% 数据作为训练集。这个比例根据算法中有多少超参数，以及这些超参数对于算法的预期影响来决定。如果需要预测的超参数很多，那么就应该使用更大的验证集来有效地估计它们。如果担心验证集数量不够，那么就尝试交叉验证方法。如果计算资源足够，使用交叉验证总是更加安全的（份数越多，效果越好，也更耗费计算资源）。</li>
+<li>在验证集上调优，尝试足够多的k值，尝试L1和L2两种范数计算方式。</li>
+<li>如果分类器跑得太慢，尝试使用Approximate Nearest Neighbor库（比如<a href="http://link.zhihu.com/?target=http%3A//www.cs.ubc.ca/research/flann/" target="_blank" rel="noopener"><strong>FLANN</strong></a>）来加速这个过程，其代价是降低一些准确率。</li>
+<li>对最优的超参数做记录。记录最优参数后，是否应该让使用最优参数的算法在完整的训练集上运行并再次训练呢？因为如果把验证集重新放回到训练集中（自然训练集的数据量就又变大了），有可能最优参数又会有所变化。在实践中，<strong>不要这样做</strong>。千万不要在最终的分类器中使用验证集数据，这样做会破坏对于最优参数的估计。<strong>直接使用测试集来测试用最优参数设置好的最优模型</strong>，得到测试集数据的分类准确率，并以此作为你的kNN分类器在该数据上的性能表现。</li>
+</ol>
+<h2 id="拓展阅读"><a href="#拓展阅读" class="headerlink" title="拓展阅读"></a>拓展阅读</h2><p>下面是一些你可能感兴趣的拓展阅读链接：</p>
+<ul>
+<li><a href="http://link.zhihu.com/?target=http%3A//homes.cs.washington.edu/%257Epedrod/papers/cacm12.pdf" target="_blank" rel="noopener"><strong>A Few Useful Things to Know about Machine Learning</strong></a>，文中第6节与本节相关，但是整篇文章都强烈推荐。</li>
+<li><a href="http://link.zhihu.com/?target=http%3A//people.csail.mit.edu/torralba/shortCourseRLOC/index.html" target="_blank" rel="noopener"><strong>Recognizing and Learning Object Categories</strong></a>，ICCV 2005上的一节关于物体分类的课程。</li>
+</ul>
+<p><strong>图像分类笔记全文翻译完毕</strong>。</p>
+<blockquote>
+<p>翻译自斯坦福CS231n课程笔记<a href="http://link.zhihu.com/?target=http%3A//cs231n.github.io/classification" target="_blank" rel="noopener"><strong>image classification notes</strong></a>，课程教师<a href="http://link.zhihu.com/?target=http%3A//cs.stanford.edu/people/karpathy/" target="_blank" rel="noopener"><strong>Andrej Karpathy</strong></a>授权翻译。本篇教程由<a href="https://www.zhihu.com/people/du-ke" target="_blank" rel="noopener">杜客</a>进行翻译，<a href="https://www.zhihu.com/people/sqfan" target="_blank" rel="noopener">ShiqingFan</a>和<a href="https://www.zhihu.com/people/gong-zi-jia-57" target="_blank" rel="noopener">巩子嘉</a>进行校对修改。</p>
+<p>知乎地址：<a href="https://zhuanlan.zhihu.com/p/20894041?refer=intelligentunit" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/20894041?refer=intelligentunit</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/11/CS231n/CS231n_Linear_Classify/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2371,14 +2396,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
 
               
                 
               
 
-              <time title="Created: 2018-02-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-02-11T11:11:11+08:00">2018-02-11</time>
+              <time title="创建时间：2018-02-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-02-11T11:11:11+08:00">2018-02-11</time>
             
 
             
@@ -2393,9 +2418,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Edited on</span>
+                  <span class="post-meta-item-text">更新于</span>
                 
-                <time title="Modified: 2018-03-26 08:53:54" itemprop="dateModified" datetime="2018-03-26T08:53:54+08:00">2018-03-26</time>
+                <time title="修改时间：2018-03-26 08:53:54" itemprop="dateModified" datetime="2018-03-26T08:53:54+08:00">2018-03-26</time>
               
             
           </span>
@@ -2409,7 +2434,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">分类于</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/CS231n课程笔记翻译/" itemprop="url" rel="index"><span itemprop="name">CS231n课程笔记翻译</span></a></span>
@@ -2718,14 +2743,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
 
               
                 
               
 
-              <time title="Created: 2018-02-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-02-11T11:11:11+08:00">2018-02-11</time>
+              <time title="创建时间：2018-02-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-02-11T11:11:11+08:00">2018-02-11</time>
             
 
             
@@ -2740,9 +2765,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Edited on</span>
+                  <span class="post-meta-item-text">更新于</span>
                 
-                <time title="Modified: 2018-03-26 08:53:34" itemprop="dateModified" datetime="2018-03-26T08:53:34+08:00">2018-03-26</time>
+                <time title="修改时间：2018-03-26 08:53:34" itemprop="dateModified" datetime="2018-03-26T08:53:34+08:00">2018-03-26</time>
               
             
           </span>
@@ -2756,7 +2781,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">分类于</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/CS231n课程笔记翻译/" itemprop="url" rel="index"><span itemprop="name">CS231n课程笔记翻译</span></a></span>
@@ -2914,7 +2939,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2961,7 +2986,7 @@
                   <a href="/archives/">
                 
                     <span class="site-state-item-count">35</span>
-                    <span class="site-state-item-name">posts</span>
+                    <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
               
@@ -3000,7 +3025,7 @@
                       
                     
                     <span class="site-state-item-count">11</span>
-                    <span class="site-state-item-name">categories</span>
+                    <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
               
@@ -3135,7 +3160,7 @@
                       
                     
                     <span class="site-state-item-count">59</span>
-                    <span class="site-state-item-name">tags</span>
+                    <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
               
@@ -3225,7 +3250,7 @@
 </div>
 
 
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.6.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.6.0</div>
 
 
 
@@ -3233,7 +3258,7 @@
 
 
 
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.2</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.2</div>
 
 
 

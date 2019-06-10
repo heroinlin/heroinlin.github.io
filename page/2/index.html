@@ -193,7 +193,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -221,7 +221,7 @@
 
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>首页</a>
 
   </li>
         
@@ -238,7 +238,7 @@
 
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br/>Tags</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br/>标签</a>
 
   </li>
         
@@ -255,7 +255,7 @@
 
     
 
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br/>Categories</a>
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br/>分类</a>
 
   </li>
         
@@ -272,7 +272,7 @@
 
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>归档</a>
 
   </li>
         
@@ -289,7 +289,7 @@
 
     
 
-    <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br/>Schedule</a>
+    <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br/>日程表</a>
 
   </li>
 
@@ -325,187 +325,6 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/11/blogs/Docker_Hexo_Nginx_blog/"/>
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Heroinlin"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="/images/leaf.jpg"/>
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Heroinlin's Blog"/>
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/04/11/blogs/Docker_Hexo_Nginx_blog/" class="post-title-link" itemprop="url">Mac下使用Docker+Hexo搭建博客</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-04-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-04-11T11:11:11+08:00">2018-04-11</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-06-05 10:48:40" itemprop="dateModified" datetime="2019-06-05T10:48:40+08:00">2019-06-05</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/blog/" itemprop="url" rel="index"><span itemprop="name">blog</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Mac下使用Docker-Hexo搭建博客"><a href="#Mac下使用Docker-Hexo搭建博客" class="headerlink" title="Mac下使用Docker+Hexo搭建博客"></a>Mac下使用Docker+Hexo搭建博客</h1><h2 id="Docker的安装"><a href="#Docker的安装" class="headerlink" title="Docker的安装"></a><a href="https://hub.docker.com/editions/community/docker-ce-desktop-mac" target="_blank" rel="noopener">Docker的安装</a></h2><p>下载Docker.dmg文件，双击进行安装。之后安装Kitematic。</p>
-<p><img src="/Users/heroin/Library/Application Support/typora-user-images/image-20190304234754685.png" alt="image-20190304234754685"></p>
-<h2 id="Hexo配置"><a href="#Hexo配置" class="headerlink" title="Hexo配置"></a>Hexo配置</h2><p>安装完后打开Kitematic，搜索Hexo创建hexo-with-hexo-hey，将Settings中的Volumes路径更改为之前搭建的Hexo博客所在文件夹路径</p>
-<p><img src="/Users/heroin/Library/Application Support/typora-user-images/image-20190304235200033.png" alt="image-20190304235200033"></p>
-<p>点击START，之后点击EXEC进入命令行模式，复制.ssh文件夹到Docker中的/home文件夹下，执行hexo的发布命令</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-<p>即可进行博客的发布，此时发布的内容可登入对应的github.io.git网址查看</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
     
       
 
@@ -560,14 +379,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
 
               
                 
               
 
-              <time title="Created: 2018-04-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-04-11T11:11:11+08:00">2018-04-11</time>
+              <time title="创建时间：2018-04-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-04-11T11:11:11+08:00">2018-04-11</time>
             
 
             
@@ -582,9 +401,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Edited on</span>
+                  <span class="post-meta-item-text">更新于</span>
                 
-                <time title="Modified: 2019-06-10 10:16:57" itemprop="dateModified" datetime="2019-06-10T10:16:57+08:00">2019-06-10</time>
+                <time title="修改时间：2019-06-10 10:16:57" itemprop="dateModified" datetime="2019-06-10T10:16:57+08:00">2019-06-10</time>
               
             
           </span>
@@ -747,162 +566,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/11/blogs/linux_user_password/"/>
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Heroinlin"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="/images/leaf.jpg"/>
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Heroinlin's Blog"/>
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/04/11/blogs/linux_user_password/" class="post-title-link" itemprop="url">linux修改密码和添加用户</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-04-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-04-11T11:11:11+08:00">2018-04-11</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-06-05 10:49:44" itemprop="dateModified" datetime="2019-06-05T10:49:44+08:00">2019-06-05</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="linux修改密码和添加用户"><a href="#linux修改密码和添加用户" class="headerlink" title="linux修改密码和添加用户"></a>linux修改密码和添加用户</h1><p>默认root账户是没有密码的，使用<code>sudo su</code>进入root账户，输入passwd进行密码的设置，输入passwd -d heroin， 可以删除heroin账户原先设置的密码，切换到heroin账户后，输入passwd可以重新设置heroin账户的密码</p>
-<p>切换到root账户后，输入gpasswd -a heroin root 可以将heroin账户加入root组</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/11/Docker/docker_document/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -941,14 +604,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
 
               
                 
               
 
-              <time title="Created: 2018-04-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-04-11T11:11:11+08:00">2018-04-11</time>
+              <time title="创建时间：2018-04-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-04-11T11:11:11+08:00">2018-04-11</time>
             
 
             
@@ -963,9 +626,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Edited on</span>
+                  <span class="post-meta-item-text">更新于</span>
                 
-                <time title="Modified: 2019-06-10 13:53:06" itemprop="dateModified" datetime="2019-06-10T13:53:06+08:00">2019-06-10</time>
+                <time title="修改时间：2019-06-10 13:53:06" itemprop="dateModified" datetime="2019-06-10T13:53:06+08:00">2019-06-10</time>
               
             
           </span>
@@ -979,7 +642,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">分类于</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a></span>
@@ -1226,14 +889,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
 
               
                 
               
 
-              <time title="Created: 2018-04-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-04-11T11:11:11+08:00">2018-04-11</time>
+              <time title="创建时间：2018-04-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-04-11T11:11:11+08:00">2018-04-11</time>
             
 
             
@@ -1248,9 +911,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Edited on</span>
+                  <span class="post-meta-item-text">更新于</span>
                 
-                <time title="Modified: 2019-06-05 10:48:42" itemprop="dateModified" datetime="2019-06-05T10:48:42+08:00">2019-06-05</time>
+                <time title="修改时间：2019-06-05 10:48:42" itemprop="dateModified" datetime="2019-06-05T10:48:42+08:00">2019-06-05</time>
               
             
           </span>
@@ -1384,6 +1047,343 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/11/blogs/linux_user_password/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heroinlin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/leaf.jpg"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Heroinlin's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/04/11/blogs/linux_user_password/" class="post-title-link" itemprop="url">linux修改密码和添加用户</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-04-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-04-11T11:11:11+08:00">2018-04-11</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-05 10:49:44" itemprop="dateModified" datetime="2019-06-05T10:49:44+08:00">2019-06-05</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="linux修改密码和添加用户"><a href="#linux修改密码和添加用户" class="headerlink" title="linux修改密码和添加用户"></a>linux修改密码和添加用户</h1><p>默认root账户是没有密码的，使用<code>sudo su</code>进入root账户，输入passwd进行密码的设置，输入passwd -d heroin， 可以删除heroin账户原先设置的密码，切换到heroin账户后，输入passwd可以重新设置heroin账户的密码</p>
+<p>切换到root账户后，输入gpasswd -a heroin root 可以将heroin账户加入root组</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/11/blogs/Docker_Hexo_Nginx_blog/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heroinlin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/leaf.jpg"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Heroinlin's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/04/11/blogs/Docker_Hexo_Nginx_blog/" class="post-title-link" itemprop="url">Mac下使用Docker+Hexo搭建博客</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-04-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-04-11T11:11:11+08:00">2018-04-11</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-05 10:48:40" itemprop="dateModified" datetime="2019-06-05T10:48:40+08:00">2019-06-05</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/blog/" itemprop="url" rel="index"><span itemprop="name">blog</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Mac下使用Docker-Hexo搭建博客"><a href="#Mac下使用Docker-Hexo搭建博客" class="headerlink" title="Mac下使用Docker+Hexo搭建博客"></a>Mac下使用Docker+Hexo搭建博客</h1><h2 id="Docker的安装"><a href="#Docker的安装" class="headerlink" title="Docker的安装"></a><a href="https://hub.docker.com/editions/community/docker-ce-desktop-mac" target="_blank" rel="noopener">Docker的安装</a></h2><p>下载Docker.dmg文件，双击进行安装。之后安装Kitematic。</p>
+<p><img src="/Users/heroin/Library/Application Support/typora-user-images/image-20190304234754685.png" alt="image-20190304234754685"></p>
+<h2 id="Hexo配置"><a href="#Hexo配置" class="headerlink" title="Hexo配置"></a>Hexo配置</h2><p>安装完后打开Kitematic，搜索Hexo创建hexo-with-hexo-hey，将Settings中的Volumes路径更改为之前搭建的Hexo博客所在文件夹路径</p>
+<p><img src="/Users/heroin/Library/Application Support/typora-user-images/image-20190304235200033.png" alt="image-20190304235200033"></p>
+<p>点击START，之后点击EXEC进入命令行模式，复制.ssh文件夹到Docker中的/home文件夹下，执行hexo的发布命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+<p>即可进行博客的发布，此时发布的内容可登入对应的github.io.git网址查看</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/10/opencv/ffmpeg_and_opencv_build_by_source_code/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1422,14 +1422,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
 
               
                 
               
 
-              <time title="Created: 2018-04-10 16:48:11" itemprop="dateCreated datePublished" datetime="2018-04-10T16:48:11+08:00">2018-04-10</time>
+              <time title="创建时间：2018-04-10 16:48:11" itemprop="dateCreated datePublished" datetime="2018-04-10T16:48:11+08:00">2018-04-10</time>
             
 
             
@@ -1444,9 +1444,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Edited on</span>
+                  <span class="post-meta-item-text">更新于</span>
                 
-                <time title="Modified: 2018-04-18 18:44:42" itemprop="dateModified" datetime="2018-04-18T18:44:42+08:00">2018-04-18</time>
+                <time title="修改时间：2018-04-18 18:44:42" itemprop="dateModified" datetime="2018-04-18T18:44:42+08:00">2018-04-18</time>
               
             
           </span>
@@ -1460,7 +1460,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">分类于</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a></span>
@@ -1671,14 +1671,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
 
               
                 
               
 
-              <time title="Created: 2018-03-15 08:48:11 / Modified: 08:57:10" itemprop="dateCreated datePublished" datetime="2018-03-15T08:48:11+08:00">2018-03-15</time>
+              <time title="创建时间：2018-03-15 08:48:11 / 修改时间：08:57:10" itemprop="dateCreated datePublished" datetime="2018-03-15T08:48:11+08:00">2018-03-15</time>
             
 
             
@@ -1697,7 +1697,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">分类于</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
@@ -1836,14 +1836,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
 
               
                 
               
 
-              <time title="Created: 2018-03-13 15:11:11 / Modified: 17:07:34" itemprop="dateCreated datePublished" datetime="2018-03-13T15:11:11+08:00">2018-03-13</time>
+              <time title="创建时间：2018-03-13 15:11:11 / 修改时间：17:07:34" itemprop="dateCreated datePublished" datetime="2018-03-13T15:11:11+08:00">2018-03-13</time>
             
 
             
@@ -1862,7 +1862,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">分类于</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
@@ -2011,14 +2011,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
 
               
                 
               
 
-              <time title="Created: 2018-03-12 10:48:11 / Modified: 10:52:18" itemprop="dateCreated datePublished" datetime="2018-03-12T10:48:11+08:00">2018-03-12</time>
+              <time title="创建时间：2018-03-12 10:48:11 / 修改时间：10:52:18" itemprop="dateCreated datePublished" datetime="2018-03-12T10:48:11+08:00">2018-03-12</time>
             
 
             
@@ -2037,7 +2037,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">分类于</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
@@ -2187,7 +2187,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/Python/Python_selenium/"/>
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/Python/Python_shutil/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Heroinlin"/>
@@ -2207,7 +2207,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2018/03/12/Python/Python_selenium/" class="post-title-link" itemprop="url">python之Selenium</a>
+                <a href="/2018/03/12/Python/Python_shutil/" class="post-title-link" itemprop="url">python之Shutil</a>
               
             
           </h1>
@@ -2225,14 +2225,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
 
               
                 
               
 
-              <time title="Created: 2018-03-12 10:48:11" itemprop="dateCreated datePublished" datetime="2018-03-12T10:48:11+08:00">2018-03-12</time>
+              <time title="创建时间：2018-03-12 10:48:11" itemprop="dateCreated datePublished" datetime="2018-03-12T10:48:11+08:00">2018-03-12</time>
             
 
             
@@ -2247,9 +2247,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Edited on</span>
+                  <span class="post-meta-item-text">更新于</span>
                 
-                <time title="Modified: 2018-10-12 17:13:10" itemprop="dateModified" datetime="2018-10-12T17:13:10+08:00">2018-10-12</time>
+                <time title="修改时间：2018-10-12 15:08:00" itemprop="dateModified" datetime="2018-10-12T15:08:00+08:00">2018-10-12</time>
               
             
           </span>
@@ -2263,7 +2263,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">分类于</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
@@ -2303,60 +2303,84 @@
       
         
           
-            <h1 id="python之Selenium打开浏览器"><a href="#python之Selenium打开浏览器" class="headerlink" title="python之Selenium打开浏览器"></a>python之Selenium打开浏览器</h1><h2 id="函数及属性"><a href="#函数及属性" class="headerlink" title="函数及属性"></a>函数及属性</h2><p>driver = webdriver.Chrome(chromeDriver)</p>
-<h3 id="返回当前会话中的cookies"><a href="#返回当前会话中的cookies" class="headerlink" title="返回当前会话中的cookies"></a>返回当前会话中的cookies</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.get_cookies()</span><br></pre></td></tr></table></figure>
-<h3 id="根据cookies-name查找"><a href="#根据cookies-name查找" class="headerlink" title="根据cookies name查找"></a>根据cookies name查找</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.get_cookie(cookiename)</span><br></pre></td></tr></table></figure>
-<h3 id="截取当前页面"><a href="#截取当前页面" class="headerlink" title="截取当前页面"></a>截取当前页面</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">get_screenshot_as_file(filename)</span><br></pre></td></tr></table></figure>
-<p>如：get_screenshot_as_file(“D:\nm.bmp”)</p>
-<h3 id="获取当前窗口的坐标"><a href="#获取当前窗口的坐标" class="headerlink" title="获取当前窗口的坐标"></a>获取当前窗口的坐标</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.get_window_position()</span><br></pre></td></tr></table></figure>
-<h3 id="获取当前窗口的长和宽"><a href="#获取当前窗口的长和宽" class="headerlink" title="获取当前窗口的长和宽"></a>获取当前窗口的长和宽</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.get_window_size()</span><br></pre></td></tr></table></figure>
-<h3 id="获取当前页面的URL"><a href="#获取当前页面的URL" class="headerlink" title="获取当前页面的URL"></a>获取当前页面的URL</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.current_url</span><br></pre></td></tr></table></figure>
-<h3 id="获取当前页面的title"><a href="#获取当前页面的title" class="headerlink" title="获取当前页面的title"></a>获取当前页面的title</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.title</span><br></pre></td></tr></table></figure>
-<h3 id="获取元素的坐标"><a href="#获取元素的坐标" class="headerlink" title="获取元素的坐标"></a>获取元素的坐标</h3><p>先获取到该元素，然后调用location属性</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">　driver.find_element_by_xpath(<span class="string">"//*[@id='tablechart']/tbody/tr[14]/td[9]"</span>).location</span><br></pre></td></tr></table></figure>
-<h3 id="获取css的属性值"><a href="#获取css的属性值" class="headerlink" title="获取css的属性值"></a>获取css的属性值</h3><p>value_of_css_property(css_name)</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.find_element_by_css_selector(<span class="string">"input.btn"</span>).value_of_css_property(<span class="string">"input.btn"</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="获取元素的属性值"><a href="#获取元素的属性值" class="headerlink" title="获取元素的属性值"></a>获取元素的属性值</h3><p>get_attribute(element_name)</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.find_element_by_id(<span class="string">"sellaiyuan"</span>).get_attribute(<span class="string">"sellaiyuan"</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="判断元素是否被选中"><a href="#判断元素是否被选中" class="headerlink" title="判断元素是否被选中"></a>判断元素是否被选中</h3><p>is_selected()</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.find_element_by_id(<span class="string">"form1"</span>).is_selected()</span><br></pre></td></tr></table></figure>
-<h3 id="返回元素的大小"><a href="#返回元素的大小" class="headerlink" title="返回元素的大小"></a>返回元素的大小</h3><p>size</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">driver.find_element_by_id(<span class="string">"iptPassword"</span>).size</span><br><span class="line">size``返回值：&#123;<span class="string">'width'</span>: <span class="number">250</span>, <span class="string">'height'</span>: <span class="number">30</span>&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="判断元素是否显示："><a href="#判断元素是否显示：" class="headerlink" title="判断元素是否显示："></a>判断元素是否显示：</h3><p>is_displayed()</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.find_element_by_id(<span class="string">"iptPassword"</span>).is_displayed()</span><br></pre></td></tr></table></figure>
-<h3 id="判断元素是否被使用方法"><a href="#判断元素是否被使用方法" class="headerlink" title="判断元素是否被使用方法"></a>判断元素是否被使用方法</h3><p>is_enabled()</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.find_element_by_id(<span class="string">"iptPassword"</span>).is_enabled()</span><br></pre></td></tr></table></figure>
-<h3 id="获取元素的文本值方法"><a href="#获取元素的文本值方法" class="headerlink" title="获取元素的文本值方法"></a>获取元素的文本值方法</h3><p>text</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.find_element_by_id(<span class="string">"iptUsername"</span>).text</span><br></pre></td></tr></table></figure>
-<h3 id="元素赋值方法"><a href="#元素赋值方法" class="headerlink" title="元素赋值方法"></a>元素赋值方法</h3><p>send_keys(*values)</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">driver.find_element_by_id(<span class="string">"iptUsername"</span>).send_keys(<span class="string">'admin'</span>)</span><br><span class="line">PS：``注意如果是中文需要增加转义符u，eg.``driver.find_element_by_id(<span class="string">"iptUsername"</span>).send_keys(<span class="string">u'青春'</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="返回元素的标签名称"><a href="#返回元素的标签名称" class="headerlink" title="返回元素的标签名称"></a>返回元素的标签名称</h3><p>tag_name</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.find_element_by_id(<span class="string">"iptUsername"</span>).tag_name</span><br></pre></td></tr></table></figure>
-<h3 id="删除浏览器所有的cookies"><a href="#删除浏览器所有的cookies" class="headerlink" title="删除浏览器所有的cookies"></a>删除浏览器所有的cookies</h3><p>delete_all_cookies()</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.delete_all_cookies()</span><br></pre></td></tr></table></figure>
-<h3 id="删除指定的cookie"><a href="#删除指定的cookie" class="headerlink" title="删除指定的cookie"></a>删除指定的cookie</h3><p>delete_cookie(name)</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.delete_cookie(<span class="string">"my_cookie_name"</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="关闭浏览器方法"><a href="#关闭浏览器方法" class="headerlink" title="关闭浏览器方法"></a>关闭浏览器方法</h3><p>close()</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.close()</span><br></pre></td></tr></table></figure>
-<h3 id="关闭浏览器并且退出驱动程序"><a href="#关闭浏览器并且退出驱动程序" class="headerlink" title="关闭浏览器并且退出驱动程序"></a>关闭浏览器并且退出驱动程序</h3><p>quit()</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.quit()</span><br></pre></td></tr></table></figure>
-<h3 id="返回上一页"><a href="#返回上一页" class="headerlink" title="返回上一页"></a>返回上一页</h3><p>back()</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.back()</span><br></pre></td></tr></table></figure>
-<h3 id="设置等待超时的方法"><a href="#设置等待超时的方法" class="headerlink" title="设置等待超时的方法"></a>设置等待超时的方法</h3><p>implicitly_wait(wait_time)</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.implicitly_wait(<span class="number">30</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="浏览器窗口最大化"><a href="#浏览器窗口最大化" class="headerlink" title="浏览器窗口最大化"></a>浏览器窗口最大化</h3><p>maximize_window()</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.maximize_window()</span><br></pre></td></tr></table></figure>
-<h3 id="查看浏览器的名字"><a href="#查看浏览器的名字" class="headerlink" title="查看浏览器的名字"></a>查看浏览器的名字</h3><p>name</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drvier.name</span><br></pre></td></tr></table></figure>
-<h2 id="实例代码"><a href="#实例代码" class="headerlink" title="实例代码"></a>实例代码</h2><h3 id="打开网址"><a href="#打开网址" class="headerlink" title="打开网址"></a>打开网址</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"></span><br><span class="line"><span class="comment"># chromeDriver = r".\chromedriver_win32\chromedriver.exe"</span></span><br><span class="line"><span class="comment"># browser = webdriver.Chrome(chromeDriver)</span></span><br><span class="line">browser = webdriver.Chrome()</span><br><span class="line">browser.get(<span class="string">'http://www.baidu.com/'</span>)</span><br></pre></td></tr></table></figure>
-<p>如果程序执行错误，浏览器没有打开，那么应该是没有装 Chrome 浏览器或者 Chrome 驱动没有配置在环境变量里。下载驱动，然后将驱动文件路径配置在环境变量即可。</p>
-<p><a href="https://sites.google.com/a/chromium.org/chromedriver/downloads" target="_blank" rel="noopener">浏览器驱动下载</a></p>
-<p>比如Mac OS，就把下载好的文件放在 /usr/bin 目录下就可以了。</p>
-<h3 id="模拟提交"><a href="#模拟提交" class="headerlink" title="模拟提交"></a>模拟提交</h3><p>下面的代码实现了模拟提交提交搜索的功能，首先等页面加载完成，然后输入到搜索框文本，点击提交。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.common.keys <span class="keyword">import</span> Keys</span><br><span class="line"></span><br><span class="line">driver = webdriver.Firefox()</span><br><span class="line">driver.get(<span class="string">"http://www.python.org"</span>)</span><br><span class="line"><span class="keyword">assert</span> <span class="string">"Python"</span> <span class="keyword">in</span> driver.title</span><br><span class="line">elem = driver.find_element_by_name(<span class="string">"q"</span>)</span><br><span class="line">elem.clear()</span><br><span class="line">elem.send_keys(<span class="string">"pycon"</span>)</span><br><span class="line">elem.send_keys(Keys.RETURN)</span><br><span class="line">print(driver.page_source)</span><br><span class="line"><span class="keyword">assert</span> <span class="string">"No results found."</span> <span class="keyword">not</span> <span class="keyword">in</span> driver.page_source</span><br><span class="line">driver.close()</span><br></pre></td></tr></table></figure>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://cuiqingcai.com/2599.html" target="_blank" rel="noopener">Python爬虫利器五之Selenium的用法</a></p>
-<p><a href="https://www.cnblogs.com/qiezizi/p/5788783.html" target="_blank" rel="noopener">selenium2中关于Python的常用函数</a></p>
-<p><a href="https://selenium-python-zh.readthedocs.io/en/latest/index.html" target="_blank" rel="noopener">Selenium-Python中文文档</a></p>
+            <p>#python之Shutil文件、文件夹高级操作</p>
+<h2 id="复制操作"><a href="#复制操作" class="headerlink" title="复制操作"></a>复制操作</h2><h3 id="copyfileobj"><a href="#copyfileobj" class="headerlink" title="copyfileobj"></a>copyfileobj</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutil.copyfileobj(fsrc, fdst[, length=<span class="number">16</span>\*<span class="number">1024</span>])</span><br></pre></td></tr></table></figure>
+<p>copy文件内容到另一个文件，可以copy指定大小的内容。这个方法是shutil模块中其它拷贝方法的基础，其它方法在本质上都是调用这个方法。</p>
+<p>让我们看一下它的源码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">copyfileobj</span><span class="params">(fsrc, fdst, length=<span class="number">16</span>*<span class="number">1024</span>)</span>:</span></span><br><span class="line">    <span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">        buf = fsrc.read(length)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> buf:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        fdst.write(buf)</span><br></pre></td></tr></table></figure>
+<p>代码很简单，一看就懂。但是要注意，其中的fsrc，fdst都是使用open()方法打开后的文件对象。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line">s =open(<span class="string">'fsrc.txt'</span>,<span class="string">'r'</span>)</span><br><span class="line">d=open(<span class="string">'fdst.txt'</span>,<span class="string">'w'</span>)</span><br><span class="line">shutil.copyfileobj(s,d,length=<span class="number">16</span>*<span class="number">1024</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="copyfile"><a href="#copyfile" class="headerlink" title="copyfile"></a>copyfile</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutil.copyfile(src, dst)</span><br></pre></td></tr></table></figure>
+<p>拷贝整个文件。同样看下它的源码，忽略前面一些检测用的代码，该方法的核心在最后几行，我们可以很清楚地看到<code>copyfile()</code>方法对<code>copyfileobj()</code>进行了调用。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">copyfile</span><span class="params">(src, dst, *, follow_symlinks=True)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> _samefile(src, dst):</span><br><span class="line">        <span class="keyword">raise</span> SameFileError(<span class="string">"&#123;!r&#125; and &#123;!r&#125; are the same file"</span>.format(src, dst))</span><br><span class="line">    <span class="keyword">for</span> fn <span class="keyword">in</span> [src, dst]:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            st = os.stat(fn)</span><br><span class="line">        <span class="keyword">except</span> OSError:      </span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> stat.S_ISFIFO(st.st_mode):</span><br><span class="line">                <span class="keyword">raise</span> SpecialFileError(<span class="string">"`%s` is a named pipe"</span> % fn)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> follow_symlinks <span class="keyword">and</span> os.path.islink(src):</span><br><span class="line">        os.symlink(os.readlink(src), dst)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">with</span> open(src, <span class="string">'rb'</span>) <span class="keyword">as</span> fsrc:</span><br><span class="line">            <span class="keyword">with</span> open(dst, <span class="string">'wb'</span>) <span class="keyword">as</span> fdst:</span><br><span class="line">                copyfileobj(fsrc, fdst)</span><br><span class="line">    <span class="keyword">return</span> dst</span><br></pre></td></tr></table></figure>
+<h3 id="copymode"><a href="#copymode" class="headerlink" title="copymode"></a>copymode</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutil.copymode(src, dst)</span><br></pre></td></tr></table></figure>
+<p>仅拷贝权限。内容、组、用户均不变。</p>
+<h3 id="copystat"><a href="#copystat" class="headerlink" title="copystat"></a>copystat</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutil.copystat(src, dst)</span><br></pre></td></tr></table></figure>
+<p>仅复制所有的状态信息，包括权限，组，用户，时间等。</p>
+<h3 id="copy"><a href="#copy" class="headerlink" title="copy"></a>copy</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutil.copy(src,dst)</span><br></pre></td></tr></table></figure>
+<p>同时复制文件的内容以及权限，也就是先copyfile()然后copymode()。</p>
+<h3 id="copy2"><a href="#copy2" class="headerlink" title="copy2"></a>copy2</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutil.copy2(src, dst)</span><br></pre></td></tr></table></figure>
+<p>同时复制文件的内容以及文件的所有状态信息。先copyfile()后copystat()。</p>
+<h3 id="ignore-patterns"><a href="#ignore-patterns" class="headerlink" title="ignore_patterns"></a>ignore_patterns</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutil.ignore_patterns(*patterns)</span><br></pre></td></tr></table></figure>
+<p>忽略指定的文件。通常配合下面的copytree()方法使用。</p>
+<h3 id="copytree"><a href="#copytree" class="headerlink" title="copytree"></a>copytree</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">shutil.copytree(src, dst, symlinks=<span class="keyword">False</span>,ignore=<span class="keyword">None</span>,copy_function=copy2,</span><br><span class="line">                ignore_dangling_symlinks=<span class="keyword">False</span>)</span><br></pre></td></tr></table></figure>
+<p>递归地复制目录及其子目录的文件和状态信息</p>
+<ul>
+<li>symlinks：指定是否复制软链接。小心陷入死循环。</li>
+<li>ignore：指定不参与复制的文件，其值应该是一个ignore_patterns()方法。</li>
+<li>copy_function：指定复制的模式</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 典型用法</span></span><br><span class="line"><span class="keyword">from</span> shutil <span class="keyword">import</span> copytree, ignore_patterns</span><br><span class="line">copytree(source, destination, ignore=ignore_patterns(<span class="string">'*.pyc'</span>, <span class="string">'tmp*'</span>))</span><br><span class="line">copytree(<span class="string">'folder1'</span>, <span class="string">'folder2'</span>, ignore=ignore_patterns(<span class="string">'*.pyc'</span>, <span class="string">'tmp*'</span>))</span><br><span class="line">copytree(<span class="string">'f1'</span>, <span class="string">'f2'</span>, symlinks=<span class="keyword">True</span>, ignore=ignore_patterns(<span class="string">'*.pyc'</span>, <span class="string">'tmp*'</span>))</span><br></pre></td></tr></table></figure>
+<h2 id="移动删除操作"><a href="#移动删除操作" class="headerlink" title="移动删除操作"></a>移动删除操作</h2><h3 id="rmtree"><a href="#rmtree" class="headerlink" title="rmtree"></a>rmtree</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutil.rmtree(path[, ignore_errors[, onerror]])</span><br></pre></td></tr></table></figure>
+<p>递归地删除目录及子目录内的文件。注意！<strong>该方法不会询问yes或no，被删除的文件也不会出现在回收站里，请务必小心！</strong>此函数与类似<code>os.removedirs</code> ，但是<code>os.removedirs</code> 不能删除非空文件夹</p>
+<p>下面的例子在碰到只读文件时，尝试清除只读属性，然后再删除。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os, stat</span><br><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">remove_readonly</span><span class="params">(func, path, _)</span>:</span></span><br><span class="line">    <span class="string">"去除文件的只读属性，尝试再次删除"</span></span><br><span class="line">    os.chmod(path, stat.S_IWRITE)</span><br><span class="line">    func(path)</span><br><span class="line">shutil.rmtree(directory, onerror=remove_readonly)</span><br></pre></td></tr></table></figure>
+<h3 id="move"><a href="#move" class="headerlink" title="move"></a>move</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutil.move(src, dst)</span><br></pre></td></tr></table></figure>
+<p>递归地移动文件，类似mv命令，其实就是重命名。</p>
+<h2 id="which"><a href="#which" class="headerlink" title="which"></a>which</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutil.which(cmd)</span><br></pre></td></tr></table></figure>
+<p>类似linux的<code>which</code>命令，返回执行该命令的程序路径。Python3.3新增</p>
+<h2 id="disk-usage"><a href="#disk-usage" class="headerlink" title="disk_usage"></a>disk_usage</h2><p>检测磁盘使用信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutil.disk_usage(&quot;d:/&quot;)</span><br></pre></td></tr></table></figure>
+<h2 id="解压缩"><a href="#解压缩" class="headerlink" title="解压缩"></a>解压缩</h2><h3 id="get-archive-formats"><a href="#get-archive-formats" class="headerlink" title="get_archive_formats"></a>get_archive_formats</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutil.get_archive_formats()</span><br></pre></td></tr></table></figure>
+<p>获取当前系统已注册的归档文件格式（后缀）</p>
+<blockquote>
+<p>[(‘bztar’, “bzip2’ed tar-file”), </p>
+<p>(‘gztar’, “gzip’ed tar-file”), </p>
+<p>(‘tar’, ‘uncompressed tar file’),</p>
+<p> (‘xztar’, “xz’ed tar-file”), </p>
+<p>(‘zip’, ‘ZIP file’)]</p>
+</blockquote>
+<h3 id="make-archive"><a href="#make-archive" class="headerlink" title="make_archive"></a>make_archive</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutil.make_archive(base_name, format[, root_dir[, base_dir[, verbose[, dry_run[, owner[, group[, logger]]]]]]])</span><br></pre></td></tr></table></figure>
+<p>创建归档或压缩文件。</p>
+<ul>
+<li><code>base_name</code>：压缩后的文件名。如果不指定绝对路径，则压缩文件保存在当前目录下。这个参数必须指定。</li>
+<li><code>format</code>：压缩格式，可以是“zip”, “tar”, “bztar” ，“gztar”，“xztar”中的一种。这个参数也必须指定。</li>
+<li><code>root_dir</code>：设置压缩包里的根目录，一般使用默认值，不特别指定。</li>
+<li><code>base_dir</code>：要进行压缩的源文件或目录。</li>
+<li><code>owner</code>：用户，默认当前用户。</li>
+<li><code>group</code>：组，默认当前组。</li>
+<li><code>logger</code>：用于记录日志，通常是<code>logging.Logger</code>对象。</li>
+</ul>
+<p>范例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line">shutil.make_archive(<span class="string">"d:\\3"</span>, <span class="string">"zip"</span>,  base_dir=<span class="string">"d:\\1.txt"</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="get-unpack-formats"><a href="#get-unpack-formats" class="headerlink" title="get_unpack_formats"></a>get_unpack_formats</h3><p>获取当前系统已经注册的解包文件格式(后缀)</p>
+<blockquote>
+<p>[(‘bztar’, [‘.tar.bz2’, ‘.tbz2’], “bzip2’ed tar-file”), </p>
+<p>(‘gztar’, [‘.tar.gz’, ‘.tgz’], “gzip’ed tar-file”), </p>
+<p>(‘tar’, [‘.tar’], ‘uncompressed tar file’),</p>
+<p> (‘xztar’, [‘.tar.xz’, ‘.txz’], “xz’ed tar-file”),</p>
+<p> (‘zip’, [‘.zip’], ‘ZIP file’)]</p>
+</blockquote>
+<h3 id="unpack-archive"><a href="#unpack-archive" class="headerlink" title="unpack_archive"></a>unpack_archive</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutil.unpack_archive(filename[, extract_dir[, format]])</span><br></pre></td></tr></table></figure>
+<p>解压缩或解包源文件。</p>
+<ul>
+<li>filename是压缩文档的完整路径</li>
+<li>extract_dir是解压缩路径，默认为当前目录。</li>
+<li>format是压缩格式。默认使用文件后缀名代码的压缩格式。</li>
+</ul>
+<p>范例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line">shutil.unpack_archive(<span class="string">"d:\\3.zip"</span>, <span class="string">"f:\\3"</span>, <span class="string">'zip'</span>)</span><br></pre></td></tr></table></figure>
+<p>shutil模块的压缩和解压功能，在后台是通过调用zipfile和tarfile两个模块来进行的。</p>
 
           
         
@@ -2402,7 +2426,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2449,7 +2473,7 @@
                   <a href="/archives/">
                 
                     <span class="site-state-item-count">35</span>
-                    <span class="site-state-item-name">posts</span>
+                    <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
               
@@ -2488,7 +2512,7 @@
                       
                     
                     <span class="site-state-item-count">11</span>
-                    <span class="site-state-item-name">categories</span>
+                    <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
               
@@ -2623,7 +2647,7 @@
                       
                     
                     <span class="site-state-item-count">59</span>
-                    <span class="site-state-item-name">tags</span>
+                    <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
               
@@ -2713,7 +2737,7 @@
 </div>
 
 
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.6.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.6.0</div>
 
 
 
@@ -2721,7 +2745,7 @@
 
 
 
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.2</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.2</div>
 
 
 
