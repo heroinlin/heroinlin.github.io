@@ -271,23 +271,6 @@
     <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>归档</a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-schedule">
-
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br/>日程表</a>
-
-  </li>
 
       
       
@@ -321,6 +304,487 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/11/blogs/Google_Cloud _SSR_BBR/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heroinlin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/leaf.jpg"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Heroinlin's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/04/11/blogs/Google_Cloud _SSR_BBR/" class="post-title-link" itemprop="url">科学上网：Google Cloud 安装SSR与BBR加速</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-04-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-04-11T11:11:11+08:00">2018-04-11</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-05 10:48:42" itemprop="dateModified" datetime="2019-06-05T10:48:42+08:00">2019-06-05</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="科学上网：Google-Cloud-安装SSR与BBR加速"><a href="#科学上网：Google-Cloud-安装SSR与BBR加速" class="headerlink" title="科学上网：Google Cloud 安装SSR与BBR加速"></a>科学上网：Google Cloud 安装SSR与BBR加速</h1><h2 id="基础准备"><a href="#基础准备" class="headerlink" title="基础准备"></a>基础准备</h2><ul>
+<li>可以访问<a href="https://cloud.google.com/" target="_blank" rel="noopener">谷歌云官网</a>的网络环境 （不科学上网就访问不了，可先其他地方借用/购买/试用SSR</li>
+<li>申请一张全币信用卡用于申请免费试用 （国内几家全币信用卡基本免年费）</li>
+</ul>
+<h2 id="创建和配置Google云实例"><a href="#创建和配置Google云实例" class="headerlink" title="创建和配置Google云实例"></a>创建和配置Google云实例</h2><h3 id="创建实例"><a href="#创建实例" class="headerlink" title="创建实例"></a>创建实例</h3><ol>
+<li>在<a href="https://console.cloud.google.com/compute/instances" target="_blank" rel="noopener">计算引擎-VM实例</a>中点击创建</li>
+<li>地区选择:根据需要 一般选择台湾</li>
+<li>机器类型：小型 / 微型 (我选择微型 费用较低，相对可以用更多免费流量 不过一般用不完，好像后面也可以增加配额等操作</li>
+<li>启动磁盘：根据自己熟悉的选， linux走命令行大部分也没差</li>
+<li>防火墙：允许HTTP流量，允许HTTPS流量</li>
+</ol>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><ol>
+<li><p>防火墙配置</p>
+<p>新建一个防火墙规则 <a href="https://console.cloud.google.com/networking/firewalls/add" target="_blank" rel="noopener">VPS-防火墙规则</a></p>
+<p>进行以下配置：流量方向<code>入站</code>、来源ip地址<code>0.0.0.0/0</code>、协议和端口<code>全部允许</code></p>
+</li>
+<li><p>外部IP设置成静态IP</p>
+<p>在<a href="https://console.cloud.google.com/networking/addresses/list" target="_blank" rel="noopener">VPS-外部IP地址</a> （点击直达）中在相应的实例 类型中临时改为静态即可</p>
+<p>这个主要是为了避免服务器重启IP变化</p>
+</li>
+</ol>
+<h2 id="服务器部署SSR-BBR"><a href="#服务器部署SSR-BBR" class="headerlink" title="服务器部署SSR+BBR"></a>服务器部署SSR+BBR</h2><h3 id="使用ssh终端连接服务器"><a href="#使用ssh终端连接服务器" class="headerlink" title="使用ssh终端连接服务器"></a>使用ssh终端连接服务器</h3><p>进行ssh登录，将用户名和ip地址替换为你的服务器的用户名与ip地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh 用户名@ip地址</span><br></pre></td></tr></table></figure>
+<h3 id="安装ss"><a href="#安装ss" class="headerlink" title="安装ss"></a>安装<code>ss</code></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget --no-check-certificate  https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh</span><br><span class="line">chmod +x shadowsocks.sh</span><br><span class="line">./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log</span><br></pre></td></tr></table></figure>
+<p>到这步已经可以使用SS科学上网.后续步骤安装BBR可以进行一定加速</p>
+<h3 id="配置多用户-可选"><a href="#配置多用户-可选" class="headerlink" title="配置多用户(可选)"></a>配置多用户(可选)</h3><p>有时候想给小伙伴一起分享这个ss，但又不想一起用一个号，那么我们最好配置多个用户</p>
+<h4 id="在登录的状态下，输入以下命令，查看配置文件"><a href="#在登录的状态下，输入以下命令，查看配置文件" class="headerlink" title="在登录的状态下，输入以下命令，查看配置文件"></a>在登录的状态下，输入以下命令，查看配置文件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat  /etc/shadowsocks.json</span><br></pre></td></tr></table></figure>
+<h4 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/shadowsocks.json</span><br></pre></td></tr></table></figure>
+<p>默认配置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    "server":"0.0.0.0",</span><br><span class="line">    "server_port":443,</span><br><span class="line">    "local_address":"127.0.0.1",</span><br><span class="line">    "local_port":1080,</span><br><span class="line">    "password":"aabbcc",</span><br><span class="line">    "timeout":300,</span><br><span class="line">    "method":"aes-256-cfb",</span><br><span class="line">    "fast_open":false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>点击<code>i</code>键进行编辑</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    "server":"0.0.0.0",</span><br><span class="line">    "local_address":"127.0.0.1",</span><br><span class="line">    "local_port":1080,</span><br><span class="line">    "port_password":&#123;</span><br><span class="line">         "443":"pwd000",</span><br><span class="line">         "9001":"pwd123",</span><br><span class="line">         "9002":"pwd234",</span><br><span class="line">         "9003":"pwd345",</span><br><span class="line">         "9004":"pwd456"                    </span><br><span class="line">    &#125;,</span><br><span class="line">    "timeout":300,</span><br><span class="line">    "method":"aes-256-cfb",</span><br><span class="line">    "fast_open": false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编辑完毕后，点击<code>esc</code>键，再输入<code>:wq</code>保存</p>
+<h4 id="开放端口"><a href="#开放端口" class="headerlink" title="开放端口"></a>开放端口</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看已开放端口</span></span><br><span class="line"> firewall-cmd --list-ports</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 开启端口 以开启8388端口为例</span></span><br><span class="line"> firewall-cmd --zone=public --add-port=8388/tcp --permanent</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 重启防火墙</span></span><br><span class="line"> firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+<p>在这里将新建的端口全部打开，如果不执行这部操作，很可能连接不上</p>
+<p>####重启ss</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssserver -c/etc/shadowsocks.json -d restart</span><br></pre></td></tr></table></figure>
+<p>重启成功后，就可以将地址与密码分享给你的小伙伴咯。</p>
+<h3 id="BBR加速"><a href="#BBR加速" class="headerlink" title="BBR加速"></a>BBR加速</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh </span><br><span class="line">chmod +x bbr.sh </span><br><span class="line">./bbr.sh</span><br></pre></td></tr></table></figure>
+<p>重启VM</p>
+<p>配置BBR</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_available_congestion_control</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/11/Docker/docker_document/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heroinlin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/leaf.jpg"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Heroinlin's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/04/11/Docker/docker_document/" class="post-title-link" itemprop="url">docker常用管理命令</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-04-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-04-11T11:11:11+08:00">2018-04-11</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-10 13:53:06" itemprop="dateModified" datetime="2019-06-10T13:53:06+08:00">2019-06-10</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="docker常用管理命令"><a href="#docker常用管理命令" class="headerlink" title="docker常用管理命令"></a>docker常用管理命令</h1><blockquote>
+<p>转载地址：<a href="http://seanlook.com/2014/10/31/docker-command-best-use-1/" target="_blank" rel="noopener">http://seanlook.com/2014/10/31/docker-command-best-use-1/</a></p>
+</blockquote>
+<p>本文只记录docker命令在大部分情境下的使用，如果想了解每一个选项的细节，请参考官方文档，这里只作为自己以后的备忘记录下来。</p>
+<p>根据自己的理解，总的来说分为以下几种：</p>
+<ul>
+<li><p>容器生命周期管理</p>
+<p><code>docker [run|start|stop|restart|kill|rm|pause|unpause]</code></p>
+</li>
+<li><p>容器操作运维</p>
+<p><code>docker [ps|inspect|top|attach|events|logs|wait|export|port]</code></p>
+</li>
+<li><p>容器rootfs命令</p>
+<p><code>docker [commit|cp|diff]</code></p>
+</li>
+<li><p>镜像仓库 </p>
+<p> <code>docker [login|pull|push|search]</code></p>
+</li>
+<li><p>本地镜像管理 </p>
+<p><code>docker [images|rmi|tag|build|history|save|import]</code></p>
+</li>
+<li><p>其他命令 </p>
+<p><code>docker [info|version]</code></p>
+</li>
+</ul>
+<p>看一个变迁图<br><a href="http://sean-images.qiniudn.com/docker_cli_stage.png" target="_blank" rel="noopener"><img src="http://sean-images.qiniudn.com/docker_cli_stage.png" alt="docker_cli_stage"></a></p>
+<h2 id="1-列出机器上的镜像（images）"><a href="#1-列出机器上的镜像（images）" class="headerlink" title="1. 列出机器上的镜像（images）"></a>1. 列出机器上的镜像（images）</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker images </span></span><br><span class="line">REPOSITORY               TAG             IMAGE ID        CREATED         VIRTUAL SIZE</span><br><span class="line">ubuntu                   14.10           2185fd50e2ca    13 days ago     236.9 MB</span><br><span class="line">…</span><br></pre></td></tr></table></figure>
+<p>其中我们可以根据REPOSITORY来判断这个镜像是来自哪个服务器，如果没有 / 则表示官方镜像，类似于<code>username/repos_name</code>表示Github的个人公共库，类似于<code>regsistory.example.com:5000/repos_name</code>则表示的是私服。<br>IMAGE ID列其实是缩写，要显示完整则带上<code>--no-trunc</code>选项</p>
+<h2 id="2-在docker-index中搜索image（search）"><a href="#2-在docker-index中搜索image（search）" class="headerlink" title="2. 在docker index中搜索image（search）"></a>2. 在docker index中搜索image（search）</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Usage: docker search TERM</span><br><span class="line"><span class="meta">#</span><span class="bash"> docker search seanlo</span></span><br><span class="line">NAME                DESCRIPTION           STARS     OFFICIAL   AUTOMATED</span><br><span class="line">seanloook/centos6   sean's docker repos         0</span><br></pre></td></tr></table></figure>
+<p>搜索的范围是官方镜像和所有个人公共镜像。NAME列的 / 后面是仓库的名字。</p>
+<h2 id="3-从docker-registry-server-中下拉image或repository（pull）"><a href="#3-从docker-registry-server-中下拉image或repository（pull）" class="headerlink" title="3. 从docker registry server 中下拉image或repository（pull）"></a>3. 从docker registry server 中下拉image或repository（pull）</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Usage: docker pull [OPTIONS] NAME[:TAG]</span><br><span class="line"><span class="meta">#</span><span class="bash"> docker pull centos</span></span><br></pre></td></tr></table></figure>
+<p>上面的命令需要注意，在docker v1.2版本以前，会下载官方镜像的centos仓库里的所有镜像，而从v.13开始官方文档里的说明变了：will pull the centos:latest image, its intermediate layers and any aliases of the same id，也就是只会下载tag为latest的镜像（以及同一images id的其他tag）。<br>也可以明确指定具体的镜像：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker pull centos:centos6</span></span><br></pre></td></tr></table></figure>
+<p>当然也可以从某个人的公共仓库（包括自己是私人仓库）拉取，形如<code>docker pull username/repository&lt;:tag_name&gt;</code> ：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker pull seanlook/centos:centos6</span></span><br></pre></td></tr></table></figure>
+<p>如果你没有网络，或者从其他私服获取镜像，形如<code>docker pull registry.domain.com:5000/repos:&lt;tag_name&gt;</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker pull dl.dockerpool.com:5000/mongo:latest</span></span><br></pre></td></tr></table></figure>
+<h2 id="4-推送一个image或repository到registry（push）"><a href="#4-推送一个image或repository到registry（push）" class="headerlink" title="4. 推送一个image或repository到registry（push）"></a>4. 推送一个image或repository到registry（push）</h2><p>与上面的pull对应，可以推送到Docker Hub的Public、Private以及私服，但不能推送到Top Level Repository。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker push seanlook/mongo</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> docker push registry.tp-link.net:5000/mongo:2014-10-27</span></span><br></pre></td></tr></table></figure>
+<p>registry.tp-link.net也可以写成IP，172.29.88.222。<br>在repository不存在的情况下，命令行下push上去的会为我们创建为私有库，然而通过浏览器创建的默认为公共库。</p>
+<h2 id="5-从image启动一个container（run）"><a href="#5-从image启动一个container（run）" class="headerlink" title="5. 从image启动一个container（run）"></a>5. 从image启动一个container（run）</h2><p><code>docker run</code>命令首先会从特定的image创之上create一层可写的container，然后通过start命令来启动它。停止的container可以重新启动并保留原来的修改。run命令启动参数有很多，以下是一些常规使用说明，更多部分请参考<a href="http://www.cnphp6.com/archives/24899" target="_blank" rel="noopener">http://www.cnphp6.com/archives/24899</a><br>当利用 docker run 来创建容器时，Docker 在后台运行的标准操作包括：</p>
+<ul>
+<li>检查本地是否存在指定的镜像，不存在就从公有仓库下载</li>
+<li>利用镜像创建并启动一个容器</li>
+<li>分配一个文件系统，并在只读的镜像层外面挂载一层可读写层</li>
+<li>从宿主主机配置的网桥接口中桥接一个虚拟接口到容器中去</li>
+<li>从地址池配置一个 ip 地址给容器</li>
+<li>执行用户指定的应用程序</li>
+<li>执行完毕后容器被终止</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Usage: docker run [OPTIONS] IMAGE [COMMAND] [ARG...]</span><br></pre></td></tr></table></figure>
+<h3 id="5-1-使用image创建container并执行相应命令，然后停止"><a href="#5-1-使用image创建container并执行相应命令，然后停止" class="headerlink" title="5.1 使用image创建container并执行相应命令，然后停止"></a>5.1 使用image创建container并执行相应命令，然后停止</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker run ubuntu <span class="built_in">echo</span> <span class="string">"hello world"</span></span></span><br><span class="line">hello word</span><br></pre></td></tr></table></figure>
+<p>这是最简单的方式，跟在本地直接执行<code>echo &#39;hello world&#39;</code> 几乎感觉不出任何区别，而实际上它会从本地ubuntu:latest镜像启动到一个容器，并执行打印命令后退出（<code>docker ps -l</code>可查看）。需要注意的是，默认有一个<code>--rm=true</code>参数，即完成操作后停止容器并从文件系统移除。因为Docker的容器实在太轻量级了，很多时候用户都是随时删除和新创建容器。<br>容器启动后会自动随机生成一个<code>CONTAINER ID</code>，这个ID在后面commit命令后可以变为<code>IMAGE ID</code></p>
+<h4 id="使用image创建container并进入交互模式-login-shell是-bin-bash"><a href="#使用image创建container并进入交互模式-login-shell是-bin-bash" class="headerlink" title="使用image创建container并进入交互模式, login shell是/bin/bash"></a>使用image创建container并进入交互模式, login shell是/bin/bash</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker run -i -t --name mytest centos:centos6 /bin/bash</span></span><br><span class="line">bash-4.1#</span><br></pre></td></tr></table></figure>
+<p>上面的<code>--name</code>参数可以指定启动后的容器名字，如果不指定则docker会帮我们取一个名字。镜像<code>centos:centos6</code>也可以用<code>IMAGE ID</code> (68edf809afe7) 代替），并且会启动一个伪终端，但通过ps或top命令我们却只能看到一两个进程，因为容器的核心是所执行的应用程序，所需要的资源都是应用程序运行所必需的，除此之外，并没有其它的资源，可见Docker对资源的利用率极高。此时使用exit或Ctrl+D退出后，这个容器也就消失了（消失后的容器并没有完全删除？）<br>（那么多个TAG不同而IMAGE ID相同的的镜像究竟会运行以哪一个TAG启动呢</p>
+<h3 id="5-2-运行出一个container放到后台运行"><a href="#5-2-运行出一个container放到后台运行" class="headerlink" title="5.2 运行出一个container放到后台运行"></a>5.2 运行出一个container放到后台运行</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker run -d ubuntu /bin/sh -c <span class="string">"while true; do echo hello world; sleep 2; done"</span></span></span><br><span class="line">ae60c4b642058fefcc61ada85a610914bed9f5df0e2aa147100eab85cea785dc</span><br></pre></td></tr></table></figure>
+<p>它将直接把启动的container挂起放在后台运行（这才叫saas），并且会输出一个<code>CONTAINER ID</code>，通过<code>docker ps</code>可以看到这个容器的信息，可在container外面查看它的输出<code>docker logs ae60c4b64205</code>，也可以通过<code>docker attach ae60c4b64205</code>连接到这个正在运行的终端，此时在<code>Ctrl+C</code>退出container就消失了，按ctrl-p ctrl-q可以退出到宿主机，而保持container仍然在运行<br>另外，如果-d启动但后面的命令执行完就结束了，如<code>/bin/bash</code>、<code>echo test</code>，则container做完该做的时候依然会终止。而且-d不能与–rm同时使用<br>可以通过这种方式来运行memcached、apache等。</p>
+<h3 id="5-3-映射host到container的端口和目录"><a href="#5-3-映射host到container的端口和目录" class="headerlink" title="5.3 映射host到container的端口和目录"></a>5.3 映射host到container的端口和目录</h3><p>映射主机到容器的端口是很有用的，比如在container中运行memcached，端口为11211，运行容器的host可以连接container的 internel_ip:11211 访问，如果有从其他主机访问memcached需求那就可以通过-p选项，形如<code>-p &lt;host_port:contain_port&gt;</code>，存在以下几种写法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-p 11211:11211 这个即是默认情况下，绑定主机所有网卡（0.0.0.0）的11211端口到容器的11211端口上</span><br><span class="line">-p 127.0.0.1:11211:11211 只绑定localhost这个接口的11211端口</span><br><span class="line">-p 127.0.0.1::5000</span><br><span class="line">-p 127.0.0.1:80:8080</span><br></pre></td></tr></table></figure>
+<p>目录映射其实是“绑定挂载”host的路径到container的目录，这对于内外传送文件比较方便，在搭建私服那一节，为了避免私服container停止以后保存的images不被删除，就要把提交的images保存到挂载的主机目录下。使用比较简单，<code>-v &lt;host_path:container_path&gt;</code>，绑定多个目录时再加<code>-v</code>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-v /tmp/docker:/tmp/docker</span><br></pre></td></tr></table></figure>
+<p>另外在两个container之间建立联系可用<code>--link</code>，详见高级部分或<a href="http://docs.docker.com/v1.1/reference/commandline/cli/#run" target="_blank" rel="noopener">官方文档</a>。<br>下面是一个例子：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker run --name nginx_test \</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> -v /tmp/docker:/usr/share/nginx/html:ro \</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> -p 80:80 -d \</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> nginx:1.7.6</span></span><br></pre></td></tr></table></figure>
+<p>在主机的/tmp/docker下建立index.html，就可以通过<code>http://localhost:80/</code>或<code>http://host-ip:80</code>访问了。</p>
+<h2 id="6-将一个container固化为一个新的image（commit）"><a href="#6-将一个container固化为一个新的image（commit）" class="headerlink" title="6. 将一个container固化为一个新的image（commit）"></a>6. 将一个container固化为一个新的image（commit）</h2><p>当我们在制作自己的镜像的时候，会在container中安装一些工具、修改配置，如果不做commit保存起来，那么container停止以后再启动，这些更改就消失了。<br><code>docker commit &lt;container&gt; [repo:tag]</code><br>后面的repo:tag可选<br>只能提交正在运行的container，即通过<code>docker ps</code>可以看见的容器，</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">查看刚运行过的容器</span><br><span class="line"><span class="meta">#</span><span class="bash"> docker ps -l</span></span><br><span class="line">CONTAINER ID   IMAGE     COMMAND      CREATED       STATUS        PORTS   NAMES</span><br><span class="line">c9fdf26326c9   nginx:1   nginx -g..   3 hours ago   Exited (0)..     nginx_test</span><br><span class="line"></span><br><span class="line">启动一个已存在的容器（run是从image新建容器后再启动），以下也可以使用docker start nginx_test代替  </span><br><span class="line">[root@hostname docker]# docker start c9fdf26326c9</span><br><span class="line">c9fdf26326c9</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">docker run -i -t --sig-proxy=false 21ffe545748baf /bin/bash</span><br><span class="line">nginx服务没有启动</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> docker commit -m <span class="string">"some tools installed"</span> fcbd0a5348ca seanlook/ubuntu:14.10_tutorial</span></span><br><span class="line">fe022762070b09866eaab47bc943ccb796e53f3f416abf3f2327481b446a9503</span><br></pre></td></tr></table></figure>
+<p>-a “<a href="mailto:seanlook7@gmail.com" target="_blank" rel="noopener">seanlook7@gmail.com</a>“<br>请注意，当你反复去commit一个容器的时候，每次都会得到一个新的<code>IMAGE ID</code>，假如后面的<code>repository:tag</code>没有变，通过<code>docker images</code>可以看到，之前提交的那份镜像的<code>repository:tag</code>就会变成<code>&lt;none&gt;:&lt;none&gt;</code>，所以尽量避免反复提交。<br>另外，观察以下几点</p>
+<ul>
+<li>commit container只会pause住容器，这是为了保证容器文件系统的一致性，但不会stop。如果你要对这个容器继续做其他修改：<ul>
+<li>你可以重新提交得到新image2，删除次新的image1</li>
+<li>也可以关闭容器用新image1启动，继续修改，提交image2后删除image1</li>
+<li>当然这样会很痛苦，所以一般是采用<code>Dockerfile</code>来<code>build</code>得到最终image，参考[]</li>
+</ul>
+</li>
+<li>虽然产生了一个新的image，并且你可以看到大小有100MB，但从commit过程很快就可以知道实际上它并没有独立占用100MB的硬盘空间，而只是在旧镜像的基础上修改，它们共享大部分公共的“片”。</li>
+</ul>
+<h2 id="7-开启-停止-重启container（start-stop-restart）"><a href="#7-开启-停止-重启container（start-stop-restart）" class="headerlink" title="7. 开启/停止/重启container（start/stop/restart）"></a>7. 开启/停止/重启container（start/stop/restart）</h2><p>容器可以通过<code>run</code>新建一个来运行，也可以重新<code>start</code>已经停止的container，但<code>start</code>不能够再指定容器启动时运行的指令，因为docker只能有一个前台进程。<br>容器stop（或<code>Ctrl+D</code>）时，会在保存当前容器的状态之后退出，下次start时保有上次关闭时更改。而且每次进入<code>attach</code>进去的界面是一样的，与第一次run启动或commit提交的时刻相同。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CONTAINER_ID=$(docker start &lt;containner_id&gt;)</span><br><span class="line">docker stop $CONTAINER_ID</span><br><span class="line">docker restart $CONTAINER_ID</span><br></pre></td></tr></table></figure>
+<p>关于这几个命令可以通过一个完整的实例使用：<a href="http://seanlook.com/2014/11/03/docker-run-container-with-shell-daemon_process/" target="_blank" rel="noopener">docker如何创建一个运行后台进程的容器并同时提供shell终端</a>。</p>
+<h2 id="8-连接到正在运行中的container（attach）"><a href="#8-连接到正在运行中的container（attach）" class="headerlink" title="8. 连接到正在运行中的container（attach）"></a>8. 连接到正在运行中的container（attach）</h2><p>要<code>attach</code>上去的容器必须正在运行，可以同时连接上同一个container来共享屏幕（与<code>screen</code>命令的attach类似）。<br>官方文档中说<code>attach</code>后可以通过<code>CTRL-C</code>来detach，但实际上经过我的测试，如果container当前在运行bash，<code>CTRL-C</code>自然是当前行的输入，没有退出；如果container当前正在前台运行进程，如输出nginx的access.log日志，<code>CTRL-C</code>不仅会导致退出容器，而且还stop了。这不是我们想要的，detach的意思按理应该是脱离容器终端，但容器依然运行。好在<code>attach</code>是可以带上<code>--sig-proxy=false</code>来确保<code>CTRL-D</code>或<code>CTRL-C</code>不会关闭容器。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker attach --sig-proxy=<span class="literal">false</span> <span class="variable">$CONTAINER_ID</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="9-查看image或container的底层信息（inspect）"><a href="#9-查看image或container的底层信息（inspect）" class="headerlink" title="9. 查看image或container的底层信息（inspect）"></a>9. 查看image或container的底层信息（inspect）</h2><p><code>inspect</code>的对象可以是image、运行中的container和停止的container。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">查看容器的内部IP</span><br><span class="line"><span class="meta">#</span><span class="bash"> docker inspect --format=<span class="string">'&#123;\&#123;.NetworkSettings.IPAddress&#125;&#125;'</span> <span class="variable">$CONTAINER_ID</span></span></span><br><span class="line">172.17.42.35</span><br><span class="line">（注：由于代码块解析的问题，上面NetworkSettings前面的 \ 去掉）</span><br></pre></td></tr></table></figure>
+<h2 id="10-删除一个或多个container、image（rm、rmi）"><a href="#10-删除一个或多个container、image（rm、rmi）" class="headerlink" title="10. 删除一个或多个container、image（rm、rmi）"></a>10. 删除一个或多个container、image（rm、rmi）</h2><p>你可能在使用过程中会<code>build</code>或<code>commit</code>许多镜像，无用的镜像需要删除。但删除这些镜像是有一些条件的：</p>
+<ul>
+<li>同一个<code>IMAGE ID</code>可能会有多个<code>TAG</code>（可能还在不同的仓库），首先你要根据这些 image names 来删除标签，当删除最后一个tag的时候就会自动删除镜像；</li>
+<li>承上，如果要删除的多个<code>IMAGE NAME</code>在同一个<code>REPOSITORY</code>，可以通过<code>docker rmi &lt;image_id&gt;</code>来同时删除剩下的<code>TAG</code>；若在不同Repo则还是需要手动逐个删除<code>TAG</code>；</li>
+<li>还存在由这个镜像启动的container时（即便已经停止），也无法删除镜像；</li>
+</ul>
+<p>TO-DO<br>如何查看镜像与容器的依存关系</p>
+<p><strong>删除容器</strong><br><code>docker rm &lt;container_id/contaner_name&gt;</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">删除所有停止的容器</span><br><span class="line">docker rm $(docker ps -a -q)</span><br></pre></td></tr></table></figure>
+<p><strong>删除镜像</strong><br><code>docker rmi &lt;image_id/image_name ...&gt;</code><br>下面是一个完整的示例：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker images            &lt;==</span></span><br><span class="line">ubuntu            13.10        195eb90b5349       4 months ago       184.6 MB</span><br><span class="line">ubuntu            saucy        195eb90b5349       4 months ago       184.6 MB</span><br><span class="line">seanlook/ubuntu   rm_test      195eb90b5349       4 months ago       184.6 MB</span><br><span class="line"></span><br><span class="line">使用195eb90b5349启动、停止一个容器后，删除这个镜像</span><br><span class="line"><span class="meta">#</span><span class="bash"> docker rmi 195eb90b5349</span></span><br><span class="line">Error response from daemon: Conflict, cannot delete image 195eb90b5349 because it is </span><br><span class="line">tagged in multiple repositories, use -f to force</span><br><span class="line">2014/11/04 14:19:00 Error: failed to remove one or more images</span><br><span class="line"></span><br><span class="line">删除seanlook仓库中的tag     &lt;==</span><br><span class="line"><span class="meta">#</span><span class="bash"> docker rmi seanlook/ubuntu:rm_test</span></span><br><span class="line">Untagged: seanlook/ubuntu:rm_test</span><br><span class="line"></span><br><span class="line">现在删除镜像，还会由于container的存在不能rmi</span><br><span class="line"><span class="meta">#</span><span class="bash"> docker rmi 195eb90b5349</span></span><br><span class="line">Error response from daemon: Conflict, cannot delete 195eb90b5349 because the </span><br><span class="line"> container eef3648a6e77 is using it, use -f to force</span><br><span class="line">2014/11/04 14:24:15 Error: failed to remove one or more images</span><br><span class="line"></span><br><span class="line">先删除由这个镜像启动的容器    &lt;==</span><br><span class="line"><span class="meta">#</span><span class="bash"> docker rm eef3648a6e77</span></span><br><span class="line"></span><br><span class="line">删除镜像                    &lt;==</span><br><span class="line"><span class="meta">#</span><span class="bash"> docker rmi 195eb90b5349</span></span><br><span class="line">Deleted: 195eb90b534950d334188c3627f860fbdf898e224d8a0a11ec54ff453175e081</span><br><span class="line">Deleted: 209ea56fda6dc2fb013e4d1e40cb678b2af91d1b54a71529f7df0bd867adc961</span><br><span class="line">Deleted: 0f4aac48388f5d65a725ccf8e7caada42f136026c566528a5ee9b02467dac90a</span><br><span class="line">Deleted: fae16849ebe23b48f2bedcc08aaabd45408c62b531ffd8d3088592043d5e7364</span><br><span class="line">Deleted: f127542f0b6191e99bb015b672f5cf48fa79d974784ac8090b11aeac184eaaff</span><br></pre></td></tr></table></figure>
+<p>注意，上面的删除过程我所举的例子比较特殊——镜像被tag在多个仓库，也有启动过的容器。按照<code>&lt;==</code>指示的顺序进行即可。</p>
+<h2 id="11-docker-build-使用此配置生成新的image"><a href="#11-docker-build-使用此配置生成新的image" class="headerlink" title="11. docker build 使用此配置生成新的image"></a>11. docker build 使用此配置生成新的image</h2><p><code>build</code>命令可以从<code>Dockerfile</code>和上下文来创建镜像：<br><code>docker build [OPTIONS] PATH | URL | -</code><br>上面的<code>PATH</code>或<code>URL</code>中的文件被称作上下文，build image的过程会先把这些文件传送到docker的服务端来进行的。<br>如果<code>PATH</code>直接就是一个单独的<code>Dockerfile</code>文件则可以不需要上下文；如果<code>URL</code>是一个Git仓库地址，那么创建image的过程中会自动<code>git clone</code>一份到本机的临时目录，它就成为了本次build的上下文。无论指定的<code>PATH</code>是什么，<code>Dockerfile</code>是至关重要的，请参考<a href="http://docs.docker.com/reference/builder/" target="_blank" rel="noopener">Dockerfile Reference</a>。<br>请看下面的例子：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> cat Dockerfile </span></span><br><span class="line">FROM seanlook/nginx:bash_vim</span><br><span class="line">EXPOSE 80</span><br><span class="line">ENTRYPOINT /usr/sbin/nginx -c /etc/nginx/nginx.conf &amp;&amp; /bin/bash</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> docker build -t seanlook/nginx:bash_vim_Df .</span></span><br><span class="line">Sending build context to Docker daemon 73.45 MB</span><br><span class="line">Sending build context to Docker daemon </span><br><span class="line">Step 0 : FROM seanlook/nginx:bash_vim</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> aa8516fa0bb7</span></span><br><span class="line">Step 1 : EXPOSE 80</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> Using cache</span></span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> fece07e2b515</span></span><br><span class="line">Step 2 : ENTRYPOINT /usr/sbin/nginx -c /etc/nginx/nginx.conf &amp;&amp; /bin/bash</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> Running <span class="keyword">in</span> e08963fd5afb</span></span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> d9bbd13f5066</span></span><br><span class="line">Removing intermediate container e08963fd5afb</span><br><span class="line">Successfully built d9bbd13f5066</span><br></pre></td></tr></table></figure>
+<p>上面的<code>PATH</code>为<code>.</code>，所以在当前目录下的所有文件（不包括<code>.dockerignore</code>中的）将会被<code>tar</code>打包并传送到<code>docker daemon</code>（一般在本机），从输出我们可以到<code>Sending build context...</code>，最后有个<code>Removing intermediate container</code>的过程，可以通过<code>--rm=false</code>来保留容器。<br>TO-DO<br><code>docker build github.com/creack/docker-firefox</code>失败。</p>
+<h2 id="12-给镜像打上标签（tag）"><a href="#12-给镜像打上标签（tag）" class="headerlink" title="12. 给镜像打上标签（tag）"></a>12. 给镜像打上标签（tag）</h2><p>tag的作用主要有两点：一是为镜像起一个容易理解的名字，二是可以通过<code>docker tag</code>来重新指定镜像的仓库，这样在<code>push</code>时自动提交到仓库。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">将同一IMAGE_ID的所有tag，合并为一个新的</span><br><span class="line"><span class="meta">#</span><span class="bash"> docker tag 195eb90b5349 seanlook/ubuntu:rm_test</span></span><br><span class="line"></span><br><span class="line">新建一个tag，保留旧的那条记录</span><br><span class="line"><span class="meta">#</span><span class="bash"> docker tag Registry/Repos:Tag New_Registry/New_Repos:New_Tag</span></span><br></pre></td></tr></table></figure>
+<h2 id="13-查看容器的信息container（ps）"><a href="#13-查看容器的信息container（ps）" class="headerlink" title="13. 查看容器的信息container（ps）"></a>13. 查看容器的信息container（ps）</h2><p><code>docker ps</code>命令可以查看容器的<code>CONTAINER ID</code>、<code>NAME</code>、<code>IMAGE NAME</code>、端口开启及绑定、容器启动后执行的<code>COMMNAD</code>。经常通过<code>ps</code>来找到<code>CONTAINER_ID</code>。<br><code>docker ps</code> 默认显示当前正在运行中的container<br><code>docker ps -a</code> 查看包括已经停止的所有容器<br><code>docker ps -l</code> 显示最新启动的一个容器（包括已停止的）</p>
+<h2 id="14-查看容器中正在运行的进程（top）"><a href="#14-查看容器中正在运行的进程（top）" class="headerlink" title="14. 查看容器中正在运行的进程（top）"></a>14. 查看容器中正在运行的进程（top）</h2><p>容器运行时不一定有<code>/bin/bash</code>终端来交互执行top命令，查看container中正在运行的进程，况且还不一定有<code>top</code>命令，这是<code>docker top &lt;container_id/container_name&gt;</code>就很有用了。实际上在host上使用<code>ps -ef|grep docker</code>也可以看到一组类似的进程信息，把container里的进程看成是host上启动docker的子进程就对了。</p>
+<h2 id="15-其他命令"><a href="#15-其他命令" class="headerlink" title="15. 其他命令"></a>15. 其他命令</h2><p>docker还有一些如<code>login</code>、<code>cp</code>、<code>logs</code>、<code>export</code>、<code>import</code>、<code>load</code>、<code>kill</code>等不是很常用的命令，比较简单，请参考官网。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><p><a href="http://docs.docker.com/v1.1/reference/commandline/cli/" target="_blank" rel="noopener">Official Command Line Reference</a></p>
+</li>
+<li><p><a href="http://www.widuu.com/docker/" target="_blank" rel="noopener">docker中文指南cli-widuu翻译</a></p>
+</li>
+<li><p><a href="http://www.dockerpool.com/static/books/docker_practice/" target="_blank" rel="noopener">Docker —— 从入门到实践</a></p>
+</li>
+<li><p><a href="http://17173ops.com/2014/10/13/docker%E5%9F%BA%E7%A1%80%E4%B8%8E%E9%AB%98%E7%BA%A7.shtml" target="_blank" rel="noopener">Docker基础与高级</a></p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -674,202 +1138,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/11/blogs/Google_Cloud _SSR_BBR/"/>
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Heroinlin"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="/images/leaf.jpg"/>
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Heroinlin's Blog"/>
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/04/11/blogs/Google_Cloud _SSR_BBR/" class="post-title-link" itemprop="url">科学上网：Google Cloud 安装SSR与BBR加速</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-04-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-04-11T11:11:11+08:00">2018-04-11</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-06-05 10:48:42" itemprop="dateModified" datetime="2019-06-05T10:48:42+08:00">2019-06-05</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="科学上网：Google-Cloud-安装SSR与BBR加速"><a href="#科学上网：Google-Cloud-安装SSR与BBR加速" class="headerlink" title="科学上网：Google Cloud 安装SSR与BBR加速"></a>科学上网：Google Cloud 安装SSR与BBR加速</h1><h2 id="基础准备"><a href="#基础准备" class="headerlink" title="基础准备"></a>基础准备</h2><ul>
-<li>可以访问<a href="https://cloud.google.com/" target="_blank" rel="noopener">谷歌云官网</a>的网络环境 （不科学上网就访问不了，可先其他地方借用/购买/试用SSR</li>
-<li>申请一张全币信用卡用于申请免费试用 （国内几家全币信用卡基本免年费）</li>
-</ul>
-<h2 id="创建和配置Google云实例"><a href="#创建和配置Google云实例" class="headerlink" title="创建和配置Google云实例"></a>创建和配置Google云实例</h2><h3 id="创建实例"><a href="#创建实例" class="headerlink" title="创建实例"></a>创建实例</h3><ol>
-<li>在<a href="https://console.cloud.google.com/compute/instances" target="_blank" rel="noopener">计算引擎-VM实例</a>中点击创建</li>
-<li>地区选择:根据需要 一般选择台湾</li>
-<li>机器类型：小型 / 微型 (我选择微型 费用较低，相对可以用更多免费流量 不过一般用不完，好像后面也可以增加配额等操作</li>
-<li>启动磁盘：根据自己熟悉的选， linux走命令行大部分也没差</li>
-<li>防火墙：允许HTTP流量，允许HTTPS流量</li>
-</ol>
-<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><ol>
-<li><p>防火墙配置</p>
-<p>新建一个防火墙规则 <a href="https://console.cloud.google.com/networking/firewalls/add" target="_blank" rel="noopener">VPS-防火墙规则</a></p>
-<p>进行以下配置：流量方向<code>入站</code>、来源ip地址<code>0.0.0.0/0</code>、协议和端口<code>全部允许</code></p>
-</li>
-<li><p>外部IP设置成静态IP</p>
-<p>在<a href="https://console.cloud.google.com/networking/addresses/list" target="_blank" rel="noopener">VPS-外部IP地址</a> （点击直达）中在相应的实例 类型中临时改为静态即可</p>
-<p>这个主要是为了避免服务器重启IP变化</p>
-</li>
-</ol>
-<h2 id="服务器部署SSR-BBR"><a href="#服务器部署SSR-BBR" class="headerlink" title="服务器部署SSR+BBR"></a>服务器部署SSR+BBR</h2><h3 id="使用ssh终端连接服务器"><a href="#使用ssh终端连接服务器" class="headerlink" title="使用ssh终端连接服务器"></a>使用ssh终端连接服务器</h3><p>进行ssh登录，将用户名和ip地址替换为你的服务器的用户名与ip地址</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh 用户名@ip地址</span><br></pre></td></tr></table></figure>
-<h3 id="安装ss"><a href="#安装ss" class="headerlink" title="安装ss"></a>安装<code>ss</code></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget --no-check-certificate  https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh</span><br><span class="line">chmod +x shadowsocks.sh</span><br><span class="line">./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log</span><br></pre></td></tr></table></figure>
-<p>到这步已经可以使用SS科学上网.后续步骤安装BBR可以进行一定加速</p>
-<h3 id="配置多用户-可选"><a href="#配置多用户-可选" class="headerlink" title="配置多用户(可选)"></a>配置多用户(可选)</h3><p>有时候想给小伙伴一起分享这个ss，但又不想一起用一个号，那么我们最好配置多个用户</p>
-<h4 id="在登录的状态下，输入以下命令，查看配置文件"><a href="#在登录的状态下，输入以下命令，查看配置文件" class="headerlink" title="在登录的状态下，输入以下命令，查看配置文件"></a>在登录的状态下，输入以下命令，查看配置文件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat  /etc/shadowsocks.json</span><br></pre></td></tr></table></figure>
-<h4 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/shadowsocks.json</span><br></pre></td></tr></table></figure>
-<p>默认配置</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    "server":"0.0.0.0",</span><br><span class="line">    "server_port":443,</span><br><span class="line">    "local_address":"127.0.0.1",</span><br><span class="line">    "local_port":1080,</span><br><span class="line">    "password":"aabbcc",</span><br><span class="line">    "timeout":300,</span><br><span class="line">    "method":"aes-256-cfb",</span><br><span class="line">    "fast_open":false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>点击<code>i</code>键进行编辑</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    "server":"0.0.0.0",</span><br><span class="line">    "local_address":"127.0.0.1",</span><br><span class="line">    "local_port":1080,</span><br><span class="line">    "port_password":&#123;</span><br><span class="line">         "443":"pwd000",</span><br><span class="line">         "9001":"pwd123",</span><br><span class="line">         "9002":"pwd234",</span><br><span class="line">         "9003":"pwd345",</span><br><span class="line">         "9004":"pwd456"                    </span><br><span class="line">    &#125;,</span><br><span class="line">    "timeout":300,</span><br><span class="line">    "method":"aes-256-cfb",</span><br><span class="line">    "fast_open": false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>编辑完毕后，点击<code>esc</code>键，再输入<code>:wq</code>保存</p>
-<h4 id="开放端口"><a href="#开放端口" class="headerlink" title="开放端口"></a>开放端口</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看已开放端口</span></span><br><span class="line"> firewall-cmd --list-ports</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 开启端口 以开启8388端口为例</span></span><br><span class="line"> firewall-cmd --zone=public --add-port=8388/tcp --permanent</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 重启防火墙</span></span><br><span class="line"> firewall-cmd --reload</span><br></pre></td></tr></table></figure>
-<p>在这里将新建的端口全部打开，如果不执行这部操作，很可能连接不上</p>
-<p>####重启ss</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssserver -c/etc/shadowsocks.json -d restart</span><br></pre></td></tr></table></figure>
-<p>重启成功后，就可以将地址与密码分享给你的小伙伴咯。</p>
-<h3 id="BBR加速"><a href="#BBR加速" class="headerlink" title="BBR加速"></a>BBR加速</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh </span><br><span class="line">chmod +x bbr.sh </span><br><span class="line">./bbr.sh</span><br></pre></td></tr></table></figure>
-<p>重启VM</p>
-<p>配置BBR</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_available_congestion_control</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/11/blogs/Docker_Nginx_Hexo_blog/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1039,291 +1307,6 @@
 </blockquote>
 <h2 id="解决-bash-docker-compose-command-not-found"><a href="#解决-bash-docker-compose-command-not-found" class="headerlink" title="解决-bash: docker-compose: command not found"></a>解决-bash: docker-compose: command not found</h2><h3 id="利用pip-python-方式进行安装"><a href="#利用pip-python-方式进行安装" class="headerlink" title="利用pip(python)方式进行安装"></a>利用pip(python)方式进行安装</h3><p>虽然很简单，还是有URL确认，x权限设定等需要做，如果使用pip进行安装虽然看似绕远，实质上也是绕远，安装来一看吧。CentOS上需要先行安装yum的一个额外的包，这个包里面才有python-pip，缺省的没有。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yum -y install epel-release</span><br><span class="line">yum -y install python-pip</span><br><span class="line">pip install docker-compose</span><br><span class="line">docker-compose version</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/11/Docker/docker_document/"/>
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Heroinlin"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="/images/leaf.jpg"/>
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Heroinlin's Blog"/>
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/04/11/Docker/docker_document/" class="post-title-link" itemprop="url">docker常用管理命令</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-04-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-04-11T11:11:11+08:00">2018-04-11</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-06-10 13:53:06" itemprop="dateModified" datetime="2019-06-10T13:53:06+08:00">2019-06-10</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="docker常用管理命令"><a href="#docker常用管理命令" class="headerlink" title="docker常用管理命令"></a>docker常用管理命令</h1><blockquote>
-<p>转载地址：<a href="http://seanlook.com/2014/10/31/docker-command-best-use-1/" target="_blank" rel="noopener">http://seanlook.com/2014/10/31/docker-command-best-use-1/</a></p>
-</blockquote>
-<p>本文只记录docker命令在大部分情境下的使用，如果想了解每一个选项的细节，请参考官方文档，这里只作为自己以后的备忘记录下来。</p>
-<p>根据自己的理解，总的来说分为以下几种：</p>
-<ul>
-<li><p>容器生命周期管理</p>
-<p><code>docker [run|start|stop|restart|kill|rm|pause|unpause]</code></p>
-</li>
-<li><p>容器操作运维</p>
-<p><code>docker [ps|inspect|top|attach|events|logs|wait|export|port]</code></p>
-</li>
-<li><p>容器rootfs命令</p>
-<p><code>docker [commit|cp|diff]</code></p>
-</li>
-<li><p>镜像仓库 </p>
-<p> <code>docker [login|pull|push|search]</code></p>
-</li>
-<li><p>本地镜像管理 </p>
-<p><code>docker [images|rmi|tag|build|history|save|import]</code></p>
-</li>
-<li><p>其他命令 </p>
-<p><code>docker [info|version]</code></p>
-</li>
-</ul>
-<p>看一个变迁图<br><a href="http://sean-images.qiniudn.com/docker_cli_stage.png" target="_blank" rel="noopener"><img src="http://sean-images.qiniudn.com/docker_cli_stage.png" alt="docker_cli_stage"></a></p>
-<h2 id="1-列出机器上的镜像（images）"><a href="#1-列出机器上的镜像（images）" class="headerlink" title="1. 列出机器上的镜像（images）"></a>1. 列出机器上的镜像（images）</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker images </span></span><br><span class="line">REPOSITORY               TAG             IMAGE ID        CREATED         VIRTUAL SIZE</span><br><span class="line">ubuntu                   14.10           2185fd50e2ca    13 days ago     236.9 MB</span><br><span class="line">…</span><br></pre></td></tr></table></figure>
-<p>其中我们可以根据REPOSITORY来判断这个镜像是来自哪个服务器，如果没有 / 则表示官方镜像，类似于<code>username/repos_name</code>表示Github的个人公共库，类似于<code>regsistory.example.com:5000/repos_name</code>则表示的是私服。<br>IMAGE ID列其实是缩写，要显示完整则带上<code>--no-trunc</code>选项</p>
-<h2 id="2-在docker-index中搜索image（search）"><a href="#2-在docker-index中搜索image（search）" class="headerlink" title="2. 在docker index中搜索image（search）"></a>2. 在docker index中搜索image（search）</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Usage: docker search TERM</span><br><span class="line"><span class="meta">#</span><span class="bash"> docker search seanlo</span></span><br><span class="line">NAME                DESCRIPTION           STARS     OFFICIAL   AUTOMATED</span><br><span class="line">seanloook/centos6   sean's docker repos         0</span><br></pre></td></tr></table></figure>
-<p>搜索的范围是官方镜像和所有个人公共镜像。NAME列的 / 后面是仓库的名字。</p>
-<h2 id="3-从docker-registry-server-中下拉image或repository（pull）"><a href="#3-从docker-registry-server-中下拉image或repository（pull）" class="headerlink" title="3. 从docker registry server 中下拉image或repository（pull）"></a>3. 从docker registry server 中下拉image或repository（pull）</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Usage: docker pull [OPTIONS] NAME[:TAG]</span><br><span class="line"><span class="meta">#</span><span class="bash"> docker pull centos</span></span><br></pre></td></tr></table></figure>
-<p>上面的命令需要注意，在docker v1.2版本以前，会下载官方镜像的centos仓库里的所有镜像，而从v.13开始官方文档里的说明变了：will pull the centos:latest image, its intermediate layers and any aliases of the same id，也就是只会下载tag为latest的镜像（以及同一images id的其他tag）。<br>也可以明确指定具体的镜像：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker pull centos:centos6</span></span><br></pre></td></tr></table></figure>
-<p>当然也可以从某个人的公共仓库（包括自己是私人仓库）拉取，形如<code>docker pull username/repository&lt;:tag_name&gt;</code> ：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker pull seanlook/centos:centos6</span></span><br></pre></td></tr></table></figure>
-<p>如果你没有网络，或者从其他私服获取镜像，形如<code>docker pull registry.domain.com:5000/repos:&lt;tag_name&gt;</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker pull dl.dockerpool.com:5000/mongo:latest</span></span><br></pre></td></tr></table></figure>
-<h2 id="4-推送一个image或repository到registry（push）"><a href="#4-推送一个image或repository到registry（push）" class="headerlink" title="4. 推送一个image或repository到registry（push）"></a>4. 推送一个image或repository到registry（push）</h2><p>与上面的pull对应，可以推送到Docker Hub的Public、Private以及私服，但不能推送到Top Level Repository。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker push seanlook/mongo</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> docker push registry.tp-link.net:5000/mongo:2014-10-27</span></span><br></pre></td></tr></table></figure>
-<p>registry.tp-link.net也可以写成IP，172.29.88.222。<br>在repository不存在的情况下，命令行下push上去的会为我们创建为私有库，然而通过浏览器创建的默认为公共库。</p>
-<h2 id="5-从image启动一个container（run）"><a href="#5-从image启动一个container（run）" class="headerlink" title="5. 从image启动一个container（run）"></a>5. 从image启动一个container（run）</h2><p><code>docker run</code>命令首先会从特定的image创之上create一层可写的container，然后通过start命令来启动它。停止的container可以重新启动并保留原来的修改。run命令启动参数有很多，以下是一些常规使用说明，更多部分请参考<a href="http://www.cnphp6.com/archives/24899" target="_blank" rel="noopener">http://www.cnphp6.com/archives/24899</a><br>当利用 docker run 来创建容器时，Docker 在后台运行的标准操作包括：</p>
-<ul>
-<li>检查本地是否存在指定的镜像，不存在就从公有仓库下载</li>
-<li>利用镜像创建并启动一个容器</li>
-<li>分配一个文件系统，并在只读的镜像层外面挂载一层可读写层</li>
-<li>从宿主主机配置的网桥接口中桥接一个虚拟接口到容器中去</li>
-<li>从地址池配置一个 ip 地址给容器</li>
-<li>执行用户指定的应用程序</li>
-<li>执行完毕后容器被终止</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Usage: docker run [OPTIONS] IMAGE [COMMAND] [ARG...]</span><br></pre></td></tr></table></figure>
-<h3 id="5-1-使用image创建container并执行相应命令，然后停止"><a href="#5-1-使用image创建container并执行相应命令，然后停止" class="headerlink" title="5.1 使用image创建container并执行相应命令，然后停止"></a>5.1 使用image创建container并执行相应命令，然后停止</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker run ubuntu <span class="built_in">echo</span> <span class="string">"hello world"</span></span></span><br><span class="line">hello word</span><br></pre></td></tr></table></figure>
-<p>这是最简单的方式，跟在本地直接执行<code>echo &#39;hello world&#39;</code> 几乎感觉不出任何区别，而实际上它会从本地ubuntu:latest镜像启动到一个容器，并执行打印命令后退出（<code>docker ps -l</code>可查看）。需要注意的是，默认有一个<code>--rm=true</code>参数，即完成操作后停止容器并从文件系统移除。因为Docker的容器实在太轻量级了，很多时候用户都是随时删除和新创建容器。<br>容器启动后会自动随机生成一个<code>CONTAINER ID</code>，这个ID在后面commit命令后可以变为<code>IMAGE ID</code></p>
-<h4 id="使用image创建container并进入交互模式-login-shell是-bin-bash"><a href="#使用image创建container并进入交互模式-login-shell是-bin-bash" class="headerlink" title="使用image创建container并进入交互模式, login shell是/bin/bash"></a>使用image创建container并进入交互模式, login shell是/bin/bash</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker run -i -t --name mytest centos:centos6 /bin/bash</span></span><br><span class="line">bash-4.1#</span><br></pre></td></tr></table></figure>
-<p>上面的<code>--name</code>参数可以指定启动后的容器名字，如果不指定则docker会帮我们取一个名字。镜像<code>centos:centos6</code>也可以用<code>IMAGE ID</code> (68edf809afe7) 代替），并且会启动一个伪终端，但通过ps或top命令我们却只能看到一两个进程，因为容器的核心是所执行的应用程序，所需要的资源都是应用程序运行所必需的，除此之外，并没有其它的资源，可见Docker对资源的利用率极高。此时使用exit或Ctrl+D退出后，这个容器也就消失了（消失后的容器并没有完全删除？）<br>（那么多个TAG不同而IMAGE ID相同的的镜像究竟会运行以哪一个TAG启动呢</p>
-<h3 id="5-2-运行出一个container放到后台运行"><a href="#5-2-运行出一个container放到后台运行" class="headerlink" title="5.2 运行出一个container放到后台运行"></a>5.2 运行出一个container放到后台运行</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker run -d ubuntu /bin/sh -c <span class="string">"while true; do echo hello world; sleep 2; done"</span></span></span><br><span class="line">ae60c4b642058fefcc61ada85a610914bed9f5df0e2aa147100eab85cea785dc</span><br></pre></td></tr></table></figure>
-<p>它将直接把启动的container挂起放在后台运行（这才叫saas），并且会输出一个<code>CONTAINER ID</code>，通过<code>docker ps</code>可以看到这个容器的信息，可在container外面查看它的输出<code>docker logs ae60c4b64205</code>，也可以通过<code>docker attach ae60c4b64205</code>连接到这个正在运行的终端，此时在<code>Ctrl+C</code>退出container就消失了，按ctrl-p ctrl-q可以退出到宿主机，而保持container仍然在运行<br>另外，如果-d启动但后面的命令执行完就结束了，如<code>/bin/bash</code>、<code>echo test</code>，则container做完该做的时候依然会终止。而且-d不能与–rm同时使用<br>可以通过这种方式来运行memcached、apache等。</p>
-<h3 id="5-3-映射host到container的端口和目录"><a href="#5-3-映射host到container的端口和目录" class="headerlink" title="5.3 映射host到container的端口和目录"></a>5.3 映射host到container的端口和目录</h3><p>映射主机到容器的端口是很有用的，比如在container中运行memcached，端口为11211，运行容器的host可以连接container的 internel_ip:11211 访问，如果有从其他主机访问memcached需求那就可以通过-p选项，形如<code>-p &lt;host_port:contain_port&gt;</code>，存在以下几种写法：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-p 11211:11211 这个即是默认情况下，绑定主机所有网卡（0.0.0.0）的11211端口到容器的11211端口上</span><br><span class="line">-p 127.0.0.1:11211:11211 只绑定localhost这个接口的11211端口</span><br><span class="line">-p 127.0.0.1::5000</span><br><span class="line">-p 127.0.0.1:80:8080</span><br></pre></td></tr></table></figure>
-<p>目录映射其实是“绑定挂载”host的路径到container的目录，这对于内外传送文件比较方便，在搭建私服那一节，为了避免私服container停止以后保存的images不被删除，就要把提交的images保存到挂载的主机目录下。使用比较简单，<code>-v &lt;host_path:container_path&gt;</code>，绑定多个目录时再加<code>-v</code>。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-v /tmp/docker:/tmp/docker</span><br></pre></td></tr></table></figure>
-<p>另外在两个container之间建立联系可用<code>--link</code>，详见高级部分或<a href="http://docs.docker.com/v1.1/reference/commandline/cli/#run" target="_blank" rel="noopener">官方文档</a>。<br>下面是一个例子：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker run --name nginx_test \</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> -v /tmp/docker:/usr/share/nginx/html:ro \</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> -p 80:80 -d \</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> nginx:1.7.6</span></span><br></pre></td></tr></table></figure>
-<p>在主机的/tmp/docker下建立index.html，就可以通过<code>http://localhost:80/</code>或<code>http://host-ip:80</code>访问了。</p>
-<h2 id="6-将一个container固化为一个新的image（commit）"><a href="#6-将一个container固化为一个新的image（commit）" class="headerlink" title="6. 将一个container固化为一个新的image（commit）"></a>6. 将一个container固化为一个新的image（commit）</h2><p>当我们在制作自己的镜像的时候，会在container中安装一些工具、修改配置，如果不做commit保存起来，那么container停止以后再启动，这些更改就消失了。<br><code>docker commit &lt;container&gt; [repo:tag]</code><br>后面的repo:tag可选<br>只能提交正在运行的container，即通过<code>docker ps</code>可以看见的容器，</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">查看刚运行过的容器</span><br><span class="line"><span class="meta">#</span><span class="bash"> docker ps -l</span></span><br><span class="line">CONTAINER ID   IMAGE     COMMAND      CREATED       STATUS        PORTS   NAMES</span><br><span class="line">c9fdf26326c9   nginx:1   nginx -g..   3 hours ago   Exited (0)..     nginx_test</span><br><span class="line"></span><br><span class="line">启动一个已存在的容器（run是从image新建容器后再启动），以下也可以使用docker start nginx_test代替  </span><br><span class="line">[root@hostname docker]# docker start c9fdf26326c9</span><br><span class="line">c9fdf26326c9</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">docker run -i -t --sig-proxy=false 21ffe545748baf /bin/bash</span><br><span class="line">nginx服务没有启动</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> docker commit -m <span class="string">"some tools installed"</span> fcbd0a5348ca seanlook/ubuntu:14.10_tutorial</span></span><br><span class="line">fe022762070b09866eaab47bc943ccb796e53f3f416abf3f2327481b446a9503</span><br></pre></td></tr></table></figure>
-<p>-a “<a href="mailto:seanlook7@gmail.com" target="_blank" rel="noopener">seanlook7@gmail.com</a>“<br>请注意，当你反复去commit一个容器的时候，每次都会得到一个新的<code>IMAGE ID</code>，假如后面的<code>repository:tag</code>没有变，通过<code>docker images</code>可以看到，之前提交的那份镜像的<code>repository:tag</code>就会变成<code>&lt;none&gt;:&lt;none&gt;</code>，所以尽量避免反复提交。<br>另外，观察以下几点</p>
-<ul>
-<li>commit container只会pause住容器，这是为了保证容器文件系统的一致性，但不会stop。如果你要对这个容器继续做其他修改：<ul>
-<li>你可以重新提交得到新image2，删除次新的image1</li>
-<li>也可以关闭容器用新image1启动，继续修改，提交image2后删除image1</li>
-<li>当然这样会很痛苦，所以一般是采用<code>Dockerfile</code>来<code>build</code>得到最终image，参考[]</li>
-</ul>
-</li>
-<li>虽然产生了一个新的image，并且你可以看到大小有100MB，但从commit过程很快就可以知道实际上它并没有独立占用100MB的硬盘空间，而只是在旧镜像的基础上修改，它们共享大部分公共的“片”。</li>
-</ul>
-<h2 id="7-开启-停止-重启container（start-stop-restart）"><a href="#7-开启-停止-重启container（start-stop-restart）" class="headerlink" title="7. 开启/停止/重启container（start/stop/restart）"></a>7. 开启/停止/重启container（start/stop/restart）</h2><p>容器可以通过<code>run</code>新建一个来运行，也可以重新<code>start</code>已经停止的container，但<code>start</code>不能够再指定容器启动时运行的指令，因为docker只能有一个前台进程。<br>容器stop（或<code>Ctrl+D</code>）时，会在保存当前容器的状态之后退出，下次start时保有上次关闭时更改。而且每次进入<code>attach</code>进去的界面是一样的，与第一次run启动或commit提交的时刻相同。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CONTAINER_ID=$(docker start &lt;containner_id&gt;)</span><br><span class="line">docker stop $CONTAINER_ID</span><br><span class="line">docker restart $CONTAINER_ID</span><br></pre></td></tr></table></figure>
-<p>关于这几个命令可以通过一个完整的实例使用：<a href="http://seanlook.com/2014/11/03/docker-run-container-with-shell-daemon_process/" target="_blank" rel="noopener">docker如何创建一个运行后台进程的容器并同时提供shell终端</a>。</p>
-<h2 id="8-连接到正在运行中的container（attach）"><a href="#8-连接到正在运行中的container（attach）" class="headerlink" title="8. 连接到正在运行中的container（attach）"></a>8. 连接到正在运行中的container（attach）</h2><p>要<code>attach</code>上去的容器必须正在运行，可以同时连接上同一个container来共享屏幕（与<code>screen</code>命令的attach类似）。<br>官方文档中说<code>attach</code>后可以通过<code>CTRL-C</code>来detach，但实际上经过我的测试，如果container当前在运行bash，<code>CTRL-C</code>自然是当前行的输入，没有退出；如果container当前正在前台运行进程，如输出nginx的access.log日志，<code>CTRL-C</code>不仅会导致退出容器，而且还stop了。这不是我们想要的，detach的意思按理应该是脱离容器终端，但容器依然运行。好在<code>attach</code>是可以带上<code>--sig-proxy=false</code>来确保<code>CTRL-D</code>或<code>CTRL-C</code>不会关闭容器。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker attach --sig-proxy=<span class="literal">false</span> <span class="variable">$CONTAINER_ID</span></span></span><br></pre></td></tr></table></figure>
-<h2 id="9-查看image或container的底层信息（inspect）"><a href="#9-查看image或container的底层信息（inspect）" class="headerlink" title="9. 查看image或container的底层信息（inspect）"></a>9. 查看image或container的底层信息（inspect）</h2><p><code>inspect</code>的对象可以是image、运行中的container和停止的container。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">查看容器的内部IP</span><br><span class="line"><span class="meta">#</span><span class="bash"> docker inspect --format=<span class="string">'&#123;\&#123;.NetworkSettings.IPAddress&#125;&#125;'</span> <span class="variable">$CONTAINER_ID</span></span></span><br><span class="line">172.17.42.35</span><br><span class="line">（注：由于代码块解析的问题，上面NetworkSettings前面的 \ 去掉）</span><br></pre></td></tr></table></figure>
-<h2 id="10-删除一个或多个container、image（rm、rmi）"><a href="#10-删除一个或多个container、image（rm、rmi）" class="headerlink" title="10. 删除一个或多个container、image（rm、rmi）"></a>10. 删除一个或多个container、image（rm、rmi）</h2><p>你可能在使用过程中会<code>build</code>或<code>commit</code>许多镜像，无用的镜像需要删除。但删除这些镜像是有一些条件的：</p>
-<ul>
-<li>同一个<code>IMAGE ID</code>可能会有多个<code>TAG</code>（可能还在不同的仓库），首先你要根据这些 image names 来删除标签，当删除最后一个tag的时候就会自动删除镜像；</li>
-<li>承上，如果要删除的多个<code>IMAGE NAME</code>在同一个<code>REPOSITORY</code>，可以通过<code>docker rmi &lt;image_id&gt;</code>来同时删除剩下的<code>TAG</code>；若在不同Repo则还是需要手动逐个删除<code>TAG</code>；</li>
-<li>还存在由这个镜像启动的container时（即便已经停止），也无法删除镜像；</li>
-</ul>
-<p>TO-DO<br>如何查看镜像与容器的依存关系</p>
-<p><strong>删除容器</strong><br><code>docker rm &lt;container_id/contaner_name&gt;</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">删除所有停止的容器</span><br><span class="line">docker rm $(docker ps -a -q)</span><br></pre></td></tr></table></figure>
-<p><strong>删除镜像</strong><br><code>docker rmi &lt;image_id/image_name ...&gt;</code><br>下面是一个完整的示例：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker images            &lt;==</span></span><br><span class="line">ubuntu            13.10        195eb90b5349       4 months ago       184.6 MB</span><br><span class="line">ubuntu            saucy        195eb90b5349       4 months ago       184.6 MB</span><br><span class="line">seanlook/ubuntu   rm_test      195eb90b5349       4 months ago       184.6 MB</span><br><span class="line"></span><br><span class="line">使用195eb90b5349启动、停止一个容器后，删除这个镜像</span><br><span class="line"><span class="meta">#</span><span class="bash"> docker rmi 195eb90b5349</span></span><br><span class="line">Error response from daemon: Conflict, cannot delete image 195eb90b5349 because it is </span><br><span class="line">tagged in multiple repositories, use -f to force</span><br><span class="line">2014/11/04 14:19:00 Error: failed to remove one or more images</span><br><span class="line"></span><br><span class="line">删除seanlook仓库中的tag     &lt;==</span><br><span class="line"><span class="meta">#</span><span class="bash"> docker rmi seanlook/ubuntu:rm_test</span></span><br><span class="line">Untagged: seanlook/ubuntu:rm_test</span><br><span class="line"></span><br><span class="line">现在删除镜像，还会由于container的存在不能rmi</span><br><span class="line"><span class="meta">#</span><span class="bash"> docker rmi 195eb90b5349</span></span><br><span class="line">Error response from daemon: Conflict, cannot delete 195eb90b5349 because the </span><br><span class="line"> container eef3648a6e77 is using it, use -f to force</span><br><span class="line">2014/11/04 14:24:15 Error: failed to remove one or more images</span><br><span class="line"></span><br><span class="line">先删除由这个镜像启动的容器    &lt;==</span><br><span class="line"><span class="meta">#</span><span class="bash"> docker rm eef3648a6e77</span></span><br><span class="line"></span><br><span class="line">删除镜像                    &lt;==</span><br><span class="line"><span class="meta">#</span><span class="bash"> docker rmi 195eb90b5349</span></span><br><span class="line">Deleted: 195eb90b534950d334188c3627f860fbdf898e224d8a0a11ec54ff453175e081</span><br><span class="line">Deleted: 209ea56fda6dc2fb013e4d1e40cb678b2af91d1b54a71529f7df0bd867adc961</span><br><span class="line">Deleted: 0f4aac48388f5d65a725ccf8e7caada42f136026c566528a5ee9b02467dac90a</span><br><span class="line">Deleted: fae16849ebe23b48f2bedcc08aaabd45408c62b531ffd8d3088592043d5e7364</span><br><span class="line">Deleted: f127542f0b6191e99bb015b672f5cf48fa79d974784ac8090b11aeac184eaaff</span><br></pre></td></tr></table></figure>
-<p>注意，上面的删除过程我所举的例子比较特殊——镜像被tag在多个仓库，也有启动过的容器。按照<code>&lt;==</code>指示的顺序进行即可。</p>
-<h2 id="11-docker-build-使用此配置生成新的image"><a href="#11-docker-build-使用此配置生成新的image" class="headerlink" title="11. docker build 使用此配置生成新的image"></a>11. docker build 使用此配置生成新的image</h2><p><code>build</code>命令可以从<code>Dockerfile</code>和上下文来创建镜像：<br><code>docker build [OPTIONS] PATH | URL | -</code><br>上面的<code>PATH</code>或<code>URL</code>中的文件被称作上下文，build image的过程会先把这些文件传送到docker的服务端来进行的。<br>如果<code>PATH</code>直接就是一个单独的<code>Dockerfile</code>文件则可以不需要上下文；如果<code>URL</code>是一个Git仓库地址，那么创建image的过程中会自动<code>git clone</code>一份到本机的临时目录，它就成为了本次build的上下文。无论指定的<code>PATH</code>是什么，<code>Dockerfile</code>是至关重要的，请参考<a href="http://docs.docker.com/reference/builder/" target="_blank" rel="noopener">Dockerfile Reference</a>。<br>请看下面的例子：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> cat Dockerfile </span></span><br><span class="line">FROM seanlook/nginx:bash_vim</span><br><span class="line">EXPOSE 80</span><br><span class="line">ENTRYPOINT /usr/sbin/nginx -c /etc/nginx/nginx.conf &amp;&amp; /bin/bash</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> docker build -t seanlook/nginx:bash_vim_Df .</span></span><br><span class="line">Sending build context to Docker daemon 73.45 MB</span><br><span class="line">Sending build context to Docker daemon </span><br><span class="line">Step 0 : FROM seanlook/nginx:bash_vim</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> aa8516fa0bb7</span></span><br><span class="line">Step 1 : EXPOSE 80</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> Using cache</span></span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> fece07e2b515</span></span><br><span class="line">Step 2 : ENTRYPOINT /usr/sbin/nginx -c /etc/nginx/nginx.conf &amp;&amp; /bin/bash</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> Running <span class="keyword">in</span> e08963fd5afb</span></span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> d9bbd13f5066</span></span><br><span class="line">Removing intermediate container e08963fd5afb</span><br><span class="line">Successfully built d9bbd13f5066</span><br></pre></td></tr></table></figure>
-<p>上面的<code>PATH</code>为<code>.</code>，所以在当前目录下的所有文件（不包括<code>.dockerignore</code>中的）将会被<code>tar</code>打包并传送到<code>docker daemon</code>（一般在本机），从输出我们可以到<code>Sending build context...</code>，最后有个<code>Removing intermediate container</code>的过程，可以通过<code>--rm=false</code>来保留容器。<br>TO-DO<br><code>docker build github.com/creack/docker-firefox</code>失败。</p>
-<h2 id="12-给镜像打上标签（tag）"><a href="#12-给镜像打上标签（tag）" class="headerlink" title="12. 给镜像打上标签（tag）"></a>12. 给镜像打上标签（tag）</h2><p>tag的作用主要有两点：一是为镜像起一个容易理解的名字，二是可以通过<code>docker tag</code>来重新指定镜像的仓库，这样在<code>push</code>时自动提交到仓库。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">将同一IMAGE_ID的所有tag，合并为一个新的</span><br><span class="line"><span class="meta">#</span><span class="bash"> docker tag 195eb90b5349 seanlook/ubuntu:rm_test</span></span><br><span class="line"></span><br><span class="line">新建一个tag，保留旧的那条记录</span><br><span class="line"><span class="meta">#</span><span class="bash"> docker tag Registry/Repos:Tag New_Registry/New_Repos:New_Tag</span></span><br></pre></td></tr></table></figure>
-<h2 id="13-查看容器的信息container（ps）"><a href="#13-查看容器的信息container（ps）" class="headerlink" title="13. 查看容器的信息container（ps）"></a>13. 查看容器的信息container（ps）</h2><p><code>docker ps</code>命令可以查看容器的<code>CONTAINER ID</code>、<code>NAME</code>、<code>IMAGE NAME</code>、端口开启及绑定、容器启动后执行的<code>COMMNAD</code>。经常通过<code>ps</code>来找到<code>CONTAINER_ID</code>。<br><code>docker ps</code> 默认显示当前正在运行中的container<br><code>docker ps -a</code> 查看包括已经停止的所有容器<br><code>docker ps -l</code> 显示最新启动的一个容器（包括已停止的）</p>
-<h2 id="14-查看容器中正在运行的进程（top）"><a href="#14-查看容器中正在运行的进程（top）" class="headerlink" title="14. 查看容器中正在运行的进程（top）"></a>14. 查看容器中正在运行的进程（top）</h2><p>容器运行时不一定有<code>/bin/bash</code>终端来交互执行top命令，查看container中正在运行的进程，况且还不一定有<code>top</code>命令，这是<code>docker top &lt;container_id/container_name&gt;</code>就很有用了。实际上在host上使用<code>ps -ef|grep docker</code>也可以看到一组类似的进程信息，把container里的进程看成是host上启动docker的子进程就对了。</p>
-<h2 id="15-其他命令"><a href="#15-其他命令" class="headerlink" title="15. 其他命令"></a>15. 其他命令</h2><p>docker还有一些如<code>login</code>、<code>cp</code>、<code>logs</code>、<code>export</code>、<code>import</code>、<code>load</code>、<code>kill</code>等不是很常用的命令，比较简单，请参考官网。</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
-<li><p><a href="http://docs.docker.com/v1.1/reference/commandline/cli/" target="_blank" rel="noopener">Official Command Line Reference</a></p>
-</li>
-<li><p><a href="http://www.widuu.com/docker/" target="_blank" rel="noopener">docker中文指南cli-widuu翻译</a></p>
-</li>
-<li><p><a href="http://www.dockerpool.com/static/books/docker_practice/" target="_blank" rel="noopener">Docker —— 从入门到实践</a></p>
-</li>
-<li><p><a href="http://17173ops.com/2014/10/13/docker%E5%9F%BA%E7%A1%80%E4%B8%8E%E9%AB%98%E7%BA%A7.shtml" target="_blank" rel="noopener">Docker基础与高级</a></p>
-</li>
-</ul>
 
           
         
@@ -1969,483 +1952,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/Pytorch/pytorch_Tensor/"/>
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Heroinlin"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="/images/leaf.jpg"/>
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Heroinlin's Blog"/>
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/03/12/Pytorch/pytorch_Tensor/" class="post-title-link" itemprop="url">Tensor的数学运算</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-03-12 10:48:11" itemprop="dateCreated datePublished" datetime="2018-03-12T10:48:11+08:00">2018-03-12</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-08-06 09:25:00" itemprop="dateModified" datetime="2018-08-06T09:25:00+08:00">2018-08-06</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Pytorch/" itemprop="url" rel="index"><span itemprop="name">Pytorch</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>#<strong>Tensor的数学运算</strong></p>
-<p>总结的方法包括：</p>
-<p>Tensor求和以及按索引求和：<strong>torch.sum()         torch.Tensor.indexadd()</strong></p>
-<p>Tensor元素乘积<strong>：torch.prod(input)</strong></p>
-<p>对Tensor求均值、方差、极值：</p>
-<p><strong>torch.mean()      torch.var()</strong></p>
-<p><strong>torch.max()         torch.min()</strong></p>
-<p>最后还有在NLP领域经常用到的：</p>
-<p>求Tensor的平方根倒数、线性插值、双曲正切</p>
-<p><strong>torch.rsqrt(input)     torch.lerp(star,end,weight)</strong></p>
-<p><strong>torch.tanh(input, out=None)</strong></p>
-<h2 id="元素求和"><a href="#元素求和" class="headerlink" title="元素求和"></a><strong>元素求和</strong></h2><p><strong>torch.sum(input)</strong> → float</p>
-<p>返回输入向量input中所有元素的和。</p>
-<p><strong>参数：</strong></p>
-<ul>
-<li>input (Tensor) - 输入张量</li>
-</ul>
-<p><strong>例子：</strong></p>
-<blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_sum</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.sum(a)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p> 0.6491 -0.1617  0.7009<br>[torch.FloatTensor of size 1x3]</p>
-<p>1.1884211152791977</p>
-</blockquote>
-<p><strong>torch.sum(input, dim, keepdim=False, out=None)</strong> → Tensor</p>
-<p>返回新的张量，其中包括输入张量input中指定维度dim中每行的和。</p>
-<p>若keepdim值为True，则在输出张量中，除了被操作的dim维度值降为1，其它维度与输入张量input相同。否则，dim维度相当于被执行torch.squeeze()维度压缩操作，导致此维度消失，最终输出张量会比输入张量少一个维度。</p>
-<p><strong>参数：</strong></p>
-<ul>
-<li>input (Tensor) - 输入Tensor</li>
-<li>dim (int) - 指定维度</li>
-<li>keepdim (bool) - 输出张量是否保持与输入张量有相同数量的维度</li>
-<li>out (Tensor,optional) - 结果张量</li>
-</ul>
-<p><strong>例子：</strong></p>
-<blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_sum_2d</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">4</span>, <span class="number">3</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.sum(a, <span class="number">0</span>, <span class="keyword">True</span>)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p>-0.8452 -0.2816  0.2672<br> 1.0685  2.4003 -0.6541<br>-0.1700 -0.4373 -0.2217<br>-1.2500  1.1798 -0.6842<br>[torch.FloatTensor of size 4x3]</p>
-<p>-1.1968  2.8613 -1.2928<br>[torch.FloatTensor of size 1x3]</p>
-</blockquote>
-<h2 id="元素乘积"><a href="#元素乘积" class="headerlink" title="元素乘积"></a><strong>元素乘积</strong></h2><p><strong>torch.prod(input)</strong> → float</p>
-<p>返回输入张量input所有元素的乘积。</p>
-<p><strong>参数：</strong></p>
-<ul>
-<li>input (Tensor) - 输入张量</li>
-</ul>
-<p><strong>例子：</strong></p>
-<blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_prod</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.prod(a)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p>-0.3751  0.3082 -0.7879<br>[torch.FloatTensor of size 1x3]</p>
-<p>0.09109678113290456</p>
-</blockquote>
-<p><strong>torch.prod(input, dim, keepdim=False, out=None)</strong> → Tensor</p>
-<p>返回新的张量，其中包括输入张量input中指定维度dim中每行的乘积。</p>
-<p>若keepdim值为True，则在输出张量中，除了被操作的dim维度值降为1，其它维度与输入张量input相同。否则，dim维度相当于被执行torch.squeeze()维度压缩操作，导致此维度消失，最终输出张量会比输入张量少一个维度。</p>
-<p><strong>参数：</strong></p>
-<ul>
-<li>input (Tensor) - 输入Tensor</li>
-<li>dim (int) - 指定维度</li>
-<li>keepdim (bool) - 输出张量是否保持与输入张量有相同数量的维度</li>
-<li>out (Tensor,optional) - 结果张量</li>
-</ul>
-<p><strong>例子：</strong></p>
-<blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_prod_2d</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">4</span>, <span class="number">2</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.prod(a, <span class="number">1</span>, <span class="keyword">True</span>)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p> 0.2707  0.4322<br>-2.0925  0.3860<br>-1.1050  1.2551<br>-0.9644 -0.8771<br>[torch.FloatTensor of size 4x2]</p>
-<p> 0.1170<br>-0.8077<br>-1.3869<br> 0.8459<br>[torch.FloatTensor of size 4x1]</p>
-</blockquote>
-<h2 id="按索引求和"><a href="#按索引求和" class="headerlink" title="按索引求和"></a><strong>按索引求和</strong></h2><p><strong>torch.Tensor.indexadd(dim, index, tensor)</strong> → Tensor</p>
-<p>按索引参数index中所确定的顺序，将参数张量tensor中的元素与执行本方法的张量的元素逐个相加。参数tensor的尺寸必须严格地与执行方法的张量匹配，否则会发生错误。</p>
-<p><strong>参数：</strong></p>
-<ul>
-<li>dim (int) - 索引index所指向的维度</li>
-<li>index (LongTensor) - 包含索引数的张量</li>
-<li>tensor (Tensor) - 含有相加元素的张量</li>
-</ul>
-<p><strong>例子：</strong></p>
-<blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_index_add</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     x = torch.Tensor([[<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>], [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>], [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]])</span><br><span class="line">&gt;     print(x)</span><br><span class="line">&gt;     t = torch.Tensor([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>], [<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]])</span><br><span class="line">&gt;     index = torch.LongTensor([<span class="number">0</span>, <span class="number">2</span>, <span class="number">1</span>])</span><br><span class="line">&gt;     x.index_add_(<span class="number">0</span>, index, t)</span><br><span class="line">&gt;     print(x)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p>Output:</p>
-<p>1  1  1<br> 1  1  1<br> 1  1  1<br>[torch.FloatTensor of size 3x3]</p>
-<p>  2   3   4<br>  8   9  10<br>  5   6   7<br>[torch.FloatTensor of size 3x3]</p>
-</blockquote>
-<h2 id="平均数"><a href="#平均数" class="headerlink" title="平均数"></a><strong>平均数</strong></h2><p><strong>torch.mean(input)</strong></p>
-<p>返回输入张量input中每个元素的平均值。</p>
-<p><strong>参数：</strong></p>
-<ul>
-<li>input (Tensor) – 输入张量</li>
-</ul>
-<p><strong>例子：</strong></p>
-<blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_mean</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.mean(a)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p> 0.9257 -0.1373  1.5762<br>[torch.FloatTensor of size 1x3]</p>
-<p>0.788198247551918</p>
-</blockquote>
-<p><strong>torch.mean(input, dim, keepdim=False, out=None)</strong></p>
-<p>返回新的张量，其中包含输入张量input指定维度dim中每行的平均值。</p>
-<p>若keepdim值为True，则在输出张量中，除了被操作的dim维度值降为1，其它维度与输入张量input相同。否则，dim维度相当于被执行torch.squeeze()维度压缩操作，导致此维度消失，最终输出张量会比输入张量少一个维度。</p>
-<p><strong>参数：</strong></p>
-<ul>
-<li>input (Tensor) - 输入张量</li>
-<li>dim (int) - 指定进行均值计算的维度</li>
-<li>keepdim (bool, optional) - 输出张量是否保持与输入张量有相同数量的维度</li>
-<li>out (Tensor) - 结果张量</li>
-</ul>
-<p><strong>例子：</strong></p>
-<blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_mean_2d</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">3</span>, <span class="number">5</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.mean(a, <span class="number">0</span>, <span class="keyword">True</span>)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p> 0.3839 -1.2157  0.0210  1.1199  0.0319<br>-1.3452 -1.0125 -1.2500  1.0597 -0.9030<br> 0.1642  0.9110  0.8520  0.0481 -0.5234<br>[torch.FloatTensor of size 3x5]</p>
-<p>-0.2657 -0.4391 -0.1257  0.7425 -0.4648<br>[torch.FloatTensor of size 1x5]</p>
-</blockquote>
-<h2 id="方差"><a href="#方差" class="headerlink" title="方差"></a><strong>方差</strong></h2><p><strong>torch.var(input, unbiased=True)</strong> → float</p>
-<p>返回输入向量input中所有元素的方差。</p>
-<p><strong>参数：</strong></p>
-<ul>
-<li>input (Tensor) - 输入张量</li>
-<li>unbiased (bool) - 是否使用基于修正贝塞尔函数的无偏估计</li>
-</ul>
-<p><strong>例子：</strong></p>
-<blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_var</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.var(a)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p>-0.7808  0.1883  0.7654<br>[torch.FloatTensor of size 1x3]</p>
-<p>0.6105006681458913</p>
-</blockquote>
-<p><strong>torch.var(input, dim, keepdim=False, unbiased=True, out=None)</strong> → Tensor</p>
-<p>返回新的张量，其中包括输入张量input中指定维度dim中每行的方差。</p>
-<p>若keepdim值为True，则在输出张量中，除了被操作的dim维度值降为1，其它维度与输入张量input相同。否则，dim维度相当于被执行torch.squeeze()维度压缩操作，导致此维度消失，最终输出张量会比输入张量少一个维度。</p>
-<p><strong>参数：</strong></p>
-<ul>
-<li>input (Tensor) - 输入Tensor</li>
-<li>dim (int) - 指定维度</li>
-<li>keepdim (bool) - 输出张量是否保持与输入张量有相同数量的维度</li>
-<li>unbiased (bool) - 是否使用基于修正贝塞尔函数的无偏估计</li>
-<li>out (Tensor,optional) - 结果张量</li>
-</ul>
-<p><strong>例子：</strong></p>
-<blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_var_2d</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">3</span>, <span class="number">5</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.var(a, <span class="number">0</span>, <span class="keyword">True</span>)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p>-0.2789 -1.6603  1.1928  0.9614  1.2953<br> 0.9082  0.4015  1.1001 -0.9432  0.9254<br>-1.0593 -0.2636 -0.9274  0.0006  1.3933<br>[torch.FloatTensor of size 3x5]</p>
-<p> 0.9815  1.1074  1.4358  0.9069  0.0609<br>[torch.FloatTensor of size 1x5]</p>
-</blockquote>
-<h2 id="最大值"><a href="#最大值" class="headerlink" title="最大值"></a><strong>最大值</strong></h2><p><strong>torch.max(input)</strong> → float</p>
-<p>返回输入张量所有元素的最大值。</p>
-<p><strong>参数：</strong></p>
-<ul>
-<li>input (Tensor) - 输入张量</li>
-</ul>
-<p><strong>例子：</strong></p>
-<blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_max</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.max(a)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p> 0.8944  0.8395 -0.8867<br>[torch.FloatTensor of size 1x3]</p>
-<p>0.8944145441055298</p>
-</blockquote>
-<p><strong>torch.max(input, dim, keepdim=False, out=None)</strong> -&gt; (Tensor, LongTensor)</p>
-<p>返回新的张量，其中包括输入张量input中指定维度dim中每行的最大值，同时返回每个最大值的位置索引。</p>
-<p>若keepdim值为True，则在输出张量中，除了被操作的dim维度值降为1，其它维度与输入张量input相同。否则，dim维度相当于被执行torch.squeeze()维度压缩操作，导致此维度消失，最终输出张量会比输入张量少一个维度。</p>
-<p><strong>参数：</strong></p>
-<ul>
-<li>input (Tensor) - 输入Tensor</li>
-<li>dim (int) - 指定维度</li>
-<li>keepdim (bool) - 输出张量是否保持与输入张量有相同数量的维度</li>
-<li>out (tuple,optional) - 结果张量</li>
-</ul>
-<p><strong>例子：</strong></p>
-<blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_max_2d</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">3</span>, <span class="number">5</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.max(a, <span class="number">0</span>, <span class="keyword">True</span>)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p> 0.5306 -0.8915  2.7820  0.1723 -0.5061<br> 2.0535  0.2018 -3.1085 -0.7618  0.5924<br> 0.9906 -0.3212  0.1849  1.7002  0.8102<br>[torch.FloatTensor of size 3x5]</p>
-<p>(<br> 2.0535  0.2018  2.7820  1.7002  0.8102<br>[torch.FloatTensor of size 1x5]<br>,<br> 1  1  0  2  2<br>[torch.LongTensor of size 1x5]<br>)</p>
-</blockquote>
-<p><strong>torch.max(input, other, out=None)</strong> → Tensor</p>
-<p>逐个元素比较张量input与张量other，将比较出的最大值保存到输出张量中。<br>两个张量尺寸不需要完全相同，但需要支持自动扩展法则。</p>
-<p><strong>参数：</strong></p>
-<ul>
-<li>input (Tensor) - 输入Tensor</li>
-<li>other (Tensor) - 另一个输入的Tensor</li>
-<li>out (Tensor,optional) - 结果张量</li>
-</ul>
-<p><strong>例子：</strong></p>
-<blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_max_2tensor</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">4</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.randn(<span class="number">1</span>)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;     print(torch.max(a, b))</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p>0.5369<br>-1.5926<br>-1.3574<br>-1.6009<br>[torch.FloatTensor of size 4]</p>
-<p>-0.1394<br>[torch.FloatTensor of size 1]</p>
-<p> 0.5369<br>-0.1394<br>-0.1394<br>-0.1394<br>[torch.FloatTensor of size 4]</p>
-</blockquote>
-<h2 id="最小值"><a href="#最小值" class="headerlink" title="最小值"></a><strong>最小值</strong></h2><p><strong>torch.min(input)</strong> → float</p>
-<p>返回输入张量所有元素的最小值。</p>
-<p><strong>参数：</strong></p>
-<ul>
-<li>input (Tensor) - 输入张量</li>
-</ul>
-<p><strong>例子：</strong></p>
-<blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_min</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.min(a)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p>-0.8926  0.2079 -0.6790<br>[torch.FloatTensor of size 1x3]</p>
-<p>-0.8925955295562744</p>
-</blockquote>
-<p><strong>torch.min(input, dim, keepdim=False, out=None)</strong> -&gt; (Tensor, LongTensor)</p>
-<p>返回新的张量，其中包括输入张量input中指定维度dim中每行的最小值，同时返回每个最小值的位置索引。</p>
-<p>若keepdim值为True，则在输出张量中，除了被操作的dim维度值降为1，其它维度与输入张量input相同。否则，dim维度相当于被执行torch.squeeze()维度压缩操作，导致此维度消失，最终输出张量会比输入张量少一个维度。</p>
-<p><strong>参数：</strong></p>
-<ul>
-<li>input (Tensor) - 输入Tensor</li>
-<li>dim (int) - 指定维度</li>
-<li>keepdim (bool) - 输出张量是否保持与输入张量有相同数量的维度</li>
-<li>out (tuple,optional) - 结果张量</li>
-</ul>
-<p><strong>例子：</strong></p>
-<blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_min_2d</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">3</span>, <span class="number">5</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.min(a, <span class="number">0</span>, <span class="keyword">True</span>)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p>-0.8179  1.1834 -0.2989  0.6051 -0.1072<br>-1.1543  0.0666 -0.7919  0.2359  1.1995<br>-0.8094  0.5873  0.5116 -0.6181  0.9788<br>[torch.FloatTensor of size 3x5]</p>
-<p>(<br>-1.1543  0.0666 -0.7919 -0.6181 -0.1072<br>[torch.FloatTensor of size 1x5]<br>,<br> 1  1  1  2  0<br>[torch.LongTensor of size 1x5]<br>)</p>
-</blockquote>
-<p><strong>torch.min(input, other, out=None)</strong> → Tensor</p>
-<p>逐个元素比较张量input与张量other，将比较出的最小值保存到输出张量中。<br>两个张量尺寸不需要完全相同，但需要支持自动扩展法则。</p>
-<p><strong>参数：</strong></p>
-<ul>
-<li>input (Tensor) - 输入Tensor</li>
-<li>other (Tensor) - 另一个输入的Tensor</li>
-<li>out (Tensor,optional) - 结果张量</li>
-</ul>
-<p><strong>例子：</strong></p>
-<blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_min_2tensor</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">1</span>,<span class="number">4</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.randn(<span class="number">1</span>)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;     print(torch.min(a, b))</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p> 0.3494  0.2155 -0.0723  0.8322<br>[torch.FloatTensor of size 1x4]</p>
-<p> 0.2635<br>[torch.FloatTensor of size 1]</p>
-<p> 0.2635  0.2155 -0.0723  0.2635<br>[torch.FloatTensor of size 1x4]</p>
-</blockquote>
-<h2 id="平方根倒数"><a href="#平方根倒数" class="headerlink" title="平方根倒数"></a><strong>平方根倒数</strong></h2><p><strong>torch.rsqrt(input)</strong> → Tensor</p>
-<p>返回新的张量，其中包含input张量每个元素平方根的倒数。</p>
-<p><strong>参数：</strong></p>
-<ul>
-<li>input (Tensor) – 输入张量</li>
-<li>out (Tensor, optional) – 输出张量</li>
-</ul>
-<p><strong>例子：</strong></p>
-<blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_rsqrt</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">1</span>, <span class="number">4</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     b = torch.rsqrt(a)</span><br><span class="line">&gt;     print(b)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p> 0.1615  0.3116 -0.3093 -1.5020<br>[torch.FloatTensor of size 1x4]</p>
-<p> 2.4884  1.7915     nan     nan<br>[torch.FloatTensor of size 1x4]</p>
-</blockquote>
-<h2 id="线性插值"><a href="#线性插值" class="headerlink" title="线性插值"></a><strong>线性插值</strong></h2><p><strong>torch.lerp(start,end,weight)</strong> → Tensor</p>
-<p>基于weight对输入的两个张量start与end逐个元素计算线性插值，结果返回至输出张量。</p>
-<p>返回结果是： $outs_i=start_i+weight*(end_i-start_i)$</p>
-<p><strong>参数：</strong></p>
-<ul>
-<li>start (Tensor) – 起始点张量</li>
-<li>end (Tensor) – 终止点张量</li>
-<li>weight (float) – 插入公式的 weight</li>
-<li>out (Tensor, optional) – 结果张量</li>
-</ul>
-<p><strong>例子：</strong></p>
-<blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_lerp</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     start = torch.arange(<span class="number">1</span>, <span class="number">5</span>)</span><br><span class="line">&gt;     print(start)</span><br><span class="line">&gt;     end = torch.Tensor(<span class="number">4</span>).fill_(<span class="number">10</span>)</span><br><span class="line">&gt;     print(end)</span><br><span class="line">&gt;     outs = torch.lerp(start, end, <span class="number">0.4</span>)</span><br><span class="line">&gt;     print(outs)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p> 1<br> 2<br> 3<br> 4<br>[torch.FloatTensor of size 4]</p>
-<p> 10<br> 10<br> 10<br> 10<br>[torch.FloatTensor of size 4]</p>
-<p> 4.6000<br> 5.2000<br> 5.8000<br> 6.4000<br>[torch.FloatTensor of size 4]</p>
-</blockquote>
-<h2 id="双曲正切"><a href="#双曲正切" class="headerlink" title="双曲正切"></a><strong>双曲正切</strong></h2><p><strong>torch.tanh(input, out=None)</strong> → Tensor</p>
-<p>返回新的张量，其中包括输入张量input中每个元素的双曲正切。</p>
-<p><strong>参数：</strong></p>
-<ul>
-<li>input (Tensor) - 输入张量</li>
-<li>out (Tensor,optional) - 结果张量</li>
-</ul>
-<p><strong>例子：</strong></p>
-<blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="function"><span class="keyword">def</span> <span class="title">tensor_tanh</span><span class="params">()</span>:</span></span><br><span class="line">&gt;     a = torch.randn(<span class="number">1</span>, <span class="number">5</span>)</span><br><span class="line">&gt;     print(a)</span><br><span class="line">&gt;     outs = torch.tanh(a)</span><br><span class="line">&gt;     print(outs)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p>-0.4298  0.0992  0.1322  1.4975  0.8817<br>[torch.FloatTensor of size 1x5]</p>
-<p>-0.4051  0.0989  0.1314  0.9047  0.7073<br>[torch.FloatTensor of size 1x5]</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/Python/Python_shutil/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2640,6 +2146,220 @@
 <p>范例：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line">shutil.unpack_archive(<span class="string">"d:\\3.zip"</span>, <span class="string">"f:\\3"</span>, <span class="string">'zip'</span>)</span><br></pre></td></tr></table></figure>
 <p>shutil模块的压缩和解压功能，在后台是通过调用zipfile和tarfile两个模块来进行的。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/Python/Python_File/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heroinlin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/leaf.jpg"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Heroinlin's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/03/12/Python/Python_File/" class="post-title-link" itemprop="url">python中对文件、文件夹操作</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-03-12 10:48:11 / 修改时间：10:52:18" itemprop="dateCreated datePublished" datetime="2018-03-12T10:48:11+08:00">2018-03-12</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>#python中对文件、文件夹操作</p>
+<p><strong>python中对文件、文件夹（文件操作函数）的操作需要涉及到os模块和shutil模块。</strong></p>
+<p>##os模块</p>
+<p>得到当前工作目录，即当前Python脚本工作的目录路径: <strong>os.getcwd()</strong></p>
+<p>返回指定目录下的所有文件和目录名:<strong>os.listdir()</strong></p>
+<p>函数用来删除一个文件:<strong>os.remove()</strong></p>
+<p>删除多个目录：<strong>os.removedirs（r“c：\python”）</strong></p>
+<p>检验给出的路径是否是一个文件：<strong>os.path.isfile()</strong></p>
+<p>检验给出的路径是否是一个目录：<strong>os.path.isdir()</strong></p>
+<p>判断是否是绝对路径：<strong>os.path.isabs()</strong></p>
+<p>检验给出的路径是否真地存:<strong>os.path.exists()</strong></p>
+<p>返回一个路径的目录名和文件名:<strong>os.path.split()  </strong>   eg os.path.split(‘/home/swaroop/byte/code/poem.txt’) 结果：(‘/home/swaroop/byte/code’, ‘poem.txt’) </p>
+<p>分离扩展名：<strong>os.path.splitext()</strong></p>
+<p>获取路径名：<strong>os.path.dirname()</strong></p>
+<p>获取文件名：<strong>os.path.basename()</strong></p>
+<p>运行shell命令: <strong>os.system()</strong></p>
+<p>读取和设置环境变量:<strong>os.getenv() 与os.putenv()</strong></p>
+<p>给出当前平台使用的行终止符:<strong>os.linesep    </strong>Windows使用’\r\n’，Linux使用’\n’而Mac使用’\r’</p>
+<p>指示你正在使用的平台：<strong>os.name </strong>      对于Windows，它是’nt’，而对于Linux/Unix用户，它是’posix’</p>
+<p>重命名：<strong>os.rename（old， new）</strong></p>
+<p>创建多级目录：<strong>os.makedirs（r“c：\python\test”）</strong></p>
+<p>创建单个目录：<strong>os.mkdir（“test”）</strong></p>
+<p>获取文件属性：<strong>os.stat（file）</strong></p>
+<p>修改文件权限与时间戳：<strong>os.chmod（file）</strong></p>
+<p>终止当前进程：<strong>os.exit（）</strong></p>
+<p>获取文件大小：<strong>os.path.getsize（filename）</strong></p>
+<p>##文件读写操作</p>
+<p><strong>文件操作：os.mknod(“test.txt”) </strong>       创建空文件<br><strong>fp = open(“test.txt”,w)  </strong>   直接打开一个文件，如果文件不存在则创建文件</p>
+<p>关于open 模式：</p>
+<p>w     以写方式打开，<br>a     以追加模式打开 (从 EOF 开始, 必要时创建新文件)<br>r+     以读写模式打开<br>w+     以读写模式打开 (参见 w )<br>a+     以读写模式打开 (参见 a )<br>rb     以二进制读模式打开<br>wb     以二进制写模式打开 (参见 w )<br>ab     以二进制追加模式打开 (参见 a )<br>rb+    以二进制读写模式打开 (参见 r+ )<br>wb+    以二进制读写模式打开 (参见 w+ )<br>ab+    以二进制读写模式打开 (参见 a+ )</p>
+<p><strong>fp.read([size])  </strong>                   #size为读取的长度，以byte为单位</p>
+<p><strong>fp.readline([size])  </strong>               #读一行，如果定义了size，有可能返回的只是一行的一部分</p>
+<p><strong>fp.readlines([size])   </strong>             #把文件每一行作为一个list的一个成员，并返回这个list。其实它的内部是通过循环调用readline()来实现的。如果提供size参数，size是表示读取内容的总长，也就是说可能只读到文件的一部分。</p>
+<p><strong>fp.write(str)   </strong>                   #把str写到文件中，write()并不会在str后加上一个换行符</p>
+<p><strong>fp.writelines(seq)    </strong>        #把seq的内容全部写到文件中(多行一次性写入)。这个函数也只是忠实地写入，不会在每行后面加上任何东西。</p>
+<p><strong>fp.close()   </strong>                     #关闭文件。python会在一个文件不用后自动关闭文件，不过这一功能没有保证，最好还是养成自己关闭的习惯。  如果一个文件在关闭后还对其进行操作会产生ValueError</p>
+<p><strong>fp.flush()   </strong>                                   #把缓冲区的内容写入硬盘</p>
+<p><strong>fp.fileno()    </strong>                                  #返回一个长整型的”文件标签“</p>
+<p><strong>fp.isatty()    </strong>                                  #文件是否是一个终端设备文件（unix系统中的）</p>
+<p><strong>fp.tell()</strong>                                         #返回文件操作标记的当前位置，以文件的开头为原点</p>
+<p><strong>fp.next()    </strong>                                   #返回下一行，并将文件操作标记位移到下一行。把一个file用于for … in file这样的语句时，就是调用next()函数来实现遍历的。</p>
+<p><strong>fp.seek(offset[,whence])  </strong>            #将文件打操作标记移到offset的位置。这个offset一般是相对于文件的开头来计算的，一般为正数。但如果提供了whence参数就不一定了，whence可以为0表示从头开始计算，1表示以当前位置为原点计算。2表示以文件末尾为原点进行计算。需要注意，如果文件以a或a+的模式打开，每次进行写操作时，文件操作标记会自动返回到文件末尾。</p>
+<p><strong>fp.truncate([size])   </strong>                    #把文件裁成规定的大小，默认的是裁到当前文件操作标记的位置。如果size比文件的大小还要大，依据系统的不同可能是不改变文件，也可能是用0把文件补到相应的大小，也可能是以一些随机的内容加上去。</p>
+<h2 id="目录操作"><a href="#目录操作" class="headerlink" title="目录操作"></a>目录操作</h2><p><strong>目录操作：os.mkdir(“file”)     </strong>              创建目录<br>复制文件：<br><strong>shutil.copyfile(“oldfile”,”newfile”) </strong>      oldfile和newfile都只能是文件<br><strong>shutil.copy(“oldfile”,”newfile”)   </strong>         oldfile只能是文件夹，newfile可以是文件，也可以是目标目录<br>复制文件夹：<br><strong>shutil.copytree(“olddir”,”newdir”) </strong>       olddir和newdir都只能是目录，且newdir必须不存在<br>重命名文件（目录）<br><strong>os.rename(“oldname”,”newname”) </strong>      文件或目录都是使用这条命令<br>移动文件（目录）<br><strong>shutil.move(“oldpos”,”newpos”)   </strong><br>删除文件<br><strong>os.remove(“file”)</strong><br>删除目录<br><strong>os.rmdir(“dir”)</strong>只能删除空目录<br><strong>shutil.rmtree(“dir”)  </strong>  空目录、有内容的目录都可以删<br>转换目录<br><strong>os.chdir(“path”)   </strong>换路径</p>
+<p><strong>相关例子 </strong></p>
+<ul>
+<li>将文件夹下所有图片名称加上’_fc’</li>
+</ul>
+<p><strong>python代码:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="comment">#str.split(string)分割字符串</span></span><br><span class="line"><span class="comment">#'连接符'.join(list) 将列表组成字符串</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">change_name</span><span class="params">(path)</span>:</span></span><br><span class="line">    <span class="keyword">global</span> i</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.isdir(path) <span class="keyword">and</span> <span class="keyword">not</span> os.path.isfile(path):</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">    <span class="keyword">if</span> os.path.isfile(path):</span><br><span class="line">        file_path = os.path.split(path) <span class="comment">#分割出目录与文件</span></span><br><span class="line">        lists = file_path[<span class="number">1</span>].split(<span class="string">'.'</span>) <span class="comment">#分割出文件与文件扩展名</span></span><br><span class="line">        file_ext = lists[<span class="number">-1</span>] <span class="comment">#取出后缀名(列表切片操作)</span></span><br><span class="line">        img_ext = [<span class="string">'bmp'</span>,<span class="string">'jpeg'</span>,<span class="string">'gif'</span>,<span class="string">'psd'</span>,<span class="string">'png'</span>,<span class="string">'jpg'</span>]</span><br><span class="line">        <span class="keyword">if</span> file_ext <span class="keyword">in</span> img_ext:</span><br><span class="line">            os.rename(path,file_path[<span class="number">0</span>]+<span class="string">'/'</span>+lists[<span class="number">0</span>]+<span class="string">'_fc.'</span>+file_ext)</span><br><span class="line">            i+=<span class="number">1</span> <span class="comment">#注意这里的i是一个陷阱</span></span><br><span class="line">        <span class="comment">#或者</span></span><br><span class="line">        <span class="comment">#img_ext = 'bmp|jpeg|gif|psd|png|jpg'</span></span><br><span class="line">        <span class="comment">#if file_ext in img_ext:</span></span><br><span class="line">        <span class="comment">#    print('ok---'+file_ext)</span></span><br><span class="line">    <span class="keyword">elif</span> os.path.isdir(path):</span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> os.listdir(path):</span><br><span class="line">            change_name(os.path.join(path,x)) <span class="comment">#os.path.join()在路径处理上很有用</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    img_dir = <span class="string">'D:\\xx\\xx\\images'</span></span><br><span class="line">    img_dir = img_dir.replace(<span class="string">'\\'</span>,<span class="string">'/'</span>)</span><br><span class="line">    start = time.time()</span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    change_name(img_dir)</span><br><span class="line">    c = time.time() - start</span><br><span class="line">    print(<span class="string">'程序运行耗时:%0.2f'</span>%(c))</span><br><span class="line">    print(<span class="string">'总共处理了 %s 张图片'</span>%(i))</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p> 输出结果：</p>
+<p>程序运行耗时:0.11<br>总共处理了 109 张图片</p>
+</blockquote>
 
           
         
