@@ -105,7 +105,7 @@
 <meta property="og:description" content="感受野的计算1 感受野的概念在卷积神经网络中，感受野的定义是 卷积神经网络每一层输出的特征图（feature map）上的像素点在原始图像上映射的区域大小。  RCNN论文中有一段描述，Alexnet网络pool5输出的特征图上的像素在输入图像上有很大的感受野（have very large receptive fields ($$195 × 195 pixels$$)）和步长（strides$$">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://images2015.cnblogs.com/blog/846839/201610/846839-20161010201946696-456664256.png">
-<meta property="og:updated_time" content="2019-06-12T17:00:08.000Z">
+<meta property="og:updated_time" content="2019-06-13T08:22:17.860Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="感受野的计算">
 <meta name="twitter:description" content="感受野的计算1 感受野的概念在卷积神经网络中，感受野的定义是 卷积神经网络每一层输出的特征图（feature map）上的像素点在原始图像上映射的区域大小。  RCNN论文中有一段描述，Alexnet网络pool5输出的特征图上的像素在输入图像上有很大的感受野（have very large receptive fields ($$195 × 195 pixels$$)）和步长（strides$$">
@@ -386,7 +386,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-13 01:00:08" itemprop="dateModified" datetime="2019-06-13T01:00:08+08:00">2019-06-13</time>
+                <time title="修改时间：2019-06-13 16:22:17" itemprop="dateModified" datetime="2019-06-13T16:22:17+08:00">2019-06-13</time>
               
             
           </span>
@@ -541,8 +541,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/08/27/C&C++/C_standard/" rel="next" title="C语言规范整理">
-                <i class="fa fa-chevron-left"></i> C语言规范整理
+              <a href="/2017/09/27/Scripts/extract_frame/" rel="next" title="由视频提取图片">
+                <i class="fa fa-chevron-left"></i> 由视频提取图片
               </a>
             
           </div>
@@ -551,8 +551,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/09/27/Scripts/videos_merge/" rel="prev" title="视频合并">
-                视频合并 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/09/27/Markdown/Latex_count/" rel="prev" title="LaTex各种命令和符号">
+                LaTex各种命令和符号 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -688,13 +688,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-count">19</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -897,9 +891,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">94</span>
+                    <span class="site-state-item-count">93</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1148,6 +1140,46 @@
   
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
   
 
 

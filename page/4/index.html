@@ -320,7 +320,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/Python/Python_File/"/>
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/Pytorch/pytorch_Tensor/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Heroinlin"/>
@@ -340,7 +340,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2018/03/12/Python/Python_File/" class="post-title-link" itemprop="url">python中对文件、文件夹操作</a>
+                <a href="/2018/03/12/Pytorch/pytorch_Tensor/" class="post-title-link" itemprop="url">Tensor的数学运算</a>
               
             
           </h1>
@@ -365,12 +365,24 @@
                 
               
 
-              <time title="创建时间：2018-03-12 10:48:11 / 修改时间：10:52:18" itemprop="dateCreated datePublished" datetime="2018-03-12T10:48:11+08:00">2018-03-12</time>
+              <time title="创建时间：2018-03-12 10:48:11" itemprop="dateCreated datePublished" datetime="2018-03-12T10:48:11+08:00">2018-03-12</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-08-06 09:25:00" itemprop="dateModified" datetime="2018-08-06T09:25:00+08:00">2018-08-06</time>
               
             
           </span>
@@ -387,7 +399,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Pytorch/" itemprop="url" rel="index"><span itemprop="name">Pytorch</span></a></span>
 
                 
                 
@@ -425,18 +437,18 @@
         
           
             <p>
-              #python中对文件、文件夹操作
-python中对文件、文件夹（文件操作函数）的操作需要涉及到os模块和shutil模块。
-##os模块
-得到当前工作目录，即当前Python脚本工作的目录路径: os.getcwd()
-返回指定目录下的所有文件和目录名:os.listdir()
-函数用来删除一个文
+              #Tensor的数学运算
+总结的方法包括：
+Tensor求和以及按索引求和：torch.sum()         torch.Tensor.indexadd()
+Tensor元素乘积：torch.prod(input)
+对Tensor求均值、方差、极值：
+torch.mean()      tor
               ...
             </p>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2018/03/12/Python/Python_File/#more" rel="contents">
+              <a class="btn" href="/2018/03/12/Pytorch/pytorch_Tensor/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -680,7 +692,7 @@ python中对文件、文件夹（文件操作函数）的操作需要涉及到os
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/11/CS231n/CS231n_Neural_Network2/"/>
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/11/CS231n/CS231n_Neural_Network3/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Heroinlin"/>
@@ -700,7 +712,7 @@ python中对文件、文件夹（文件操作函数）的操作需要涉及到os
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2018/02/11/CS231n/CS231n_Neural_Network2/" class="post-title-link" itemprop="url">CS231n课程笔记翻译：神经网络笔记2</a>
+                <a href="/2018/02/11/CS231n/CS231n_Neural_Network3/" class="post-title-link" itemprop="url">CS231n课程笔记翻译：神经网络笔记3</a>
               
             
           </h1>
@@ -742,7 +754,7 @@ python中对文件、文件夹（文件操作函数）的操作需要涉及到os
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-10 17:21:49" itemprop="dateModified" datetime="2019-06-10T17:21:49+08:00">2019-06-10</time>
+                <time title="修改时间：2019-06-10 17:21:59" itemprop="dateModified" datetime="2019-06-10T17:21:59+08:00">2019-06-10</time>
               
             
           </span>
@@ -797,25 +809,446 @@ python中对文件、文件夹（文件操作函数）的操作需要涉及到os
         
           
             <p>
-              CS231n课程笔记翻译：神经网络笔记 2原文如下内容列表：
+              CS231n课程笔记翻译：神经网络笔记3原文如下内容列表：
 
-设置数据和模型
-数据预处理
-权重初始化
-批量归一化（Batch Normalization）
-正则化（L2/L1/Maxnorm/Dropout）
-
-
+梯度检查
+合理性（Sanity）检查
+检查学习过程
 损失函数
-小结
+训练集与验证集准确率
+权重：更新比例
+每层的激活数据与梯度分布
+可视化 
 
-设置数据和模型在上一节中介绍了神经元的模型，它在计算内积后进行非线
+
+参数更新
+一阶（随机梯度下降）方法，动量方法，Nesterov动量方法
+学习率退火
+二阶方法
+逐参
               ...
             </p>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2018/02/11/CS231n/CS231n_Neural_Network2/#more" rel="contents">
+              <a class="btn" href="/2018/02/11/CS231n/CS231n_Neural_Network3/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/11/CS231n/CS231n_Neural_Network1/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heroinlin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/leaf.jpg"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Heroinlin's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/02/11/CS231n/CS231n_Neural_Network1/" class="post-title-link" itemprop="url">CS231n课程笔记翻译：神经网络笔记1</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-02-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-02-11T11:11:11+08:00">2018-02-11</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-10 17:21:40" itemprop="dateModified" datetime="2019-06-10T17:21:40+08:00">2019-06-10</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/CS231n课程笔记翻译/" itemprop="url" rel="index"><span itemprop="name">CS231n课程笔记翻译</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              CS231n课程笔记翻译：神经网络笔记原文如下内容列表：
+
+不用大脑做类比的快速简介
+单个神经元建模
+生物动机和连接
+作为线性分类器的单个神经元
+常用的激活函数 
+
+
+神经网络结构
+层组织
+前向传播计算例子
+表达能力
+设置层的数量和尺寸
+
+
+小节
+参考文献
+
+快速简介在不诉诸大脑的类比的情况下，依然
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/02/11/CS231n/CS231n_Neural_Network1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/11/CS231n/CS231n_Optimizer/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heroinlin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/leaf.jpg"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Heroinlin's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/02/11/CS231n/CS231n_Optimizer/" class="post-title-link" itemprop="url">CS231n课程笔记翻译：最优化笔记</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-02-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-02-11T11:11:11+08:00">2018-02-11</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-10 17:20:18" itemprop="dateModified" datetime="2019-06-10T17:20:18+08:00">2019-06-10</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/CS231n课程笔记翻译/" itemprop="url" rel="index"><span itemprop="name">CS231n课程笔记翻译</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              CS231n课程笔记翻译：最优化笔记原文如下内容列表：
+
+简介
+
+损失函数可视化
+
+最优化
+
+策略#1：随机搜索
+
+
+
+
+策略#2：随机局部搜索
+策略#3：跟随梯度 
+
+
+梯度计算
+
+使用有限差值进行数值计算
+
+
+
+
+微分计算梯度
+
+
+梯度下降
+
+小结
+
+
+简介在上一节中，我们介绍了图像分类任务中的
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/02/11/CS231n/CS231n_Optimizer/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1232,389 +1665,6 @@ k-Nearest Neighbor
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/11/CS231n/CS231n_Python_Numpy/"/>
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Heroinlin"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="/images/leaf.jpg"/>
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Heroinlin's Blog"/>
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/02/11/CS231n/CS231n_Python_Numpy/" class="post-title-link" itemprop="url">CS231n课程笔记翻译：Python Numpy教程</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-02-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-02-11T11:11:11+08:00">2018-02-11</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-03-26 08:53:06" itemprop="dateModified" datetime="2018-03-26T08:53:06+08:00">2018-03-26</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/CS231n课程笔记翻译/" itemprop="url" rel="index"><span itemprop="name">CS231n课程笔记翻译</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>
-              CS231n课程笔记翻译：Python Numpy教程原文如下这篇教程由Justin Johnson创作。
-我们将使用Python编程语言来完成本课程的所有作业。Python是一门伟大的通用编程语言，在一些常用库（numpy, scipy, matplotlib）的帮助下，它又会变成一个强大的科学计
-              ...
-            </p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/02/11/CS231n/CS231n_Python_Numpy/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/11/CS231n/CS231n_Neural_Network3/"/>
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Heroinlin"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="/images/leaf.jpg"/>
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Heroinlin's Blog"/>
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/02/11/CS231n/CS231n_Neural_Network3/" class="post-title-link" itemprop="url">CS231n课程笔记翻译：神经网络笔记3</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-02-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-02-11T11:11:11+08:00">2018-02-11</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-06-10 17:21:59" itemprop="dateModified" datetime="2019-06-10T17:21:59+08:00">2019-06-10</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/CS231n课程笔记翻译/" itemprop="url" rel="index"><span itemprop="name">CS231n课程笔记翻译</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>
-              CS231n课程笔记翻译：神经网络笔记3原文如下内容列表：
-
-梯度检查
-合理性（Sanity）检查
-检查学习过程
-损失函数
-训练集与验证集准确率
-权重：更新比例
-每层的激活数据与梯度分布
-可视化 
-
-
-参数更新
-一阶（随机梯度下降）方法，动量方法，Nesterov动量方法
-学习率退火
-二阶方法
-逐参
-              ...
-            </p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/02/11/CS231n/CS231n_Neural_Network3/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/11/CS231n/CS231n_BP/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1810,7 +1860,7 @@ k-Nearest Neighbor
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/11/CS231n/CS231n_Optimizer/"/>
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/11/CS231n/CS231n_Linear_Classify/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Heroinlin"/>
@@ -1830,7 +1880,7 @@ k-Nearest Neighbor
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2018/02/11/CS231n/CS231n_Optimizer/" class="post-title-link" itemprop="url">CS231n课程笔记翻译：最优化笔记</a>
+                <a href="/2018/02/11/CS231n/CS231n_Linear_Classify/" class="post-title-link" itemprop="url">CS231n课程笔记翻译：线性分类笔记</a>
               
             
           </h1>
@@ -1872,7 +1922,7 @@ k-Nearest Neighbor
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-10 17:20:18" itemprop="dateModified" datetime="2019-06-10T17:20:18+08:00">2019-06-10</time>
+                <time title="修改时间：2019-06-10 17:21:27" itemprop="dateModified" datetime="2019-06-10T17:21:27+08:00">2019-06-10</time>
               
             
           </span>
@@ -1927,45 +1977,37 @@ k-Nearest Neighbor
         
           
             <p>
-              CS231n课程笔记翻译：最优化笔记原文如下内容列表：
+              CS231n课程笔记翻译：线性分类笔记原文如下内容列表：
 
-简介
+线性分类器简介
 
-损失函数可视化
+线性评分函数
 
-最优化
+阐明线性分类器
 
-策略#1：随机搜索
+损失函数
 
-
-
-
-策略#2：随机局部搜索
-策略#3：跟随梯度 
-
-
-梯度计算
-
-使用有限差值进行数值计算
+多类SVM
 
 
 
 
-微分计算梯度
+Softmax分类器
+SVM和Softmax的比较
 
 
-梯度下降
+基于Web的可交互线性分类器原型
 
 小结
 
 
-简介在上一节中，我们介绍了图像分类任务中的
+线性分类上一篇笔记介绍了图像分类问题。图像分类的任务，
               ...
             </p>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2018/02/11/CS231n/CS231n_Optimizer/#more" rel="contents">
+              <a class="btn" href="/2018/02/11/CS231n/CS231n_Linear_Classify/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -2025,7 +2067,7 @@ k-Nearest Neighbor
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/11/CS231n/CS231n_Neural_Network1/"/>
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/11/CS231n/CS231n_Python_Numpy/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Heroinlin"/>
@@ -2045,7 +2087,7 @@ k-Nearest Neighbor
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2018/02/11/CS231n/CS231n_Neural_Network1/" class="post-title-link" itemprop="url">CS231n课程笔记翻译：神经网络笔记1</a>
+                <a href="/2018/02/11/CS231n/CS231n_Python_Numpy/" class="post-title-link" itemprop="url">CS231n课程笔记翻译：Python Numpy教程</a>
               
             
           </h1>
@@ -2087,7 +2129,7 @@ k-Nearest Neighbor
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-10 17:21:40" itemprop="dateModified" datetime="2019-06-10T17:21:40+08:00">2019-06-10</time>
+                <time title="修改时间：2018-03-26 08:53:06" itemprop="dateModified" datetime="2018-03-26T08:53:06+08:00">2018-03-26</time>
               
             
           </span>
@@ -2142,32 +2184,14 @@ k-Nearest Neighbor
         
           
             <p>
-              CS231n课程笔记翻译：神经网络笔记原文如下内容列表：
-
-不用大脑做类比的快速简介
-单个神经元建模
-生物动机和连接
-作为线性分类器的单个神经元
-常用的激活函数 
-
-
-神经网络结构
-层组织
-前向传播计算例子
-表达能力
-设置层的数量和尺寸
-
-
-小节
-参考文献
-
-快速简介在不诉诸大脑的类比的情况下，依然
+              CS231n课程笔记翻译：Python Numpy教程原文如下这篇教程由Justin Johnson创作。
+我们将使用Python编程语言来完成本课程的所有作业。Python是一门伟大的通用编程语言，在一些常用库（numpy, scipy, matplotlib）的帮助下，它又会变成一个强大的科学计
               ...
             </p>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2018/02/11/CS231n/CS231n_Neural_Network1/#more" rel="contents">
+              <a class="btn" href="/2018/02/11/CS231n/CS231n_Python_Numpy/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -2317,13 +2341,7 @@ k-Nearest Neighbor
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-count">19</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -2526,9 +2544,7 @@ k-Nearest Neighbor
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">94</span>
+                    <span class="site-state-item-count">93</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="Heroinlin&#39;s Blog">
 <meta property="og:description" content="Windows 7 Keras 深度学习框架配置这里选择安装python2.7.12的版本，Keras中文文档： http://keras-cn.readthedocs.io/en/latest/ 安装keras打开cmd或Anaconda Prompt的命令行中输入“pip install keras“，稍等片刻，keras直接就安装完了，安装Python2.7时使用命令为“pip2 insta">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-12T17:00:08.000Z">
+<meta property="og:updated_time" content="2019-06-13T08:25:10.027Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Windows 7 Keras 深度学习框架配置">
 <meta name="twitter:description" content="Windows 7 Keras 深度学习框架配置这里选择安装python2.7.12的版本，Keras中文文档： http://keras-cn.readthedocs.io/en/latest/ 安装keras打开cmd或Anaconda Prompt的命令行中输入“pip install keras“，稍等片刻，keras直接就安装完了，安装Python2.7时使用命令为“pip2 insta">
@@ -384,7 +384,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-13 01:00:08" itemprop="dateModified" datetime="2019-06-13T01:00:08+08:00">2019-06-13</time>
+                <time title="修改时间：2019-06-13 16:25:10" itemprop="dateModified" datetime="2019-06-13T16:25:10+08:00">2019-06-13</time>
               
             
           </span>
@@ -401,7 +401,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/TensorFlow/" itemprop="url" rel="index"><span itemprop="name">TensorFlow</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Tensorflow/" itemprop="url" rel="index"><span itemprop="name">Tensorflow</span></a></span>
 
                 
                 
@@ -473,12 +473,13 @@
 <p><code>$HOME/.keras/keras.json</code></p>
 <p>如果该目录下没有该文件，你可以手动创建一个</p>
 <p>文件的默认配置如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; &#123;</span><br><span class="line">&gt;     &quot;image_data_format&quot;: &quot;channels_last&quot;,</span><br><span class="line">&gt;     &quot;epsilon&quot;: 1e-07,</span><br><span class="line">&gt;     &quot;floatx&quot;: &quot;float32&quot;,</span><br><span class="line">&gt;     &quot;backend&quot;: &quot;tensorflow&quot;</span><br><span class="line">&gt; &#125;</span><br><span class="line">&gt;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; &#123;</span><br><span class="line">&gt;     "image_data_format": "channels_last",</span><br><span class="line">&gt;     "epsilon": 1e-07,</span><br><span class="line">&gt;     "floatx": "float32",</span><br><span class="line">&gt;     "backend": "tensorflow"</span><br><span class="line">&gt; &#125;</span><br><span class="line">&gt;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
 <blockquote>
 <p>将<code>backend</code>字段的值改写为你需要使用的后端：<code>theano</code>或<code>tensorflow</code>，即可完成后端的切换</p>
 <p>我们也可以通过定义环境变量<code>KERAS_BACKEND</code>来覆盖上面配置文件中定义的后端：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; KERAS_BACKEND=tensorflow python -c &quot;from keras import backend;&quot;</span><br><span class="line">&gt; Using TensorFlow backend.</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> KERAS_BACKEND=tensorflow python -c <span class="string">"from keras import backend;"</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Using TensorFlow backend.</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+</blockquote>
 </li>
 </ul>
 
@@ -669,13 +670,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-count">19</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -878,9 +873,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">94</span>
+                    <span class="site-state-item-count">93</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
