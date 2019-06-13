@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0"/>
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2"/>
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/leaf.jpg?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/leaf.ico?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/leaf1.ico?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/leaf.jpg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="git的相关配置全局设置12$ git config --global user.name &quot;AtlasColin&quot;$ git config --global user.email atlas365@163.com 配置完成之后会在$HOME目录下生成一个.gitconfig配置文件，具体参考示例。 --local 是将这些内容写入 project 下的 .git/config 文件中，每个pro">
+<meta name="keywords" content="git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git的相关配置">
+<meta property="og:url" content="http://yoursite.com/2017/08/27/Git/git_operate/index.html">
+<meta property="og:site_name" content="Heroinlin&#39;s Blog">
+<meta property="og:description" content="git的相关配置全局设置12$ git config --global user.name &quot;AtlasColin&quot;$ git config --global user.email atlas365@163.com 配置完成之后会在$HOME目录下生成一个.gitconfig配置文件，具体参考示例。 --local 是将这些内容写入 project 下的 .git/config 文件中，每个pro">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-06-12T17:00:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="git的相关配置">
+<meta name="twitter:description" content="git的相关配置全局设置12$ git config --global user.name &quot;AtlasColin&quot;$ git config --global user.email atlas365@163.com 配置完成之后会在$HOME目录下生成一个.gitconfig配置文件，具体参考示例。 --local 是将这些内容写入 project 下的 .git/config 文件中，每个pro">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2017/08/27/Git/git_operate/"/>
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>git的相关配置 | Heroinlin's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Heroinlin's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br/>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br/>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/27/Git/git_operate/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heroinlin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/leaf.jpg"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Heroinlin's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">git的相关配置
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-08-27 10:00:10" itemprop="dateCreated datePublished" datetime="2017-08-27T10:00:10+08:00">2017-08-27</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-13 01:00:08" itemprop="dateModified" datetime="2019-06-13T01:00:08+08:00">2019-06-13</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="git的相关配置"><a href="#git的相关配置" class="headerlink" title="git的相关配置"></a>git的相关配置</h1><h3 id="全局设置"><a href="#全局设置" class="headerlink" title="全局设置"></a>全局设置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git config --global user.name <span class="string">"AtlasColin"</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git config --global user.email atlas365@163.com</span></span><br></pre></td></tr></table></figure>
+<p>配置完成之后会在$HOME目录下生成一个.gitconfig配置文件，具体参考<a href=".gitconfig">示例</a>。</p>
+<p><code>--local</code> 是将这些内容写入 project 下的 .git/config 文件中，每个project都可以有不同的配置。</p>
+<h3 id="自动补全"><a href="#自动补全" class="headerlink" title="自动补全"></a>自动补全</h3><p>如果你系统上安装git之后没有自动补全功能，可以按如下操作来添加补全功能，记得需要重新登录一下。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> wget -O /etc/profile.d/git-completion.sh https://raw.github.com/git/git/master/contrib/completion/git-completion.bash</span></span><br></pre></td></tr></table></figure>
+<h3 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h3><ul>
+<li>创建新的git仓库</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir git_repo</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> git_repo</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git init</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"test"</span> &gt; README.mkd</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git add README.mkd</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -m <span class="string">"add README.mkd file"</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git remote add origin git@github.com:username/test.git</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push -u origin master</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用已存在的git仓库</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> git_repo</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git remote add origin git@github.com:username/test.git</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push -u origin master</span></span><br></pre></td></tr></table></figure>
+<p>注意，如果提示<code>fatal: remote origin already exists.</code>，那么说明该本地仓库已经有远端地址了。你可以先使用<code>git remote rm origin</code>删除origin，或者使用<code>git remote add other_name git@github.com:username/test.git</code>来添加（提交时记得使用<code>git push -u other_name master</code>）。</p>
+<h3 id="一次提交到多个远端仓库"><a href="#一次提交到多个远端仓库" class="headerlink" title="一次提交到多个远端仓库"></a>一次提交到多个远端仓库</h3><p>假设现有仓库地址为： <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:AtlasColin/knowledges.git</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> git@github.com:AtlasColin/knowledges.git</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> knowledges</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> vim .git/config</span></span><br><span class="line">[core]</span><br><span class="line">    repositoryformatversion = 0</span><br><span class="line">    filemode = true</span><br><span class="line">    bare = false</span><br><span class="line">    logallrefupdates = true</span><br><span class="line">[remote "origin"]</span><br><span class="line">    url = git@github.com:AtlasColin/knowledges.git</span><br><span class="line">    url = git@gitshell.com:AtlasColin/knowledges.git</span><br><span class="line">    url = git@bitbucket.org:AtlasColin/knowledges.git</span><br><span class="line">    fetch = +refs/heads/*:refs/remotes/origin/*</span><br><span class="line">[branch "master"]</span><br><span class="line">    remote = origin</span><br><span class="line">    merge = refs/heads/master</span><br></pre></td></tr></table></figure>
+<p>然后第一次提交时需要执行<code>git push -u origin master</code>，再往后就只需要执行<code>git push</code>就能把修改提交到上述三个远端仓库了。</p>
+<p>注意：在 Git 2.0 将会更改默认的<code>push</code>动作为『只 push 当前 branch 到远端仓库』。如果想继续使用<code>git push both</code>命令需要手动设置一下<code>git push</code>的默认动作<code>git config --global push.default matching</code>。</p>
+<p><code>push.default</code>有几个简单动作，这里介绍<code>matching</code>和<code>simple</code>，二者<a href="http://stackoverflow.com/questions/13148066/warning-push-default-is-unset-its-implicit-value-is-changing-in-git-2-0" target="_blank" rel="noopener">意思</a>分别是 push 本地所有的分支到远端仓库和 push 本地当前分支到上游分支。这个解释貌似还不够精确，可以<code>man git-config</code>来查看详细说明。</p>
+<h2 id="在现有仓库上创建孤儿分支"><a href="#在现有仓库上创建孤儿分支" class="headerlink" title="在现有仓库上创建孤儿分支"></a>在现有仓库上创建孤儿分支</h2><p>孤儿分支意思为该分支中没有任何内容，与之前创建的其他分支没有任何关联。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> git@github.com:AtlasColin/knowledges.git</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> knowledges</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git checkout --orphan new_branch</span></span><br><span class="line">Switched to a new branch 'new_branch'</span><br><span class="line"><span class="meta">$</span><span class="bash"> git rm -rf . <span class="comment"># 删除旧工作目录树中所有文件</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> rm .gitignore <span class="comment"># 如果有该文件的话就删除</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"orphan branch"</span> &gt; README.mkd</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git add .</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -m <span class="string">"add README.mkd file"</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push origin new_branch</span></span><br></pre></td></tr></table></figure>
+<h2 id="提交单个分支到远端git仓库"><a href="#提交单个分支到远端git仓库" class="headerlink" title="提交单个分支到远端git仓库"></a>提交单个分支到远端git仓库</h2><p><code>git push</code>命令默认是将所有分支(branch)都提交到git仓库，有时你只想提交某个分支到远端仓库，那么就就需要使用<code>git push origin HEAD</code>。当然也可以使用<code>git config --global push.default tracking</code>命令来改变<code>git push</code>的默认操作，意思是执行<code>git push</code>时默认只提交当前分支到远端git仓库。</p>
+<h2 id="git常用指令"><a href="#git常用指令" class="headerlink" title="git常用指令"></a>git常用指令</h2><p>以下几个是git常用的指令，可以简单了解一下。</p>
+<h3 id="git-config"><a href="#git-config" class="headerlink" title="git config"></a>git config</h3><p>在使用git前最好先配置一下你的个人信息及使用偏好。以下命令的意思就不用解释了吧，执行完以下命令就会在你的家目录（~)下生成一个文件<code>~/.gitconfig</code>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git config --global user.name <span class="string">"AtlasColin"</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git config --global user.email atlas365@163.com</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git config --global core.editor vim</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git config --global merge.tool vimdiff</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git config --global color.status auto</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git config --global color.branch auto</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git config --global color.interactive auto</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git config --global color.diff auto</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git config --global push.default simple</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git config --global alias.co checkout</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git config --global alias.ci commit</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git config --global alias.st status</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git config --global alias.last <span class="string">'log -1 HEAD'</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git config --global alias.unstage <span class="string">'reset HEAD --'</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="git-add"><a href="#git-add" class="headerlink" title="git add"></a>git add</h3><p>$$</p>
+<p>$$</p>
+<p>添加文件内容到索引中去（暂存文件），几个简单示例：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git add .</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git add --all</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git add *.txt</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git add directory/*.sh</span></span><br></pre></td></tr></table></figure>
+<p>突然你又不想<code>git add</code>了，那么执行以下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git reset .</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git reset *.txt</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git reset directory/*.sh</span></span><br></pre></td></tr></table></figure>
+<h3 id="git-rm"><a href="#git-rm" class="headerlink" title="git rm"></a>git rm</h3><p>删除索引和当时工作目录中的文件。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git rm filename</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git rm -f *.txt</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git rm -r .</span></span><br></pre></td></tr></table></figure>
+<h3 id="git-commit"><a href="#git-commit" class="headerlink" title="git commit"></a>git commit</h3><p>将当前改动记录到仓库中，即提交改动到本地仓库中。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git commit -m <span class="string">"add a file and remove a file"</span></span></span><br></pre></td></tr></table></figure>
+<p>突然你又不想<code>git commit</code>了，那么执行以下命令:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git reset HEAD^</span></span><br></pre></td></tr></table></figure>
+<p>你<code>commit</code>之后发现少添加了一个文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git commit -m<span class="string">'msg'</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git add forget_file</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit --amend</span></span><br></pre></td></tr></table></figure>
+<p>你的 commit 已经 push 到远程分支(master)了，现在你想反悔了：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> git@github.com:AtlasColin/knowledges.git</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> knowledges</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git reset HEAD^</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push -f master</span></span><br></pre></td></tr></table></figure>
+<h3 id="git-status"><a href="#git-status" class="headerlink" title="git status"></a>git status</h3><p>查看当前工作目录的状态，即修改、添加及删除了哪些文件。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git status</span></span><br></pre></td></tr></table></figure>
+<h3 id="git-checkout"><a href="#git-checkout" class="headerlink" title="git checkout"></a>git checkout</h3><p>检出一个分支和目录到当前工作目录中，可以简单理解为切换分支的命令。</p>
+<p>以下命令分别为切换到分支 branch1 和创建一个新的分支 new_branch 。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git checkout branch1</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git checkout -b new_branch</span></span><br></pre></td></tr></table></figure>
+<p>取消本地改动：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git checkout -- file_name</span></span><br></pre></td></tr></table></figure>
+<h3 id="git-clean"><a href="#git-clean" class="headerlink" title="git clean"></a>git clean</h3><p>清理当前工作目录。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git clean -nd</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git clean -fd</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git clean -fX</span></span><br></pre></td></tr></table></figure>
+<h3 id="git-branch"><a href="#git-branch" class="headerlink" title="git branch"></a>git branch</h3><ul>
+<li>列出、创建和删除分支。</li>
+</ul>
+<p>以下指令分别为列出本地分支、所有分支、远端分支、创建、删除、强制删除分支。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git branch --list</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git branch --all</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git branch --remotes</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git branch new_branch</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git branch --delete branch_name</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git branch -D branch_name</span></span><br></pre></td></tr></table></figure>
+<p>删除remote tracking branch，就是<code>git branch -r</code>命令列出的分支。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git branch -r</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git branch -d -r origin/develop</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>合并分支</li>
+</ul>
+<p>如果出现冲突，那么手动解决冲突就可以了。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git checkout branch_name</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git checkout master</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git merge branch_name</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>删除远程分支</li>
+</ul>
+<p>合并分支之后如果不再需要以前的分支了，那么可以在本地及远程删除它。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git branch -d branch_name</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git branch -D branch_name</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push origin :branch_name</span></span><br></pre></td></tr></table></figure>
+<p>这条命令耐人寻味啊，其中<code>origin</code>是你的远程仓库名字（<code>git remote -v</code>可以查看到）。</p>
+<h3 id="git-diff"><a href="#git-diff" class="headerlink" title="git diff"></a>git diff</h3><p>查看改动内容。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git diff filename</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git diff .</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git diff revision1 revision2</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git diff branch1 branch2</span></span><br></pre></td></tr></table></figure>
+<p>DIFF暂存（添加到索引中）的文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git add .</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git diff --cached</span></span><br></pre></td></tr></table></figure>
+<p>View the redundant Tab or Space in your codes:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git diff --check</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git diff --check --cached</span></span><br></pre></td></tr></table></figure>
+<p>只查看更改了哪些文件:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git diff --name-only</span></span><br></pre></td></tr></table></figure>
+<h3 id="git-init"><a href="#git-init" class="headerlink" title="git init"></a>git init</h3><h3 id="git-log"><a href="#git-log" class="headerlink" title="git log"></a>git log</h3><p>查看修改日志。</p>
+<p><strong>git log – filename</strong></p>
+<p>查看某个文件（包括已删除的文件）的修改历史，输出为commit info。</p>
+<p><strong>git log -p – filename</strong></p>
+<p>查看某个文件（包括已删除的文件）的修改历史，输出为commit info和diff。</p>
+<h3 id="git-merge"><a href="#git-merge" class="headerlink" title="git merge"></a>git merge</h3><h3 id="git-mv"><a href="#git-mv" class="headerlink" title="git mv"></a>git mv</h3><h3 id="git-pull"><a href="#git-pull" class="headerlink" title="git pull"></a>git pull</h3><h3 id="git-push"><a href="#git-push" class="headerlink" title="git push"></a>git push</h3><h3 id="git-rebase"><a href="#git-rebase" class="headerlink" title="git rebase"></a>git rebase</h3><p>你检索出代码之后（假设是master分支），创建了一个分支，然后修改了这个分支。另一个人也检索出代码（假设是master分支），然后修改了这个分支并提交到远端了。这时你需要重新从远端检索一下（master）分支的代码，然后切换到你创建的那个分支，再执行<code>rebase</code>命令，因为你这个分支的 base 分支已经发生变化了，你要合并到 base 分支的话需要重新 rebase 一下。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> -b master git@github.com:AtlasColin/knowledges.git</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git checkout -b new_branch</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git checkout master</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git pull</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git checkout new_branch</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git rebase</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git rebase --<span class="built_in">continue</span></span></span><br></pre></td></tr></table></figure>
+<p>你执行<code>git rebase</code>之后可能会有文件冲突，这时你需要手动解决冲突，解决之后继续rebase。</p>
+<h3 id="git-cherry-pick"><a href="#git-cherry-pick" class="headerlink" title="git cherry-pick"></a>git cherry-pick</h3><p>把已经提交的commit从一个分支移动到另一个分支。使用场景如下：</p>
+<p>你有两个分支分别是master和stable，并且stable是master的一个历史commit。有一个bug存在于stable中，很明显这个bug也会存在于master中，你在stable里修复了这个bug，现在你也要在master里修复这个bug，这时你就需要使用cherry-pick把修复这个bug的commit移动到master分支里。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git checkout stable</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -m<span class="string">"fix a bug"</span> <span class="comment"># commit id: 2ea0234b1fa6</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git checkout master</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git cherry-pick 2ea0234b1fa6</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> vim xxx <span class="comment"># solve conflicts</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -c 2ea0234b1fa6</span></span><br></pre></td></tr></table></figure>
+<h3 id="git-revert"><a href="#git-revert" class="headerlink" title="git revert"></a>git revert</h3><h3 id="git-reset"><a href="#git-reset" class="headerlink" title="git reset"></a>git reset</h3><p>一不小心执行了<code>git add .</code>，然后就可以用<code>git reset</code>命令来破了。</p>
+<p>删除最近一次 commit ，但保留这次 commit 中修改的内容，即用<code>git status</code>来查看会显示有文件等待提交。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git reset --soft HEAD^</span></span><br></pre></td></tr></table></figure>
+<p>删除最近一次 commit ，并且不保留这次 commit 中的修改内容，即用<code>git status</code>来查看会显示没有改动。</p>
+<h3 id="git-stash"><a href="#git-stash" class="headerlink" title="git stash"></a>git stash</h3><p>暂时保存工作目录里的东东，随后可以再还原回来。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> git stash -a</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> git stash list</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> git stash pop</span></span><br></pre></td></tr></table></figure>
+<h3 id="git-submodule"><a href="#git-submodule" class="headerlink" title="git submodule"></a>git submodule</h3><p>git 是分布式的，每次只能将整个 repo 全部下载下来进行更改提交，这样明显不太合理，因为很多时候你只想改动一点代码，只需要将这部分代码所在的目录 clone 下来就行了。为了解决这个问题，git 引入了 submodule ，即一个 git repo 里可以包含多个 child git repo 。</p>
+<p>一个比较大的项目，里面肯定会包含很多模块及子项目，可以将这些模块和子项目分别做成 git repo ，然后用大项目的 git repo 将其包含进来就可以了，举例如下：</p>
+<p>一个项目（foo）包含了一个子项目(bar)，主项目的 repo 是 <code>https://github.com/AtlasColin/knowledges</code>，子项目的 repo 地址是 <code>https://github.com/AtlasColin/vim</code>，需要做以下操作来完成 git submodule 的创建。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/AtlasColin/knowledges</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> linux</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git submodule add https://github.com/AtlasColin/vim vim</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git status</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -m<span class="string">"add a submodule vim"</span></span></span><br></pre></td></tr></table></figure>
+<p><code>git submodule add</code>命令会生成一个<code>.gitmodules</code>文件，并且当前目录下也会出现<code>vim</code>这个 repo 。</p>
+<p>其他人 clone 时默认是不会将<code>vim</code>的代码clone下来的，并且<code>vim</code>这个 submodule 体现在本地文件系统上是个目录，而在 git repo 里其实是一个空的文本文件。如果想将 submodule 即子项目的代码也全部 clone 下来，你需要执行以下操作：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/AtlasColin/knowledges.git</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> linux</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git submodule init</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git submodule update</span></span><br></pre></td></tr></table></figure>
+<p>删除 submodule</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git rm -r submodule</span></span><br></pre></td></tr></table></figure>
+<h3 id="git-tag"><a href="#git-tag" class="headerlink" title="git tag"></a>git tag</h3><p>个人感觉功能比branch强大点，因为tag里可以加注释。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git tag -a tagname -m<span class="string">"tag message"</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git tag tagname -f -m<span class="string">"new tag message"</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push origin tagname</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push --tags origin tagname</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push orgin :tagname</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push --delete orgin tagname</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push orgin :refs/tags/tagname</span></span><br></pre></td></tr></table></figure>
+<h3 id="git-blame"><a href="#git-blame" class="headerlink" title="git blame"></a>git blame</h3><p>查看某个文件当前内容的修改记录，即都在哪个commit中被谁修改的。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git blame filename</span></span><br></pre></td></tr></table></figure>
+<p>会列出filename文件中所有行都是在什么时候被添加的、被谁添加的以及被谁在哪个commit里添加的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="git-ls-remote"><a href="#git-ls-remote" class="headerlink" title="git ls-remote"></a>git ls-remote</h3><p>查看远端仓库里的信息，比如<code>tag</code>之类的东东：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git ls-remote --tags orign</span></span><br></pre></td></tr></table></figure>
+<p>Why duplicate tag in remotes: <a href="http://stackoverflow.com/q/5346060/1536735" target="_blank" rel="noopener">http://stackoverflow.com/q/5346060/1536735</a></p>
+<h2 id="Sparse-Checkout"><a href="#Sparse-Checkout" class="headerlink" title="Sparse Checkout"></a>Sparse Checkout</h2><p>意思就是只 Checkout 某个文件或某些文件。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git init linux</span><br><span class="line">cd linux</span><br><span class="line">git config core.sparsecheckout true</span><br><span class="line">git remote add origin https://github.com/AtlasColin/knowledges.git</span><br><span class="line">echo 'git' &gt;&gt; .git/info/sparse-checkout</span><br><span class="line">git pull origin master</span><br></pre></td></tr></table></figure>
+<p>以上的意思就是只 Checkout 仓库 Master 分支上的根目录下的<code>git</code>目录里的内容，其实还是会从远端仓库拉下所有代码，只是在本地把除了<code>git</code>目录以外的东西都隐藏掉了。</p>
+<h2 id="Squash-多个-commits-为一个"><a href="#Squash-多个-commits-为一个" class="headerlink" title="Squash 多个 commits 为一个"></a>Squash 多个 commits 为一个</h2><p><code>git log</code> 输出如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">commit f1f0f4629ee714533799cbad131d89e70ed53100</span><br><span class="line">Author: AtlasColin &lt;atlas365@163.com&gt;</span><br><span class="line">Date:   Wed Jun 22 12:08:21 2016 +0800</span><br><span class="line"></span><br><span class="line">    New Feature: step 3</span><br><span class="line"></span><br><span class="line">commit 2da26d85988aae5bef68498b66a2298e655b3a67</span><br><span class="line">Author: AtlasColin &lt;atlas365@163.com&gt;</span><br><span class="line">Date:   Wed Jun 22 12:08:10 2016 +0800</span><br><span class="line"></span><br><span class="line">    New Feature: step 2</span><br><span class="line"></span><br><span class="line">commit 5acf4b84a435535d679b1777bfc9fc4a7750ee11</span><br><span class="line">Author: AtlasColin &lt;atlas365@163.com&gt;</span><br><span class="line">Date:   Wed Jun 22 12:08:03 2016 +0800</span><br><span class="line"></span><br><span class="line">    New Feature: step 1</span><br><span class="line"></span><br><span class="line">commit 5b33fc2ddaa152e9ce10a4371e6cad6148eb974c</span><br><span class="line">Author: AtlasColin &lt;atlas365@163.com&gt;</span><br><span class="line">Date:   Wed Jun 22 12:07:45 2016 +0800</span><br><span class="line"></span><br><span class="line">    first commit</span><br></pre></td></tr></table></figure>
+<p>你添加了一个<code>New Feature</code>，用了 3 个 Commits，现在你需要把这三个 Commits 合并成一个。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git rebase -i 5b33fc2ddaa152e9ce10a4371e6cad6148eb974c</span></span><br><span class="line">pick 5acf4b8 New Feature: step 1</span><br><span class="line">pick 2da26d8 New Feature: step 2</span><br><span class="line">pick f1f0f46 New Feature: step 3</span><br></pre></td></tr></table></figure>
+<p>然后修改一下，仅保留一个<code>pick</code>，其他都改成<code>squash</code>，意思是将所有的 Commit 都压缩成保留的这一个<code>pick</code> Commit 上，然后保存。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pick 5acf4b8 New Feature: step 1</span><br><span class="line">squash 2da26d8 New Feature: step 2</span><br><span class="line">squash f1f0f46 New Feature: step 3</span><br></pre></td></tr></table></figure>
+<p>再次查看<code>git log</code>就会变成如下的样子：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">commit b4d5a507a722d83c611108204a4100a5152f5fe5</span><br><span class="line">Author: AtlasColin &lt;atlas365@163.com&gt;</span><br><span class="line">Date:   Wed Jun 22 12:08:03 2016 +0800</span><br><span class="line"></span><br><span class="line">    New Feature: step 1</span><br><span class="line"></span><br><span class="line">    New Feature: step 2</span><br><span class="line"></span><br><span class="line">    New Feature: step 3</span><br><span class="line"></span><br><span class="line">commit 5b33fc2ddaa152e9ce10a4371e6cad6148eb974c</span><br><span class="line">Author: AtlasColin &lt;atlas365@163.com&gt;</span><br><span class="line">Date:   Wed Jun 22 12:07:45 2016 +0800</span><br><span class="line"></span><br><span class="line">    first commit</span><br></pre></td></tr></table></figure>
+<h2 id="从历史记录时删除大文件"><a href="#从历史记录时删除大文件" class="headerlink" title="从历史记录时删除大文件"></a>从历史记录时删除大文件</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git filter-branch --force --index-filter \</span></span><br><span class="line">    'git rm --cached --ignore-unmatch PATH-TO-YOUR-BIG-FILES' \</span><br><span class="line">    --prune-empty --tag-name-filter cat -- --all</span><br><span class="line"><span class="meta">$</span><span class="bash"> git push origin --force --all</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push origin --force --tags</span></span><br></pre></td></tr></table></figure>
+<p>这样会导致所有和<code>PATH-TO-YOUR-BIG-FILES</code>相关的 commit 都会被修改，感觉压根就不应该提交大文件的。</p>
+<h2 id="给-Git-挂代理"><a href="#给-Git-挂代理" class="headerlink" title="给 Git 挂代理"></a>给 Git 挂代理</h2><p>对于 Git over http/https，可以这样做：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">export</span> all_proxy=http://1.2.3.4:3128</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">export</span> all_proxy=socks5://1.2.3.4:1080</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> http://github.com/user/repo.git</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/user/repo.git</span></span><br></pre></td></tr></table></figure>
+<p>对于 Git over SSH，可以这样做：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.ssh/config</span><br><span class="line">Host github.com</span><br><span class="line">    User git</span><br><span class="line">    ProxyCommand nc -X 5 -x localhost:1080 %h %p</span><br></pre></td></tr></table></figure>
+<p>原理是给 SSH 配置代理，其中<code>-X 5</code>的意思是使用 socks5 协议，<code>-x localhost:1080</code>就是 socks5 的代理地址了，这两个都是 nc 的参数。</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="给GIT-SSH添加参数"><a href="#给GIT-SSH添加参数" class="headerlink" title="给GIT SSH添加参数"></a>给GIT SSH添加参数</h3><p>默认情况下，使用<code>git clone</code>时会使用默认的ssh key连接，你现在（git 2.3）可以自定义ssh key的位置了。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> GIT_SSH_COMMAND=<span class="string">'ssh -i /path/to/ssh_private_key'</span> git <span class="built_in">clone</span> git@github.com:AtlasColin/knowledges.git</span></span><br></pre></td></tr></table></figure>
+<h3 id="给自己项目在github上创建一个mirror"><a href="#给自己项目在github上创建一个mirror" class="headerlink" title="给自己项目在github上创建一个mirror"></a>给自己项目在github上创建一个mirror</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> In this example, we use an external account named extuser and</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> a GitHub account named ghuser to transfer repo.git</span></span><br><span class="line"></span><br><span class="line">git clone --bare https://githost.org/extuser/repo.git</span><br><span class="line"><span class="meta">#</span><span class="bash"> Make a bare <span class="built_in">clone</span> of the external repository to a <span class="built_in">local</span> directory</span></span><br><span class="line"></span><br><span class="line">cd repo.git</span><br><span class="line">git push --mirror https://github.com/ghuser/repo.git</span><br><span class="line"><span class="meta">#</span><span class="bash"> Push mirror to new GitHub repository</span></span><br><span class="line"></span><br><span class="line">cd ..</span><br><span class="line">rm -rf repo.git</span><br><span class="line"><span class="meta">#</span><span class="bash"> Remove temporary <span class="built_in">local</span> repository</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/git/" rel="tag"># git</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/27/Git/Git_shell/" rel="next" title="Git查看、删除、重命名远程分支和tag">
+                <i class="fa fa-chevron-left"></i> Git查看、删除、重命名远程分支和tag
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/27/C&C++/C_standard/" rel="prev" title="C语言规范整理">
+                C语言规范整理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/leaf.jpg"
+                alt="Heroinlin"/>
+            
+              <p class="site-author-name" itemprop="name">Heroinlin</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">63</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">94</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/heroinlin" title="GitHub &rarr; https://github.com/heroinlin" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/heroinlj@gmail.com" title="E-Mail &rarr; heroinlj@gmail.com"><i class="fa fa-fw fa-gmail"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/Heroin" title="Twitter &rarr; https://twitter.com/Heroin" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#git的相关配置"><span class="nav-number">1.</span> <span class="nav-text">git的相关配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#全局设置"><span class="nav-number">1.0.1.</span> <span class="nav-text">全局设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动补全"><span class="nav-number">1.0.2.</span> <span class="nav-text">自动补全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开始使用"><span class="nav-number">1.0.3.</span> <span class="nav-text">开始使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一次提交到多个远端仓库"><span class="nav-number">1.0.4.</span> <span class="nav-text">一次提交到多个远端仓库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在现有仓库上创建孤儿分支"><span class="nav-number">1.1.</span> <span class="nav-text">在现有仓库上创建孤儿分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提交单个分支到远端git仓库"><span class="nav-number">1.2.</span> <span class="nav-text">提交单个分支到远端git仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git常用指令"><span class="nav-number">1.3.</span> <span class="nav-text">git常用指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#git-config"><span class="nav-number">1.3.1.</span> <span class="nav-text">git config</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-add"><span class="nav-number">1.3.2.</span> <span class="nav-text">git add</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-rm"><span class="nav-number">1.3.3.</span> <span class="nav-text">git rm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-commit"><span class="nav-number">1.3.4.</span> <span class="nav-text">git commit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-status"><span class="nav-number">1.3.5.</span> <span class="nav-text">git status</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-checkout"><span class="nav-number">1.3.6.</span> <span class="nav-text">git checkout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-clean"><span class="nav-number">1.3.7.</span> <span class="nav-text">git clean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-branch"><span class="nav-number">1.3.8.</span> <span class="nav-text">git branch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-diff"><span class="nav-number">1.3.9.</span> <span class="nav-text">git diff</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-init"><span class="nav-number">1.3.10.</span> <span class="nav-text">git init</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-log"><span class="nav-number">1.3.11.</span> <span class="nav-text">git log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-merge"><span class="nav-number">1.3.12.</span> <span class="nav-text">git merge</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-mv"><span class="nav-number">1.3.13.</span> <span class="nav-text">git mv</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-pull"><span class="nav-number">1.3.14.</span> <span class="nav-text">git pull</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-push"><span class="nav-number">1.3.15.</span> <span class="nav-text">git push</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-rebase"><span class="nav-number">1.3.16.</span> <span class="nav-text">git rebase</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-cherry-pick"><span class="nav-number">1.3.17.</span> <span class="nav-text">git cherry-pick</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-revert"><span class="nav-number">1.3.18.</span> <span class="nav-text">git revert</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-reset"><span class="nav-number">1.3.19.</span> <span class="nav-text">git reset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-stash"><span class="nav-number">1.3.20.</span> <span class="nav-text">git stash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-submodule"><span class="nav-number">1.3.21.</span> <span class="nav-text">git submodule</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-tag"><span class="nav-number">1.3.22.</span> <span class="nav-text">git tag</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-blame"><span class="nav-number">1.3.23.</span> <span class="nav-text">git blame</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-ls-remote"><span class="nav-number">1.3.24.</span> <span class="nav-text">git ls-remote</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sparse-Checkout"><span class="nav-number">1.4.</span> <span class="nav-text">Sparse Checkout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Squash-多个-commits-为一个"><span class="nav-number">1.5.</span> <span class="nav-text">Squash 多个 commits 为一个</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从历史记录时删除大文件"><span class="nav-number">1.6.</span> <span class="nav-text">从历史记录时删除大文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#给-Git-挂代理"><span class="nav-number">1.7.</span> <span class="nav-text">给 Git 挂代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">1.8.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#给GIT-SSH添加参数"><span class="nav-number">1.8.1.</span> <span class="nav-text">给GIT SSH添加参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#给自己项目在github上创建一个mirror"><span class="nav-number">1.8.2.</span> <span class="nav-text">给自己项目在github上创建一个mirror</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Heroinlin</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.6.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

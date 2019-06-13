@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0"/>
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2"/>
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/leaf.jpg?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/leaf.ico?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/leaf1.ico?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/leaf.jpg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="图像处理——高斯一阶及二阶导数计算一：图像处理之高斯一阶及二阶导数计算图像的一阶与二阶导数计算在图像特征提取与边缘提取中十分重要。一阶与二阶导数的 作用，通常情况下：  一阶导数可以反应出图像灰度梯度的变化情况  二阶导数可以提取出图像的细节同时双响应图像梯度变化情况   常见的算子有Robot, Sobel算子，二阶常见多数为拉普拉斯算子，如图所示：对于一个1D的有限集合数据$$f(x) = {">
+<meta name="keywords" content="图像处理,高斯导数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图像处理------高斯一阶及二阶导数计算">
+<meta property="og:url" content="http://yoursite.com/2017/06/07/opencv/Gaussian_derivative_calculation/index.html">
+<meta property="og:site_name" content="Heroinlin&#39;s Blog">
+<meta property="og:description" content="图像处理——高斯一阶及二阶导数计算一：图像处理之高斯一阶及二阶导数计算图像的一阶与二阶导数计算在图像特征提取与边缘提取中十分重要。一阶与二阶导数的 作用，通常情况下：  一阶导数可以反应出图像灰度梯度的变化情况  二阶导数可以提取出图像的细节同时双响应图像梯度变化情况   常见的算子有Robot, Sobel算子，二阶常见多数为拉普拉斯算子，如图所示：对于一个1D的有限集合数据$$f(x) = {">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img.blog.csdn.net/20131117125855281">
+<meta property="og:image" content="http://img.blog.csdn.net/20131117125946187">
+<meta property="og:image" content="http://img.blog.csdn.net/20131117130148000">
+<meta property="og:image" content="http://img.blog.csdn.net/20131117130521750">
+<meta property="og:image" content="http://img.blog.csdn.net/20131117130608515">
+<meta property="og:updated_time" content="2019-06-12T17:00:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="图像处理------高斯一阶及二阶导数计算">
+<meta name="twitter:description" content="图像处理——高斯一阶及二阶导数计算一：图像处理之高斯一阶及二阶导数计算图像的一阶与二阶导数计算在图像特征提取与边缘提取中十分重要。一阶与二阶导数的 作用，通常情况下：  一阶导数可以反应出图像灰度梯度的变化情况  二阶导数可以提取出图像的细节同时双响应图像梯度变化情况   常见的算子有Robot, Sobel算子，二阶常见多数为拉普拉斯算子，如图所示：对于一个1D的有限集合数据$$f(x) = {">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20131117125855281">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2017/06/07/opencv/Gaussian_derivative_calculation/"/>
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>图像处理------高斯一阶及二阶导数计算 | Heroinlin's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Heroinlin's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br/>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br/>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/07/opencv/Gaussian_derivative_calculation/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heroinlin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/leaf.jpg"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Heroinlin's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">图像处理------高斯一阶及二阶导数计算
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-06-07 10:00:11" itemprop="dateCreated datePublished" datetime="2017-06-07T10:00:11+08:00">2017-06-07</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-13 01:00:08" itemprop="dateModified" datetime="2019-06-13T01:00:08+08:00">2019-06-13</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/图像处理/" itemprop="url" rel="index"><span itemprop="name">图像处理</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="图像处理——高斯一阶及二阶导数计算"><a href="#图像处理——高斯一阶及二阶导数计算" class="headerlink" title="图像处理——高斯一阶及二阶导数计算"></a>图像处理——高斯一阶及二阶导数计算</h1><h2 id="一：图像处理之高斯一阶及二阶导数计算"><a href="#一：图像处理之高斯一阶及二阶导数计算" class="headerlink" title="一：图像处理之高斯一阶及二阶导数计算"></a>一：图像处理之高斯一阶及二阶导数计算</h2><p>图像的一阶与二阶导数计算在图像特征提取与边缘提取中十分重要。一阶与二阶导数的</p>
+<p>作用，通常情况下：</p>
+<ul>
+<li><p>一阶导数可以反应出图像灰度梯度的变化情况</p>
+</li>
+<li><p>二阶导数可以提取出图像的细节同时双响应图像梯度变化情况</p>
+</li>
+</ul>
+<p>常见的算子有Robot, Sobel算子，二阶常见多数为拉普拉斯算子，如图所示：<br><img src="http://img.blog.csdn.net/20131117125855281" alt="拉普拉斯算子"><br>对于一个1D的有限集合数据$$f(x) = {1…N}$$, 假设$dx$的间隔为1则一阶导数计算公式如下：<br>$$Df(x) = f(x+1) – f(x-1) $$<br>二阶导数的计算公式为：<br>$$df(x)= f(x+1) + f(x-1) – 2f(x)$$</p>
+<p>稍微难一点的则是基于高斯的一阶导数与二阶导数求取，首先看一下高斯的1D与2D的</p>
+<p>公式。</p>
+<ul>
+<li>一维高斯对应的X阶导数公式：<br><img src="http://img.blog.csdn.net/20131117125946187" alt="一维高斯模型对应x阶导数"></li>
+<li>二维高斯对应的导数公式：<br><img src="http://img.blog.csdn.net/20131117130148000" alt="一维高斯模型对应x阶导数"><h2 id="二：算法实现"><a href="#二：算法实现" class="headerlink" title="二：算法实现"></a>二：算法实现</h2></li>
+</ul>
+<ol>
+<li><p>高斯采样，基于间隔1计算，计算mask窗口计算，这样就跟普通的卷积计算差不多</p>
+</li>
+<li><p>设置sigma的值，本例默认为10，首先计算高斯窗口函数，默认为3 * 3</p>
+</li>
+<li><p>根据2的结果，计算高斯导数窗口值</p>
+</li>
+<li><p>卷积计算像素中心点值。</p>
+</li>
+</ol>
+<p>注意点：计算高斯函数一定要以零为中心点, 如果窗口函数大小为3，则表达为-1, 0, 1</p>
+<h2 id="三：程序实现关键点"><a href="#三：程序实现关键点" class="headerlink" title="三：程序实现关键点"></a>三：程序实现关键点</h2><ol>
+<li><p>归一化处理，由于高斯计算出来的窗口值非常的小，必须实现归一化处理。</p>
+</li>
+<li><p>亮度提升，对X,Y的梯度计算结果进行了亮度提升，目的是让大家看得更清楚。</p>
+</li>
+<li><p>支持一阶与二阶单一方向X，Y偏导数计算</p>
+</li>
+</ol>
+<h2 id="四：运行效果："><a href="#四：运行效果：" class="headerlink" title="四：运行效果："></a>四：运行效果：</h2><p>高斯一阶导数X方向效果<br><img src="http://img.blog.csdn.net/20131117130521750" alt="高斯一阶导数X方向效果"><br>高斯一阶导数Y方向效果<br><img src="http://img.blog.csdn.net/20131117130608515" alt="高斯一阶导数Y方向效果"></p>
+<h2 id="五：算法全部源代码："><a href="#五：算法全部源代码：" class="headerlink" title="五：算法全部源代码："></a>五：算法全部源代码：</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * @author: gloomyfish </span></span><br><span class="line"><span class="comment"> * @date: 2013-11-17 </span></span><br><span class="line"><span class="comment"> *  </span></span><br><span class="line"><span class="comment"> * Title - Gaussian fist order derivative and second derivative filter </span></span><br><span class="line"><span class="comment"> */</span>  </span><br><span class="line"><span class="keyword">package</span> com.gloomyfish.image.harris.corner;  </span><br><span class="line"><span class="keyword">import</span> java.awt.image.BufferedImage;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">import</span> com.gloomyfish.filter.study.AbstractBufferedImageOp;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GaussianDerivativeFilter</span> <span class="keyword">extends</span> <span class="title">AbstractBufferedImageOp</span> </span>&#123;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> X_DIRECTION = <span class="number">0</span>;  </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> Y_DIRECTION = <span class="number">16</span>;  </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> XY_DIRECTION = <span class="number">2</span>;  </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> XX_DIRECTION = <span class="number">4</span>;  </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> YY_DIRECTION = <span class="number">8</span>;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// private attribute and settings  </span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> DIRECTION_TYPE = <span class="number">0</span>;  </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> GAUSSIAN_WIN_SIZE = <span class="number">1</span>; <span class="comment">// N*2 + 1  </span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">double</span> sigma = <span class="number">10</span>; <span class="comment">// default  </span></span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">GaussianDerivativeFilter</span><span class="params">()</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    System.out.println(<span class="string">"高斯一阶及多阶导数滤镜"</span>);  </span><br><span class="line">&#125;     </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getGaussianWinSize</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> GAUSSIAN_WIN_SIZE;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setGaussianWinSize</span><span class="params">(<span class="keyword">int</span> gAUSSIAN_WIN_SIZE)</span> </span>&#123;  </span><br><span class="line">    GAUSSIAN_WIN_SIZE = gAUSSIAN_WIN_SIZE;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getDirectionType</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> DIRECTION_TYPE;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDirectionType</span><span class="params">(<span class="keyword">int</span> dIRECTION_TYPE)</span> </span>&#123;  </span><br><span class="line">    DIRECTION_TYPE = dIRECTION_TYPE;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="meta">@Override</span>  </span><br><span class="line"><span class="function"><span class="keyword">public</span> BufferedImage <span class="title">filter</span><span class="params">(BufferedImage src, BufferedImage dest)</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">int</span> width = src.getWidth();  </span><br><span class="line">    <span class="keyword">int</span> height = src.getHeight();  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">if</span> ( dest == <span class="keyword">null</span> )  </span><br><span class="line">        dest = createCompatibleDestImage( src, <span class="keyword">null</span> );  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">int</span>[] inPixels = <span class="keyword">new</span> <span class="keyword">int</span>[width*height];  </span><br><span class="line">    <span class="keyword">int</span>[] outPixels = <span class="keyword">new</span> <span class="keyword">int</span>[width*height];  </span><br><span class="line">    getRGB( src, <span class="number">0</span>, <span class="number">0</span>, width, height, inPixels );  </span><br><span class="line">    <span class="keyword">int</span> index = <span class="number">0</span>, index2 = <span class="number">0</span>;  </span><br><span class="line">    <span class="keyword">double</span> xred = <span class="number">0</span>, xgreen = <span class="number">0</span>, xblue = <span class="number">0</span>;  </span><br><span class="line">    <span class="comment">// double yred = 0, ygreen = 0, yblue = 0;  </span></span><br><span class="line">    <span class="keyword">int</span> newRow, newCol;  </span><br><span class="line">    <span class="keyword">double</span>[][] winDeviationData = getDirectionData();  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> row=<span class="number">0</span>; row&lt;height; row++) &#123;  </span><br><span class="line">        <span class="keyword">int</span> ta = <span class="number">255</span>, tr = <span class="number">0</span>, tg = <span class="number">0</span>, tb = <span class="number">0</span>;  </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> col=<span class="number">0</span>; col&lt;width; col++) &#123;  </span><br><span class="line">            index = row * width + col;  </span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> subrow = -GAUSSIAN_WIN_SIZE; subrow &lt;= GAUSSIAN_WIN_SIZE; subrow++) &#123;  </span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> subcol = -GAUSSIAN_WIN_SIZE; subcol &lt;= GAUSSIAN_WIN_SIZE; subcol++) &#123;  </span><br><span class="line">                    newRow = row + subrow;  </span><br><span class="line">                    newCol = col + subcol;  </span><br><span class="line">                    <span class="keyword">if</span>(newRow &lt; <span class="number">0</span> || newRow &gt;= height) &#123;  </span><br><span class="line">                        newRow = row;  </span><br><span class="line">                    &#125;  </span><br><span class="line">                    <span class="keyword">if</span>(newCol &lt; <span class="number">0</span> || newCol &gt;= width) &#123;  </span><br><span class="line">                        newCol = col;  </span><br><span class="line">                    &#125;  </span><br><span class="line">                    index2 = newRow * width + newCol;  </span><br><span class="line">                    tr = (inPixels[index2] &gt;&gt; <span class="number">16</span>) &amp; <span class="number">0xff</span>;  </span><br><span class="line">                    tg = (inPixels[index2] &gt;&gt; <span class="number">8</span>) &amp; <span class="number">0xff</span>;  </span><br><span class="line">                    tb = inPixels[index2] &amp; <span class="number">0xff</span>;  </span><br><span class="line">                    xred += (winDeviationData[subrow + GAUSSIAN_WIN_SIZE][subcol + GAUSSIAN_WIN_SIZE] * tr);  </span><br><span class="line">                    xgreen +=(winDeviationData[subrow + GAUSSIAN_WIN_SIZE][subcol + GAUSSIAN_WIN_SIZE] * tg);  </span><br><span class="line">                    xblue +=(winDeviationData[subrow + GAUSSIAN_WIN_SIZE][subcol + GAUSSIAN_WIN_SIZE] * tb);  </span><br><span class="line">                &#125;  </span><br><span class="line">            &#125;  </span><br><span class="line">              </span><br><span class="line">            outPixels[index] = (ta &lt;&lt; <span class="number">24</span>) | (clamp((<span class="keyword">int</span>)xred) &lt;&lt; <span class="number">16</span>) | (clamp((<span class="keyword">int</span>)xgreen) &lt;&lt; <span class="number">8</span>) | clamp((<span class="keyword">int</span>)xblue);  </span><br><span class="line">              </span><br><span class="line">            <span class="comment">// clean up values for next pixel  </span></span><br><span class="line">            newRow = newCol = <span class="number">0</span>;  </span><br><span class="line">            xred = xgreen = xblue = <span class="number">0</span>;  </span><br><span class="line">            <span class="comment">// yred = ygreen = yblue = 0;  </span></span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    setRGB( dest, <span class="number">0</span>, <span class="number">0</span>, width, height, outPixels );  </span><br><span class="line">    <span class="keyword">return</span> dest;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">double</span>[][] getDirectionData()  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="keyword">double</span>[][] winDeviationData = <span class="keyword">null</span>;  </span><br><span class="line">    <span class="keyword">if</span>(DIRECTION_TYPE == X_DIRECTION)  </span><br><span class="line">    &#123;  </span><br><span class="line">        winDeviationData = <span class="keyword">this</span>.getXDirectionDeviation();  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(DIRECTION_TYPE == Y_DIRECTION)  </span><br><span class="line">    &#123;  </span><br><span class="line">        winDeviationData = <span class="keyword">this</span>.getYDirectionDeviation();  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(DIRECTION_TYPE == XY_DIRECTION)  </span><br><span class="line">    &#123;  </span><br><span class="line">        winDeviationData = <span class="keyword">this</span>.getXYDirectionDeviation();  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(DIRECTION_TYPE == XX_DIRECTION)  </span><br><span class="line">    &#123;  </span><br><span class="line">        winDeviationData = <span class="keyword">this</span>.getXXDirectionDeviation();  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(DIRECTION_TYPE == YY_DIRECTION)  </span><br><span class="line">    &#123;  </span><br><span class="line">        winDeviationData = <span class="keyword">this</span>.getYYDirectionDeviation();  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> winDeviationData;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">clamp</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;  </span><br><span class="line">    <span class="comment">// trick, just improve the lightness otherwise image is too darker...  </span></span><br><span class="line">    <span class="keyword">if</span>(DIRECTION_TYPE == X_DIRECTION || DIRECTION_TYPE == Y_DIRECTION)  </span><br><span class="line">    &#123;  </span><br><span class="line">        value = value * <span class="number">10</span> + <span class="number">50</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> value &lt; <span class="number">0</span> ? <span class="number">0</span> : (value &gt; <span class="number">255</span> ? <span class="number">255</span> : value);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">// centered on zero and with Gaussian standard deviation  </span></span><br><span class="line"><span class="comment">// parameter : sigma  </span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">double</span>[][] get2DGaussianData()  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="keyword">int</span> size = GAUSSIAN_WIN_SIZE * <span class="number">2</span> + <span class="number">1</span>;  </span><br><span class="line">    <span class="keyword">double</span>[][] winData = <span class="keyword">new</span> <span class="keyword">double</span>[size][size];  </span><br><span class="line">    <span class="keyword">double</span> sigma2 = <span class="keyword">this</span>.sigma * sigma;  </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=-GAUSSIAN_WIN_SIZE; i&lt;=GAUSSIAN_WIN_SIZE; i++)  </span><br><span class="line">    &#123;  </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=-GAUSSIAN_WIN_SIZE; j&lt;=GAUSSIAN_WIN_SIZE; j++)  </span><br><span class="line">        &#123;  </span><br><span class="line">            <span class="keyword">double</span> r = i*<span class="number">1</span> + j*j;  </span><br><span class="line">            <span class="keyword">double</span> sum = -(r/(<span class="number">2</span>*sigma2));  </span><br><span class="line">            winData[i + GAUSSIAN_WIN_SIZE][j + GAUSSIAN_WIN_SIZE] = Math.exp(sum);  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> winData;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">double</span>[][] getXDirectionDeviation()  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="keyword">int</span> size = GAUSSIAN_WIN_SIZE * <span class="number">2</span> + <span class="number">1</span>;  </span><br><span class="line">    <span class="keyword">double</span>[][] data = get2DGaussianData();  </span><br><span class="line">    <span class="keyword">double</span>[][] xDeviation = <span class="keyword">new</span> <span class="keyword">double</span>[size][size];  </span><br><span class="line">    <span class="keyword">double</span> sigma2 = <span class="keyword">this</span>.sigma * sigma;  </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> x=-GAUSSIAN_WIN_SIZE; x&lt;=GAUSSIAN_WIN_SIZE; x++)  </span><br><span class="line">    &#123;  </span><br><span class="line">        <span class="keyword">double</span> c = -(x/sigma2);  </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;size; i++)  </span><br><span class="line">        &#123;  </span><br><span class="line">            xDeviation[i][x + GAUSSIAN_WIN_SIZE] = c * data[i][x + GAUSSIAN_WIN_SIZE];                </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> xDeviation;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">double</span>[][] getYDirectionDeviation()  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="keyword">int</span> size = GAUSSIAN_WIN_SIZE * <span class="number">2</span> + <span class="number">1</span>;  </span><br><span class="line">    <span class="keyword">double</span>[][] data = get2DGaussianData();  </span><br><span class="line">    <span class="keyword">double</span>[][] yDeviation = <span class="keyword">new</span> <span class="keyword">double</span>[size][size];  </span><br><span class="line">    <span class="keyword">double</span> sigma2 = <span class="keyword">this</span>.sigma * sigma;  </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> y=-GAUSSIAN_WIN_SIZE; y&lt;=GAUSSIAN_WIN_SIZE; y++)  </span><br><span class="line">    &#123;  </span><br><span class="line">        <span class="keyword">double</span> c = -(y/sigma2);  </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;size; i++)  </span><br><span class="line">        &#123;  </span><br><span class="line">            yDeviation[y + GAUSSIAN_WIN_SIZE][i] = c * data[y + GAUSSIAN_WIN_SIZE][i];                </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> yDeviation;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="comment">/*** </span></span><br><span class="line"><span class="comment"> *  </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> </span></span><br><span class="line"><span class="comment"> */</span>  </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">double</span>[][] getXYDirectionDeviation()  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="keyword">int</span> size = GAUSSIAN_WIN_SIZE * <span class="number">2</span> + <span class="number">1</span>;  </span><br><span class="line">    <span class="keyword">double</span>[][] data = get2DGaussianData();  </span><br><span class="line">    <span class="keyword">double</span>[][] xyDeviation = <span class="keyword">new</span> <span class="keyword">double</span>[size][size];  </span><br><span class="line">    <span class="keyword">double</span> sigma2 = sigma * sigma;  </span><br><span class="line">    <span class="keyword">double</span> sigma4 = sigma2 * sigma2;  </span><br><span class="line">    <span class="comment">// <span class="doctag">TODO:</span>zhigang  </span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> x=-GAUSSIAN_WIN_SIZE; x&lt;=GAUSSIAN_WIN_SIZE; x++)  </span><br><span class="line">    &#123;  </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> y=-GAUSSIAN_WIN_SIZE; y&lt;=GAUSSIAN_WIN_SIZE; y++)  </span><br><span class="line">        &#123;  </span><br><span class="line">            <span class="keyword">double</span> c = -((x*y)/sigma4);  </span><br><span class="line">            xyDeviation[x + GAUSSIAN_WIN_SIZE][y + GAUSSIAN_WIN_SIZE] = c * data[x + GAUSSIAN_WIN_SIZE][y + GAUSSIAN_WIN_SIZE];  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> normalizeData(xyDeviation);  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">double</span>[][] normalizeData(<span class="keyword">double</span>[][] data)  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="comment">// normalization the data  </span></span><br><span class="line">    <span class="keyword">double</span> min = data[<span class="number">0</span>][<span class="number">0</span>];  </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> x=-GAUSSIAN_WIN_SIZE; x&lt;=GAUSSIAN_WIN_SIZE; x++)  </span><br><span class="line">    &#123;  </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> y=-GAUSSIAN_WIN_SIZE; y&lt;=GAUSSIAN_WIN_SIZE; y++)  </span><br><span class="line">        &#123;  </span><br><span class="line">            <span class="keyword">if</span>(min &gt; data[x + GAUSSIAN_WIN_SIZE][y + GAUSSIAN_WIN_SIZE])  </span><br><span class="line">            &#123;  </span><br><span class="line">                min = data[x + GAUSSIAN_WIN_SIZE][y + GAUSSIAN_WIN_SIZE];  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> x=-GAUSSIAN_WIN_SIZE; x&lt;=GAUSSIAN_WIN_SIZE; x++)  </span><br><span class="line">    &#123;  </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> y=-GAUSSIAN_WIN_SIZE; y&lt;=GAUSSIAN_WIN_SIZE; y++)  </span><br><span class="line">        &#123;  </span><br><span class="line">            data[x + GAUSSIAN_WIN_SIZE][y + GAUSSIAN_WIN_SIZE] = data[x + GAUSSIAN_WIN_SIZE][y + GAUSSIAN_WIN_SIZE] /min;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    <span class="keyword">return</span> data;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">double</span>[][] getXXDirectionDeviation()  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="keyword">int</span> size = GAUSSIAN_WIN_SIZE * <span class="number">2</span> + <span class="number">1</span>;  </span><br><span class="line">    <span class="keyword">double</span>[][] data = get2DGaussianData();  </span><br><span class="line">    <span class="keyword">double</span>[][] xxDeviation = <span class="keyword">new</span> <span class="keyword">double</span>[size][size];  </span><br><span class="line">    <span class="keyword">double</span> sigma2 = <span class="keyword">this</span>.sigma * sigma;  </span><br><span class="line">    <span class="keyword">double</span> sigma4 = sigma2 * sigma2;  </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> x=-GAUSSIAN_WIN_SIZE; x&lt;=GAUSSIAN_WIN_SIZE; x++)  </span><br><span class="line">    &#123;  </span><br><span class="line">        <span class="keyword">double</span> c = -((x - sigma2)/sigma4);  </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;size; i++)  </span><br><span class="line">        &#123;  </span><br><span class="line">            xxDeviation[i][x + GAUSSIAN_WIN_SIZE] = c * data[i][x + GAUSSIAN_WIN_SIZE];               </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> xxDeviation;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">double</span>[][] getYYDirectionDeviation()  </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="keyword">int</span> size = GAUSSIAN_WIN_SIZE * <span class="number">2</span> + <span class="number">1</span>;  </span><br><span class="line">    <span class="keyword">double</span>[][] data = get2DGaussianData();  </span><br><span class="line">    <span class="keyword">double</span>[][] yyDeviation = <span class="keyword">new</span> <span class="keyword">double</span>[size][size];  </span><br><span class="line">    <span class="keyword">double</span> sigma2 = <span class="keyword">this</span>.sigma * sigma;  </span><br><span class="line">    <span class="keyword">double</span> sigma4 = sigma2 * sigma2;  </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> y=-GAUSSIAN_WIN_SIZE; y&lt;=GAUSSIAN_WIN_SIZE; y++)  </span><br><span class="line">    &#123;  </span><br><span class="line">        <span class="keyword">double</span> c = -((y - sigma2)/sigma4);  </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;size; i++)  </span><br><span class="line">        &#123;  </span><br><span class="line">            yyDeviation[y + GAUSSIAN_WIN_SIZE][i] = c * data[y + GAUSSIAN_WIN_SIZE][i];               </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> yyDeviation;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/图像处理/" rel="tag"># 图像处理</a>
+          
+            <a href="/tags/高斯导数/" rel="tag"># 高斯导数</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/17/deep_learning/Linear_and_non_Linear/" rel="next" title="线性与非线性">
+                <i class="fa fa-chevron-left"></i> 线性与非线性
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/12/C&C++/VScode_hotkey/" rel="prev" title="VS Code 快捷键（中英文对照版）">
+                VS Code 快捷键（中英文对照版） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/leaf.jpg"
+                alt="Heroinlin"/>
+            
+              <p class="site-author-name" itemprop="name">Heroinlin</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">63</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">94</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/heroinlin" title="GitHub &rarr; https://github.com/heroinlin" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/heroinlj@gmail.com" title="E-Mail &rarr; heroinlj@gmail.com"><i class="fa fa-fw fa-gmail"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/Heroin" title="Twitter &rarr; https://twitter.com/Heroin" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#图像处理——高斯一阶及二阶导数计算"><span class="nav-number">1.</span> <span class="nav-text">图像处理——高斯一阶及二阶导数计算</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一：图像处理之高斯一阶及二阶导数计算"><span class="nav-number">1.1.</span> <span class="nav-text">一：图像处理之高斯一阶及二阶导数计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二：算法实现"><span class="nav-number">1.2.</span> <span class="nav-text">二：算法实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三：程序实现关键点"><span class="nav-number">1.3.</span> <span class="nav-text">三：程序实现关键点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四：运行效果："><span class="nav-number">1.4.</span> <span class="nav-text">四：运行效果：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五：算法全部源代码："><span class="nav-number">1.5.</span> <span class="nav-text">五：算法全部源代码：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Heroinlin</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.6.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0"/>
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2"/>
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/leaf.jpg?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/leaf.ico?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/leaf1.ico?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/leaf.jpg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="tensorflow之object_detection模块切换当前目录至models文件夹（请在此路径下操作，不然出现许多多多多多多…错误） 当前使用版本为Fix ML Engine Dashboard link (#1599) Installation适当修改 Add Libraries to PYTHONPATH对应 linux下添加slim文件夹到环境变量 123&amp;gt; # From te">
+<meta name="keywords" content="tensorflow,object_detection">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tensorflow之object_detection模块">
+<meta property="og:url" content="http://yoursite.com/2017/07/04/Tensorflow/tensorflow_object_detection/index.html">
+<meta property="og:site_name" content="Heroinlin&#39;s Blog">
+<meta property="og:description" content="tensorflow之object_detection模块切换当前目录至models文件夹（请在此路径下操作，不然出现许多多多多多多…错误） 当前使用版本为Fix ML Engine Dashboard link (#1599) Installation适当修改 Add Libraries to PYTHONPATH对应 linux下添加slim文件夹到环境变量 123&amp;gt; # From te">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://github.com/heroinlin/picture_of_markdown/blob/master/tensorflow_object_detection/label_map_util.png?raw=true">
+<meta property="og:image" content="https://github.com/heroinlin/picture_of_markdown/blob/master/tensorflow_object_detection/fix_to_train_1.jpg?raw=true">
+<meta property="og:image" content="https://github.com/heroinlin/picture_of_markdown/blob/master/tensorflow_object_detection/fix_to_train_2.jpg?raw=true">
+<meta property="og:image" content="https://github.com/heroinlin/picture_of_markdown/blob/master/tensorflow_object_detection/fix_to_train_3.jpg?raw=true">
+<meta property="og:image" content="https://github.com/heroinlin/picture_of_markdown/blob/master/tensorflow_object_detection/fix_to_train_4.jpg?raw=true">
+<meta property="og:image" content="https://github.com/heroinlin/picture_of_markdown/blob/master/tensorflow_object_detection/fix_to_train_5.jpg?raw=true">
+<meta property="og:image" content="https://github.com/heroinlin/picture_of_markdown/blob/master/tensorflow_object_detection/fix_to_train_6.jpg?raw=true">
+<meta property="og:image" content="https://github.com/heroinlin/picture_of_markdown/blob/master/tensorflow_object_detection/fix_to_train_7.jpg?raw=true">
+<meta property="og:image" content="https://github.com/heroinlin/picture_of_markdown/blob/master/tensorflow_object_detection/fix_to_train_8.jpg?raw=true">
+<meta property="og:image" content="https://github.com/heroinlin/picture_of_markdown/blob/master/tensorflow_object_detection/fix_to_train_9.jpg?raw=true">
+<meta property="og:image" content="https://github.com/heroinlin/picture_of_markdown/blob/master/tensorflow_object_detection/fix_to_train10.jpg?raw=true">
+<meta property="og:updated_time" content="2019-06-12T17:00:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tensorflow之object_detection模块">
+<meta name="twitter:description" content="tensorflow之object_detection模块切换当前目录至models文件夹（请在此路径下操作，不然出现许多多多多多多…错误） 当前使用版本为Fix ML Engine Dashboard link (#1599) Installation适当修改 Add Libraries to PYTHONPATH对应 linux下添加slim文件夹到环境变量 123&amp;gt; # From te">
+<meta name="twitter:image" content="https://github.com/heroinlin/picture_of_markdown/blob/master/tensorflow_object_detection/label_map_util.png?raw=true">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2017/07/04/Tensorflow/tensorflow_object_detection/"/>
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>tensorflow之object_detection模块 | Heroinlin's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Heroinlin's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br/>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br/>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/04/Tensorflow/tensorflow_object_detection/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heroinlin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/leaf.jpg"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Heroinlin's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">tensorflow之object_detection模块
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-07-04 08:26:11" itemprop="dateCreated datePublished" datetime="2017-07-04T08:26:11+08:00">2017-07-04</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-13 01:00:08" itemprop="dateModified" datetime="2019-06-13T01:00:08+08:00">2019-06-13</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/tensorflow/" itemprop="url" rel="index"><span itemprop="name">tensorflow</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="tensorflow之object-detection模块"><a href="#tensorflow之object-detection模块" class="headerlink" title="tensorflow之object_detection模块"></a>tensorflow之object_detection模块</h1><p>切换当前目录至models文件夹（请在此路径下操作，不然出现许多多多多多多…错误）</p>
+<p>当前使用版本为<a href="https://github.com/tensorflow/models/commit/b4968012c62722cdd2a98419589b779c97f788c7" target="_blank" rel="noopener">Fix ML Engine Dashboard link (</a><a href="https://github.com/tensorflow/models/pull/1599" target="_blank" rel="noopener">#1599</a><a href="https://github.com/tensorflow/models/commit/b4968012c62722cdd2a98419589b779c97f788c7" target="_blank" rel="noopener">)</a></p>
+<h2 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h2><h3 id="适当修改"><a href="#适当修改" class="headerlink" title="适当修改"></a>适当修改</h3><blockquote>
+<h2 id="Add-Libraries-to-PYTHONPATH"><a href="#Add-Libraries-to-PYTHONPATH" class="headerlink" title="Add Libraries to PYTHONPATH"></a>Add Libraries to PYTHONPATH</h2><p>对应 linux下添加slim文件夹到环境变量</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="comment"># From tensorflow/models/</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="built_in">export</span> PYTHONPATH=<span class="variable">$PYTHONPATH</span>:`<span class="built_in">pwd</span>`:`<span class="built_in">pwd</span>`/slim</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>直接<strong>将slim文件夹添加到python path中</strong>（推荐使用），pycharm可参考<a href="http://blog.csdn.net/wh357589873/article/details/53204024" target="_blank" rel="noopener">http://blog.csdn.net/wh357589873/article/details/53204024</a></p>
+<p>或进行如下代替操作（不推荐）</p>
+<ul>
+<li><p><code>trainer.py</code>中<code>from deployment import model_deploy</code>改为<code>from slim.deployment import model_deploy</code>,deployment在slim文件夹下</p>
+</li>
+<li><p>object_detection\models文件夹下的<code>*_feature_extractor.py</code>中<code>from nets</code>  改为<code>from slim.nets</code> ,nets在slim文件夹下</p>
+</li>
+<li><p>slim/nets文件夹下的inception_utils.py和resnet_utils.py中<code>from nets</code>  改为<code>from slim.nets</code> ,nets在slim文件夹下</p>
+</li>
+</ul>
+<blockquote>
+<h2 id="Protobuf-Compilation"><a href="#Protobuf-Compilation" class="headerlink" title="Protobuf Compilation"></a>Protobuf Compilation</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="comment"># From tensorflow/models/</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> protoc object_detection/protos/*.proto --python_out=.</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<ul>
+<li><p><strong>用protoc生成protos文件夹下的所有.proto对应的pb2文件</strong></p>
+<p>使用protoc生成<code>string_int_label_map_pb2.py</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protoc object_detection/protos/string_int_label_map.proto --python_out=.</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：protoc代码内并没有提供，需自行下载，注意下载3.0以上的，生成python3以上代码</p>
+<p>下载地址：<a href="http://repo1.maven.org/maven2/com/google/protobuf/protoc/" target="_blank" rel="noopener">http://repo1.maven.org/maven2/com/google/protobuf/protoc/</a></p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> object_detection.protos <span class="keyword">import</span> input_reader_pb2</span><br><span class="line"><span class="keyword">from</span> object_detection.protos <span class="keyword">import</span> model_pb2</span><br><span class="line"><span class="keyword">from</span> object_detection.protos <span class="keyword">import</span> pipeline_pb2</span><br><span class="line"><span class="keyword">from</span> object_detection.protos <span class="keyword">import</span> train_pb2</span><br></pre></td></tr></table></figure>
+<p>对应地，在protos文件夹中生成，而生成 model_pb2时需要生成ssd_pb2和faster_rcnn_pb2,生成ssd_pb2又需要如下pb2文件（如下为在object_detection文件夹下操作的提醒，也说明了<code>ssd_pb2.py</code>和<code>faster_rcnn_pb2.py</code>关联的一些文件）</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">object_detection/protos/anchor_generator.proto: File not found.</span><br><span class="line">object_detection/protos/box_coder.proto: File not found.</span><br><span class="line">object_detection/protos/box_predictor.proto: File not found.</span><br><span class="line">object_detection/protos/hyperparams.proto: File not found.</span><br><span class="line">object_detection/protos/image_resizer.proto: File not found.</span><br><span class="line">object_detection/protos/matcher.proto: File not found.</span><br><span class="line">object_detection/protos/losses.proto: File not found.</span><br><span class="line">object_detection/protos/post_processing.proto: File not found.</span><br><span class="line">object_detection/protos/region_similarity_calculator.proto: File not found.</span><br></pre></td></tr></table></figure>
+<p>生成<code>faster_rcnn_pb2</code>文件需要如下pb2文件</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">object_detection/protos/anchor_generator.proto: File not found.</span><br><span class="line">object_detection/protos/box_predictor.proto: File not found.</span><br><span class="line">object_detection/protos/hyperparams.proto: File not found.</span><br><span class="line">object_detection/protos/image_resizer.proto: File not found.</span><br><span class="line">object_detection/protos/losses.proto: File not found.</span><br><span class="line">object_detection/protos/post_processing.proto: File not found.</span><br></pre></td></tr></table></figure>
+<p>依次生成上述pb2文件</p>
+<p><code>anchor_generator_pb2.py</code>关联<code>grid_anchor_generator_pb2</code> 与<code>ssd_anchor_generator_pb2</code></p>
+<p><code>box_coder_pb2.py</code>关联<code>faster_rcnn_box_coder_pb2</code> <code>mean_stddev_box_coder_pb2</code>  <code>square_box_coder_pb2</code></p>
+<p><code>matcher_pb2.py</code>关联<code>argmax_matcher_pb2</code>   <code>bipartite_matcher_pb2</code></p>
+<p><code>pipeline_pb2.py</code> 关联<code>eval_pb2</code></p>
+<p><code>train_pb2.py</code> 关联<code>optimizer_pb2</code></p>
+<p>总之，就是生成protos文件夹下的所有.proto对应的pb2文件</p>
+</li>
+</ul>
+<blockquote>
+<h1 id="Testing-the-Installation"><a href="#Testing-the-Installation" class="headerlink" title="Testing the Installation"></a>Testing the Installation</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; python object_detection/builders/model_builder_test.py</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<ul>
+<li><p>运行model_builder_test.py文件，结果如下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">----------------------------------------------------------------------</span><br><span class="line">Ran 6 tests in 0.003s</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Configuring-an-object-detection-pipeline"><a href="#Configuring-an-object-detection-pipeline" class="headerlink" title="Configuring an object detection pipeline"></a>Configuring an object detection pipeline</h2><h3 id="总览"><a href="#总览" class="headerlink" title="总览"></a>总览</h3><p>配置文件分为五个部分</p>
+<ul>
+<li><code>model</code> configuration,定义了训练什么类型的模型(如meta-architecture, feature extractor)</li>
+<li><code>train_config</code>,决定哪些参数应该被用来训练模型参数（如SGD参数，输入预处理和特征提取初始化值）。</li>
+<li><code>eval_config</code>,决定了哪些指标将被进行评估报告（目前仅支持PASCAL VOC指标）</li>
+<li><code>train_input_config</code>, 定义了模型训练时用了哪些数据集</li>
+<li><code>eval_input_config</code>, 定义了模型进行评估是哪些数据集。通常这应该与训练输入数据集不同</li>
+</ul>
+<p>配置文件架构如下：</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">model &#123;</span><br><span class="line">(... Add model config here...)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">train_config : &#123;</span><br><span class="line">(... Add train_config here...)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">train_input_reader: &#123;</span><br><span class="line">(... Add train_input configuration here...)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">eval_config: &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">eval_input_reader: &#123;</span><br><span class="line">(... Add eval_input configuration here...)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可参考samples/configs文件夹下的config文件，如</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><span class="line"># Faster R-CNN with Resnet-<span class="number">101</span> (v1), configured for Pascal VOC Dataset.</span><br><span class="line"># Users should configure the fine_tune_checkpoint field in the train config as</span><br><span class="line"># well as the label_map_path <span class="keyword">and</span> input_path fields in the train_input_reader <span class="keyword">and</span></span><br><span class="line"># eval_input_reader. Search for <span class="string">"PATH_TO_BE_CONFIGURED"</span> to find the fields that</span><br><span class="line"># should be configured.</span><br><span class="line"></span><br><span class="line">model &#123;</span><br><span class="line">       faster_rcnn &#123;</span><br><span class="line">                    num_classes: <span class="number">20</span></span><br><span class="line">                    image_resizer &#123;</span><br><span class="line">                                   keep_aspect_ratio_resizer &#123;</span><br><span class="line">                                                              min_dimension: <span class="number">600</span></span><br><span class="line">                                                              max_dimension: <span class="number">1024</span></span><br><span class="line">                                                              &#125;</span><br><span class="line">                                   &#125;</span><br><span class="line">                    feature_extractor &#123;</span><br><span class="line">                                       type: 'faster_rcnn_resnet101'</span><br><span class="line">                                       first_stage_features_stride: <span class="number">16</span></span><br><span class="line">                                       &#125;</span><br><span class="line">                    first_stage_anchor_generator &#123;</span><br><span class="line">                                                  grid_anchor_generator &#123;</span><br><span class="line">                                                                         scales: [<span class="number">0.25</span>, <span class="number">0.5</span>, <span class="number">1.0</span>, <span class="number">2.0</span>]</span><br><span class="line">                                                                         aspect_ratios: [<span class="number">0.5</span>, <span class="number">1.0</span>, <span class="number">2.0</span>]</span><br><span class="line">                                                                         height_stride: <span class="number">16</span></span><br><span class="line">                                                                         width_stride: <span class="number">16</span></span><br><span class="line">                                                                         &#125;</span><br><span class="line">                                                  &#125;    </span><br><span class="line">                    first_stage_box_predictor_conv_hyperparams &#123;      </span><br><span class="line">                                                                op: CONV</span><br><span class="line">                                                                regularizer &#123;</span><br><span class="line">                                                                             l2_regularizer &#123;</span><br><span class="line">                                                                                             weight: <span class="number">0.0</span></span><br><span class="line">                                                                                             &#125;</span><br><span class="line">                                                                             &#125;</span><br><span class="line">                                                                initializer &#123;</span><br><span class="line">                                                                             truncated_normal_initializer &#123;</span><br><span class="line">                                                                                                           stddev: <span class="number">0.01</span></span><br><span class="line">                                                                                                           &#125;</span><br><span class="line">                                                                             &#125;</span><br><span class="line">                                                                &#125;</span><br><span class="line">                    first_stage_nms_score_threshold: <span class="number">0.0</span></span><br><span class="line">                    first_stage_nms_iou_threshold: <span class="number">0.7</span></span><br><span class="line">                    first_stage_max_proposals: <span class="number">300</span></span><br><span class="line">                    first_stage_localization_loss_weight: <span class="number">2.0</span></span><br><span class="line">                    first_stage_objectness_loss_weight: <span class="number">1.0</span></span><br><span class="line">                    initial_crop_size: <span class="number">14</span></span><br><span class="line">                    maxpool_kernel_size: <span class="number">2</span></span><br><span class="line">                    maxpool_stride: <span class="number">2</span></span><br><span class="line">                    second_stage_box_predictor &#123;</span><br><span class="line">                                                mask_rcnn_box_predictor &#123;</span><br><span class="line">                                                                         use_dropout: false</span><br><span class="line">                                                                         dropout_keep_probability: <span class="number">1.0</span></span><br><span class="line">                                                                         fc_hyperparams &#123;</span><br><span class="line">                                                                                         op: FC</span><br><span class="line">                                                                                         regularizer &#123;</span><br><span class="line">                                                                                                      l2_regularizer &#123;</span><br><span class="line">                                                                                                                      weight: <span class="number">0.0</span></span><br><span class="line">                                                                                                                      &#125;</span><br><span class="line">                                                                                                      &#125;</span><br><span class="line">                                                                                         initializer &#123;</span><br><span class="line">                                                                                                      variance_scaling_initializer &#123;</span><br><span class="line">                                                                                                                                    factor: <span class="number">1.0</span> </span><br><span class="line">                                                                                                                                    uniform: true</span><br><span class="line">                                                                                                                                    mode: FAN_AVG</span><br><span class="line">                                                                                                                                    &#125;</span><br><span class="line">                                                                                                      &#125;</span><br><span class="line">                                                                                         &#125;</span><br><span class="line">                                                                         &#125;</span><br><span class="line">                                                second_stage_post_processing &#123;</span><br><span class="line">                                                                              batch_non_max_suppression &#123;</span><br><span class="line">                                                                                                         score_threshold: <span class="number">0.0</span></span><br><span class="line">                                                                                                         iou_threshold: <span class="number">0.6</span></span><br><span class="line">                                                                                                         max_detections_per_class: <span class="number">100</span></span><br><span class="line">                                                                                                         max_total_detections: <span class="number">300</span></span><br><span class="line">                                                                                                         &#125;</span><br><span class="line">                                                                              score_converter: SOFTMAX</span><br><span class="line">                                                                              &#125;</span><br><span class="line">                                                second_stage_localization_loss_weight: <span class="number">2.0</span></span><br><span class="line">                                                second_stage_classification_loss_weight: <span class="number">1.0</span></span><br><span class="line">                                                &#125;</span><br><span class="line">                    &#125;      </span><br><span class="line">train_config: &#123;</span><br><span class="line">               batch_size: <span class="number">1</span></span><br><span class="line">               optimizer &#123;</span><br><span class="line">                          momentum_optimizer: &#123;</span><br><span class="line">                                               learning_rate: &#123;</span><br><span class="line">                                                               manual_step_learning_rate &#123;</span><br><span class="line">                                                                                          initial_learning_rate: <span class="number">0.0001</span></span><br><span class="line">                                                                                          schedule &#123;</span><br><span class="line">                                                                                                    step: <span class="number">0</span></span><br><span class="line">                                                                                                    learning_rate: .<span class="number">0001</span></span><br><span class="line">																								  &#125;</span><br><span class="line">                                                                                          schedule &#123;</span><br><span class="line">                                                                                                    step: <span class="number">500000</span></span><br><span class="line">                                                                                                    learning_rate: .<span class="number">00001</span></span><br><span class="line">																						 		  &#125;</span><br><span class="line">                                                                                          schedule &#123;</span><br><span class="line">                                                                                                    step: <span class="number">700000</span></span><br><span class="line">                                                                                                    learning_rate: .<span class="number">000001</span></span><br><span class="line">																								   &#125;</span><br><span class="line">                                                                                          &#125;</span><br><span class="line">                                                               &#125;</span><br><span class="line">                                                momentum_optimizer_value: <span class="number">0.9</span></span><br><span class="line">                                               &#125;</span><br><span class="line">                          use_moving_average: false</span><br><span class="line">                          &#125;</span><br><span class="line">               gradient_clipping_by_norm: <span class="number">10.0</span></span><br><span class="line">               fine_tune_checkpoint: <span class="string">"PATH_TO_BE_CONFIGURED/model.ckpt"</span></span><br><span class="line">  			   from_detection_checkpoint: true</span><br><span class="line">  			   num_steps: <span class="number">800000</span></span><br><span class="line">  			   data_augmentation_options &#123;</span><br><span class="line">                                          random_horizontal_flip &#123;&#125;</span><br><span class="line">                                          &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">train_input_reader: &#123;</span><br><span class="line">                     tf_record_input_reader &#123;</span><br><span class="line">                                             input_path: <span class="string">"PATH_TO_BE_CONFIGURED/pascal_voc_train.record"</span></span><br><span class="line">                                             &#125;</span><br><span class="line">                     label_map_path: <span class="string">"PATH_TO_BE_CONFIGURED/pascal_voc_label_map.pbtxt"</span></span><br><span class="line">                     &#125;</span><br><span class="line"></span><br><span class="line">eval_config: &#123;</span><br><span class="line">              num_examples: <span class="number">4952</span></span><br><span class="line">              &#125;</span><br><span class="line"></span><br><span class="line">eval_input_reader: &#123;</span><br><span class="line">                    tf_record_input_reader &#123;</span><br><span class="line">                                            input_path: <span class="string">"PATH_TO_BE_CONFIGURED/pascal_voc_val.record"</span></span><br><span class="line">                                            &#125;</span><br><span class="line">                    label_map_path: <span class="string">"PATH_TO_BE_CONFIGURED/pascal_voc_label_map.pbtxt"</span></span><br><span class="line">                    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="模型参数初始化-预训练模型"><a href="#模型参数初始化-预训练模型" class="headerlink" title="模型参数初始化(预训练模型)"></a>模型参数初始化(预训练模型)</h3><p>虽然可选，但强烈建议用户利用其他对象检测检查点(checkpoints)。从头开始训练一个目标检测器可能需要几天时间。为加快训练过程，建议用户从预先存在的对象分类或检测点重新使用特征提取器参数。<code>train_config</code>提供了两个字段指定预先存在的检查点：<code>fine_tune_checkpoint</code>和<code>from_detection_checkpoint</code>。<code>fine_tune_checkpoint</code>应提供一个到现有检查点的路径（如：“/usr/home/username/checkpoint/model.ckpt-#####”。 <code>from_detection_checkpoint</code>是一个布尔值。如果为false，则假定检查点来自对象分类检查点。请注意，从检测点开始通常会导致比分类检查点更快的训练作业。提供的检查点列表可以在<a href="https://github.com/tensorflow/models/blob/master/object_detection/g3doc/detection_model_zoo.md" target="_blank" rel="noopener">这里</a>找到。</p>
+<h3 id="输入预处理"><a href="#输入预处理" class="headerlink" title="输入预处理"></a>输入预处理</h3><p><code>train_config</code>中<code>data_augmentation_options</code>可用于指定的训练数据是如何被修改。此字段是可选的。</p>
+<h3 id="SGD参数"><a href="#SGD参数" class="headerlink" title="SGD参数"></a>SGD参数</h3><p><code>train_config</code>剩余的参数是梯度下降的超参数。请注意，这些配置文件中提供的最佳学习率可能取决于训练设置的具体情况（例如，迭代次数，gpu类型）。</p>
+<h3 id="配置评估器"><a href="#配置评估器" class="headerlink" title="配置评估器"></a>配置评估器</h3><p>目前的评估固定在由PASCAL VOC挑战定义的生成指标上。参数<code>eval_config</code>设置为合理的默认值，通常不需要配置</p>
+<h2 id="Preparing-Inputs"><a href="#Preparing-Inputs" class="headerlink" title="Preparing Inputs"></a>Preparing Inputs</h2><h3 id="生成PASCAL-VOC-TFRecord文件"><a href="#生成PASCAL-VOC-TFRecord文件" class="headerlink" title="生成PASCAL VOC TFRecord文件"></a>生成PASCAL VOC TFRecord文件</h3><ul>
+<li><p><code>create_pascal_tf_record.py</code>和<code>label_map_util.py</code>文件中存在编解码的错误。<code>create_pascal_tf_record.py</code>在<a href="https://github.com/tensorflow/models/pull/1614" target="_blank" rel="noopener">#1614</a>的提交上得到了解决，utils文件夹下的<code>label_map_util.py</code>在第104行代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">label_map_string = fid.read()</span><br></pre></td></tr></table></figure>
+<p>修改为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">label_map_string = fid.read().decode(<span class="string">'utf-8'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>见下图显示</p>
+<div align="center">
+
+<p><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/tensorflow_object_detection/label_map_util.png?raw=true" width="600" height="400"></p>
+<div>
+
+<ul>
+<li><p>然后运行<code>create_pascal_tf_record.py</code>，以生成pascal2012训练用的record为例，其后参数如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--data_dir=F:/Database/VOC/VOCtrainval_11-May<span class="number">-2012</span>/VOCdevkit  --year=VOC2012 --set=train --output_path=pascal_train.record</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>由于运行目录需要是models文件夹，可用pycharm打开至models文件夹，在Run选项下的Edit Configurations下设置参数</p>
+</blockquote>
+<p> 生成验证所需的record</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--data_dir=F:/Database/VOC/VOCtrainval_11-May<span class="number">-2012</span>/VOCdevkit  --year=VOC2012 --set=val --output_path=pascal_val.record</span><br></pre></td></tr></table></figure>
+<p>这样在<code>tensorflow/models/object_detection</code>目录下生成了两个<code>TFRecord</code>文件<code>pascal_train.record</code>和<code>pascal_val.record</code></p>
+</li>
+<li><p>PASCAL VOC数据集的label map 可以在<code>data/pascal_label_map.pbtxt</code>找到</p>
+<h2 id="Train-for-VOC"><a href="#Train-for-VOC" class="headerlink" title="Train for  VOC"></a>Train for  VOC</h2></li>
+</ul>
+<h3 id="编码问题修改"><a href="#编码问题修改" class="headerlink" title="编码问题修改"></a>编码问题修改</h3><ul>
+<li>train.py中的get_configs_from_pipeline_file()函数内text_format.Merge(f.read(), pipeline_config)改为text_format.Merge(f.read().decode(‘utf-8’), pipeline_config)</li>
+</ul>
+<h3 id="python2到python3的修改"><a href="#python2到python3的修改" class="headerlink" title="python2到python3的修改"></a>python2到python3的修改</h3><p>进行如下修改</p>
+<p><a href="https://github.com/tensorflow/models/pull/1610/files/94498b19b954b14e508b34d93badae027592cb83#diff-56e4e0ed49c1ab9a066e570d65d1f330" target="_blank" rel="noopener">https://github.com/tensorflow/models/pull/1610/files/94498b19b954b14e508b34d93badae027592cb83#diff-56e4e0ed49c1ab9a066e570d65d1f330</a></p>
+<p><a href="https://github.com/tensorflow/models/pull/1593/files" target="_blank" rel="noopener">https://github.com/tensorflow/models/pull/1593/files</a></p>
+<p><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/tensorflow_object_detection/fix_to_train_1.jpg?raw=true"></p>
+<p><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/tensorflow_object_detection/fix_to_train_2.jpg?raw=true"></p>
+<p><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/tensorflow_object_detection/fix_to_train_3.jpg?raw=true"></p>
+<p><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/tensorflow_object_detection/fix_to_train_4.jpg?raw=true"></p>
+<p><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/tensorflow_object_detection/fix_to_train_5.jpg?raw=true"></p>
+<p><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/tensorflow_object_detection/fix_to_train_6.jpg?raw=true"></p>
+<p><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/tensorflow_object_detection/fix_to_train_7.jpg?raw=true"></p>
+<p><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/tensorflow_object_detection/fix_to_train_8.jpg?raw=true"></p>
+<p><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/tensorflow_object_detection/fix_to_train_9.jpg?raw=true"></p>
+<p>训练参数设置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--logtostderr  --pipeline_config_path=./my_model/ssd_inception_v2_head.config    --train_dir=F:/models/bus</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--logtostderr  --pipeline_config_path=./my_model/faster_rcnn_resnet101_voc07.config   --train_dir=F:/models/passenger_head/rfcn_resnet50</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：第一次训练需要将<code>faster_rcnn_resnet101_voc07.config</code>中的from_detection_checkpoint: true注释掉或设为False，否则报错，之后可以使用该参数进行继续训练,同时注释fine_tune_checkpoint的话，则不使用预训练模型</p>
+<p><img src="https://github.com/heroinlin/picture_of_markdown/blob/master/tensorflow_object_detection/fix_to_train10.jpg?raw=true"></p>
+</blockquote>
+<h2 id="eval"><a href="#eval" class="headerlink" title="eval"></a>eval</h2><p><a href="https://github.com/tensorflow/models/pull/1758/commits/e9606bc69ae9e8a401db1cf5920b24d8408b0c02" target="_blank" rel="noopener">https://github.com/tensorflow/models/pull/1758/commits/e9606bc69ae9e8a401db1cf5920b24d8408b0c02</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--logtostderr --eval_dir=F:/log  --pipeline_config_path=./my_model/ssd_inception_v2_head.config  --checkpoint_dir=F:\models\bus\model.ckpt-369</span><br></pre></td></tr></table></figure>
+<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><p>本部分查看<code>object_detection_tutorial.ipynb</code>文件（在pycharm中打开）</p>
+<p>用<code>export_inference_graph.py</code>将生成的模型转换为.pb格式模型</p>
+<p>参数如下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">--input_type image_tensor \</span><br><span class="line">--pipeline_config_path path/to/ssd_inception_v2.config \</span><br><span class="line">--checkpoint_path path/to/model-ckpt \</span><br><span class="line">--inference_graph_path path/to/inference_graph.pb</span><br><span class="line"></span><br><span class="line">--input_type image_tensor \   </span><br><span class="line">--pipeline_config_path ./my_model/faster_rcnn_resnet101_voc07.config \  </span><br><span class="line">--checkpoint_path F:\models\voc\model.ckpt-189629  </span><br><span class="line">--inference_graph_path ./my_model/inference_graph.pb</span><br></pre></td></tr></table></figure>
+<p><code>export_inference_graph.py</code>文件中需要改一个编码问题</p>
+<blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="number">93</span>   text_format.Merge(f.read(), pipeline_config)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>改为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="number">93</span>   text_format.Merge(f.read().decode(<span class="string">'utf-8'</span>), pipeline_config)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="训练我们的数据集"><a href="#训练我们的数据集" class="headerlink" title="训练我们的数据集"></a>训练我们的数据集</h2><ul>
+<li><p>首先需要生成我们数据集对应的TFRecord文件，代码如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> absolute_import</span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> division</span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> io</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> PIL.Image</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> object_detection.utils <span class="keyword">import</span> dataset_util</span><br><span class="line"> <span class="function"><span class="keyword">def</span> <span class="title">read_label_file</span><span class="params">(label_file_path)</span>:</span></span><br><span class="line">      object = []</span><br><span class="line">      <span class="keyword">with</span> open(label_file_path) <span class="keyword">as</span> label_file:</span><br><span class="line">          raw_lines = [line.strip() <span class="keyword">for</span> line <span class="keyword">in</span> label_file.readlines()]</span><br><span class="line">          <span class="keyword">for</span> raw_line <span class="keyword">in</span> raw_lines:</span><br><span class="line">              class_num, c_x, c_y, w, h = [float(e) <span class="keyword">for</span> e <span class="keyword">in</span> raw_line.split(<span class="string">" "</span>)]</span><br><span class="line">              x1 = (c_x - w / <span class="number">2</span>)</span><br><span class="line">              y1 = (c_y - h / <span class="number">2</span>)</span><br><span class="line">              x2 = (c_x + w / <span class="number">2</span>)</span><br><span class="line">              y2 = (c_y + h / <span class="number">2</span>)</span><br><span class="line">              x1 = max(x1, <span class="number">0</span>)</span><br><span class="line">              y1 = max(y1, <span class="number">0</span>)</span><br><span class="line">              x2 = min(x2, <span class="number">1</span>)</span><br><span class="line">              y2 = min(y2, <span class="number">1</span>)</span><br><span class="line">              class_num = int(class_num)</span><br><span class="line">              object.append([class_num, x1, y1, x2, y2])</span><br><span class="line">      <span class="keyword">return</span> object</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">      xmin = []</span><br><span class="line">      ymin = []</span><br><span class="line">      xmax = []</span><br><span class="line">      ymax = []</span><br><span class="line">      classes = []</span><br><span class="line">      classes_text = []</span><br><span class="line">      truncated = []</span><br><span class="line">      poses = []</span><br><span class="line">      difficult_obj = []</span><br><span class="line">      <span class="comment"># image_idx = 0</span></span><br><span class="line">      image_list_path = <span class="string">r"F:\Database\data_set\train\train_bk.txt"</span></span><br><span class="line">      <span class="comment"># image_list_path = r"F:\Database\data_set\validate\val.txt"</span></span><br><span class="line">      writer = tf.python_io.TFRecordWriter(<span class="string">"F:\tensorflow\tfrecord\train.record"</span>)</span><br><span class="line">      <span class="comment"># writer = tf.python_io.TFRecordWriter("F:\tensorflow\tfrecord\val.record")</span></span><br><span class="line">      <span class="keyword">with</span> open(image_list_path, <span class="string">"r"</span>) <span class="keyword">as</span> file:</span><br><span class="line">          image_list = [line.strip().split() <span class="keyword">for</span> line <span class="keyword">in</span> file.readlines()]</span><br><span class="line">          <span class="keyword">for</span> img_path <span class="keyword">in</span> image_list:</span><br><span class="line">              <span class="comment"># print(img_path[0])</span></span><br><span class="line">              <span class="keyword">with</span> tf.gfile.GFile(img_path[<span class="number">0</span>], <span class="string">'rb'</span>) <span class="keyword">as</span> fid:</span><br><span class="line">                  encoded_jpg = fid.read()</span><br><span class="line">              encoded_jpg_io = io.BytesIO(encoded_jpg)</span><br><span class="line">              image = PIL.Image.open(encoded_jpg_io)</span><br><span class="line">              <span class="comment"># image = PIL.Image.open(img_path[0])</span></span><br><span class="line">              <span class="keyword">if</span> image.format != <span class="string">'JPEG'</span>:</span><br><span class="line">                  <span class="keyword">raise</span> ValueError(<span class="string">'Image format not JPEG'</span>)</span><br><span class="line">              key = hashlib.sha256(encoded_jpg).hexdigest()</span><br><span class="line">              width = image.width</span><br><span class="line">              height = image.height</span><br><span class="line">              <span class="comment"># print(width, height)</span></span><br><span class="line">              label_path = img_path[<span class="number">0</span>].replace(<span class="string">"images"</span>, <span class="string">"labels"</span>).replace(<span class="string">"jpg"</span>, <span class="string">"txt"</span>)</span><br><span class="line">              object = read_label_file(label_path)</span><br><span class="line">              <span class="comment"># print(len(object))</span></span><br><span class="line">              <span class="keyword">for</span> obj_num <span class="keyword">in</span> range(<span class="number">0</span>, len(object)):</span><br><span class="line">                  xmin.append(objectobj_num)</span><br><span class="line">                  ymin.append(objectobj_num)</span><br><span class="line">                  xmax.append(objectobj_num)</span><br><span class="line">                  ymax.append(objectobj_num)</span><br><span class="line">                  classes_text.append(<span class="string">'head'</span>.encode(<span class="string">'utf8'</span>))</span><br><span class="line">                  classes.append(objectobj_num + <span class="number">1</span>)  <span class="comment"># 类别从1开始</span></span><br><span class="line">                  difficult_obj.append(<span class="number">0</span>)</span><br><span class="line">                  truncated.append(<span class="number">1</span>)</span><br><span class="line">                  poses.append(<span class="string">'Unspecified'</span>.encode(<span class="string">'utf8'</span>))</span><br><span class="line">              example = tf.train.Example(features=tf.train.Features(feature=&#123;</span><br><span class="line">                  <span class="string">'image/height'</span>: dataset_util.int64_feature(height),</span><br><span class="line">                  <span class="string">'image/width'</span>: dataset_util.int64_feature(width),</span><br><span class="line">                  <span class="string">'image/filename'</span>: dataset_util.bytes_feature(</span><br><span class="line">                      img_path[<span class="number">0</span>].strip().split(<span class="string">'/'</span>)[<span class="number">-1</span>].encode(<span class="string">'utf8'</span>)),</span><br><span class="line">                  <span class="string">'image/source_id'</span>: dataset_util.bytes_feature(</span><br><span class="line">                       img_path[<span class="number">0</span>].strip().split(<span class="string">'/'</span>)[<span class="number">-1</span>].encode(<span class="string">'utf8'</span>)),</span><br><span class="line">                  <span class="string">'image/key/sha256'</span>: dataset_util.bytes_feature(key.encode(<span class="string">'utf8'</span>)),</span><br><span class="line">                  <span class="string">'image/encoded'</span>: dataset_util.bytes_feature(encoded_jpg),</span><br><span class="line">                  <span class="string">'image/format'</span>: dataset_util.bytes_feature(<span class="string">'jpeg'</span>.encode(<span class="string">'utf8'</span>)),</span><br><span class="line">                  <span class="string">'image/object/bbox/xmin'</span>: dataset_util.float_list_feature(xmin),</span><br><span class="line">                  <span class="string">'image/object/bbox/xmax'</span>: dataset_util.float_list_feature(xmax),</span><br><span class="line">                  <span class="string">'image/object/bbox/ymin'</span>: dataset_util.float_list_feature(ymin),</span><br><span class="line">                  <span class="string">'image/object/bbox/ymax'</span>: dataset_util.float_list_feature(ymax),</span><br><span class="line">                  <span class="string">'image/object/class/text'</span>: dataset_util.bytes_list_feature(classes_text),</span><br><span class="line">                  <span class="string">'image/object/class/label'</span>: dataset_util.int64_list_feature(classes),</span><br><span class="line">                  <span class="string">'image/object/difficult'</span>: dataset_util.int64_list_feature(difficult_obj),</span><br><span class="line">                  <span class="string">'image/object/truncated'</span>: dataset_util.int64_list_feature(truncated),</span><br><span class="line">                  <span class="string">'image/object/view'</span>: dataset_util.bytes_list_feature(poses),</span><br><span class="line">              &#125;))</span><br><span class="line">              <span class="comment"># image_idx +=1</span></span><br><span class="line">              <span class="comment"># if image_idx == 1:</span></span><br><span class="line">              <span class="comment">#     print(example)</span></span><br><span class="line">              writer.write(example.SerializeToString())</span><br><span class="line">      writer.close()</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> name == <span class="string">'main'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<blockquote>
+<p>注：类别号需要从1开始，由于我们的标注类别为0，所以<code>classes.append(object[obj_num][0] + 1)</code>这有个+1操作。另外，对比voc的TFRecord文件内容，由于我们的数据集不存在其他参数，所以都设置为一样（参考voc的第1个tf_example输出）</p>
+</blockquote>
+</blockquote>
+</div></div>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/tensorflow/" rel="tag"># tensorflow</a>
+          
+            <a href="/tags/object-detection/" rel="tag"># object_detection</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/01/Tensorflow/tensorflow_Saver/" rel="next" title="Tensorflow之Saver的用法">
+                <i class="fa fa-chevron-left"></i> Tensorflow之Saver的用法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/15/Tensorflow/Windows_7_Keras/" rel="prev" title="Windows 7 Keras 深度学习框架配置">
+                Windows 7 Keras 深度学习框架配置 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/leaf.jpg"
+                alt="Heroinlin"/>
+            
+              <p class="site-author-name" itemprop="name">Heroinlin</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">63</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">94</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/heroinlin" title="GitHub &rarr; https://github.com/heroinlin" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/heroinlj@gmail.com" title="E-Mail &rarr; heroinlj@gmail.com"><i class="fa fa-fw fa-gmail"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/Heroin" title="Twitter &rarr; https://twitter.com/Heroin" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tensorflow之object-detection模块"><span class="nav-number">1.</span> <span class="nav-text">tensorflow之object_detection模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Installation"><span class="nav-number">1.1.</span> <span class="nav-text">Installation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#适当修改"><span class="nav-number">1.1.1.</span> <span class="nav-text">适当修改</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Add-Libraries-to-PYTHONPATH"><span class="nav-number">1.2.</span> <span class="nav-text">Add Libraries to PYTHONPATH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Protobuf-Compilation"><span class="nav-number">1.3.</span> <span class="nav-text">Protobuf Compilation</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Testing-the-Installation"><span class="nav-number">2.</span> <span class="nav-text">Testing the Installation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Configuring-an-object-detection-pipeline"><span class="nav-number">2.1.</span> <span class="nav-text">Configuring an object detection pipeline</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#总览"><span class="nav-number">2.1.1.</span> <span class="nav-text">总览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型参数初始化-预训练模型"><span class="nav-number">2.1.2.</span> <span class="nav-text">模型参数初始化(预训练模型)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输入预处理"><span class="nav-number">2.1.3.</span> <span class="nav-text">输入预处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SGD参数"><span class="nav-number">2.1.4.</span> <span class="nav-text">SGD参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置评估器"><span class="nav-number">2.1.5.</span> <span class="nav-text">配置评估器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Preparing-Inputs"><span class="nav-number">2.2.</span> <span class="nav-text">Preparing Inputs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#生成PASCAL-VOC-TFRecord文件"><span class="nav-number">2.2.1.</span> <span class="nav-text">生成PASCAL VOC TFRecord文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Train-for-VOC"><span class="nav-number">2.3.</span> <span class="nav-text">Train for  VOC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编码问题修改"><span class="nav-number">2.3.1.</span> <span class="nav-text">编码问题修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#python2到python3的修改"><span class="nav-number">2.3.2.</span> <span class="nav-text">python2到python3的修改</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#eval"><span class="nav-number">2.4.</span> <span class="nav-text">eval</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Test"><span class="nav-number">2.5.</span> <span class="nav-text">Test</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#训练我们的数据集"><span class="nav-number">2.6.</span> <span class="nav-text">训练我们的数据集</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Heroinlin</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.6.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

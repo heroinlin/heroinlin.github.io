@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0"/>
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2"/>
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/leaf.jpg?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/leaf.ico?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/leaf1.ico?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/leaf.jpg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="从RGB色转为灰度色算法一、基础 　　对于彩色转灰度，有一个很著名的心理学公式：$$Gray = R0.299 + G0.587 + B*0.114$$ 二、整数算法　　而实际应用时，希望避免低速的浮点运算，所以需要整数算法。　　注意到系数都是3位精度的没有，我们可以将它们缩放1000倍来实现整数运算算法： ​$$Gray = (R299 + G587 + B114 + 500) / 1000$$">
+<meta name="keywords" content="图像处理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从RGB色转为灰度色算法">
+<meta property="og:url" content="http://yoursite.com/2017/05/16/opencv/rgb2gray/index.html">
+<meta property="og:site_name" content="Heroinlin&#39;s Blog">
+<meta property="og:description" content="从RGB色转为灰度色算法一、基础 　　对于彩色转灰度，有一个很著名的心理学公式：$$Gray = R0.299 + G0.587 + B*0.114$$ 二、整数算法　　而实际应用时，希望避免低速的浮点运算，所以需要整数算法。　　注意到系数都是3位精度的没有，我们可以将它们缩放1000倍来实现整数运算算法： ​$$Gray = (R299 + G587 + B114 + 500) / 1000$$">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-06-12T17:00:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从RGB色转为灰度色算法">
+<meta name="twitter:description" content="从RGB色转为灰度色算法一、基础 　　对于彩色转灰度，有一个很著名的心理学公式：$$Gray = R0.299 + G0.587 + B*0.114$$ 二、整数算法　　而实际应用时，希望避免低速的浮点运算，所以需要整数算法。　　注意到系数都是3位精度的没有，我们可以将它们缩放1000倍来实现整数运算算法： ​$$Gray = (R299 + G587 + B114 + 500) / 1000$$">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2017/05/16/opencv/rgb2gray/"/>
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>从RGB色转为灰度色算法 | Heroinlin's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Heroinlin's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br/>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br/>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/16/opencv/rgb2gray/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heroinlin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/leaf.jpg"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Heroinlin's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">从RGB色转为灰度色算法
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-05-16 14:20:20" itemprop="dateCreated datePublished" datetime="2017-05-16T14:20:20+08:00">2017-05-16</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-13 01:00:08" itemprop="dateModified" datetime="2019-06-13T01:00:08+08:00">2019-06-13</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/图像处理/" itemprop="url" rel="index"><span itemprop="name">图像处理</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="从RGB色转为灰度色算法"><a href="#从RGB色转为灰度色算法" class="headerlink" title="从RGB色转为灰度色算法"></a>从RGB色转为灰度色算法</h1><h2 id="一、基础"><a href="#一、基础" class="headerlink" title="一、基础 　"></a>一、基础 　</h2><p>　对于彩色转灰度，有一个很著名的心理学公式：<br>$$<br>Gray = R<em>0.299 + G</em>0.587 + B*0.114<br>$$</p>
+<h2 id="二、整数算法"><a href="#二、整数算法" class="headerlink" title="二、整数算法"></a>二、整数算法</h2><p>　　而实际应用时，希望避免低速的浮点运算，所以需要整数算法。<br>　　注意到系数都是3位精度的没有，我们可以将它们缩放1000倍来实现整数运算算法：</p>
+<p>​<br>$$<br>Gray = (R<em>299 + G</em>587 + B<em>114 + 500) / 1000<br>$$<br>　　RGB一般是8位精度，现在缩放1000倍，所以上面的运算是32位整型的运算。注意后面那个除法是整数除法，所以需要加上500来实现四舍五入。<br>　　就是由于该算法需要32位运算，所以该公式的另一个变种很流行：<br>$$<br>Gray = (R</em>30 + G<em>59 + B</em>11 + 50) / 100<br>$$<br>　　但是，虽说上一个公式是32位整数运算，但是根据80x86体系的整数乘除指令的特点，是可以用16位整数乘除指令来运算的。而且现在32位早普及了（AMD64都出来了），所以推荐使用上一个公式。</p>
+<h2 id="三、整数移位算法"><a href="#三、整数移位算法" class="headerlink" title="三、整数移位算法"></a>三、整数移位算法</h2><p>　　上面的整数算法已经很快了，但是有一点仍制约速度，就是最后的那个除法。移位比除法快多了，所以可以将系数缩放成 2的整数幂。<br>　　习惯上使用16位精度，2的16次幂是65536，所以这样计算系数：<br>$$<br>0.299 <em> 65536 = 19595.264 ≈ 19595<br>$$<br>$$<br>\begin{align}0.587 </em> 65536 + (0.264) &amp;= 38469.632 + 0.264 \&amp;= 38469.896 \&amp;≈ 38469\end{align}<br>$$<br>$$<br>0.114 * 65536 + (0.896) =   7471.104 + 0.896 = 7472<br>$$</p>
+<p>　　可能很多人看见了，我所使用的舍入方式不是四舍五入。四舍五入会有较大的误差，应该将以前的计算结果的误差一起计算进去，舍入方式是去尾法：</p>
+<p>​　　写成表达式是：                          </p>
+<p>$$<br>Gray = (R<em>19595 + G</em>38469 + B*7472) &gt;&gt; 16<br>$$<br>​2至20位精度的系数：                    </p>
+<p>$$<br>\begin{align}&amp;Gray = (R<em>1 + G</em>2 + B<em>1) &gt;&gt; 2\<br>                          &amp;Gray = (R</em>2 + G<em>5 + B</em>1) &gt;&gt; 3\<br>                          &amp;Gray = (R<em>4 + G</em>10 + B<em>2) &gt;&gt; 4\<br>                          &amp;Gray = (R</em>9 + G<em>19 + B</em>4) &gt;&gt; 5\<br>                          &amp;Gray = (R<em>19 + G</em>37 + B<em>8) &gt;&gt; 6\<br>                          &amp;Gray = (R</em>38 + G<em>75 + B</em>15) &gt;&gt; 7\<br>                          &amp;Gray = (R<em>76 + G</em>150 + B<em>30) &gt;&gt; 8\<br>                          &amp;Gray = (R</em>153 + G<em>300 + B</em>59) &gt;&gt; 9\<br>                          &amp;Gray = (R<em>306 + G</em>601 + B<em>117) &gt;&gt; 10\<br>                          &amp;Gray = (R</em>612 + G<em>1202 + B</em>234) &gt;&gt; 11\<br>                          &amp;Gray = (R<em>1224 + G</em>2405 + B<em>467) &gt;&gt; 12\<br>                          &amp;Gray = (R</em>2449 + G<em>4809 + B</em>934) &gt;&gt; 13\<br>                         &amp;Gray = (R<em>4898 + G</em>9618 + B<em>1868) &gt;&gt; 14\<br>                         &amp;Gray = (R</em>9797 + G<em>19235 + B</em>3736) &gt;&gt; 15\<br>                          &amp;Gray = (R<em>19595 + G</em>38469 + B<em>7472) &gt;&gt; 16\<br>                          &amp;Gray = (R</em>39190 + G<em>76939 + B</em>14943) &gt;&gt; 17\<br>                          &amp;Gray = (R<em>78381 + G</em>153878 + B<em>29885) &gt;&gt; 18\<br>                          &amp;Gray = (R</em>156762 + G<em>307757 + B</em>59769) &gt;&gt; 19\<br>                          &amp;Gray = (R<em>313524 + G</em>615514 + B*119538) &gt;&gt; 20\end{align}<br>$$<br>　　仔细观察上面的表格，这些精度实际上是一样的：3与4、7与8、10与11、13与14、19与20<br>​　　所以16位运算下最好的计算公式是使用7位精度，比先前那个系数缩放100倍的精度高，而且速度快：                          </p>
+<p>$$<br>Gray = (R<em>38 + G</em>75 + B*15) &gt;&gt; 7<br>$$<br>​　　其实最有意思的还是那个2位精度的，完全可以移位优化：                          </p>
+<p>$$<br>Gray = (R + (WORD)G&lt;<1 +="" b)="">&gt; 2</1></p>
+<h1 id=""><a href="#" class="headerlink" title="$$"></a>$$</h1><p>在计算机中使用最多的 RGB 彩色空间，分别对应红、绿、蓝三种颜色；通过调配三个分量的比例来组成各种颜色。一般可以使用 1 、 2 、 4 、 8 、 16 、 24 、 32 位来存储这三颜色，不过现在一个分量最大是用 8 位来表示，最大值是 255 ，对于 32 位的颜色，高 8 位是用来表示通明度的。彩色图一般指 16 位以上的图。灰度图有一个特殊之处就是组成颜色的三个分量相等；而一般灰度图是 8 位以下。</p>
+<p>在彩色电视机系统中，通常使用一种叫 YUV 的色彩空间，其中 Y 表示亮度信号；也就是这个 YUV 空间解决了彩色电视机和黑白电视机的兼容问题。</p>
+<p>对于人眼来说，亮度信号是最敏感的，如果将彩色图像转换为灰度图像，仅仅需要转换保存亮度信号就可以。</p>
+<p>从 RGB 到 YUV 空间的 Y 转换公式为：</p>
+<p>$$<br>Y = 0.299R+0.587G+0.114B<br>$$<br>在 WINDOWS 中，表示 16 位以上的图和以下的图有点不同； 16 位以下的图使用一个调色板来表示选择具体的颜色，调色板的每个单元是 4 个字节，其中一个透明度；而具体的像素值存储的是索引，分别是 1 、 2 、 4 、 8 位。 16 位以上的图直接使用像素表示颜色。</p>
+<p>=================================================<br>那么如何将彩色图转换为灰度图呢？</p>
+<p>灰度图中有调色板，首先需要确定调色板的具体颜色取值。我们前面提到了，灰度图的三个分量相等。</p>
+<p>当转换为 8 位的时候，调色板中有 256 个颜色，每个正好从 0 到 255 个，三个分量都相等。</p>
+<p>当转换为 4 位的时候，调色板中 16 个颜色，等间隔平分 255 个颜色值，三个分量都相等。</p>
+<p>当转换为 2 位的时候，调色板中 4 个颜色，等间隔平分 255 个颜色，三个分量相等。</p>
+<p>当转换为 1 位的时候，调色板中两个颜色，是 0 和 255 ，表示黑和白。</p>
+<p>将彩色转换为灰度时候，按照公式计算出对应的值，该值实际上是亮度的级别；亮度从 0 到 255 ；由于不同的位有不同的亮度级别，所以 Y 的具体取值如下：</p>
+<p>​       Y = Y/ (1&lt;&lt;(8- 转换的位数 ));</p>
+<p>最后一点需要注意，得到 Y 值存放方式是不同的；分别用对应的位数来存储对应的 Y 值。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//----------------------------------------------------------</span></span><br><span class="line"><span class="comment">//  RGB565 转 8位灰度图</span></span><br><span class="line"><span class="comment">//----------------------------------------------------------</span></span><br><span class="line">   TUint8 gm_red,gm_green,gm_blue;</span><br><span class="line">   TInt16 *des_ptr;</span><br><span class="line">   TInt16 *pt;</span><br><span class="line">   pt = (TInt16 *)p8;  <span class="comment">//RGB565流</span></span><br><span class="line"></span><br><span class="line">   <span class="keyword">for</span>(TInt j=<span class="number">0</span>;j&lt;h;j++)</span><br><span class="line">   &#123;</span><br><span class="line">         <span class="keyword">for</span>(TInt i = w;i&gt;<span class="number">0</span>;i--)</span><br><span class="line">         &#123;</span><br><span class="line">           gm_red = ((*(TInt16 *)pt) &amp; <span class="number">0xF800</span>) &gt;&gt; <span class="number">8</span>;</span><br><span class="line">           gm_green = ((*(TInt16 *)pt) &amp; <span class="number">0x07E0</span>) &gt;&gt; <span class="number">3</span>;   </span><br><span class="line">           gm_blue = ((*(TInt16 *)pt) &amp; <span class="number">0x001F</span>) &lt;&lt;  <span class="number">3</span>;   </span><br><span class="line">           p[<span class="number">0</span>] = ( TUint8 )((gm_red*<span class="number">77</span> + gm_green*<span class="number">150</span> + gm_blue*<span class="number">29</span>+<span class="number">128</span>) / <span class="number">256</span>);</span><br><span class="line">           p++;</span><br><span class="line">           pt++;</span><br><span class="line">        &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   p = qt;   <span class="comment">//灰度图指针</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/图像处理/" rel="tag"># 图像处理</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/27/Python/python-c-api/" rel="next" title="Python调用C/C++里的函数">
+                <i class="fa fa-chevron-left"></i> Python调用C/C++里的函数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/17/deep_learning/Linear_and_non_Linear/" rel="prev" title="线性与非线性">
+                线性与非线性 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/leaf.jpg"
+                alt="Heroinlin"/>
+            
+              <p class="site-author-name" itemprop="name">Heroinlin</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">63</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">94</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/heroinlin" title="GitHub &rarr; https://github.com/heroinlin" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/heroinlj@gmail.com" title="E-Mail &rarr; heroinlj@gmail.com"><i class="fa fa-fw fa-gmail"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/Heroin" title="Twitter &rarr; https://twitter.com/Heroin" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#从RGB色转为灰度色算法"><span class="nav-number">1.</span> <span class="nav-text">从RGB色转为灰度色算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、基础"><span class="nav-number">1.1.</span> <span class="nav-text">一、基础 　</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、整数算法"><span class="nav-number">1.2.</span> <span class="nav-text">二、整数算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、整数移位算法"><span class="nav-number">1.3.</span> <span class="nav-text">三、整数移位算法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#"><span class="nav-number">2.</span> <span class="nav-text">$$</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Heroinlin</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.6.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

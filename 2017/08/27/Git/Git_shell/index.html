@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0"/>
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2"/>
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/leaf.jpg?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/leaf.ico?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/leaf1.ico?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/leaf.jpg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Git查看、删除、重命名远程分支和tag查看远程分支加上-a参数可以查看远程分支，远程分支会用红色表示出来（如果你开了颜色支持的话）： 12345678910$ git branch -a  master  remote  tungway  v1.52* zrong  remotes/origin/master  remotes/origin/tungway  remotes/origin/v1.">
+<meta name="keywords" content="git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git查看、删除、重命名远程分支和tag">
+<meta property="og:url" content="http://yoursite.com/2017/08/27/Git/Git_shell/index.html">
+<meta property="og:site_name" content="Heroinlin&#39;s Blog">
+<meta property="og:description" content="Git查看、删除、重命名远程分支和tag查看远程分支加上-a参数可以查看远程分支，远程分支会用红色表示出来（如果你开了颜色支持的话）： 12345678910$ git branch -a  master  remote  tungway  v1.52* zrong  remotes/origin/master  remotes/origin/tungway  remotes/origin/v1.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-06-12T17:00:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git查看、删除、重命名远程分支和tag">
+<meta name="twitter:description" content="Git查看、删除、重命名远程分支和tag查看远程分支加上-a参数可以查看远程分支，远程分支会用红色表示出来（如果你开了颜色支持的话）： 12345678910$ git branch -a  master  remote  tungway  v1.52* zrong  remotes/origin/master  remotes/origin/tungway  remotes/origin/v1.">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2017/08/27/Git/Git_shell/"/>
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Git查看、删除、重命名远程分支和tag | Heroinlin's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Heroinlin's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br/>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br/>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/27/Git/Git_shell/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heroinlin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/leaf.jpg"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Heroinlin's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Git查看、删除、重命名远程分支和tag
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-08-27 09:00:11" itemprop="dateCreated datePublished" datetime="2017-08-27T09:00:11+08:00">2017-08-27</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-13 01:00:08" itemprop="dateModified" datetime="2019-06-13T01:00:08+08:00">2019-06-13</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Git查看、删除、重命名远程分支和tag"><a href="#Git查看、删除、重命名远程分支和tag" class="headerlink" title="Git查看、删除、重命名远程分支和tag"></a>Git查看、删除、重命名远程分支和tag</h1><h2 id="查看远程分支"><a href="#查看远程分支" class="headerlink" title="查看远程分支"></a>查看远程分支</h2><p>加上-a参数可以查看远程分支，远程分支会用红色表示出来（如果你开了颜色支持的话）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git branch -a</span></span><br><span class="line">  master</span><br><span class="line">  remote</span><br><span class="line">  tungway</span><br><span class="line">  v1.52</span><br><span class="line">* zrong</span><br><span class="line">  remotes/origin/master</span><br><span class="line">  remotes/origin/tungway</span><br><span class="line">  remotes/origin/v1.52</span><br><span class="line">  remotes/origin/zrong</span><br></pre></td></tr></table></figure>
+<h2 id="删除远程分支和tag"><a href="#删除远程分支和tag" class="headerlink" title="删除远程分支和tag"></a>删除远程分支和tag</h2><p>在Git v1.7.0 之后，可以使用这种语法删除远程分支：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git push origin --delete &lt;branchName&gt;</span></span><br></pre></td></tr></table></figure>
+<p>删除tag这么用：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin --delete tag &lt;tagname&gt;</span><br></pre></td></tr></table></figure>
+<p>否则，可以使用这种语法，推送一个空分支到远程分支，其实就相当于删除远程分支：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin :&lt;branchName&gt;</span><br></pre></td></tr></table></figure>
+<p>这是删除tag的方法，推送一个空tag到远程tag：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git tag -d &lt;tagname&gt;</span><br><span class="line">git push origin :refs/tags/&lt;tagname&gt;</span><br></pre></td></tr></table></figure>
+<p>两种语法作用完全相同。</p>
+<h2 id="删除不存在对应远程分支的本地分支"><a href="#删除不存在对应远程分支的本地分支" class="headerlink" title="删除不存在对应远程分支的本地分支"></a>删除不存在对应远程分支的本地分支</h2><p>假设这样一种情况：</p>
+<ol>
+<li>我创建了本地分支b1并pull到远程分支 <code>origin/b1</code>；</li>
+<li>其他人在本地使用fetch或pull创建了本地的b1分支；</li>
+<li>我删除了 <code>origin/b1</code> 远程分支；</li>
+<li>其他人再次执行fetch或者pull并不会删除这个他们本地的 <code>b1</code> 分支，运行 <code>git branch -a</code> 也不能看出这个branch被删除了，如何处理？</li>
+</ol>
+<p>使用下面的代码查看b1的状态：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git remote show origin</span></span><br><span class="line">* remote origin</span><br><span class="line">  Fetch URL: git@github.com:xxx/xxx.git</span><br><span class="line">  Push  URL: git@github.com:xxx/xxx.git</span><br><span class="line">  HEAD branch: master</span><br><span class="line">  Remote branches:</span><br><span class="line">    master                 tracked</span><br><span class="line">    refs/remotes/origin/b1 stale (use 'git remote prune' to remove)</span><br><span class="line">  Local branch configured for 'git pull':</span><br><span class="line">    master merges with remote master</span><br><span class="line">  Local ref configured for 'git push':</span><br><span class="line">    master pushes to master (up to date)</span><br></pre></td></tr></table></figure>
+<p>这时候能够看到b1是stale的，使用 <code>git remote prune origin</code> 可以将其从本地版本库中去除。</p>
+<p>更简单的方法是使用这个命令，它在fetch之后删除掉没有与远程分支对应的本地分支：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fetch -p</span><br></pre></td></tr></table></figure>
+<h2 id="重命名远程分支"><a href="#重命名远程分支" class="headerlink" title="重命名远程分支"></a>重命名远程分支</h2><p>在git中重命名远程分支，其实就是先删除远程分支，然后重命名本地分支，再重新提交一个远程分支。</p>
+<p>例如下面的例子中，我需要把 devel 分支重命名为 develop 分支：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git branch -av</span></span><br><span class="line">* devel                             752bb84 Merge pull request #158 from Gwill/devel</span><br><span class="line">  master                            53b27b8 Merge pull request #138 from tdlrobin/master</span><br><span class="line">  zrong                             2ae98d8 modify CCFileUtils, export getFileData</span><br><span class="line">  remotes/origin/HEAD               -&gt; origin/master</span><br><span class="line">  remotes/origin/add_build_script   d4a8c4f Merge branch 'master' into add_build_script</span><br><span class="line">  remotes/origin/devel              752bb84 Merge pull request #158 from Gwill/devel</span><br><span class="line">  remotes/origin/devel_qt51         62208f1 update .gitignore</span><br><span class="line">  remotes/origin/master             53b27b8 Merge pull request #138 from tdlrobin/master</span><br><span class="line">  remotes/origin/zrong              2ae98d8 modify CCFileUtils, export getFileData</span><br></pre></td></tr></table></figure>
+<p>删除远程分支：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git push --delete origin devel</span></span><br><span class="line">To git@github.com:zrong/quick-cocos2d-x.git</span><br><span class="line"> - [deleted]         devel</span><br></pre></td></tr></table></figure>
+<p>重命名本地分支：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -m devel develop</span><br></pre></td></tr></table></figure>
+<p>推送本地分支：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git push origin develop</span></span><br><span class="line">Counting objects: 92, done.</span><br><span class="line">Delta compression using up to 4 threads.</span><br><span class="line">Compressing objects: 100% (48/48), done.</span><br><span class="line">Writing objects: 100% (58/58), 1.38 MiB, done.</span><br><span class="line">Total 58 (delta 34), reused 12 (delta 5)</span><br><span class="line">To git@github.com:zrong/quick-cocos2d-x.git</span><br><span class="line"> * [new branch]      develop -&gt; develop</span><br></pre></td></tr></table></figure>
+<p>然而，在 github 上操作的时候，我在删除远程分支时碰到这个错误：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git push --delete origin devel</span></span><br><span class="line">remote: error: refusing to delete the current branch: refs/heads/devel</span><br><span class="line">To git@github.com:zrong/quick-cocos2d-x.git</span><br><span class="line"> ! [remote rejected] devel (deletion of the current branch prohibited)</span><br><span class="line">error: failed to push some refs to 'git@github.com:zrong/quick-cocos2d-x.git'</span><br></pre></td></tr></table></figure>
+<p>这是由于在 github 中，devel 是项目的默认分支。要解决此问题，这样操作：</p>
+<ol>
+<li>进入 github 中该项目的 Settings 页面；</li>
+<li>设置 Default Branch 为其他的分支（例如 master）；</li>
+<li>重新执行删除远程分支命令。</li>
+</ol>
+<h2 id="把本地tag推送到远程"><a href="#把本地tag推送到远程" class="headerlink" title="把本地tag推送到远程"></a>把本地tag推送到远程</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push --tags</span><br></pre></td></tr></table></figure>
+<h2 id="获取远程tag"><a href="#获取远程tag" class="headerlink" title="获取远程tag"></a>获取远程tag</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fetch origin tag &lt;tagname&gt;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/git/" rel="tag"># git</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/15/Tensorflow/Windows_7_Keras/" rel="next" title="Windows 7 Keras 深度学习框架配置">
+                <i class="fa fa-chevron-left"></i> Windows 7 Keras 深度学习框架配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/27/Git/git_operate/" rel="prev" title="git的相关配置">
+                git的相关配置 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/leaf.jpg"
+                alt="Heroinlin"/>
+            
+              <p class="site-author-name" itemprop="name">Heroinlin</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">63</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">94</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/heroinlin" title="GitHub &rarr; https://github.com/heroinlin" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/heroinlj@gmail.com" title="E-Mail &rarr; heroinlj@gmail.com"><i class="fa fa-fw fa-gmail"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/Heroin" title="Twitter &rarr; https://twitter.com/Heroin" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Git查看、删除、重命名远程分支和tag"><span class="nav-number">1.</span> <span class="nav-text">Git查看、删除、重命名远程分支和tag</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看远程分支"><span class="nav-number">1.1.</span> <span class="nav-text">查看远程分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除远程分支和tag"><span class="nav-number">1.2.</span> <span class="nav-text">删除远程分支和tag</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除不存在对应远程分支的本地分支"><span class="nav-number">1.3.</span> <span class="nav-text">删除不存在对应远程分支的本地分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重命名远程分支"><span class="nav-number">1.4.</span> <span class="nav-text">重命名远程分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#把本地tag推送到远程"><span class="nav-number">1.5.</span> <span class="nav-text">把本地tag推送到远程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取远程tag"><span class="nav-number">1.6.</span> <span class="nav-text">获取远程tag</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Heroinlin</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.6.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

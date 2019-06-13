@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0"/>
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2"/>
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/leaf.jpg?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/leaf.ico?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/leaf1.ico?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/leaf.jpg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="#python之正则表达式   第三方模块 regex , 提供了与标准库 re 模块兼容的API接口, 同时还提供了额外的功能和更全面的Unicode支持。  正则表达式语法正则表达式可以拼接； 如果 A 和 B 都是正则表达式， 那么 AB 也是正则表达式。 通常， 如果字符串 p 匹配 A并且另一个字符串 q 匹配 B, 那么 pq 可以匹配 AB。除非 A 或者 B 包含低优先级操作，A">
+<meta name="keywords" content="Python,re,正则">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python之Re正则表达式">
+<meta property="og:url" content="http://yoursite.com/2018/10/10/Python/Python_re/index.html">
+<meta property="og:site_name" content="Heroinlin&#39;s Blog">
+<meta property="og:description" content="#python之正则表达式   第三方模块 regex , 提供了与标准库 re 模块兼容的API接口, 同时还提供了额外的功能和更全面的Unicode支持。  正则表达式语法正则表达式可以拼接； 如果 A 和 B 都是正则表达式， 那么 AB 也是正则表达式。 通常， 如果字符串 p 匹配 A并且另一个字符串 q 匹配 B, 那么 pq 可以匹配 AB。除非 A 或者 B 包含低优先级操作，A">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-06-12T08:47:44.465Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python之Re正则表达式">
+<meta name="twitter:description" content="#python之正则表达式   第三方模块 regex , 提供了与标准库 re 模块兼容的API接口, 同时还提供了额外的功能和更全面的Unicode支持。  正则表达式语法正则表达式可以拼接； 如果 A 和 B 都是正则表达式， 那么 AB 也是正则表达式。 通常， 如果字符串 p 匹配 A并且另一个字符串 q 匹配 B, 那么 pq 可以匹配 AB。除非 A 或者 B 包含低优先级操作，A">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2018/10/10/Python/Python_re/"/>
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>python之Re正则表达式 | Heroinlin's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Heroinlin's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br/>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br/>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/10/Python/Python_re/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heroinlin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/leaf.jpg"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Heroinlin's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">python之Re正则表达式
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-10 10:48:11" itemprop="dateCreated datePublished" datetime="2018-10-10T10:48:11+08:00">2018-10-10</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-12 16:47:44" itemprop="dateModified" datetime="2019-06-12T16:47:44+08:00">2019-06-12</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>#python之正则表达式</p>
+<blockquote>
+<p> 第三方模块 <a href="https://pypi.org/project/regex/" target="_blank" rel="noopener">regex</a> , 提供了与标准库 <a href="https://docs.python.org/zh-cn/3.6/library/re.html#module-re" target="_blank" rel="noopener"><code>re</code></a> 模块兼容的API接口, 同时还提供了额外的功能和更全面的Unicode支持。</p>
+</blockquote>
+<h2 id="正则表达式语法"><a href="#正则表达式语法" class="headerlink" title="正则表达式语法"></a>正则表达式语法</h2><p>正则表达式可以拼接； 如果 <em>A</em> 和 <em>B</em> 都是正则表达式， 那么 <em>AB</em> 也是正则表达式。 通常， 如果字符串 <em>p</em> 匹配 <em>A</em>并且另一个字符串 <em>q</em> 匹配 <em>B</em>, 那么 <em>pq</em> 可以匹配 AB。除非 <em>A</em> 或者 <em>B</em> 包含低优先级操作，<em>A</em> 和 <em>B</em> 存在边界条件；或者命名组引用。</p>
+<table>
+<thead>
+<tr>
+<th>特殊字符</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.</td>
+<td>(点) 在默认模式，匹配除了换行的任意字符。如果指定了标签 <a href="https://docs.python.org/zh-cn/3.6/library/re.html#re.DOTALL" target="_blank" rel="noopener"><code>DOTALL</code></a> ，它将匹配包括换行符的任意字符。</td>
+</tr>
+<tr>
+<td>^</td>
+<td>插入符号) 匹配字符串的开头， 并且在 <a href="https://docs.python.org/zh-cn/3.6/library/re.html#re.MULTILINE" target="_blank" rel="noopener"><code>MULTILINE</code></a> 模式也匹配换行后的首个符号。</td>
+</tr>
+<tr>
+<td>$</td>
+<td>匹配字符串尾或者换行符的前一个字符，在 <a href="https://docs.python.org/zh-cn/3.6/library/re.html#re.MULTILINE" target="_blank" rel="noopener"><code>MULTILINE</code></a> 模式匹配换行符的前一个字符。<code>foo</code> 匹配 <code>&#39;foo&#39;</code> 和 <code>&#39;foobar&#39;</code> , 但正则 <code>foo$</code> 只匹配 <code>&#39;foo&#39;</code></td>
+</tr>
+<tr>
+<td>*</td>
+<td>对它前面的正则式匹配0到任意次重复， 尽量多的匹配字符串。 <code>ab*</code> 会匹配 <code>&#39;a&#39;</code>， <code>&#39;ab&#39;</code>， 或者 <code>&#39;a&#39;`</code>后面跟随任意个 <code></code>‘b’`。</td>
+</tr>
+<tr>
+<td>+</td>
+<td>对它前面的正则式匹配1到任意次重复。 <code>ab+</code> 会匹配 <code>&#39;a&#39;</code> 后面跟随1个以上到任意个 <code>&#39;b&#39;</code>，它不会匹配 <code>&#39;a&#39;</code>。</td>
+</tr>
+<tr>
+<td>?</td>
+<td>对它前面的正则式匹配0到1次重复。 <code>ab?</code> 会匹配 <code>&#39;a&#39;</code> 或者 <code>&#39;ab&#39;</code>。</td>
+</tr>
+<tr>
+<td>*?<code>,</code>+?<code>,</code>??</td>
+<td><code>&#39;*&#39;</code>, <code>&#39;+&#39;</code>，和 <code>&#39;?&#39;</code> 修饰符都是 <em>贪婪的</em>；它们在字符串进行尽可能多的匹配。有时候并不需要这种行为。如果正则式 <code>&lt;.*&gt;</code> 希望找到 <code>&#39;&lt;a&gt; b &lt;c&gt;&#39;</code>，它将会匹配整个字符串，而不仅是 <code>&#39;&lt;a&gt;&#39;</code>。在修饰符之后添加 <code>?</code>将使样式以 <em>非贪婪方式或者<code>:dfn:</code>最小</em> 方式进行匹配； 尽量 <em>少</em> 的字符将会被匹配。 使用正则式 <code>&lt;.*?&gt;</code>将会仅仅匹配 <code>&#39;&lt;a&gt;&#39;</code>。</td>
+</tr>
+<tr>
+<td>{m}</td>
+<td>对其之前的正则式指定匹配 <em>m</em> 个重复；少于 <em>m</em> 的话就会导致匹配失败。比如， <code>a{6}</code> 将匹配6个 <code>&#39;a&#39;</code> , 但是不能是5个。</td>
+</tr>
+<tr>
+<td>{m, n}</td>
+<td>对正则式进行 <em>m</em> 到 <em>n</em> 次匹配，在 <em>m</em> 和 <em>n</em> 之间取尽量多。 比如，<code>a{3,5}</code> 将匹配 3 到 5个 <code>&#39;a&#39;</code>。忽略 <em>m</em> 意为指定下界为0，忽略 <em>n</em> 指定上界为无限次。 比如 <code>a{4,}b</code> 将匹配 <code>&#39;aaaab&#39;</code> 或者1000个 <code>&#39;a&#39;</code> 尾随一个 <code>&#39;b&#39;</code>，但不能匹配 <code>&#39;aaab&#39;</code>。逗号不能省略，否则无法辨别修饰符应该忽略哪个边界。</td>
+</tr>
+<tr>
+<td>{m,n}?</td>
+<td>前一个修饰符的非贪婪模式，只匹配尽量少的字符次数。比如，对于 <code>&#39;aaaaaa&#39;</code>， <code>a{3,5}</code> 匹配 5个 <code>&#39;a&#39;</code> ，而 <code>a{3,5}?</code> 只匹配3个 <code>&#39;a&#39;</code>。</td>
+</tr>
+<tr>
+<td>\</td>
+<td>转义特殊字符（允许你匹配 <code>&#39;*&#39;</code>, <code>&#39;?&#39;</code>, 或者此类其他)</td>
+</tr>
+<tr>
+<td>[]</td>
+<td>用于表示一个字符集合</td>
+</tr>
+<tr>
+<td></td>
+<td>字符可以单独列出，比如 <code>[amk]</code> 匹配 <code>&#39;a&#39;</code>， <code>&#39;m&#39;</code>， 或者 <code>&#39;k&#39;</code>。</td>
+</tr>
+<tr>
+<td></td>
+<td>可以表示字符范围，通过用 <code>&#39;-&#39;</code> 将两个字符连起来。比如 <code>[a-z]</code> 将匹配任何小写ASCII字符， <code>[0-5][0-9]</code> 将匹配从 <code>00</code> 到 <code>59</code> 的两位数字， <code>[0-9A-Fa-f]</code> 将匹配任何十六进制数位。 如果 <code>-</code> 进行了转义 （比如 <code>[a\-z]</code>）或者它的位置在首位或者末尾（如 <code>[-a]</code> 或 <code>[a-]</code>），它就只表示普通字符 <code>&#39;-&#39;</code>。</td>
+</tr>
+<tr>
+<td></td>
+<td>特殊字符在集合中，失去它的特殊含义。比如 <code>[(+*)]</code> 只会匹配这几个文法字符 <code>&#39;(&#39;</code>, <code>&#39;+&#39;</code>, <code>&#39;*&#39;</code>, or <code>&#39;)&#39;</code>。</td>
+</tr>
+<tr>
+<td></td>
+<td>不在集合范围内的字符可以通过 <em>取反</em> 来进行匹配。如果集合首字符是 <code>&#39;^&#39;</code> ，所有 <em>不</em> 在集合内的字符将会被匹配，比如 <code>[^5]</code> 将匹配所有字符，除了 <code>&#39;5&#39;</code>， <code>[^^]</code> 将匹配所有字符，除了 <code>&#39;^&#39;</code>. <code>^</code> 如果不在集合首位，就没有特殊含义。</td>
+</tr>
+<tr>
+<td></td>
+<td>在集合内要匹配一个字符 <code>&#39;]&#39;</code>，有两种方法，要么就在它之前加上反斜杠，要么就把它放到集合首位。比如， <code>[()[\]{}]</code> 和 <code>[]()[{}]</code> 都可以匹配括号。</td>
+</tr>
+<tr>
+<td>(?P\<name>…)</name></td>
+<td>(命名组合）类似正则组合，但是匹配到的子串组在外部是通过定义的 <em>name</em> 来获取的。组合名必须是有效的Python标识符，并且每个组合名只能用一个正则表达式定义，只能定义一次。一个符号组合同样是一个数字组合，就像这个组合没有被命名一样。如果样式是 <code>(?P&lt;quote&gt;[&#39;&quot;]).*?(?P=quote)</code> （也就是说，匹配单引号或者双引号括起来的字符串)</td>
+</tr>
+<tr>
+<td>(?P=name)</td>
+<td>反向引用一个命名组合；它匹配前面那个叫 <em>name</em> 的命名组中匹配到的串同样的字串。</td>
+</tr>
+<tr>
+<td>(?=…)</td>
+<td>匹配 <code>…</code> 的内容，但是并不消费样式的内容。这个叫做 <em>lookahead assertion</em>。比如， <code>Isaac (?=Asimov)</code>匹配 <code>&#39;Isaac &#39;</code> 只有在后面是 <code>&#39;Asimov&#39;</code> 的时候。</td>
+</tr>
+<tr>
+<td>(?!=…)</td>
+<td>匹配 <code>…</code> 不符合的情况。这个叫 <em>negative lookahead assertion</em> （前视取反）。比如说， <code>Isaac(?!Asimov)</code> 只有后面 <em>不</em> 是 <code>&#39;Asimov&#39;</code> 的时候才匹配 <code>&#39;Isaac &#39;</code> 。</td>
+</tr>
+<tr>
+<td>(?&lt;=…)</td>
+<td>匹配字符串的当前位置，它的前面匹配 <code>…</code> 的内容到当前位置。这叫:dfn:positive lookbehind assertion（正向后视断定）。 <code>(?&lt;=abc)def</code> 会在 <code>&#39;abcdef&#39;</code> 中找到一个匹配，因为后视会往后看3个字符并检查是否包含匹配的样式。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="语法示例"><a href="#语法示例" class="headerlink" title="语法示例"></a>语法示例</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re </span><br><span class="line">partern = re.compile(<span class="string">"(?P&lt;name&gt;[a-z]&#123;1,9&#125;)"</span>)</span><br><span class="line">result_list = partern.findall(<span class="string">"david123good!"</span>)</span><br><span class="line">result_dict = partern.search(<span class="string">"david123good!"</span>).groupdict()</span><br><span class="line">print(result_list)</span><br></pre></td></tr></table></figure>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://docs.python.org/zh-cn/3.6/library/re.html" target="_blank" rel="noopener">Python 中文文档</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/re/" rel="tag"># re</a>
+          
+            <a href="/tags/正则/" rel="tag"># 正则</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/07/Algorithm/Boyer_Moore_Algorithm/" rel="next" title="多数投票算法(Boyer-Moore Algorithm)">
+                <i class="fa fa-chevron-left"></i> 多数投票算法(Boyer-Moore Algorithm)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/10/Python/Python_JSON_and_Pickle/" rel="prev" title="python之JSON与Pickle">
+                python之JSON与Pickle <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/leaf.jpg"
+                alt="Heroinlin"/>
+            
+              <p class="site-author-name" itemprop="name">Heroinlin</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">63</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">94</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/heroinlin" title="GitHub &rarr; https://github.com/heroinlin" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/heroinlj@gmail.com" title="E-Mail &rarr; heroinlj@gmail.com"><i class="fa fa-fw fa-gmail"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/Heroin" title="Twitter &rarr; https://twitter.com/Heroin" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#正则表达式语法"><span class="nav-number">1.</span> <span class="nav-text">正则表达式语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#语法示例"><span class="nav-number">2.</span> <span class="nav-text">语法示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Heroinlin</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.6.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
