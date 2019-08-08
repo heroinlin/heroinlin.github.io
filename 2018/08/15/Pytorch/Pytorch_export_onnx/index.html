@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0"/>
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2"/>
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/leaf.jpg?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/leaf.ico?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/leaf1.ico?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/leaf.jpg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Pytorch导出ONNX一些不支持操作的解决在使用Pytorch导出ONNX格式模型时经常报一些操作不支持的问题，有些问题在Pytorch版本升级后得到解决，但是考虑到Pytorch版本升级后导出到NCNN又存在问题，所以这里还是考虑使用Pytorch0.3.1的版本进行解决 AdaptiveAvgPool2d自适应池化层用起来很方便，但是导出到onnx时候就可恼了，onnx并不支持。 使用Av">
+<meta name="keywords" content="Pytorch,ONNX">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pytorch导出ONNX一些不支持操作的解决">
+<meta property="og:url" content="http://yoursite.com/2018/08/15/Pytorch/Pytorch_export_onnx/index.html">
+<meta property="og:site_name" content="Heroinlin&#39;s Blog">
+<meta property="og:description" content="Pytorch导出ONNX一些不支持操作的解决在使用Pytorch导出ONNX格式模型时经常报一些操作不支持的问题，有些问题在Pytorch版本升级后得到解决，但是考虑到Pytorch版本升级后导出到NCNN又存在问题，所以这里还是考虑使用Pytorch0.3.1的版本进行解决 AdaptiveAvgPool2d自适应池化层用起来很方便，但是导出到onnx时候就可恼了，onnx并不支持。 使用Av">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-06-20T03:29:09.960Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pytorch导出ONNX一些不支持操作的解决">
+<meta name="twitter:description" content="Pytorch导出ONNX一些不支持操作的解决在使用Pytorch导出ONNX格式模型时经常报一些操作不支持的问题，有些问题在Pytorch版本升级后得到解决，但是考虑到Pytorch版本升级后导出到NCNN又存在问题，所以这里还是考虑使用Pytorch0.3.1的版本进行解决 AdaptiveAvgPool2d自适应池化层用起来很方便，但是导出到onnx时候就可恼了，onnx并不支持。 使用Av">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2018/08/15/Pytorch/Pytorch_export_onnx/"/>
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Pytorch导出ONNX一些不支持操作的解决 | Heroinlin's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Heroinlin's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br/>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br/>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/15/Pytorch/Pytorch_export_onnx/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heroinlin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/leaf.jpg"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Heroinlin's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Pytorch导出ONNX一些不支持操作的解决
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-08-15 15:27:31" itemprop="dateCreated datePublished" datetime="2018-08-15T15:27:31+08:00">2018-08-15</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-20 11:29:09" itemprop="dateModified" datetime="2019-06-20T11:29:09+08:00">2019-06-20</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Pytorch/" itemprop="url" rel="index"><span itemprop="name">Pytorch</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Pytorch导出ONNX一些不支持操作的解决"><a href="#Pytorch导出ONNX一些不支持操作的解决" class="headerlink" title="Pytorch导出ONNX一些不支持操作的解决"></a>Pytorch导出ONNX一些不支持操作的解决</h1><p>在使用Pytorch导出ONNX格式模型时经常报一些操作不支持的问题，有些问题在Pytorch版本升级后得到解决，但是考虑到Pytorch版本升级后导出到NCNN又存在问题，所以这里还是考虑使用Pytorch0.3.1的版本进行解决</p>
+<h2 id="AdaptiveAvgPool2d"><a href="#AdaptiveAvgPool2d" class="headerlink" title="AdaptiveAvgPool2d"></a>AdaptiveAvgPool2d</h2><p>自适应池化层用起来很方便，但是导出到onnx时候就可恼了，onnx并不支持。</p>
+<h3 id="使用AvgPool2d替换"><a href="#使用AvgPool2d替换" class="headerlink" title="使用AvgPool2d替换"></a>使用AvgPool2d替换</h3><p>导出时候可以对存在AdaptiveAvgPool2d系列的那部分代码进行替换，如</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch </span><br><span class="line">x = torch.autograd.Variable(torch.rand(<span class="number">1</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">5</span>))</span><br><span class="line">avgpool = torch.nn.AdaptiveAvgPool2d(<span class="number">1</span>)</span><br><span class="line">x = avgpool(x)</span><br><span class="line">print(x)</span><br></pre></td></tr></table></figure>
+<p>此处我们知道tensor为1x8x5x5大小，我们可以直接使用如下代码替换</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">avgpool = torch.nn.AvgPool2d(<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="自定义AdaptiveAvgPool2d类"><a href="#自定义AdaptiveAvgPool2d类" class="headerlink" title="自定义AdaptiveAvgPool2d类"></a>自定义AdaptiveAvgPool2d类</h3><p>有些时候一个模块多次调用AdaptiveAvgPool2d，但是每次输入的tensor大小又不一样，这时候使用上一种替换方式就不那么合适了，这时候重新定义一个AdaptiveAvgPool2d类是一个更合理的解决方式</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyAdaptiveAvgPool2d</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, sz=None)</span>:</span></span><br><span class="line">		super().__init__()</span><br><span class="line">    self.sz = sz</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">		inp_size = x.size()</span><br><span class="line">    kernel_width, kernel_height = inp_size[<span class="number">2</span>], inp_size[<span class="number">3</span>]</span><br><span class="line">    <span class="keyword">if</span> self.sz <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">      <span class="keyword">if</span> isinstance(self.sz, int):</span><br><span class="line">        kernel_width = ceil(inp_size[<span class="number">2</span>] / self.sz) </span><br><span class="line">        kernel_height = ceil(inp_size[<span class="number">3</span>] / self.sz)</span><br><span class="line">       <span class="keyword">elif</span> isinstance(self.sz, list) <span class="keyword">or</span> isinstance(self.sz, tuple):</span><br><span class="line">        	<span class="keyword">assert</span> len(self.sz) == <span class="number">2</span></span><br><span class="line">          kernel_width = ceil(inp_size[<span class="number">2</span>] / self.sz[<span class="number">0</span>]) </span><br><span class="line">          kernel_height = ceil(inp_size[<span class="number">3</span>] / self.sz[<span class="number">1</span>])</span><br><span class="line">		<span class="keyword">return</span> F.avg_pool2d(input=x,</span><br><span class="line">												ceil_mode=<span class="keyword">False</span>,</span><br><span class="line">												kernel_size=(kernel_width, kernel_height))</span><br></pre></td></tr></table></figure>
+<p>使用这个自定义类<code>MyAdaptiveAvgPool2d()</code>代替<code>torch.nn.AdaptiveAvgPool2d(1)</code>即可解决导出到onnx的问题</p>
+<h2 id="Expand"><a href="#Expand" class="headerlink" title="Expand"></a>Expand</h2><p>在进行tensor的数乘时由于两个tensor的维数不一致，比如维数为[3，8，8，8]的tensor和维数为[3，8，1，1]的tensor进行数乘时，Pytorch默认先将[3，8，1，1]的tensor进行Expand操作，将该tensor变换为[3，8，8，8]的tensor，两个tensor的维数保持一致后再进行数乘操作。看以下代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyModel</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,n_channels)</span>:</span></span><br><span class="line">		super(MyModel, self).__init__()</span><br><span class="line">		self.n_channels = n_channels</span><br><span class="line">		self.weight = nn.Parameter(torch.Tensor(self.n_channels))</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">		res = x * self.weight.view(<span class="number">1</span>, <span class="number">-1</span>, <span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">		<span class="keyword">return</span> res</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	net = MyModel(<span class="number">256</span>)</span><br><span class="line">	input_x = torch.autograd.Variable(torch.randn(<span class="number">1</span>, <span class="number">256</span>, <span class="number">160</span>, <span class="number">160</span>))</span><br><span class="line">  torch.onnx.export(net, input_x, <span class="string">"model.onnx"</span>, verbose=<span class="keyword">True</span>, export_param=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<p>在Pytorch0.3.1版本上会报错为<code>RuntimeError: ONNX export failed: Couldn&#39;t export operator expand; this usually means you used a form of broadcasting that ONNX does not currently support</code></p>
+<p>这里可以使用最粗暴的方式来替换Expand操作，使用torch.cat进行替换，对上边MyModel类的forward函数进行如下修改</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self)</span>:</span></span><br><span class="line">  self.weight = self.weight.view(<span class="number">1</span>, <span class="number">-1</span>, <span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">	x_size = x.size()</span><br><span class="line">	weight_list = []</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(x_size[<span class="number">2</span>]):</span><br><span class="line">		weight_list.append(self.weight)</span><br><span class="line">	self.weight = torch.cat(weight_list, <span class="number">2</span>)</span><br><span class="line">	weight_list = []</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(x_size[<span class="number">3</span>]):</span><br><span class="line">		weight_list.append(self.weight)</span><br><span class="line">	self.weight = torch.cat(weight_list, <span class="number">3</span>)</span><br><span class="line">	res = x * self.weight</span><br><span class="line">	<span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<h2 id="ReLU6"><a href="#ReLU6" class="headerlink" title="ReLU6"></a>ReLU6</h2><p>ReLU6的公式是<code>y=min(max(0, x), 6),相当于有六个bernoulli分布，即六个硬币，同时抛出正面，这样鼓励网络学习到稀疏特征。</code>而ReLU的公式为<code>y=max(0,6)</code>,由于onnx对ReLU6的导出不支持，所以可以通过以下改写实现一样的功能。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"></span><br><span class="line">input_x = torch.autograd.Variable(torch.randn(<span class="number">1</span>, <span class="number">256</span>, <span class="number">160</span>, <span class="number">160</span>)*<span class="number">6</span>)</span><br><span class="line">relu6 = nn.ReLU6(inplace=<span class="keyword">True</span>)(input_x)</span><br><span class="line"></span><br><span class="line">relu = nn.ReLU(inplace=<span class="keyword">True</span>)(input_x)</span><br><span class="line">replace_relu6 = relu.clamp(max=<span class="number">6</span>)</span><br><span class="line"></span><br><span class="line">print((relu6-replace_relu6).sum())</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Pytorch/" rel="tag"># Pytorch</a>
+          
+            <a href="/tags/ONNX/" rel="tag"># ONNX</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/08/Algorithm/daily_temperatures/" rel="next" title="每日温度">
+                <i class="fa fa-chevron-left"></i> 每日温度
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/10/Python/Python_Struct/" rel="prev" title="python之Struct解析二进制数据">
+                python之Struct解析二进制数据 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/leaf.jpg"
+                alt="Heroinlin"/>
+            
+              <p class="site-author-name" itemprop="name">Heroinlin</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">78</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">101</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/heroinlin" title="GitHub &rarr; https://github.com/heroinlin" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/heroinlj@gmail.com" title="E-Mail &rarr; heroinlj@gmail.com"><i class="fa fa-fw fa-gmail"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/Heroin" title="Twitter &rarr; https://twitter.com/Heroin" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Pytorch导出ONNX一些不支持操作的解决"><span class="nav-number">1.</span> <span class="nav-text">Pytorch导出ONNX一些不支持操作的解决</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#AdaptiveAvgPool2d"><span class="nav-number">1.1.</span> <span class="nav-text">AdaptiveAvgPool2d</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用AvgPool2d替换"><span class="nav-number">1.1.1.</span> <span class="nav-text">使用AvgPool2d替换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义AdaptiveAvgPool2d类"><span class="nav-number">1.1.2.</span> <span class="nav-text">自定义AdaptiveAvgPool2d类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Expand"><span class="nav-number">1.2.</span> <span class="nav-text">Expand</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ReLU6"><span class="nav-number">1.3.</span> <span class="nav-text">ReLU6</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Heroinlin</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.6.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
