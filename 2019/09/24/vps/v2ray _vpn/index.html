@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0"/>
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2"/>
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/leaf.jpg?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/leaf.ico?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/leaf1.ico?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/leaf.jpg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="基于 v2ray 实现科学上网]前言原本在 vultr 上面购买的 VPS 上面搭建的 VPN 不能用了，具体原因就是 GTW 经过一波加强，可以通过 TCP 阻断来封锁一些用于搭建 VPN 的 VPS。TCP 阻断的结果就是在国内无法通过 tcp 来连接访问国外的 vps，从而在国内无法 ssh 登录 vps，但是使用 ping 工具却能 ping 通被 tcp 阻断的服务器，因为 ping 是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Heroinlin&#39;s Blog">
+<meta property="og:url" content="http://yoursite.com/2019/09/24/vps/v2ray _vpn/index.html">
+<meta property="og:site_name" content="Heroinlin&#39;s Blog">
+<meta property="og:description" content="基于 v2ray 实现科学上网]前言原本在 vultr 上面购买的 VPS 上面搭建的 VPN 不能用了，具体原因就是 GTW 经过一波加强，可以通过 TCP 阻断来封锁一些用于搭建 VPN 的 VPS。TCP 阻断的结果就是在国内无法通过 tcp 来连接访问国外的 vps，从而在国内无法 ssh 登录 vps，但是使用 ping 工具却能 ping 通被 tcp 阻断的服务器，因为 ping 是">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/vps/v2ray%20_vpn/images/vmess_vpn_config1.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/vps/v2ray%20_vpn/images/vmess_vpn_config2.png">
+<meta property="og:updated_time" content="2019-09-24T01:04:46.034Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Heroinlin&#39;s Blog">
+<meta name="twitter:description" content="基于 v2ray 实现科学上网]前言原本在 vultr 上面购买的 VPS 上面搭建的 VPN 不能用了，具体原因就是 GTW 经过一波加强，可以通过 TCP 阻断来封锁一些用于搭建 VPN 的 VPS。TCP 阻断的结果就是在国内无法通过 tcp 来连接访问国外的 vps，从而在国内无法 ssh 登录 vps，但是使用 ping 工具却能 ping 通被 tcp 阻断的服务器，因为 ping 是">
+<meta name="twitter:image" content="http://yoursite.com/2019/09/24/vps/v2ray%20_vpn/images/vmess_vpn_config1.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/09/24/vps/v2ray _vpn/"/>
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | Heroinlin's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Heroinlin's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br/>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br/>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/24/vps/v2ray _vpn/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heroinlin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/leaf.jpg"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Heroinlin's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-09-24 08:51:38 / 修改时间：09:04:46" itemprop="dateCreated datePublished" datetime="2019-09-24T08:51:38+08:00">2019-09-24</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="基于-v2ray-实现科学上网"><a href="#基于-v2ray-实现科学上网" class="headerlink" title="基于 v2ray 实现科学上网]"></a>基于 v2ray 实现科学上网]</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>原本在 vultr 上面购买的 VPS 上面搭建的 VPN 不能用了，具体原因就是 GTW 经过一波加强，可以通过 TCP 阻断来封锁一些用于搭建 VPN 的 VPS。TCP 阻断的结果就是在国内无法通过 tcp 来连接访问国外的 vps，从而在国内无法 ssh 登录 vps，但是使用 ping 工具却能 ping 通被 tcp 阻断的服务器，因为 ping 是基于 ICMP 的。这样给人一种 vps 没被封的错觉。</p>
+<p>当 vps 被 TCP 阻断时，原本基于 shadowsocks 的科学上网方式就不能使用了，本文就是针对被 TCP 阻断的 vps，通过 v2ray 来实现科学上网。当然对于没有被 TCP 阻断的 vps 使用该方法来搭梯子也不容易被封。</p>
+<hr>
+<h2 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h2><h3 id="1-服务器安装"><a href="#1-服务器安装" class="headerlink" title="1. 服务器安装"></a>1. 服务器安装</h3><p>在 Linux 操作系统， V2Ray 的安装有脚本安装、手动安装、编译安装 3 种方式，选择其中一种即可，本指南仅提供使用使用脚本安装的方法，并仅推荐使用脚本安装，该脚本由 V2Ray 官方提供。该脚本仅可以在 Debian 系列或者支持 Systemd 的 Linux 操作系统使用。</p>
+<p>本文基于 CentOS 7 服务器来实现。</p>
+<p>首先下载脚本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> wget https://install.direct/go.sh</span></span><br><span class="line">--2019-02-15 07:53:34--  https://install.direct/go.sh</span><br><span class="line">Resolving install.direct (install.direct)... 104.27.174.71, 104.27.175.71, 2606:4700:30::681b:af47, ...</span><br><span class="line">Connecting to install.direct (install.direct)|104.27.174.71|:443... connected.</span><br><span class="line">HTTP request sent, awaiting response... 200 OK</span><br><span class="line">Length: unspecified [text/plain]</span><br><span class="line">Saving to: ‘go.sh’</span><br><span class="line"></span><br><span class="line">    [ &lt;=&gt;                                                                                                               ] 13,915      --.-K/s   in 0s      </span><br><span class="line"></span><br><span class="line">2019-02-15 07:53:34 (58.3 MB/s) - ‘go.sh’ saved [13915]</span><br></pre></td></tr></table></figure>
+<p>然后执行安装脚本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> sudo bash go.sh</span></span><br><span class="line">Installing V2Ray v4.16.0 on x86_64</span><br><span class="line">Downloading V2Ray: https://github.com/v2ray/v2ray-core/releases/download/v4.16.0/v2ray-linux-64.zip</span><br><span class="line"><span class="meta">  %</span><span class="bash"> Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span></span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">100   608    0   608    0     0   1330      0 --:--:-- --:--:-- --:--:--  1333</span><br><span class="line">100 10.2M  100 10.2M    0     0  1723k      0  0:00:06  0:00:06 --:--:-- 2356k</span><br><span class="line">Updating software repo</span><br><span class="line">http://mirrors.syringanetworks.net/fedora-epel/7/x86_64/repodata/5a7d69681e5cfd3ae41829a733077e717b512d3dee2d802edeeb206b7d8bda33-updateinfo.xml.bz2: [Errno 14] HTTP Error 404 - Not Found</span><br><span class="line">Trying other mirror.</span><br><span class="line">To address this issue please refer to the below wiki article </span><br><span class="line"></span><br><span class="line">https://wiki.centos.org/yum-errors</span><br><span class="line"></span><br><span class="line">If above article doesn't help to resolve this issue please use https://bugs.centos.org/.</span><br><span class="line"></span><br><span class="line">Installing unzip</span><br><span class="line">Extracting V2Ray package to /tmp/v2ray.</span><br><span class="line">Archive:  /tmp/v2ray/v2ray.zip</span><br><span class="line">  inflating: /tmp/v2ray/config.json  </span><br><span class="line">   creating: /tmp/v2ray/doc/</span><br><span class="line">  inflating: /tmp/v2ray/doc/readme.md  </span><br><span class="line">  inflating: /tmp/v2ray/geoip.dat    </span><br><span class="line">  inflating: /tmp/v2ray/geosite.dat  </span><br><span class="line">   creating: /tmp/v2ray/systemd/</span><br><span class="line">  inflating: /tmp/v2ray/systemd/v2ray.service  </span><br><span class="line">   creating: /tmp/v2ray/systemv/</span><br><span class="line">  inflating: /tmp/v2ray/systemv/v2ray  </span><br><span class="line">  inflating: /tmp/v2ray/v2ctl        </span><br><span class="line"> extracting: /tmp/v2ray/v2ctl.sig    </span><br><span class="line">  inflating: /tmp/v2ray/v2ray        </span><br><span class="line"> extracting: /tmp/v2ray/v2ray.sig    </span><br><span class="line">  inflating: /tmp/v2ray/vpoint_socks_vmess.json  </span><br><span class="line">  inflating: /tmp/v2ray/vpoint_vmess_freedom.json  </span><br><span class="line">PORT:40827</span><br><span class="line">UUID:505f001d-4aa8-4519-9c54-6b65749ee3fb</span><br><span class="line">Created symlink from /etc/systemd/system/multi-user.target.wants/v2ray.service to /etc/systemd/system/v2ray.service.</span><br><span class="line">V2Ray v4.16.0 is installed.</span><br></pre></td></tr></table></figure>
+<p>看到类似于这样的提示就算安装成功了。如果安装不成功脚本会有红色的提示语句，这个时候你应当按照提示除错，除错后再重新执行一遍脚本安装 V2Ray。</p>
+<p>在上面的提示中，有一行 “PORT:40827” 代表着端口号为 40827，还有一行 “UUID:505f001d-4aa8-4519-9c54-6b65749ee3fb” 代表着 id 为 505f001d-4aa8-4519-9c54-6b65749ee3fb。这两个都是随机生成的，不用担心跟别人撞上了。</p>
+<p>安装完之后，使用以下命令启动 V2Ray：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> systemctl start v2ray</span></span><br></pre></td></tr></table></figure>
+<p>在首次安装完成之后，V2Ray 不会自动启动，需要手动运行上述启动命令。</p>
+<hr>
+<h3 id="2-服务端配置"><a href="#2-服务端配置" class="headerlink" title="2. 服务端配置"></a>2. 服务端配置</h3><p>v2ray 的配置文件位于 <code>/etc/v2ray/config.json</code>。v2ray 相对于 shadowsocks 更复杂的地方就在于其有众多的配置选项，针对不同的应用场景有不同的配置方案，从而实现不同的功能，而 shadowsocks 则相对傻瓜一些。要详细讲述 v2ray 的所有配置选项是需要很长的内容的，本文针对被 TCP 阻断的 VPS 来实现 vpn 的场景。下面简单介绍一些配置内容：</p>
+<ul>
+<li><p><strong>VMess</strong></p>
+<p>VMess 协议是由 V2Ray 原创并使用于 V2Ray 的加密传输协议，如同 Shadowsocks 一样为了对抗墙的深度包检测而研发的。在 V2Ray 上客户端与服务器的通信主要是通过 VMess 协议通信。</p>
+<p>V2Ray 使用 inbound(传入) 和 outbound(传出) 的结构，这样的结构非常清晰地体现了数据包的流动方向，同时也使得 V2Ray 功能强大复杂的同时而不混乱，清晰明了。形象地说，我们可以把 V2Ray 当作一个盒子，这个盒子有入口和出口(即 inbound 和 outbound)，我们将数据包通过某个入口放进这个盒子里，然后这个盒子以某种机制（这个机制其实就是路由，后面会讲到）决定这个数据包从哪个出口吐出来。以这样的角度理解的话，V2Ray 做客户端，则 inbound 接收来自浏览器数据，由 outbound 发出去(通常是发到 V2Ray 服务器)；V2Ray 做服务器，则 inbound 接收来自 V2Ray 客户端的数据，由 outbound 发出去(通常是如 Google 等想要访问的目标网站)。</p>
+</li>
+<li><p><strong>mKCP</strong></p>
+<p>V2Ray 引入了 KCP 传输协议，并且做了一些不同的优化，称为 mKCP。 mKCP 使用 UDP 来模拟 TCP 连接，这样即使 vps 被 TCP 阻断了，还是能够通过 UDP 来连接。mKCP 牺牲带宽来降低延迟，传输同样的内容，mKCP 一般比 TCP 消耗更多的流量，但是对于我购买的 vps 流量一般都用的很少，每个月用不完 十分之一，所以采用 mKCP 对流量消耗也没有太大的问题。</p>
+</li>
+</ul>
+<p>服务端采用 <code>vmess + mKCP</code> 的配置时，配置文件 <code>/etc/v2ray/config.json</code> 的内容如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"inbounds"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"port"</span>: <span class="number">40827</span>,</span><br><span class="line">      <span class="attr">"protocol"</span>: <span class="string">"vmess"</span>,</span><br><span class="line">      <span class="attr">"settings"</span>: &#123;</span><br><span class="line">        <span class="attr">"clients"</span>: [</span><br><span class="line">          &#123;</span><br><span class="line">            <span class="attr">"id"</span>: <span class="string">"505f001d-4aa8-4519-9c54-6b65749ee3fb"</span>,</span><br><span class="line">            <span class="attr">"alterId"</span>: <span class="number">64</span></span><br><span class="line">          &#125;</span><br><span class="line">        ]</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">"streamSettings"</span>: &#123;</span><br><span class="line">        <span class="attr">"network"</span>: <span class="string">"mkcp"</span>,</span><br><span class="line">        <span class="attr">"kcpSettings"</span>: &#123;</span><br><span class="line">          <span class="attr">"uplinkCapacity"</span>: <span class="number">5</span>,</span><br><span class="line">          <span class="attr">"downlinkCapacity"</span>: <span class="number">100</span>,</span><br><span class="line">          <span class="attr">"congestion"</span>: <span class="literal">true</span>,</span><br><span class="line">          <span class="attr">"header"</span>: &#123;</span><br><span class="line">            <span class="attr">"type"</span>: <span class="string">"none"</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"outbounds"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"protocol"</span>: <span class="string">"freedom"</span>,</span><br><span class="line">      <span class="attr">"settings"</span>: &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>修改完配置文件后，需要重新启动 v2ray：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> systemctl restart v2ray</span></span><br></pre></td></tr></table></figure>
+<p>最后，还需要修改 vps 的防火墙设置，将对应的 udp 端口放行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> firewall-cmd --zone=public --add-port=40827/udp --permanent</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> firewall-cmd --reload</span></span><br></pre></td></tr></table></figure>
+<p>再设置 v2ray 开机自启动，修改 <code>/etc/rc.local</code> 文件，添加：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart v2ray</span><br></pre></td></tr></table></figure>
+<p>服务端配置完毕。</p>
+<hr>
+<h3 id="3-客户端安装"><a href="#3-客户端安装" class="headerlink" title="3. 客户端安装"></a>3. 客户端安装</h3><p>下载客户端，windows 系统下有两种客户端，一种是不带图形界面的，另一种是在其基础上增加了图形界面的。为了方便，使用带有图形界面的版本。下载连接：<a href="https://github.com/2dust/v2rayN/releases" target="_blank" rel="noopener">v2rayN</a>，下载 Lastest release 的 <code>v2rayN.zip</code> 压缩包。</p>
+<p>解压后运行 <code>v2rayN.exe</code> 程序，双击任务栏图标打开界面：</p>
+<p><img src="images/vmess_vpn_config1.png" alt="[v2rayN界面](images/vmess_vpn_config1.png)"></p>
+<p>点击上方<strong>检查更新</strong>，<strong>检查更新 v2rayCore</strong>，点击“是”。</p>
+<p>更新完后，点击<strong>服务器</strong>，<strong>添加[VMess]服务器</strong>，如下配置：</p>
+<p><img src="images/vmess_vpn_config2.png" alt="[v2rayN服务器配置](images/vmess_vpn_config2.png)"></p>
+<p>配置完成点击确定，右键任务栏 v2rayN 图标，点击<strong>启用http代理</strong>，http 代理模式可选择 <strong>PAC模式</strong> 或者 <strong>全局模式</strong>。</p>
+<p>这样，客户端的配置也完成，即可开始科学上网。</p>
+<hr>
+<h2 id="其他内容"><a href="#其他内容" class="headerlink" title="其他内容"></a>其他内容</h2><ol>
+<li><p><strong>非图形界面客户端配置：</strong></p>
+<p>如果客户端没有使用带有图形界面的 v2rayN，其配置稍微复杂一点，需要自己修改客户端配置文件 <code>config.json</code>，配置内容如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"inbounds"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"port"</span>: <span class="number">1080</span>,</span><br><span class="line">      <span class="attr">"protocol"</span>: <span class="string">"socks"</span>,</span><br><span class="line">      <span class="attr">"sniffing"</span>: &#123;</span><br><span class="line">        <span class="attr">"enabled"</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">"destOverride"</span>: [<span class="string">"http"</span>, <span class="string">"tls"</span>]</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">"settings"</span>: &#123;</span><br><span class="line">        <span class="attr">"auth"</span>: <span class="string">"noauth"</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"outbounds"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"protocol"</span>: <span class="string">"vmess"</span>,</span><br><span class="line">      <span class="attr">"settings"</span>: &#123;</span><br><span class="line">        <span class="attr">"vnext"</span>: [</span><br><span class="line">          &#123;</span><br><span class="line">            <span class="attr">"address"</span>: <span class="string">"xxx.xxx.xxx.xxx"</span>,</span><br><span class="line">            <span class="attr">"port"</span>: <span class="number">40827</span>,</span><br><span class="line">            <span class="attr">"users"</span>: [</span><br><span class="line">              &#123;</span><br><span class="line">                <span class="attr">"id"</span>: <span class="string">"505f001d-4aa8-4519-9c54-6b65749ee3fb"</span>,</span><br><span class="line">                <span class="attr">"alterId"</span>: <span class="number">64</span></span><br><span class="line">              &#125;</span><br><span class="line">            ]</span><br><span class="line">          &#125;</span><br><span class="line">        ]</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">"streamSettings"</span>: &#123;</span><br><span class="line">        <span class="attr">"network"</span>: <span class="string">"mkcp"</span>,</span><br><span class="line">        <span class="attr">"kcpSettings"</span>: &#123;</span><br><span class="line">          <span class="attr">"uplinkCapacity"</span>: <span class="number">5</span>,</span><br><span class="line">          <span class="attr">"downlinkCapacity"</span>: <span class="number">100</span>,</span><br><span class="line">          <span class="attr">"congestion"</span>: <span class="literal">true</span>,</span><br><span class="line">          <span class="attr">"header"</span>: &#123;</span><br><span class="line">            <span class="attr">"type"</span>: <span class="string">"none"</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>配置完 v2ray 并启动之后，还需要配合浏览器的一些代理插件来实现科学上网，如谷歌浏览器与火狐浏览器的 <code>SwitchyOmega</code> 插件，如何使用这里不介绍。</p>
+</li>
+<li><p><strong>参考链接</strong></p>
+<p>v2ray 配置指南：<a href="https://toutyrater.github.io/" target="_blank" rel="noopener">https://toutyrater.github.io</a></p>
+<p>v2ray配置模板：<a href="https://github.com/KiriKira/vTemplate" target="_blank" rel="noopener">https://github.com/KiriKira/vTemplate</a></p>
+<p>v2ray客户端： <a href="https://github.com/2dust/v2rayN/releases" target="_blank" rel="noopener">https://github.com/2dust/v2rayN/releases</a></p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/17/Scripts/softlink_clean/" rel="next" title="删除无效软连接">
+                <i class="fa fa-chevron-left"></i> 删除无效软连接
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/24/vps/docker_v2ray/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/leaf.jpg"
+                alt="Heroinlin"/>
+            
+              <p class="site-author-name" itemprop="name">Heroinlin</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">81</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">102</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/heroinlin" title="GitHub &rarr; https://github.com/heroinlin" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/heroinlj@gmail.com" title="E-Mail &rarr; heroinlj@gmail.com"><i class="fa fa-fw fa-gmail"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/Heroin" title="Twitter &rarr; https://twitter.com/Heroin" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基于-v2ray-实现科学上网"><span class="nav-number">1.</span> <span class="nav-text">基于 v2ray 实现科学上网]</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现过程"><span class="nav-number">1.2.</span> <span class="nav-text">实现过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-服务器安装"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 服务器安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-服务端配置"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. 服务端配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-客户端安装"><span class="nav-number">1.2.3.</span> <span class="nav-text">3. 客户端安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他内容"><span class="nav-number">1.3.</span> <span class="nav-text">其他内容</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Heroinlin</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.6.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.2"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
