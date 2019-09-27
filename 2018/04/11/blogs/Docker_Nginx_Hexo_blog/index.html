@@ -97,14 +97,14 @@
 
 
   <meta name="description" content="使用Docker搭建Nginx环境挂载Hexo博客介绍原先我的博客是挂载在github pages上面的，但是因为github pages的服务器在国外，国内访问速度就会有点感人，于是就想把我的博客挂载在自己阿里云的服务器上面。 环境 一台有独立ip的服务器（centos 7) 在本地搭建好了hexo框架  实现因为我的博客是hexo写的，众所周知这是一个快速生成静态博客的框架，既然是静态网页，w">
-<meta name="keywords" content="Docker,Nginx,Hexo,blog">
+<meta name="keywords" content="blog,Docker,Hexo,Nginx">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用Docker搭建Nginx环境挂载Hexo博客">
 <meta property="og:url" content="http://yoursite.com/2018/04/11/blogs/Docker_Nginx_Hexo_blog/index.html">
 <meta property="og:site_name" content="Heroinlin&#39;s Blog">
 <meta property="og:description" content="使用Docker搭建Nginx环境挂载Hexo博客介绍原先我的博客是挂载在github pages上面的，但是因为github pages的服务器在国外，国内访问速度就会有点感人，于是就想把我的博客挂载在自己阿里云的服务器上面。 环境 一台有独立ip的服务器（centos 7) 在本地搭建好了hexo框架  实现因为我的博客是hexo写的，众所周知这是一个快速生成静态博客的框架，既然是静态网页，w">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-10T02:16:57.606Z">
+<meta property="og:updated_time" content="2019-09-25T06:09:28.081Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用Docker搭建Nginx环境挂载Hexo博客">
 <meta name="twitter:description" content="使用Docker搭建Nginx环境挂载Hexo博客介绍原先我的博客是挂载在github pages上面的，但是因为github pages的服务器在国外，国内访问速度就会有点感人，于是就想把我的博客挂载在自己阿里云的服务器上面。 环境 一台有独立ip的服务器（centos 7) 在本地搭建好了hexo框架  实现因为我的博客是hexo写的，众所周知这是一个快速生成静态博客的框架，既然是静态网页，w">
@@ -384,7 +384,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-10 10:16:57" itemprop="dateModified" datetime="2019-06-10T10:16:57+08:00">2019-06-10</time>
+                <time title="修改时间：2019-09-25 14:09:28" itemprop="dateModified" datetime="2019-09-25T14:09:28+08:00">2019-09-25</time>
               
             
           </span>
@@ -431,6 +431,8 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜　sudo curl -L "https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure>
 <p>修改权限</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜　sudo chmod +x /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure>
+<p>将当前用户加入root组</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo su</span><br><span class="line">gpasswd -a heroin root </span><br><span class="line">su heroin</span><br></pre></td></tr></table></figure>
 <p>测试</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜　docker-compose --version</span><br><span class="line">docker-compose version 1.22.0, build 1719ceb</span><br></pre></td></tr></table></figure>
 <p>通过docker-compose管理生成容器</p>
@@ -515,13 +517,13 @@
         
         <div class="post-tags">
           
-            <a href="/tags/Docker/" rel="tag"># Docker</a>
+            <a href="/tags/blog/" rel="tag"># blog</a>
           
-            <a href="/tags/Nginx/" rel="tag"># Nginx</a>
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
           
             <a href="/tags/Hexo/" rel="tag"># Hexo</a>
           
-            <a href="/tags/blog/" rel="tag"># blog</a>
+            <a href="/tags/Nginx/" rel="tag"># Nginx</a>
           
         </div>
       
@@ -534,8 +536,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/11/Docker/docker_document/" rel="next" title="docker常用管理命令">
-                <i class="fa fa-chevron-left"></i> docker常用管理命令
+              <a href="/2018/04/11/vps/Google_Cloud _SSR_BBR/" rel="next" title="科学上网：Google Cloud 安装SSR与BBR加速">
+                <i class="fa fa-chevron-left"></i> 科学上网：Google Cloud 安装SSR与BBR加速
               </a>
             
           </div>
@@ -544,8 +546,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/04/12/deep_learning/object_detection/yolo/" rel="prev" title="目标检测网络之 YOLOv3">
-                目标检测网络之 YOLOv3 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/04/11/Docker/docker_document/" rel="prev" title="docker常用管理命令">
+                docker常用管理命令 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -626,7 +628,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">81</span>
+                    <span class="site-state-item-count">82</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -902,7 +904,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">102</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">105</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

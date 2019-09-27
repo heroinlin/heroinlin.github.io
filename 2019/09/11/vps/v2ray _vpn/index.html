@@ -96,20 +96,21 @@
 
 
 
-  <meta name="description" content="基于 v2ray 实现科学上网]前言原本在 vultr 上面购买的 VPS 上面搭建的 VPN 不能用了，具体原因就是 GTW 经过一波加强，可以通过 TCP 阻断来封锁一些用于搭建 VPN 的 VPS。TCP 阻断的结果就是在国内无法通过 tcp 来连接访问国外的 vps，从而在国内无法 ssh 登录 vps，但是使用 ping 工具却能 ping 通被 tcp 阻断的服务器，因为 ping 是">
+  <meta name="description" content="基于 v2ray 实现科学上网前言原本在 vultr 上面购买的 VPS 上面搭建的 VPN 不能用了，具体原因就是 GTW 经过一波加强，可以通过 TCP 阻断来封锁一些用于搭建 VPN 的 VPS。TCP 阻断的结果就是在国内无法通过 tcp 来连接访问国外的 vps，从而在国内无法 ssh 登录 vps，但是使用 ping 工具却能 ping 通被 tcp 阻断的服务器，因为 ping 是基">
+<meta name="keywords" content="Docker,V2ray">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Heroinlin&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/2019/09/24/vps/v2ray _vpn/index.html">
+<meta property="og:title" content="基于 v2ray 实现科学上网">
+<meta property="og:url" content="http://yoursite.com/2019/09/11/vps/v2ray _vpn/index.html">
 <meta property="og:site_name" content="Heroinlin&#39;s Blog">
-<meta property="og:description" content="基于 v2ray 实现科学上网]前言原本在 vultr 上面购买的 VPS 上面搭建的 VPN 不能用了，具体原因就是 GTW 经过一波加强，可以通过 TCP 阻断来封锁一些用于搭建 VPN 的 VPS。TCP 阻断的结果就是在国内无法通过 tcp 来连接访问国外的 vps，从而在国内无法 ssh 登录 vps，但是使用 ping 工具却能 ping 通被 tcp 阻断的服务器，因为 ping 是">
+<meta property="og:description" content="基于 v2ray 实现科学上网前言原本在 vultr 上面购买的 VPS 上面搭建的 VPN 不能用了，具体原因就是 GTW 经过一波加强，可以通过 TCP 阻断来封锁一些用于搭建 VPN 的 VPS。TCP 阻断的结果就是在国内无法通过 tcp 来连接访问国外的 vps，从而在国内无法 ssh 登录 vps，但是使用 ping 工具却能 ping 通被 tcp 阻断的服务器，因为 ping 是基">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/09/24/vps/v2ray%20_vpn/images/vmess_vpn_config1.png">
-<meta property="og:image" content="http://yoursite.com/2019/09/24/vps/v2ray%20_vpn/images/vmess_vpn_config2.png">
-<meta property="og:updated_time" content="2019-09-24T01:04:46.034Z">
+<meta property="og:image" content="http://yoursite.com/2019/09/11/vps/v2ray%20_vpn/images/vmess_vpn_config1.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/11/vps/v2ray%20_vpn/images/vmess_vpn_config2.png">
+<meta property="og:updated_time" content="2019-09-27T02:01:06.132Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Heroinlin&#39;s Blog">
-<meta name="twitter:description" content="基于 v2ray 实现科学上网]前言原本在 vultr 上面购买的 VPS 上面搭建的 VPN 不能用了，具体原因就是 GTW 经过一波加强，可以通过 TCP 阻断来封锁一些用于搭建 VPN 的 VPS。TCP 阻断的结果就是在国内无法通过 tcp 来连接访问国外的 vps，从而在国内无法 ssh 登录 vps，但是使用 ping 工具却能 ping 通被 tcp 阻断的服务器，因为 ping 是">
-<meta name="twitter:image" content="http://yoursite.com/2019/09/24/vps/v2ray%20_vpn/images/vmess_vpn_config1.png">
+<meta name="twitter:title" content="基于 v2ray 实现科学上网">
+<meta name="twitter:description" content="基于 v2ray 实现科学上网前言原本在 vultr 上面购买的 VPS 上面搭建的 VPN 不能用了，具体原因就是 GTW 经过一波加强，可以通过 TCP 阻断来封锁一些用于搭建 VPN 的 VPS。TCP 阻断的结果就是在国内无法通过 tcp 来连接访问国外的 vps，从而在国内无法 ssh 登录 vps，但是使用 ping 工具却能 ping 通被 tcp 阻断的服务器，因为 ping 是基">
+<meta name="twitter:image" content="http://yoursite.com/2019/09/11/vps/v2ray%20_vpn/images/vmess_vpn_config1.png">
 
 
 
@@ -117,7 +118,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2019/09/24/vps/v2ray _vpn/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/09/11/vps/v2ray _vpn/"/>
 
 
 
@@ -127,7 +128,7 @@
   };
 </script>
 
-  <title> | Heroinlin's Blog</title>
+  <title>基于 v2ray 实现科学上网 | Heroinlin's Blog</title>
   
 
 
@@ -326,7 +327,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/24/vps/v2ray _vpn/"/>
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/11/vps/v2ray _vpn/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Heroinlin"/>
@@ -343,7 +344,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h1 class="post-title" itemprop="name headline">基于 v2ray 实现科学上网
 
               
             
@@ -369,12 +370,24 @@
                 
               
 
-              <time title="创建时间：2019-09-24 08:51:38 / 修改时间：09:04:46" itemprop="dateCreated datePublished" datetime="2019-09-24T08:51:38+08:00">2019-09-24</time>
+              <time title="创建时间：2019-09-11 11:11:11" itemprop="dateCreated datePublished" datetime="2019-09-11T11:11:11+08:00">2019-09-11</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-09-27 10:01:06" itemprop="dateModified" datetime="2019-09-27T10:01:06+08:00">2019-09-27</time>
               
             
           </span>
@@ -408,7 +421,7 @@
       
 
       
-        <h1 id="基于-v2ray-实现科学上网"><a href="#基于-v2ray-实现科学上网" class="headerlink" title="基于 v2ray 实现科学上网]"></a>基于 v2ray 实现科学上网]</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>原本在 vultr 上面购买的 VPS 上面搭建的 VPN 不能用了，具体原因就是 GTW 经过一波加强，可以通过 TCP 阻断来封锁一些用于搭建 VPN 的 VPS。TCP 阻断的结果就是在国内无法通过 tcp 来连接访问国外的 vps，从而在国内无法 ssh 登录 vps，但是使用 ping 工具却能 ping 通被 tcp 阻断的服务器，因为 ping 是基于 ICMP 的。这样给人一种 vps 没被封的错觉。</p>
+        <h1 id="基于-v2ray-实现科学上网"><a href="#基于-v2ray-实现科学上网" class="headerlink" title="基于 v2ray 实现科学上网"></a>基于 v2ray 实现科学上网</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>原本在 vultr 上面购买的 VPS 上面搭建的 VPN 不能用了，具体原因就是 GTW 经过一波加强，可以通过 TCP 阻断来封锁一些用于搭建 VPN 的 VPS。TCP 阻断的结果就是在国内无法通过 tcp 来连接访问国外的 vps，从而在国内无法 ssh 登录 vps，但是使用 ping 工具却能 ping 通被 tcp 阻断的服务器，因为 ping 是基于 ICMP 的。这样给人一种 vps 没被封的错觉。</p>
 <p>当 vps 被 TCP 阻断时，原本基于 shadowsocks 的科学上网方式就不能使用了，本文就是针对被 TCP 阻断的 vps，通过 v2ray 来实现科学上网。当然对于没有被 TCP 阻断的 vps 使用该方法来搭梯子也不容易被封。</p>
 <hr>
 <h2 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h2><h3 id="1-服务器安装"><a href="#1-服务器安装" class="headerlink" title="1. 服务器安装"></a>1. 服务器安装</h3><p>在 Linux 操作系统， V2Ray 的安装有脚本安装、手动安装、编译安装 3 种方式，选择其中一种即可，本指南仅提供使用使用脚本安装的方法，并仅推荐使用脚本安装，该脚本由 V2Ray 官方提供。该脚本仅可以在 Debian 系列或者支持 Systemd 的 Linux 操作系统使用。</p>
@@ -485,6 +498,17 @@
 
     <footer class="post-footer">
       
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
+          
+            <a href="/tags/V2ray/" rel="tag"># V2ray</a>
+          
+        </div>
+      
 
       
       
@@ -494,8 +518,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/17/Scripts/softlink_clean/" rel="next" title="删除无效软连接">
-                <i class="fa fa-chevron-left"></i> 删除无效软连接
+              <a href="/2019/09/11/vps/docker_v2ray/" rel="next" title="使用 Docker 简单部署 v2ray">
+                <i class="fa fa-chevron-left"></i> 使用 Docker 简单部署 v2ray
               </a>
             
           </div>
@@ -503,10 +527,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/09/24/vps/docker_v2ray/" rel="prev" title="">
-                 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -586,7 +606,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">81</span>
+                    <span class="site-state-item-count">82</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -862,7 +882,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">102</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">105</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -937,7 +963,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基于-v2ray-实现科学上网"><span class="nav-number">1.</span> <span class="nav-text">基于 v2ray 实现科学上网]</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现过程"><span class="nav-number">1.2.</span> <span class="nav-text">实现过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-服务器安装"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 服务器安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-服务端配置"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. 服务端配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-客户端安装"><span class="nav-number">1.2.3.</span> <span class="nav-text">3. 客户端安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他内容"><span class="nav-number">1.3.</span> <span class="nav-text">其他内容</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基于-v2ray-实现科学上网"><span class="nav-number">1.</span> <span class="nav-text">基于 v2ray 实现科学上网</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现过程"><span class="nav-number">1.2.</span> <span class="nav-text">实现过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-服务器安装"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 服务器安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-服务端配置"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. 服务端配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-客户端安装"><span class="nav-number">1.2.3.</span> <span class="nav-text">3. 客户端安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他内容"><span class="nav-number">1.3.</span> <span class="nav-text">其他内容</span></a></li></ol></li></ol></div>
             
 
           </div>
