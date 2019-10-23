@@ -320,7 +320,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/deep_learning/object_detection/yolo/"/>
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/deep_learning/object_detection/SSD/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Heroinlin"/>
@@ -340,7 +340,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2018/04/12/deep_learning/object_detection/yolo/" class="post-title-link" itemprop="url">目标检测网络之 YOLOv3</a>
+                <a href="/2018/04/12/deep_learning/object_detection/SSD/" class="post-title-link" itemprop="url">目标检测网络之 SSD</a>
               
             
           </h1>
@@ -382,7 +382,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-10-11 10:52:44" itemprop="dateModified" datetime="2018-10-11T10:52:44+08:00">2018-10-11</time>
+                <time title="修改时间：2018-10-11 10:42:26" itemprop="dateModified" datetime="2018-10-11T10:42:26+08:00">2018-10-11</time>
               
             
           </span>
@@ -437,17 +437,368 @@
         
           
             <p>
-              目标检测网络之 YOLOv3
-本文逐步介绍YOLO v1~v3的设计历程。
-YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground truth 的中心位置的坐标落入到某个格子，那么这个格子就负责检测出这个物体。
+              Single Shot MultiBox Detector论文地址: https://arxiv.org/pdf/1512.02325.pdf
+前言目标检测近年来已经取得了很重要的进展，主流的算法主要分为两个类型（参考RefineDet）:
 
-网络结构YOLOv1网络借鉴了GoogLeNet分类网络结构
+Two stages
+以Faster RCNN为代表，即
               ...
             </p>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2018/04/12/deep_learning/object_detection/yolo/#more" rel="contents">
+              <a class="btn" href="/2018/04/12/deep_learning/object_detection/SSD/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/11/blogs/Docker_Hexo_Nginx_blog/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heroinlin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/leaf.jpg"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Heroinlin's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/04/11/blogs/Docker_Hexo_Nginx_blog/" class="post-title-link" itemprop="url">Mac下使用Docker+Hexo搭建博客</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-04-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-04-11T11:11:11+08:00">2018-04-11</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-05 10:48:40" itemprop="dateModified" datetime="2019-06-05T10:48:40+08:00">2019-06-05</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/blog/" itemprop="url" rel="index"><span itemprop="name">blog</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              Mac下使用Docker+Hexo搭建博客Docker的安装下载Docker.dmg文件，双击进行安装。之后安装Kitematic。
+
+Hexo配置安装完后打开Kitematic，搜索Hexo创建hexo-with-hexo-hey，将Settings中的Volumes路径更改为之前搭建的Hexo博
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/04/11/blogs/Docker_Hexo_Nginx_blog/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/11/linux/linux_user_password/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heroinlin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/leaf.jpg"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Heroinlin's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/04/11/linux/linux_user_password/" class="post-title-link" itemprop="url">Linux修改密码和添加用户</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-04-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-04-11T11:11:11+08:00">2018-04-11</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-08-08 11:31:56" itemprop="dateModified" datetime="2019-08-08T11:31:56+08:00">2019-08-08</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              Linux修改密码和添加用户默认root账户是没有密码的，使用sudo su进入root账户，输入passwd进行密码的设置，输入passwd -d heroin， 可以删除heroin账户原先设置的密码，切换到heroin账户后，输入passwd可以重新设置heroin账户的密码
+切换到root账
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/04/11/linux/linux_user_password/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -974,357 +1325,6 @@ YOLOv1基本思想YOLO将输入图像分成SxS个格子，若某个物体 Ground
           
             <div class="post-button text-center">
               <a class="btn" href="/2018/04/11/vps/Google_Cloud _SSR_BBR/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/11/blogs/Docker_Hexo_Nginx_blog/"/>
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Heroinlin"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="/images/leaf.jpg"/>
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Heroinlin's Blog"/>
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/04/11/blogs/Docker_Hexo_Nginx_blog/" class="post-title-link" itemprop="url">Mac下使用Docker+Hexo搭建博客</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-04-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-04-11T11:11:11+08:00">2018-04-11</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-06-05 10:48:40" itemprop="dateModified" datetime="2019-06-05T10:48:40+08:00">2019-06-05</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/blog/" itemprop="url" rel="index"><span itemprop="name">blog</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>
-              Mac下使用Docker+Hexo搭建博客Docker的安装下载Docker.dmg文件，双击进行安装。之后安装Kitematic。
-
-Hexo配置安装完后打开Kitematic，搜索Hexo创建hexo-with-hexo-hey，将Settings中的Volumes路径更改为之前搭建的Hexo博
-              ...
-            </p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/04/11/blogs/Docker_Hexo_Nginx_blog/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/11/linux/linux_user_password/"/>
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Heroinlin"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="/images/leaf.jpg"/>
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Heroinlin's Blog"/>
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/04/11/linux/linux_user_password/" class="post-title-link" itemprop="url">Linux修改密码和添加用户</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-04-11 11:11:11" itemprop="dateCreated datePublished" datetime="2018-04-11T11:11:11+08:00">2018-04-11</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-08-08 11:31:56" itemprop="dateModified" datetime="2019-08-08T11:31:56+08:00">2019-08-08</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>
-              Linux修改密码和添加用户默认root账户是没有密码的，使用sudo su进入root账户，输入passwd进行密码的设置，输入passwd -d heroin， 可以删除heroin账户原先设置的密码，切换到heroin账户后，输入passwd可以重新设置heroin账户的密码
-切换到root账
-              ...
-            </p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/04/11/linux/linux_user_password/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1918,7 +1918,7 @@ vim Pycharm.desktop      //如果没有此文件,可以新建一
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/Python/Python_webbrowser/"/>
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/Python/Python_File/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Heroinlin"/>
@@ -1938,7 +1938,7 @@ vim Pycharm.desktop      //如果没有此文件,可以新建一
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2018/03/12/Python/Python_webbrowser/" class="post-title-link" itemprop="url">python之webbrowser</a>
+                <a href="/2018/03/12/Python/Python_File/" class="post-title-link" itemprop="url">python中对文件、文件夹操作</a>
               
             
           </h1>
@@ -1963,24 +1963,12 @@ vim Pycharm.desktop      //如果没有此文件,可以新建一
                 
               
 
-              <time title="创建时间：2018-03-12 10:48:11" itemprop="dateCreated datePublished" datetime="2018-03-12T10:48:11+08:00">2018-03-12</time>
+              <time title="创建时间：2018-03-12 10:48:11 / 修改时间：10:52:18" itemprop="dateCreated datePublished" datetime="2018-03-12T10:48:11+08:00">2018-03-12</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-10-12 17:13:24" itemprop="dateModified" datetime="2018-10-12T17:13:24+08:00">2018-10-12</time>
               
             
           </span>
@@ -2035,15 +2023,18 @@ vim Pycharm.desktop      //如果没有此文件,可以新建一
         
           
             <p>
-              python之webbrowser打开浏览器使用默认浏览器显示网址webbrowser.open(url, new=0, autoraise=True)
-在默认浏览器的新窗口中打开URLwebbrowser.open_new(url)
-在默认浏览器的新页面（“标签”）中打开网址webbrowser.
+              #python中对文件、文件夹操作
+python中对文件、文件夹（文件操作函数）的操作需要涉及到os模块和shutil模块。
+##os模块
+得到当前工作目录，即当前Python脚本工作的目录路径: os.getcwd()
+返回指定目录下的所有文件和目录名:os.listdir()
+函数用来删除一个文
               ...
             </p>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2018/03/12/Python/Python_webbrowser/#more" rel="contents">
+              <a class="btn" href="/2018/03/12/Python/Python_File/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
