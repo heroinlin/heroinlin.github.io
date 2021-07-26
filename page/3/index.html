@@ -507,7 +507,7 @@ LeetCode第494题。
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/07/Algorithm/extra_num_with_two_list/"/>
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/07/Algorithm/detele_for_same_with_two_word/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Heroinlin"/>
@@ -527,7 +527,7 @@ LeetCode第494题。
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2018/08/07/Algorithm/extra_num_with_two_list/" class="post-title-link" itemprop="url">多出的数字</a>
+                <a href="/2018/08/07/Algorithm/detele_for_same_with_two_word/" class="post-title-link" itemprop="url">两个字符串上的删除操作</a>
               
             
           </h1>
@@ -624,13 +624,202 @@ LeetCode第494题。
         
           
             <p>
-              多出的数字Question在两个输入的数组中除了一个数字之外其余数字的值和顺序都相同，第一个数组比第二个数组多一个数字。请问如何找出第一个数组中多出的数字的下标？例如如果输入两个数组{2, 4, 6, 8, 9, 10, 12}和{2, 4, 6, 8, 10, 12}，则输出4，该下标对应的数字是
+              两个字符串上的删除操作Question
+LeetCode第583题 
+
+   给你两个单词word1和word2，请问至少需要几次删除操作使得word1和word2变得一样？每一步你都可以从word1或者word2里删除一个字符。例如如果输入两个单词”sea”和”eat”，我们至少需要两步删除操作，
               ...
             </p>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2018/08/07/Algorithm/extra_num_with_two_list/#more" rel="contents">
+              <a class="btn" href="/2018/08/07/Algorithm/detele_for_same_with_two_word/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/07/Algorithm/delete_and_earn/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Heroinlin"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/leaf.jpg"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Heroinlin's Blog"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/08/07/Algorithm/delete_and_earn/" class="post-title-link" itemprop="url">删掉再赚到</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-08-07 19:48:24" itemprop="dateCreated datePublished" datetime="2018-08-07T19:48:24+08:00">2018-08-07</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-06-02 11:12:23" itemprop="dateModified" datetime="2020-06-02T11:12:23+08:00">2020-06-02</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              删掉再赚到Question
+这是LeetCode第740题。
+
+   给你一个整数数组nums，你可以在数组上做如下操作：你可以选择任意一个数字nums[i]把它删掉并赚到nums[i]个点。此后，你必须删除数组中所有值为nums[i]-1和nums[i]+1的数字。你最开始有0个点。请问你如此执行
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/08/07/Algorithm/delete_and_earn/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -876,7 +1065,7 @@ LeetCode第647题
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/07/Algorithm/detele_for_same_with_two_word/"/>
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/07/Algorithm/Multiple_of_3and5/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Heroinlin"/>
@@ -896,7 +1085,7 @@ LeetCode第647题
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2018/08/07/Algorithm/detele_for_same_with_two_word/" class="post-title-link" itemprop="url">两个字符串上的删除操作</a>
+                <a href="/2018/08/07/Algorithm/Multiple_of_3and5/" class="post-title-link" itemprop="url">Multiples of 3 and 5</a>
               
             
           </h1>
@@ -993,16 +1182,13 @@ LeetCode第647题
         
           
             <p>
-              两个字符串上的删除操作Question
-LeetCode第583题 
-
-   给你两个单词word1和word2，请问至少需要几次删除操作使得word1和word2变得一样？每一步你都可以从word1或者word2里删除一个字符。例如如果输入两个单词”sea”和”eat”，我们至少需要两步删除操作，
+              Multiples of 3 and 5QuestionIf we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples
               ...
             </p>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2018/08/07/Algorithm/detele_for_same_with_two_word/#more" rel="contents">
+              <a class="btn" href="/2018/08/07/Algorithm/Multiple_of_3and5/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1187,192 +1373,6 @@ LeetCode第583题
           
             <div class="post-button text-center">
               <a class="btn" href="/2018/08/07/Algorithm/Coin_Question/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/07/Algorithm/delete_and_earn/"/>
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Heroinlin"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="/images/leaf.jpg"/>
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Heroinlin's Blog"/>
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/08/07/Algorithm/delete_and_earn/" class="post-title-link" itemprop="url">删掉再赚到</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-08-07 19:48:24" itemprop="dateCreated datePublished" datetime="2018-08-07T19:48:24+08:00">2018-08-07</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2020-06-02 11:12:23" itemprop="dateModified" datetime="2020-06-02T11:12:23+08:00">2020-06-02</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>
-              删掉再赚到Question
-这是LeetCode第740题。
-
-   给你一个整数数组nums，你可以在数组上做如下操作：你可以选择任意一个数字nums[i]把它删掉并赚到nums[i]个点。此后，你必须删除数组中所有值为nums[i]-1和nums[i]+1的数字。你最开始有0个点。请问你如此执行
-              ...
-            </p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/08/07/Algorithm/delete_and_earn/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1984,7 +1984,7 @@ Opencv安装的位置为 :/usr/local/Cellar/opencv
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/18/opencv/build_opencv4.5.1_simple_lib/"/>
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/18/opencv/build_opencv_simple_lib/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Heroinlin"/>
@@ -2004,7 +2004,7 @@ Opencv安装的位置为 :/usr/local/Cellar/opencv
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2018/04/18/opencv/build_opencv4.5.1_simple_lib/" class="post-title-link" itemprop="url">编译opencv4.5.1精简静态库</a>
+                <a href="/2018/04/18/opencv/build_opencv_simple_lib/" class="post-title-link" itemprop="url">编译opencv精简静态库</a>
               
             
           </h1>
@@ -2046,7 +2046,7 @@ Opencv安装的位置为 :/usr/local/Cellar/opencv
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2021-03-10 17:11:46" itemprop="dateModified" datetime="2021-03-10T17:11:46+08:00">2021-03-10</time>
+                <time title="修改时间：2021-07-22 11:11:36" itemprop="dateModified" datetime="2021-07-22T11:11:36+08:00">2021-07-22</time>
               
             
           </span>
@@ -2101,15 +2101,15 @@ Opencv安装的位置为 :/usr/local/Cellar/opencv
         
           
             <p>
-              编译opencv精简静态库本示例在ubuntu18.04上编译opencv4.5.1
-安装依赖包sudo apt install cmake gcc gcc-c++ make
-cmake命令直接编译opencv_highgui库在读写jpeg,png,tiff,jpeg2000图像格式时用到了第三方
+              编译opencv精简静态库本示例在centos6.5上编译opencv2.4.9
+安装依赖包yum install cmake gcc gcc-c++ make
+cmake命令直接编译opencv_highgui库在读写jpeg,png,tiff,jpeg2000图像格式时用到了第三方编解码库，可以
               ...
             </p>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2018/04/18/opencv/build_opencv4.5.1_simple_lib/#more" rel="contents">
+              <a class="btn" href="/2018/04/18/opencv/build_opencv_simple_lib/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -2502,7 +2502,9 @@ cmake命令直接编译opencv_highgui库在读写jpeg,png,tiff,jpeg2000图像格
                     
                       
                     
-                    <span class="site-state-item-count">109</span>
+                      
+                    
+                    <span class="site-state-item-count">110</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
